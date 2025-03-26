@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/26 02:15:06 by kaissramire      ###   ########.fr       */
+/*   Created: 2024/12/02 23:34:14 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/03/16 23:03:42 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
-
-# include "../Libft/libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+# include <fcntl.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_cmd
-{
-	char			*content;
-	struct s_cmd	*next;
-}					t_cmd;
-
-void	lstadd_back(t_cmd **lst, t_cmd *new);
-t_cmd	*lstnew(char *content);
+char	*ft_strjoin_GNL(char *s1, char *s2);
+char	*get_next_line(int fd, int stop);
+char	*ft_strchr(const char *s, int c);
+size_t	ft_slen(char *s);
+void	*ftmemcpy(void *dst, const void *src, size_t n);
 
 #endif

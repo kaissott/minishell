@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/26 02:15:06 by kaissramire      ###   ########.fr       */
+/*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/03/26 03:21:36 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "builtins.h"
 
-# include "../Libft/libft.h"
-# include <stdio.h>
-# include <unistd.h>
-
-typedef struct s_cmd
+int	pwd()
 {
-	char			*content;
-	struct s_cmd	*next;
-}					t_cmd;
+	char	path[1024];
+	if (getcwd(path, 1024) == NULL)
+		return(0);
+	ft_putstr_fd(path, 1);
+	write(1, "\n", 1);
+	return(1);
+}
 
-void	lstadd_back(t_cmd **lst, t_cmd *new);
-t_cmd	*lstnew(char *content);
+int	pwd_parsing(t_cmd *cmd)
+{
+	if(cmd->next != NULL)
+		ft_putendl_fd("pwd: too many arguments", 2);
+	if(!pwd())
+		exit(1);
+	return(1);
+}
 
-#endif
+int main(void)
+{
+	pwd();
+	return(0);
+}

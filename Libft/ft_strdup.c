@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/26 02:15:06 by kaissramire      ###   ########.fr       */
+/*   Created: 2024/11/13 17:01:41 by karamire          #+#    #+#             */
+/*   Updated: 2025/02/27 23:20:10 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "libft.h"
 
-# include "../Libft/libft.h"
-# include <stdio.h>
-# include <unistd.h>
-
-typedef struct s_cmd
+char	*ft_strdup(const char *s)
 {
-	char			*content;
-	struct s_cmd	*next;
-}					t_cmd;
+	char	*str;
+	int		i;
+	int		j;
 
-void	lstadd_back(t_cmd **lst, t_cmd *new);
-t_cmd	*lstnew(char *content);
+	str = malloc(ft_strlen(s) - 4);
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	j = 5;
+	while (s[j] != '\0')
+	{
+		str[i] = s[j];
+		j++;
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
 
-#endif
+// int	main(void)
+// {
+// 	char str[] = "hey";
+// 	ft_strdup(str);
+// }
