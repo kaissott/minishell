@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:54:13 by karamire          #+#    #+#             */
-/*   Updated: 2024/11/29 08:44:32 by karamire         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:54:41 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_itoa(int n)
 	size = ft_numsize(n);
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
-	str = malloc(sizeof (char) * (size + 1));
+	str = malloc(sizeof(char) * (size + 1));
 	if (str == NULL)
 		return (NULL);
 	if (n == 0)

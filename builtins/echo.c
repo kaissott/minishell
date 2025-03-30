@@ -3,54 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/26 02:56:00 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/03/28 18:36:12 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	echo_printing(t_cmd *echo)
+int	echo_flag(t_cmd *echo)
 {
-	t_cmd *temp;
+	int	i;
 
-	temp = echo;
-	while(temp)
+	i = 1;
+	if (echo->flag[0] == '-')
 	{
-		ft_putstr_fd(temp->content, 1);
-		if(temp->next != NULL)
-			write(1, " ", 1);
-		temp = temp->next;
+		while (echo->flag[i] != '\0')
+		{
+			if (echo->flag[i] != 'n')
+				return (0);
+			i++;
+		}
 	}
+	return (1);
 }
-char	*echo_parsing(t_cmd *cmd)
-{
-	t_cmd	*temp;
-	int		i;
 
-	i = 0;
-	if (ft_strcmp(cmd->next->content, "-n") == 0)
+void	print_echo(t_cmd *echo, int i)
+{
+	char	*str;
+	int		j;
+
+	j = 0;
+	if (i == 0 && echo->flag != NULL)
 	{
-		temp = cmd->next->next;
-		i = 1;
+		str = ft_strjoin(echo->flag, " ");
+		str = ft_strjoin(str, echo->args);
 	}
 	else
-		temp = cmd->next;
-	echo_printing(temp);
-	if (i == 0)
+		str = ft_strdup(echo->args);
+	while (str[j])
+	{
+		if (str[j] == ' ')
+		{
+			while (str[j] == ' ')
+				j++;
+			write(1, " ", 1);
+		}
+			write(1, &str[j], 1);
+			j++;
+	}
+	if (i == 1)
 		write(1, "\n", 1);
+	free(str);
 }
 
-int	main(void)
+int	mini_echo(t_cmd *echo)
+{
+	int	i;
+
+	i = 0;
+	if (echo_flag(echo) == 1)
+		i = 1;
+	print_echo(echo, i);
+}
+int	main(int ac, char **av)
 {
 	t_cmd	*cmd;
 
-	cmd = lstnew("echo");
-	lstadd_back(&cmd, lstnew("-n"));
-	lstadd_back(&cmd, lstnew("coucou"));
-	lstadd_back(&cmd, lstnew("coucou            bb"));
-	echo_parsing(cmd);
+	cmd = malloc(sizeof(t_cmd));
+	cmd->cmd = "echo";
+	cmd->flag = av[1];
+	cmd->args = av[2];
+	mini_echo(cmd);
 	return (0);
 }
