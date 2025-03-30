@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 18:02:37 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/30 19:13:39 by karamire         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:53:51 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	cmd_checker(t_cmd *cmd, char **env)
 		pwd_parsing(cmd);
 	else if (ft_strcmp(cmd->cmd, "env") == 0)
 		env_print(mainenv);
+	else if (ft_strcmp(cmd->cmd, "export") == 0)
+		export_parsing(cmd, mainenv);
 	else
 		printf("command not found");
 	return (0);
@@ -39,11 +41,11 @@ int	main(int ac, char **av, char **env)
 	cmd->cmd = av[1];
 	// printf("%s", cmd->cmd);
 	cmd->flag = av[2];
-	cmd->args[0] = av[3];
-	// printf("%s", cmd->args[0]);
-	cmd->args[1] = av[4];
-	cmd->args[2] = av[5];
-	cmd->args[3] = NULL;
+	cmd->args = NULL;
+	// // printf("%s", cmd->args[0]);
+	// cmd->args[1] = av[4];
+	// cmd->args[2] = av[5];
+	// cmd->args[3] = NULL;
 	cmd_checker(cmd, env);
 	// mini_echo(cmd);
 	// env_parsing(env);

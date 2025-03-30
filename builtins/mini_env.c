@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 18:52:10 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/30 19:12:46 by karamire         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:19:49 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ int	env_print(t_env *env)
 t_env	*env_build(char **env)
 {
 	int		i;
+	char	*str;
 	t_env	*mainenv;
 
 	mainenv = malloc(sizeof(t_env));
-	mainenv->env = env[0];
+	mainenv->env = ft_strdup(env[0]);
 	i = 1;
 	while (env[i] != NULL)
 	{
-		lstadd_back(&mainenv, lstnew(env[i]));
+		str = ft_strdup(env[i]);
+		lstadd_back(&mainenv, lstnew(str));
 		i++;
 	}
 	return (mainenv);

@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/30 19:13:08 by karamire         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:52:40 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ int					mini_echo(t_cmd *echo);
 int					pwd_parsing(t_cmd *cmd);
 t_env				*env_build(char **env);
 int					env_print(t_env *env);
+int					export_parsing(t_cmd *cmd, t_env *env);
 
 #endif
