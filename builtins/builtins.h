@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/30 18:06:05 by karamire         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:13:08 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,17 @@ typedef struct s_cmd
 	int				output;
 	struct s_cmd	*next;
 }					t_cmd;
+typedef struct s_env
+{
+	char			*env;
+	struct s_env	*next;
+}					t_env;
 
-void				lstadd_back(t_cmd **lst, t_cmd *new);
-t_cmd				*lstnew(char *content);
+void				lstadd_back(t_env **lst, t_env *new);
+t_env				*lstnew(char *content);
 int					mini_echo(t_cmd *echo);
 int					pwd_parsing(t_cmd *cmd);
+t_env				*env_build(char **env);
+int					env_print(t_env *env);
 
 #endif

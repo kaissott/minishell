@@ -1,45 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_add.c                                          :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 02:14:25 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/03/30 18:58:53 by karamire         ###   ########.fr       */
+/*   Created: 2025/03/30 18:52:10 by karamire          #+#    #+#             */
+/*   Updated: 2025/03/30 19:12:46 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	lstadd_back(t_env **lst, t_env *new)
+int	env_print(t_env *env)
 {
-	t_env	*last;
+	t_env	*temp;
 
-	if (new == NULL)
-		return ;
-	if ((*lst) == NULL)
+	temp = env;
+	while (temp)
 	{
-		*lst = new;
-		return ;
+		ft_putstr_fd(temp->env, 1);
+		write(1, "\n", 1);
+		temp = temp->next;
 	}
-	last = *lst;
-	while (last->next != NULL)
-	{
-		last = last->next;
-	}
-	last->next = new;
-	return ;
+	return (0);
 }
 
-t_env	*lstnew(char *content)
+t_env	*env_build(char **env)
 {
-	t_env	*newcontent;
+	int		i;
+	t_env	*mainenv;
 
-	newcontent = malloc(sizeof(t_env));
-	if (newcontent == NULL)
-		return (NULL);
-	newcontent->env = content;
-	newcontent->next = NULL;
-	return (newcontent);
+	mainenv = malloc(sizeof(t_env));
+	mainenv->env = env[0];
+	i = 1;
+	while (env[i] != NULL)
+	{
+		lstadd_back(&mainenv, lstnew(env[i]));
+		i++;
+	}
+	return (mainenv);
 }
