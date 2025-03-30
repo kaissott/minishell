@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/27 19:16:53 by karamire         ###   ########.fr       */
+/*   Updated: 2025/03/30 18:06:05 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_cmd
 {
 	char			*cmd;
 	char			*flag;
-	char			*args;
+	char			**args;
 	int				input;
 	int				output;
 	struct s_cmd	*next;
@@ -29,5 +29,7 @@ typedef struct s_cmd
 
 void				lstadd_back(t_cmd **lst, t_cmd *new);
 t_cmd				*lstnew(char *content);
+int					mini_echo(t_cmd *echo);
+int					pwd_parsing(t_cmd *cmd);
 
 #endif

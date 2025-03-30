@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/28 18:36:12 by karamire         ###   ########.fr       */
+/*   Updated: 2025/03/30 18:20:50 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,37 +25,56 @@ int	echo_flag(t_cmd *echo)
 				return (0);
 			i++;
 		}
+		if (echo->flag[i] == '\0')
+			return (1);
 	}
-	return (1);
+	return (0);
 }
 
-void	print_echo(t_cmd *echo, int i)
+void	print_echo_with_flag(t_cmd *echo)
 {
-	char	*str;
-	int		j;
+	int	j;
+	int	i;
 
 	j = 0;
-	if (i == 0 && echo->flag != NULL)
+	while (echo->args[j] != NULL)
 	{
-		str = ft_strjoin(echo->flag, " ");
-		str = ft_strjoin(str, echo->args);
-	}
-	else
-		str = ft_strdup(echo->args);
-	while (str[j])
-	{
-		if (str[j] == ' ')
+		i = 0;
+		while (echo->args[j][i] != '\0')
 		{
-			while (str[j] == ' ')
-				j++;
-			write(1, " ", 1);
+			write(1, &echo->args[j][i], 1);
+			i++;
+			if (echo->args[j][i] == '\0' && echo->args[j + 1] != NULL)
+				write(1, " ", 1);
 		}
-			write(1, &str[j], 1);
-			j++;
+		j++;
 	}
-	if (i == 1)
-		write(1, "\n", 1);
-	free(str);
+}
+
+void	print_echo(t_cmd *echo)
+{
+	int	j;
+	int	i;
+
+	j = 0;
+	while (echo->flag[j])
+	{
+		write(1, &echo->flag[j], 1);
+		j++;
+	}
+	j = 0;
+	while (echo->args[j] != NULL)
+	{
+		i = 0;
+		write(1, " ", 1);
+		while (echo->args[j][i] != '\0')
+		{
+			write(1, &echo->args[j][i], 1);
+			i++;
+		}
+		j++;
+	}
+	write(1, "\n", 1);
 }
 
 int	mini_echo(t_cmd *echo)
@@ -64,17 +83,11 @@ int	mini_echo(t_cmd *echo)
 
 	i = 0;
 	if (echo_flag(echo) == 1)
-		i = 1;
-	print_echo(echo, i);
-}
-int	main(int ac, char **av)
-{
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(t_cmd));
-	cmd->cmd = "echo";
-	cmd->flag = av[1];
-	cmd->args = av[2];
-	mini_echo(cmd);
-	return (0);
+	{
+		print_echo_with_flag(echo);
+		// printf("il y a flag\n");
+	}
+	else
+		print_echo(echo);
+	return (1);
 }
