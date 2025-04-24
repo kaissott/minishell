@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 18:02:37 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/30 21:53:51 by karamire         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:25:20 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,14 @@ int	main(int ac, char **av, char **env)
 {
 	t_cmd	*cmd;
 
-	(void)ac;
-	// (void)cmd;
-	(void)av;
 	cmd = malloc(sizeof(t_cmd));
 	cmd->args = malloc(sizeof(char *) * 4);
 	cmd->cmd = av[1];
-	// printf("%s", cmd->cmd);
-	cmd->flag = av[2];
-	cmd->args = NULL;
-	// // printf("%s", cmd->args[0]);
-	// cmd->args[1] = av[4];
-	// cmd->args[2] = av[5];
-	// cmd->args[3] = NULL;
+	cmd->args[0] = av[2];
+	cmd->args[1] = av[3];
+	cmd->args[2] = av[4];
+	cmd->args[3] = NULL;
+	cmd->flag = NULL;
 	cmd_checker(cmd, env);
-	// mini_echo(cmd);
-	// env_parsing(env);
 	return (0);
 }

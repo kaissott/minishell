@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   mini_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/30 18:20:50 by karamire         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:24:37 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	echo_flag(t_cmd *echo)
 	int	i;
 
 	i = 1;
-	if (echo->flag[0] == '-')
+	if (echo->flag != NULL && echo->flag[0] == '-')
 	{
 		while (echo->flag[i] != '\0')
 		{
@@ -57,7 +57,7 @@ void	print_echo(t_cmd *echo)
 	int	i;
 
 	j = 0;
-	while (echo->flag[j])
+	while (echo->flag != NULL && echo->flag[j])
 	{
 		write(1, &echo->flag[j], 1);
 		j++;
@@ -85,9 +85,11 @@ int	mini_echo(t_cmd *echo)
 	if (echo_flag(echo) == 1)
 	{
 		print_echo_with_flag(echo);
-		// printf("il y a flag\n");
+		printf("il y a flag\n");
 	}
 	else
+	{
 		print_echo(echo);
+	}
 	return (1);
 }

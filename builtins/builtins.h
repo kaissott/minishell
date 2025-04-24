@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/30 21:52:40 by karamire         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:55:31 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 # include "../Libft/libft.h"
 # include <stdio.h>
 # include <unistd.h>
+
+typedef struct s_p
+{
+	char			*arg;
+	int				type;
+	int				file_in;
+	int				file_out;
+	struct s_p		*next;
+}					t_p;
 
 typedef struct s_cmd
 {

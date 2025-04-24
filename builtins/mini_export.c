@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:21:38 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/30 22:05:36 by karamire         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:14:50 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	check_new_var(t_cmd *cmd)
 	while (cmd->args[i] != NULL)
 	{
 		j = 0;
-		while (cmd->args[i][j])
-		{
-			if(cmd->args[i])
-		}
+		// while (cmd->args[i][j])
+		// {
+		// 	if(cmd->args[i])
+		// }
 	}
 }
 int	export_parsing(t_cmd *cmd, t_env *env)
@@ -48,6 +48,6 @@ int	export_parsing(t_cmd *cmd, t_env *env)
 	if (cmd->args == NULL)
 		export_print_env(env);
 	else if (check_new_var(cmd) == 1)
-		add_new_var(cmd, env);
-	return (0);
+		// add_new_var(cmd, env);
+		return (0);
 }
