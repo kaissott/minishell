@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:49:43 by karamire          #+#    #+#             */
-/*   Updated: 2025/04/25 03:08:17 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:01:40 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	lstadd_backs(t_p **lst, t_p *new)
 		return ;
 	if ((*lst) == NULL)
 	{
-		*lst = new;    
+		*lst = new;
 		return ;
 	}
 	last = *lst;
@@ -43,12 +43,12 @@ t_p	*lstnews(char *content)
 	newcontent->next = NULL;
 	return (newcontent);
 }
-int	main(void)
-{
-	t_p	*p;
+// int	main(void)
+// {
+// 	t_p	*p;
 
-	p = lstnews("echo");
-	lstadd_backs(&p, lstnews("test"));
-	printf("%s\n", p->arg);
-	printf("%s\n", p->next->arg);
-}
+// 	p = lstnews("echo");
+// 	lstadd_backs(&p, lstnews("test"));
+// 	printf("%s\n", p->arg);
+// 	printf("%s\n", p->next->arg);
+// }

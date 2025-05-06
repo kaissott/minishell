@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/04/24 16:24:37 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:04:49 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,13 @@ int	mini_echo(t_cmd *echo)
 		print_echo(echo);
 	}
 	return (1);
+}
+int	main(void)
+{
+	t_cmd	*echo;
+
+	echo = malloc(sizeof(t_cmd));
+	echo->cmd = "echo";
+	echo->flag = "-n";
+	echo->args = "coucou";
 }
