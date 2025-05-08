@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:49:43 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/06 12:01:40 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/08 21:32:46 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "../include/builtins.h"
 
 void	lstadd_backs(t_p **lst, t_p *new)
 {

@@ -1,40 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_pwd.c                                         :+:      :+:    :+:   */
+/*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/08 21:33:10 by kaissramire      ###   ########.fr       */
+/*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/05/08 21:36:52 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/builtins.h"
+#ifndef MAIN_H
+# define MAIN_H
 
-int	pwd(void)
-{
-	char	path[1024];
+# include "../Libft/libft.h"
+# include "builtins.h"
+# include <stdio.h>
+# include <unistd.h>
 
-	if (getcwd(path, 1024) == NULL)
-		return (0);
-	ft_putstr_fd(path, 1);
-	write(1, "\n", 1);
-	return (1);
-}
-
-int	pwd_parsing(t_cmd *cmd)
-{
-	// printf("%s", cmd->flag);
-	if (cmd->flag != NULL)
-		ft_putendl_fd("pwd: too many arguments", 2);
-	else if (!pwd())
-		exit(1);
-	return (1);
-}
-
-// int main(void)
-// {
-// 	pwd();
-// 	return(0);
-// }
+#endif

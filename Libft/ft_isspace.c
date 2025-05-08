@@ -1,40 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_pwd.c                                         :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/08 21:33:10 by kaissramire      ###   ########.fr       */
+/*   Created: 2025/05/09 01:18:55 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/05/09 01:19:34 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/builtins.h"
-
-int	pwd(void)
+int	ft_isspace(int c)
 {
-	char	path[1024];
-
-	if (getcwd(path, 1024) == NULL)
-		return (0);
-	ft_putstr_fd(path, 1);
-	write(1, "\n", 1);
-	return (1);
+	return (c == ' ' || (c >= 9 && c <= 13));
 }
-
-int	pwd_parsing(t_cmd *cmd)
-{
-	// printf("%s", cmd->flag);
-	if (cmd->flag != NULL)
-		ft_putendl_fd("pwd: too many arguments", 2);
-	else if (!pwd())
-		exit(1);
-	return (1);
-}
-
-// int main(void)
-// {
-// 	pwd();
-// 	return(0);
-// }

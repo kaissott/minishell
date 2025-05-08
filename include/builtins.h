@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/06 12:28:52 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/08 21:44:57 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ typedef struct s_env
 
 void				lstadd_back(t_env **lst, t_env *new);
 t_env				*lstnew(char *content);
-int					mini_echo(t_cmd *echo);
 int					pwd_parsing(t_cmd *cmd);
 t_env				*env_build(char **env);
 int					env_print(t_env *env);
 int					export_parsing(t_cmd *cmd, t_env *env);
+int					mini_exit(char *line);
 
 #endif

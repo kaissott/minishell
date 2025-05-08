@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lst_add.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 02:14:25 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/03/30 18:58:53 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/08 21:32:38 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "../include/builtins.h"
 
 void	lstadd_back(t_env **lst, t_env *new)
 {
