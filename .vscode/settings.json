@@ -59,6 +59,7 @@
     "stdlib.h": "c",
     "readline.h": "c",
     "history.h": "c",
-    "main.h": "c"
+    "main.h": "c",
+    "limits.h": "c"
   }
 }

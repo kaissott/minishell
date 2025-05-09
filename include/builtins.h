@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/08 21:44:57 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/09 02:11:58 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BUILTINS_H
 
 # include "../Libft/libft.h"
+# include <errno.h>
 # include <stdio.h>
 # include <unistd.h>
 

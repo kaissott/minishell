@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:06 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/09 01:42:43 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/09 02:29:41 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ int	check_and_conv_exit_code(char *exit, int size)
 		return (1);
 	exit_code = ft_atoll(exit, &error) % 256;
 	if (error == -1)
-	{
 		exit_code = 2;
-	}
 	return (exit_code);
 }
 
@@ -74,7 +72,14 @@ int	mini_exit(char *line)
 	exit_code = 0;
 	cmd = ft_split(line, ' ');
 	size = tab_size(cmd);
-	if (cmd[1])
+	if (cmd[1] && cmd[1][0] != '\0')
+	{
+		printf("caca");
 		exit_code = check_and_conv_exit_code(cmd[1], size);
-	exit(exit_code);
+		errno = exit_code;
+		printf("%d", errno);
+		exit(exit_code);
+	}
+	printf("errno : %d", errno);
+	exit(errno);
 }
