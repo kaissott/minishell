@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_pwd.c                                         :+:      :+:    :+:   */
+/*   mini_exit_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/10 16:29:55 by kaissramire      ###   ########.fr       */
+/*   Created: 2025/05/09 16:45:28 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/05/09 18:38:32 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/builtins.h"
 
-int	pwd(void)
+void	free_tab(char **args)
 {
-	char	path[1024];
+	int	i;
 
-	if (getcwd(path, 1024) == NULL)
-		return (0);
-	ft_putstr_fd(path, 1);
-		free(path);
-	write(1, "\n", 1);
-	return (1);
+	i = 0;
+	while (args[i])
+	{
+		free(args[i]);
+		i++;
+	}
 }
 
+int	numeric_argument_error(char *error, char **args)
+{
+	ft_putstr_fd("exit\nbash: exit: ", 2);
+	ft_putstr_fd(args[1], 2);
+	ft_putstr_fd(ERR_NUM_ARG, 2);
+	free_tab(args);
+	exit(2);
+}

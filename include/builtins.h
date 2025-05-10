@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/09 02:11:58 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/10 17:19:46 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 # define BUILTINS_H
 
 # include "../Libft/libft.h"
+# include "error.h"
 # include <errno.h>
+# include <stdbool.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 
 typedef struct s_node
@@ -58,5 +61,9 @@ t_env				*env_build(char **env);
 int					env_print(t_env *env);
 int					export_parsing(t_cmd *cmd, t_env *env);
 int					mini_exit(char *line);
+int					numeric_argument_error(char *error, char **args);
+int					pwd(void);
+void				print_echo_with_flag(char **tab);
+int					mini_echo(char *line);
 
 #endif

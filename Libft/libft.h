@@ -6,13 +6,14 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:38:10 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/09 01:19:39 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/09 17:39:17 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -72,5 +73,7 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 char				*ft_strjoin(char const *s1, char const *s2);
 long long			ft_atoll(const char *str, int *error);
 int					ft_isspace(int c);
+int					handle_error(char *msg, int code);
+void				handle_error_exit(char *msg, int code);
 
 #endif

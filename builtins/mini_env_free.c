@@ -1,26 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_pwd.c                                         :+:      :+:    :+:   */
+/*   mini_env_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/10 16:29:55 by kaissramire      ###   ########.fr       */
+/*   Created: 2025/05/09 17:42:20 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/05/09 17:42:21 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../include/builtins.h"
-
-int	pwd(void)
-{
-	char	path[1024];
-
-	if (getcwd(path, 1024) == NULL)
-		return (0);
-	ft_putstr_fd(path, 1);
-		free(path);
-	write(1, "\n", 1);
-	return (1);
-}
 

@@ -6,99 +6,68 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/08 21:32:56 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/10 17:23:48 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/builtins.h"
 
-int	echo_flag(t_cmd *echo)
+bool	check_echo_flag(char **tab)
 {
 	int	i;
 
 	i = 1;
-	if (echo->flag != NULL && echo->flag[0] == '-')
+	if (tab[1])
 	{
-		while (echo->flag[i] != '\0')
+		if (tab[1][0] == '-')
 		{
-			if (echo->flag[i] != 'n')
-				return (0);
-			i++;
+			while (tab[1][i] == 'n')
+			{
+				i++;
+				if (tab[1][i] == '\0')
+					return (true);
+			}
 		}
-		if (echo->flag[i] == '\0')
-			return (1);
 	}
-	return (0);
+	return (false);
 }
 
-void	print_echo_with_flag(t_cmd *echo)
+void	print_echo_with_flag(char **tab)
 {
-	int	j;
 	int	i;
 
-	j = 0;
-	while (echo->args[j] != NULL)
+	i = 2;
+	while (tab[i])
 	{
-		i = 0;
-		while (echo->args[j][i] != '\0')
-		{
-			write(1, &echo->args[j][i], 1);
-			i++;
-			if (echo->args[j][i] == '\0' && echo->args[j + 1] != NULL)
-				write(1, " ", 1);
-		}
-		j++;
+		ft_putstr_fd(tab[i], 1);
+		i++;
+		if (tab[i])
+			write(1, " ", 1);
 	}
 }
 
-void	print_echo(t_cmd *echo)
+void	print_echo_without_flag(char **tab)
 {
-	int	j;
 	int	i;
 
-	j = 0;
-	while (echo->flag != NULL && echo->flag[j])
+	i = 1;
+	while (tab[i])
 	{
-		write(1, &echo->flag[j], 1);
-		j++;
-	}
-	j = 0;
-	while (echo->args[j] != NULL)
-	{
-		i = 0;
-		write(1, " ", 1);
-		while (echo->args[j][i] != '\0')
-		{
-			write(1, &echo->args[j][i], 1);
-			i++;
-		}
-		j++;
+		ft_putstr_fd(tab[i], 1);
+		i++;
+		if (tab[i])
+			write(1, " ", 1);
 	}
 	write(1, "\n", 1);
 }
 
-int	mini_echo(t_cmd *echo)
+int	mini_echo(char *line)
 {
-	int	i;
+	char	**tab;
 
-	i = 0;
-	if (echo_flag(echo) == 1)
-	{
-		print_echo_with_flag(echo);
-		printf("il y a flag\n");
-	}
+	tab = ft_split(line, ' ');
+	if (check_echo_flag(tab) == true)
+		print_echo_with_flag(tab);
 	else
-	{
-		print_echo(echo);
-	}
-	return (1);
-}
-int	main(void)
-{
-	t_cmd	*echo;
-
-	echo = malloc(sizeof(t_cmd));
-	echo->cmd = "echo";
-	echo->flag = "-n";
-	echo->args = "coucou";
+		print_echo_without_flag(tab);
 }

@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_pwd.c                                         :+:      :+:    :+:   */
+/*   handle_error_exit.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/10 16:29:55 by kaissramire      ###   ########.fr       */
+/*   Created: 2025/05/09 16:48:09 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/05/09 17:39:43 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/builtins.h"
+#include "libft.h"
 
-int	pwd(void)
+void	handle_error_exit(char *msg, int code)
 {
-	char	path[1024];
-
-	if (getcwd(path, 1024) == NULL)
-		return (0);
-	ft_putstr_fd(path, 1);
-		free(path);
-	write(1, "\n", 1);
-	return (1);
+	if (msg)
+		perror(msg);
+	exit(code);
 }
-
