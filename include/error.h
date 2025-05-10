@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:41:28 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/10 16:56:04 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/10 21:10:41 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,9 @@
 # define ERR_INV_ID ": not a valid identifier\n"
 # define ERR_CMD_NOT_FOUND ": command not found\n"
 # define ERR_NUM_ARG ": numeric argument required\n"
+# define ERR_CD_FOD ": No such file or directory\n"
+# define CD_ERR_NAMETOOLONG ": File name too long\n"
+# define CD_ERR_NOACCES ": Can't acces file"
+# define CD_ERR_TOO_MANY_ARGS "bash: cd: too many arguments\n"
 
 #endif

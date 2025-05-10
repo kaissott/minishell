@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/10 17:21:09 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/10 20:53:49 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	main(int ac, char **av, char **env)
 			pwd();
 		if (ft_strncmp("echo", line, 4) == 0)
 			mini_echo(line);
+		if (ft_strncmp("cd", line, 2) == 0)
+			mini_cd(line);
 		free(line);
 	}
 	return (0);

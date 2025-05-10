@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_pwd.c                                         :+:      :+:    :+:   */
+/*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/10 20:51:48 by kaissramire      ###   ########.fr       */
+/*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/05/10 20:55:47 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/builtins.h"
 
-int	pwd(void)
+int	mini_cd(char *line)
 {
-	char	path[1024];
+	char	**tab;
 
-	if (getcwd(path, 1024) == NULL)
-		return (0);
-	ft_putstr_fd(path, 1);
-	write(1, "\n", 1);
-	return (1);
+	tab = ft_split(line, ' ');
+	if (tab[1])
+	{
+		if (chdir(tab[1]) == -1)
+			printf("nul");
+	}
 }
