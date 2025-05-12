@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:06 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/09 18:35:38 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/13 00:31:15 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_and_conv_exit_code(char **exit, int size)
 	i = 0;
 	error = 0;
 	i = parse_sign(&exit[1][i]);
-	while (exit[i])
+	while (exit[1][i])
 	{
 		if (ft_isdigit(exit[1][i]) == 0)
 			return (2);
@@ -65,7 +65,7 @@ int	check_and_conv_exit_code(char **exit, int size)
 	return (exit_code);
 }
 
-int	mini_exit(char *line)
+int	mini_exit(char *line, t_main *main)
 {
 	char	**cmd;
 	int		exit_code;
@@ -78,11 +78,17 @@ int	mini_exit(char *line)
 		free(line);
 		handle_error_exit(ERR_MALLOC, 12);
 	}
+	free(line);
 	size = tab_size(cmd);
 	if (cmd[1] && cmd[1][0] != '\0')
 	{
 		exit_code = check_and_conv_exit_code(cmd, size);
 		errno = exit_code;
+		free_env(main->mainenv);
+		free(cmd[0]);
+		free(cmd[1]);
+		free(cmd);
+		free(main);
 		exit(exit_code);
 	}
 	exit(errno);

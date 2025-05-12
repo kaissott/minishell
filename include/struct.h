@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strstr.c                                        :+:      :+:    :+:   */
+/*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/14 12:08:56 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/12 23:20:58 by kaissramire      ###   ########.fr       */
+/*   Created: 2025/05/12 23:34:52 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/05/12 23:37:11 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 
-int	ft_strstr(const char *big, const char *little)
+typedef struct s_node
 {
-	size_t	i;
-	size_t	j;
+	char			*arg;
+	char			*fd_in;
+	char			*fd_out;
+}					t_node;
 
-	i = 0;
-	if (little[i] == '\0')
-		return (0);
-	while (big[i] != '\0')
-	{
-		j = 0;
-		while (little[j] == big[i + j])
-		{
-			j++;
-			if (j == ft_strlen((char *)little))
-				return (1);
-		}
-		i++;
-	}
-	return (0);
-}
+typedef struct s_env
+{
+	char			*env;
+	struct s_env	*next;
+}					t_env;
+
+typedef struct s_main
+{
+	t_env			*mainenv;
+	t_node			*node;
+}					t_main;
