@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:06 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/13 00:31:15 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/14 14:41:19 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ int	check_and_conv_exit_code(char **exit, int size)
 		return (1);
 	exit_code = ft_atoll(exit[1], &error) % 256;
 	if (error == -1)
-	{
 		numeric_argument_error("caca", exit);
-	}
 	return (exit_code);
 }
 
@@ -84,10 +82,8 @@ int	mini_exit(char *line, t_main *main)
 	{
 		exit_code = check_and_conv_exit_code(cmd, size);
 		errno = exit_code;
+		free_tab(cmd);
 		free_env(main->mainenv);
-		free(cmd[0]);
-		free(cmd[1]);
-		free(cmd);
 		free(main);
 		exit(exit_code);
 	}

@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/13 00:13:05 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/15 02:43:10 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,31 @@ void	env_pwd_update(t_main *main)
 		temp->env = ft_calloc(sizeof(char), (ft_strlen(path) + 1));
 		temp->env = ft_strjoin(temp->env, "PWD=");
 		temp->env = ft_strjoin(temp->env, path);
+	}
+}
+
+void	env_oldpwd_update(t_main *main)
+{
+	t_env	*temp;
+	int		i;
+	char	*path;
+	char	pwd[1024];
+
+	i = 0;
+	temp = main->mainenv;
+	if (getcwd(pwd, 1024) == NULL)
+		return ;
+	while (ft_strstr(temp->env, "OLDPWD=") != 1 && temp != NULL)
+		temp = temp->next;
+	if (temp != NULL)
+	{
+		free(temp->env);
+		temp->env = ft_strjoin("OLDPWD=", pwd);
+	}
+	else
+	{
+		path = ft_strjoin("OLDPWD=", pwd);
+		lstadd_back((&main->mainenv), lstnew(path));
 	}
 }
 
@@ -74,6 +99,7 @@ int	mini_cd(char *line, t_main *main)
 {
 	char	**tab;
 
+	env_oldpwd_update(main);
 	tab = ft_split(line, ' ');
 	if (check_path_size(tab[1]) == false)
 		return (0);
@@ -82,5 +108,5 @@ int	mini_cd(char *line, t_main *main)
 		if (chdir(tab[1]) == -1)
 			printf("nul");
 	}
-	// env_pwd_update(main);
+	env_pwd_update(main);
 }

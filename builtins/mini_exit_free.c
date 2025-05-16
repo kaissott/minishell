@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:45:28 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/09 18:38:32 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/14 14:40:35 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_tab(char **args)
 		free(args[i]);
 		i++;
 	}
+	free(args);
 }
 
 int	numeric_argument_error(char *error, char **args)
