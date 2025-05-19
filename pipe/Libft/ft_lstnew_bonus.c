@@ -1,43 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_add.c                                          :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 02:14:25 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/16 14:08:57 by karamire         ###   ########.fr       */
+/*   Created: 2024/11/17 04:40:15 by karamire          #+#    #+#             */
+/*   Updated: 2024/11/17 04:45:05 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/builtins.h"
+#include "libft.h"
 
-void	lstadd_back(t_env **lst, t_env *new)
+t_list	*ft_lstnew(void *content)
 {
-	t_env	*last;
+	t_list	*newcontent;
 
-	if (new == NULL)
-		return ;
-	if ((*lst) == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	last = *lst;
-	while (last->next != NULL)
-		last = last->next;
-	last->next = new;
-	return ;
-}
-
-t_env	*lstnew(char *content)
-{
-	t_env	*newcontent;
-
-	newcontent = malloc(sizeof(t_env));
+	newcontent = malloc(sizeof(t_list));
 	if (newcontent == NULL)
 		return (NULL);
-	newcontent->env = content;
+	newcontent->content = content;
 	newcontent->next = NULL;
 	return (newcontent);
 }

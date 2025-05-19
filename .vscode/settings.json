@@ -38,10 +38,7 @@
   "C_Cpp_Runner.compilerArgs": [],
   "C_Cpp_Runner.linkerArgs": [],
   "C_Cpp_Runner.includePaths": [],
-  "C_Cpp_Runner.includeSearch": [
-    "*",
-    "**/*"
-  ],
+  "C_Cpp_Runner.includeSearch": ["*", "**/*"],
   "C_Cpp_Runner.excludeSearch": [
     "**/build",
     "**/build/**",
@@ -63,6 +60,7 @@
     "readline.h": "c",
     "history.h": "c",
     "main.h": "c",
-    "limits.h": "c"
+    "limits.h": "c",
+    "errno.h": "c"
   }
 }

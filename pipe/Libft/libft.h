@@ -6,14 +6,14 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:38:10 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/19 18:48:42 by karamire         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:50:18 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stdio.h>
+# include "GNL/get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -71,9 +71,5 @@ void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 char				*ft_strjoin(char const *s1, char const *s2);
-long long			ft_atoll(const char *str, int *error);
-int					ft_isspace(int c);
-int					handle_error(char *msg, int code);
-void				handle_error_exit(char *msg, int code);
 
 #endif
