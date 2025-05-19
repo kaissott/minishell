@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/13 00:31:17 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/19 18:21:47 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ void	print_echo_with_flag(char **tab);
 int		mini_echo(char *line);
 int		mini_cd(char *line, t_main *main);
 int		free_env(t_env *env);
+void	free_tab(char **args);
 
 #endif

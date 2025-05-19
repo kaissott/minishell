@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/13 00:31:06 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/19 18:15:24 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,16 @@ int	main(int ac, char **av, char **env)
 	mainenv = env_build(env);
 	main->mainenv = mainenv;
 	printf("%s\n", mainenv->env);
+	printf("before readline\n");
 	while (1)
 	{
 		line = readline("minishell$ ");
-		if (*line)
-			add_history(line);
+		if (!line)
+		{
+			printf("exit\n");
+		}
+		//if (line[0] != '\0')
+		//	add_history(line);
 		if (ft_strncmp("exit", line, 4) == 0)
 			mini_exit(line, main);
 		if (ft_strncmp("pwd", line, 3) == 0)
