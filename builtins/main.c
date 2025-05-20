@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/19 18:41:52 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:55:10 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	main(int ac, char **av, char **env)
 	main = malloc(sizeof(t_main));
 	mainenv = env_build(env);
 	main->mainenv = mainenv;
-	printf("%s\n", mainenv->env);
-	printf("before readline\n");
 	while (1)
 	{
 		line = readline("minishell$ ");

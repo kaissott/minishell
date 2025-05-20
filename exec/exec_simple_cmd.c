@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/20 18:41:29 by kaissramire      ###   ########.fr       */
+/*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/05/20 18:45:04 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "main.h"
 
-# include "../Libft/libft.h"
-# include "builtins.h"
-# include "error.h"
-# include "exec.h"
-# include "struct.h"
-# include <stdio.h>
-# include <unistd.h>
+exec_simple_cmd(t_main *main)
+{
+	t_node	*temp;
 
-#endif
+	temp = main->node;
+}

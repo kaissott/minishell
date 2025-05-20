@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/19 18:25:31 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/19 19:31:39 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,11 @@ int	mini_cd(char *line, t_main *main)
 	if (tab[1])
 	{
 		if (chdir(tab[1]) == -1)
+			printf("nul");
+	}
+	else
+	{
+		if (chdir("~") == -1)
 			printf("nul");
 	}
 	env_pwd_update(main);
