@@ -6,11 +6,11 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/10 17:23:48 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/20 19:25:39 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/builtins.h"
+#include "../include/main.h"
 
 bool	check_echo_flag(char **tab)
 {

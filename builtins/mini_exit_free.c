@@ -6,11 +6,11 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:45:28 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/14 14:40:35 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/20 19:25:47 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/builtins.h"
+#include "../include/main.h"
 
 void	free_tab(char **args)
 {

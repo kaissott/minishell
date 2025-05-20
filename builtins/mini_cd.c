@@ -6,11 +6,11 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/19 19:31:39 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/20 19:25:36 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/builtins.h"
+#include "../include/main.h"
 
 void	env_pwd_update(t_main *main)
 {

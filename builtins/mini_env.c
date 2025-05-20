@@ -6,11 +6,11 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 18:52:10 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/14 14:41:04 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/20 19:25:45 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/builtins.h"
+#include "../include/main.h"
 
 int	free_env(t_env *env)
 {
