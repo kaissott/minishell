@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/20 20:12:40 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/20 20:39:01 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 # include "error.h"
 # include "exec.h"
 # include "struct.h"
-# include <stdlib.h>
+# include <fcntl.h> // pour open()
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 
 #endif

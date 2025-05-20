@@ -6,29 +6,56 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/20 20:12:08 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/20 22:35:02 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-get_infile_simple_cmd(t_lst_node *node)
+int	get_outfile_simple_cmd(t_main *main)
 {
-	if (node->infile != NULL)
+	int			fd_out;
+	t_lst_node	*temp;
+
+	temp = main->node;
+	if (temp->outfile->file != NULL)
 	{
-		open(node->infile, O_RONDLY);
+		if (temp->outfile->)
+		fd_out = open(temp->infile, O_RDONLY);
+		if (fd_out < 0)
+			exit_exec(main);
+		return (fd_out);
 	}
+	else
+		return (0);
+}
+
+int	get_infile_simple_cmd(t_main *main)
+{
+	int			fd_in;
+	t_lst_node	*temp;
+
+	temp = main->node;
+	if (temp->infile != NULL)
+	{
+		fd_in = open(temp->infile, O_RDONLY);
+		if (fd_in < 0)
+			exit_exec(main);
+		return (fd_in);
+	}
+	else
+		return (0);
 }
 
 exec_simple_cmd(t_main *main)
 {
-	t_lst_node	*temp;
+	int	fd_in;
+	int	fd_out;
 
-	temp = main->node;
 	if (fork() != -1)
 	{
-		get_infile_simple_cmd(temp);
-		get_outfile_simple_cmd(temp);
-		exec_simple_cmd(temp);
+		fd_in = get_infile_simple_cmd(main);
+		fd_out = get_outfile_simple_cmd(main);
+		exec_simple_cmd(main);
 	}
 }
