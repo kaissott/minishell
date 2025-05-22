@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/20 18:51:21 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/21 00:03:03 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../Libft/libft.h"
 # include "error.h"
-# include "struct.h"
+# include "structures.h"
 # include <errno.h>
 # include <stdbool.h>
 # include <stdio.h>
