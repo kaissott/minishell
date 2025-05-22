@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/22 16:25:35 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:04:09 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,8 @@
 # include <unistd.h>
 
 char	**ft_split_slash(char const *s, char c);
+void	free_tabs(char **tab1, char **tab2);
+void	fork_error(t_main *main);
+void	free_files(t_main *main);
 
 #endif

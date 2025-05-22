@@ -6,28 +6,11 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/22 16:42:05 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:19:10 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/main.h"
-
-void	free_tab(char **tab1, char **tab2)
-{
-	int	i;
-
-	i = 0;
-	if (tab1[i])
-	{
-		while (tab1[i])
-			free(tab1[i++]);
-	}
-	if (tab2[i])
-	{
-		while (tab2[i])
-			free(tab2[i++]);
-	}
-}
 
 char	*get_path(t_main *main, char *env_path)
 {
@@ -44,7 +27,7 @@ char	*get_path(t_main *main, char *env_path)
 		final_path = ft_strjoin(final_env_path[i], cmd[0]);
 		if (final_path != NULL && (access(final_path, X_OK) == 0))
 		{
-			free_tab(cmd, final_env_path);
+			free_tabs(cmd, final_env_path);
 			return (final_path);
 		}
 		free(final_path);
@@ -117,8 +100,7 @@ int	get_outfile_simple_cmd(t_main *main)
 			fd_out = open(temp->outfile.filename, O_WRONLY | O_CREAT | O_TRUNC,
 					0644);
 		if (fd_out == -1)
-				
-		return (fd_out);
+			return (fd_out);
 	}
 	else
 		return (1);
@@ -146,8 +128,6 @@ void	init_simple_cmd(t_main *main)
 	int		fd_in;
 	int		fd_out;
 	pid_t	pid;
-	char	*argv[] = {"wc", NULL};
-	char	*envp[] = {NULL};
 
 	pid = fork();
 	if (pid == 0)
@@ -157,6 +137,8 @@ void	init_simple_cmd(t_main *main)
 		file_dup(fd_in, fd_out);
 		exec_simple_cmd(main, fd_in, fd_out);
 	}
+	if (pid == -1)
+		fork_error(main);
 	wait(NULL);
 }
 
@@ -170,10 +152,11 @@ int	main(int ac, char **av, char **env)
 	main->mainenv = env;
 	main->node = node;
 	main->node->cmd = av[1];
-	main->node->infile.filename = "Makefile";
+	main->node->infile.filename = ft_strdup("./tmp/here_doc2");
 	main->node->outfile.filename = NULL;
 	main->node->outfile.type = T_REDIR_TRUNC;
 	init_simple_cmd(main);
+	free(main->node->infile.filename);
 	free(node);
 	free(main);
 }
