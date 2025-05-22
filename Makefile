@@ -8,15 +8,14 @@ NAME = minishell
 
 DIR_LIBFT = Libft/
 DIR_OBJ = obj/
-DIR_SRC = builtins/
 DIR_INC = include/
 
-LST_EXEC = lst_add.c mini_cd.c mini_echo.c mini_env_free.c mini_env.c mini_exit.c mini_exit_free.c mini_pwd.c main.c
+LST_EXEC = builtins/lst_add.c builtins/mini_cd.c builtins/mini_echo.c builtins/mini_env_free.c builtins/mini_env.c builtins/mini_exit.c builtins/mini_exit_free.c builtins/mini_pwd.c builtins/main.c exec_single_cmd/exec_simple_cmd.c exec_single_cmd/exec_single_error_handling/error_free.c exec_single_cmd/exec_single_error_handling/single_cmd_error.c exec_single_cmd/ft_split_slash.c
 LST_INC = builtins.h error.h main.h struct.h
 
-SRC = $(addprefix $(DIR_SRC), $(LST_EXEC))
+SRC = $(LST_EXEC)
 INC = $(addprefix $(DIR_INC), $(LST_INC))
-OBJ = $(subst $(DIR_SRC), $(DIR_OBJ), $(SRC:.c=.o))
+OBJ = $(SRC:.c=.o)
 LIBFT = $(DIR_LIBFT)libft.a
 
 RM = rm -f

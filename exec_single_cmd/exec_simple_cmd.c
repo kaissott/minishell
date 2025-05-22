@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/22 18:19:10 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/23 00:35:15 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,21 +142,21 @@ void	init_simple_cmd(t_main *main)
 	wait(NULL);
 }
 
-int	main(int ac, char **av, char **env)
-{
-	t_main		*main;
-	t_lst_node	*node;
+// int	main(int ac, char **av, char **env)
+// {
+// 	t_main		*main;
+// 	t_lst_node	*node;
 
-	node = malloc(sizeof(t_lst_node));
-	main = malloc(sizeof(t_main));
-	main->mainenv = env;
-	main->node = node;
-	main->node->cmd = av[1];
-	main->node->infile.filename = ft_strdup("./tmp/here_doc2");
-	main->node->outfile.filename = NULL;
-	main->node->outfile.type = T_REDIR_TRUNC;
-	init_simple_cmd(main);
-	free(main->node->infile.filename);
-	free(node);
-	free(main);
-}
+// 	node = malloc(sizeof(t_lst_node));
+// 	main = malloc(sizeof(t_main));
+// 	main->mainenv = env;
+// 	main->node = node;
+// 	main->node->cmd = av[1];
+// 	main->node->infile.filename = ft_strdup("./tmp/here_doc2");
+// 	main->node->outfile.filename = NULL;
+// 	main->node->outfile.type = T_REDIR_TRUNC;
+// 	init_simple_cmd(main);
+// 	free(main->node->infile.filename);
+// 	free(node);
+// 	free(main);
+// }

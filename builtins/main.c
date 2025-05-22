@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/20 19:25:32 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/23 00:51:09 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@
 
 int	main(int ac, char **av, char **env)
 {
-	char	*line;
-	t_env	*mainenv;
-	t_main	*main;
+	char		*line;
+	t_main		*main;
+	t_lst_node	*node;
 
 	(void)ac;
 	(void)av;
 	main = malloc(sizeof(t_main));
-	mainenv = env_build(env);
-	main->mainenv = mainenv;
+	node = malloc(sizeof(t_lst_node));
 	while (1)
 	{
 		line = readline("minishell$ ");
@@ -36,16 +35,13 @@ int	main(int ac, char **av, char **env)
 			printf("exit\n");
 		if (line[0] != '\0')
 			add_history(line);
-		if (ft_strncmp("exit", line, 4) == 0)
-			mini_exit(line, main);
-		if (ft_strncmp("pwd", line, 3) == 0)
-			pwd();
-		if (ft_strncmp("echo", line, 4) == 0)
-			mini_echo(line);
-		if (ft_strncmp("cd", line, 2) == 0)
-			mini_cd(line, main);
-		if (ft_strncmp("env", line, 3) == 0)
-			env_print(main->mainenv);
+		main->mainenv = env;
+		main->node = node;
+		main->node->cmd = line;
+		main->node->infile.filename = NULL;
+		main->node->outfile.filename = NULL;
+		main->node->outfile.type = T_REDIR_TRUNC;
+		init_simple_cmd(main);
 		free(line);
 	}
 	sleep(30);

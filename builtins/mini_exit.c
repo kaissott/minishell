@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:06 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/21 02:37:56 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/23 00:41:02 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	mini_exit(char *line, t_main *main)
 	{
 		exit_code = check_and_conv_exit_code(cmd, size);
 		errno = exit_code;
-		free_tab(cmd);
+		free_tab_exit(cmd);
 		free_env(main->mainenv);
 		free(main);
 		exit(exit_code);
