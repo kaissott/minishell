@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mini_exit_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:45:28 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/20 19:25:47 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/22 16:22:49 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/main.h"
 
-void	free_tab(char **args)
+void	free_tab_exit(char **args)
 {
 	int	i;
 

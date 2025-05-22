@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/21 00:03:03 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/22 16:23:13 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	print_echo_with_flag(char **tab);
 int		mini_echo(char *line);
 int		mini_cd(char *line, t_main *main);
 int		free_env(t_env *env);
-void	free_tab(char **args);
+void	free_tab_exit(char **args);
+void	free_tab(char **tab1, char **tab2);
 
 #endif

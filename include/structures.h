@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 03:04:19 by luca              #+#    #+#             */
-/*   Updated: 2025/05/21 02:57:59 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/22 16:27:13 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_env
 
 typedef struct s_main
 {
-	char			*mainenv;
+	char			**mainenv;
 	t_lst_node		*node;
 }					t_main;
 

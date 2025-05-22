@@ -61,6 +61,7 @@
     "history.h": "c",
     "main.h": "c",
     "limits.h": "c",
-    "errno.h": "c"
+    "errno.h": "c",
+    "libft.h": "c"
   }
 }
