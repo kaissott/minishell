@@ -12,13 +12,21 @@ NAME :=	minishell
 #Files
 LST_EXEC :=	minishell.c
 
+LST_LST_ACTIONS :=	lst_add_back.c lst_add_front.c lst_create_node.c lst_delone.c lst_last.c lst_size.c print_lst.c
+
+LST_PARSING :=	tokenisation.c tokenisation_utils.c
+
 LST_UTILS :=	utils.c
 
-LST_INC :=	minishell.h structures.h
+LST_INC :=	minishell.h structures.h lst_actions.h parsing.h
 
 #Directories
 D_SRC :=	src/
 D_INC :=	includes/
+
+D_LST_ACTIONS :=	lst_actions/
+
+D_PARSING :=	parsing/
 
 D_UTILS :=	utils/
 
@@ -26,6 +34,8 @@ D_OBJ :=	.obj/
 
 #Files full path
 SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
+		$(addprefix $(D_SRC)$(D_LST_ACTIONS), $(LST_LST_ACTIONS)) \
+		$(addprefix $(D_SRC)$(D_PARSING), $(LST_PARSING)) \
 		$(addprefix $(D_SRC)$(D_UTILS), $(LST_UTILS))
 
 INC :=	$(addprefix $(D_INC), $(LST_INC))
