@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/23 00:35:15 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/24 00:24:12 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ char	*get_path(t_main *main, char *env_path)
 
 	i = 0;
 	cmd = ft_split(main->node->cmd, ' ');
+	if (!cmd)
+		return (-1); // a gerer
 	final_env_path = ft_split_slash(env_path, ':');
+	if (!final_env_path)
+		return (-1);
 	while (final_env_path[i] != NULL)
 	{
 		final_path = ft_strjoin(final_env_path[i], cmd[0]);
@@ -50,6 +54,8 @@ char	*env_path_finding(t_main *main)
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
 			env_path = ft_strdup(env[i]);
+			if (!env_path)
+				return (-1); // a gerer
 			return (env_path);
 		}
 		i++;
@@ -63,10 +69,12 @@ void	exec_simple_cmd(t_main *main, int fd_in, int fd_out)
 	char	*path;
 
 	args = ft_split(main->node->cmd, ' ');
+	if (!args)
+		return (-1); // a gerer
 	env_path = env_path_finding(main);
 	path = get_path(main, env_path);
-	printf("%s\n", path);
 	execve(path, args, main->mainenv);
+	// error a gerer si execve ne fonctionne pas
 }
 
 void	file_dup(int fd_in, int fd_out)
@@ -138,25 +146,12 @@ void	init_simple_cmd(t_main *main)
 		exec_simple_cmd(main, fd_in, fd_out);
 	}
 	if (pid == -1)
-		fork_error(main);
+		fork_error(main, ERR_FORK);
 	wait(NULL);
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	t_main		*main;
-// 	t_lst_node	*node;
-
-// 	node = malloc(sizeof(t_lst_node));
-// 	main = malloc(sizeof(t_main));
-// 	main->mainenv = env;
-// 	main->node = node;
-// 	main->node->cmd = av[1];
-// 	main->node->infile.filename = ft_strdup("./tmp/here_doc2");
-// 	main->node->outfile.filename = NULL;
-// 	main->node->outfile.type = T_REDIR_TRUNC;
-// 	init_simple_cmd(main);
-// 	free(main->node->infile.filename);
-// 	free(node);
-// 	free(main);
-// }
+/*
+	Il faut gerer tout les retours d'erreurs ici.
+	FAIRE ATTENTION A QUELLE FONCTION DOIT RETURN ET QUELLE FONCTION DOIT EXIT
+	Il faut aussi commencer a discuter si les builtins hors exit doivent etre gerer ici.
+	je pense qu'il vaut mieux gerer les infiles et outfiles pour les outputs directement dans la partie builtins mais cela pose probleme pour le cote pipe.
+*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 03:04:19 by luca              #+#    #+#             */
-/*   Updated: 2025/05/22 16:27:13 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/24 00:17:01 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_lst_node
 	char			*cmd;
 	struct s_file	infile;
 	struct s_file	outfile;
+	t_lst_node		*next;
 }					t_lst_node;
 
 typedef struct s_env

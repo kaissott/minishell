@@ -3,20 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   single_cmd_error.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:47:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/22 17:09:54 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/24 00:12:56 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-void	fork_error(t_main *main)
+void	output_fd_error(t_main *main, char *error, int fd_in)
+{
+	// free_tabs(main->mainenv, NULL);a!
+	free_files(main);
+	if (fd_in > 0)
+		close(fd_in);
+	printf(error);
+}
+void	output_fd_error(t_main *main, char *error)
+{
+	// free_tabs(main->mainenv, NULL);a!
+	free_files(main);
+	printf(error);
+}
+void	fork_error(t_main *main, char *error)
 {
 	int	i;
 
-	printf("Fork failed");
-	// free_tabs(main->mainenv, NULL);
+	printf(error);
+	// free_tabs(main->mainenv, NULL);a!
 	free_files(main);
 }
