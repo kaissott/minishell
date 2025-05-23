@@ -1,36 +1,29 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 03:03:36 by luca              #+#    #+#             */
-/*   Updated: 2025/04/28 18:15:26 by luca             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 void	start_shell(void)
 {
 	char	*rl;
+	t_token	*lst_token;
 
+	lst_token = NULL;
 	while (1)
 	{
 		rl = readline("$> ");
 		if (*rl)
 			add_history(rl);
+		parse(&lst_token, rl);
 		free(rl);
+		free_lst_token(&lst_token);
 		rl_on_new_line();
 	}
 	clear_history();
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
+	(void)env;
 	start_shell();
 	return (EXIT_SUCCESS);
 }
