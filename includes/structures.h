@@ -3,7 +3,9 @@
 
 typedef enum e_token_type
 {
-	T_ERROR = -1,
+	T_DOUBLE_PIPE_ERROR = -2,
+	T_ERROR,
+	T_WORD,
 	T_STRING,
 	T_ENV_STRING,
 	T_PIPE,
@@ -19,6 +21,12 @@ typedef struct s_token
 	t_token_type		type;
 	struct s_token		*next;
 }						t_token;
+
+typedef enum e_token_error
+{
+	MISSING_SINGLE_QUOTE = -5,
+	MISSING_DOUBLE_QUOTE,
+}						t_token_error;
 
 typedef enum e_error
 {

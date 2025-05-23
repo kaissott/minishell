@@ -6,11 +6,25 @@
 /*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 01:36:17 by luca              #+#    #+#             */
-/*   Updated: 2025/05/23 04:36:18 by luca             ###   ########.fr       */
+/*   Updated: 2025/05/23 08:27:40 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*get_token_error_msg(int err_code)
+{
+	if (err_code == MISSING_SINGLE_QUOTE)
+		return ("Missing single quote (').");
+	else if (err_code == MISSING_DOUBLE_QUOTE)
+		return ("Missing double quote (\").");
+	else if (err_code == T_DOUBLE_PIPE_ERROR)
+		return ("Double pipe.");
+	else if (err_code == -1)
+		return ("Token creation failed (malloc error).");
+	else
+		return (NULL);
+}
 
 char	*char_realloc(char *s, char c)
 {
