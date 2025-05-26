@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/26 17:18:20 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/26 18:55:50 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,20 @@ bool	is_a_builtins(t_main *main, bool file)
 	fd = 1;
 	if (file == true)
 		fd = get_outfile_simple_cmd(main);
-	if (ft_strncmp(main->node->cmd, "echo", 4) == 0
-		&& main->node->cmd[4] == ' ')
+	cmd = ft_split(main->node->cmd, ' ');
+	if (ft_strncmp(cmd[0], "echo", 4) == 0 && ft_strlen(cmd[0]) == 4)
+	{
+		printf("caca");
 		tmp = mini_echo(main);
-	if (ft_strncmp(main->node->cmd, "pwd", 3) == 0 && main->node->cmd[3] == ' ')
+	}
+	if (ft_strncmp(cmd[0], "pwd", 3) == 0 && ft_strlen(cmd[0]) == 3)
+	{
+		printf("caca");
 		tmp = pwd(main);
-	if (ft_strncmp(main->node->cmd, "env", 3) == 0 && main->node->cmd[3] == ' ')
+	}
+	if (ft_strncmp(cmd[0], "env", 3) == 0 && ft_strlen(cmd[0]) == 3)
 		tmp = env_print(main);
-	if (ft_strncmp(main->node->cmd, "cd", 2) == 0 && main->node->cmd[2] == ' ')
+	if (ft_strncmp(main->node->cmd, "cd", 2) == 0)
 		tmp = mini_cd(main->node->cmd, main);
 	return (true);
 }
@@ -59,12 +65,14 @@ int	main(int ac, char **av, char **env)
 {
 	char		*line;
 	t_main		*main;
+	t_env		*mainenv;
 	t_lst_node	*node;
 
 	(void)ac;
 	(void)av;
 	main = malloc(sizeof(t_main));
 	node = malloc(sizeof(t_lst_node));
+	mainenv = env_build(env);
 	while (1)
 	{
 		line = readline("minishell$ ");
@@ -72,7 +80,7 @@ int	main(int ac, char **av, char **env)
 			printf("exit\n");
 		if (line[0] != '\0')
 			add_history(line);
-		main->mainenv = env;
+		main->mainenv = mainenv;
 		main->node = node;
 		main->node->cmd = line;
 		main->node->infile.filename = NULL;
