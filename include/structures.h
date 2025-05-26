@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 03:04:19 by luca              #+#    #+#             */
-/*   Updated: 2025/05/24 00:17:01 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/26 15:45:21 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ typedef struct s_file
 typedef struct s_lst_node
 {
 	char			*cmd;
-	struct s_file	infile;
-	struct s_file	outfile;
-	t_lst_node		*next;
+	t_file	infile;
+	t_file	outfile;
+	struct t_lst_node		*next;
 }					t_lst_node;
 
 typedef struct s_env

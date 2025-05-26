@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/24 00:24:12 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/26 17:14:34 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@ char	*get_path(t_main *main, char *env_path)
 
 	i = 0;
 	cmd = ft_split(main->node->cmd, ' ');
-	if (!cmd)
-		return (-1); // a gerer
 	final_env_path = ft_split_slash(env_path, ':');
-	if (!final_env_path)
-		return (-1);
 	while (final_env_path[i] != NULL)
 	{
 		final_path = ft_strjoin(final_env_path[i], cmd[0]);
@@ -53,9 +49,7 @@ char	*env_path_finding(t_main *main)
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
-			env_path = ft_strdup(env[i]);
-			if (!env_path)
-				return (-1); // a gerer
+			env_path = ft_strdup(env[i]); // a gerer
 			return (env_path);
 		}
 		i++;
@@ -68,9 +62,7 @@ void	exec_simple_cmd(t_main *main, int fd_in, int fd_out)
 	char	*env_path;
 	char	*path;
 
-	args = ft_split(main->node->cmd, ' ');
-	if (!args)
-		return (-1); // a gerer
+	args = ft_split(main->node->cmd, ' '); // a gerer
 	env_path = env_path_finding(main);
 	path = get_path(main, env_path);
 	execve(path, args, main->mainenv);
@@ -138,6 +130,8 @@ void	init_simple_cmd(t_main *main)
 	pid_t	pid;
 
 	pid = fork();
+	if (pid == -1)
+		fork_error(main, ERR_FORK);
 	if (pid == 0)
 	{
 		fd_in = get_infile_simple_cmd(main);
@@ -145,8 +139,6 @@ void	init_simple_cmd(t_main *main)
 		file_dup(fd_in, fd_out);
 		exec_simple_cmd(main, fd_in, fd_out);
 	}
-	if (pid == -1)
-		fork_error(main, ERR_FORK);
 	wait(NULL);
 }
 /*

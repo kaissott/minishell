@@ -6,13 +6,13 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/20 19:25:54 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/26 17:06:55 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/main.h"
 
-int	pwd(void)
+int	pwd(t_main *main)
 {
 	char	path[1024];
 

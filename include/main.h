@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/24 00:10:48 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/26 17:16:15 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ void	free_tabs(char **tab1, char **tab2);
 void	fork_error(t_main *main, char *error);
 void	free_files(t_main *main);
 void	init_simple_cmd(t_main *main);
+int		get_outfile_simple_cmd(t_main *main);
 
 #endif

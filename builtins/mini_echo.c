@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/20 19:25:39 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/26 17:17:14 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	print_echo_without_flag(char **tab)
 	write(1, "\n", 1);
 }
 
-int	mini_echo(char *line)
+int	mini_echo(t_main *main)
 {
 	char	**tab;
 
-	tab = ft_split(line, ' ');
+	tab = ft_split(main->node->cmd, ' ');
 	if (check_echo_flag(tab) == true)
 		print_echo_with_flag(tab);
 	else

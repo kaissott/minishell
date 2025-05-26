@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 18:52:10 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/20 19:25:45 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/26 17:09:36 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int	free_env(t_env *env)
 		temp = env;
 	}
 }
-int	env_print(t_env *env)
+int	env_print(t_main *main)
 {
 	t_env	*temp;
 
-	temp = env;
+	temp = main->mainenv;
 	while (temp)
 	{
 		ft_putstr_fd(temp->env, 1);
