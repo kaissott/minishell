@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/26 17:14:34 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/27 14:47:29 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	exec_simple_cmd(t_main *main, int fd_in, int fd_out)
 	args = ft_split(main->node->cmd, ' '); // a gerer
 	env_path = env_path_finding(main);
 	path = get_path(main, env_path);
-	execve(path, args, main->mainenv);
-	// error a gerer si execve ne fonctionne pas
+	execve(path, args, NULL);
+	printf("test");
 }
 
 void	file_dup(int fd_in, int fd_out)
@@ -99,8 +99,7 @@ int	get_outfile_simple_cmd(t_main *main)
 		else if (temp->outfile.type == T_REDIR_TRUNC)
 			fd_out = open(temp->outfile.filename, O_WRONLY | O_CREAT | O_TRUNC,
 					0644);
-		if (fd_out == -1)
-			return (fd_out);
+		return (fd_out);
 	}
 	else
 		return (1);
@@ -134,9 +133,6 @@ void	init_simple_cmd(t_main *main)
 		fork_error(main, ERR_FORK);
 	if (pid == 0)
 	{
-		fd_in = get_infile_simple_cmd(main);
-		fd_out = get_outfile_simple_cmd(main);
-		file_dup(fd_in, fd_out);
 		exec_simple_cmd(main, fd_in, fd_out);
 	}
 	wait(NULL);

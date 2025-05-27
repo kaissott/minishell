@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/26 17:17:14 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/27 12:02:52 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	print_echo_with_flag(char **tab)
 	i = 2;
 	while (tab[i])
 	{
-		ft_putstr_fd(tab[i], 1);
+		ft_putstr_fd(tab[i], STDOUT_FILENO);
 		i++;
 		if (tab[i])
-			write(1, " ", 1);
+			write(STDOUT_FILENO, " ", 1);
 	}
 }
 
@@ -53,12 +53,12 @@ void	print_echo_without_flag(char **tab)
 	i = 1;
 	while (tab[i])
 	{
-		ft_putstr_fd(tab[i], 1);
+		ft_putstr_fd(tab[i], STDOUT_FILENO);
 		i++;
 		if (tab[i])
-			write(1, " ", 1);
+			write(STDOUT_FILENO, " ", 1);
 	}
-	write(1, "\n", 1);
+	write(STDOUT_FILENO, "\n", 1);
 }
 
 int	mini_echo(t_main *main)
@@ -70,4 +70,5 @@ int	mini_echo(t_main *main)
 		print_echo_with_flag(tab);
 	else
 		print_echo_without_flag(tab);
+	return (0);
 }

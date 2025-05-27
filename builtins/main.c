@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/26 18:55:50 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/27 14:50:28 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,47 +18,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-bool	is_a_builtins(t_main *main, bool file)
+bool	exec_cmd(t_main *main, int fd)
 {
-	int		fd;
-	bool	tmp;
 	char	**cmd;
 
-	tmp = false;
-	fd = 1;
-	if (file == true)
-		fd = get_outfile_simple_cmd(main);
 	cmd = ft_split(main->node->cmd, ' ');
 	if (ft_strncmp(cmd[0], "echo", 4) == 0 && ft_strlen(cmd[0]) == 4)
-	{
-		printf("caca");
-		tmp = mini_echo(main);
-	}
-	if (ft_strncmp(cmd[0], "pwd", 3) == 0 && ft_strlen(cmd[0]) == 3)
-	{
-		printf("caca");
-		tmp = pwd(main);
-	}
-	if (ft_strncmp(cmd[0], "env", 3) == 0 && ft_strlen(cmd[0]) == 3)
-		tmp = env_print(main);
-	if (ft_strncmp(main->node->cmd, "cd", 2) == 0)
-		tmp = mini_cd(main->node->cmd, main);
-	return (true);
-}
-
-int	exec_single_cmd(t_main *main)
-{
-	if (is_a_builtins(main, true) == false)
+		mini_echo(main);
+	else if (ft_strncmp(cmd[0], "pwd", 3) == 0 && ft_strlen(cmd[0]) == 3)
+		pwd(main, fd);
+	else if (ft_strncmp(cmd[0], "env", 3) == 0 && ft_strlen(cmd[0]) == 3)
+		env_print(main, fd);
+	else if (ft_strncmp(cmd[0], "cd", 2) == 0 && ft_strlen(cmd[0]) == 2)
+		mini_cd(main->node->cmd, main);
+	else if (ft_strncmp(cmd[0], "exit", 4) == 0 && ft_strlen(cmd[0]) == 4)
+		mini_exit(main->node->cmd, main);
+	else
 		init_simple_cmd(main);
+	free_tabs(cmd, NULL);
+	if (fd > 1)
+		close(fd);
 	return (0);
 }
+
 int	check_input(t_main *main)
 {
 	t_lst_node	*node;
+	int			fd_out;
+	int			fd_in;
 
 	node = main->node;
 	if (node->next == NULL)
-		exec_single_cmd(main);
+	{
+		fd_in = get_infile_simple_cmd(main);
+		fd_out = get_outfile_simple_cmd(main);
+		file_dup(fd_in, fd_out);
+		exec_cmd(main, fd_out);
+		close(fd_in);
+		close(fd_out);
+	}
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -67,26 +66,31 @@ int	main(int ac, char **av, char **env)
 	t_main		*main;
 	t_env		*mainenv;
 	t_lst_node	*node;
+	int			std_out;
+	int			std_in;
 
-	(void)ac;
-	(void)av;
+	std_out = dup(STDOUT_FILENO);
+	std_in = dup(STDERR_FILENO);
 	main = malloc(sizeof(t_main));
 	node = malloc(sizeof(t_lst_node));
-	mainenv = env_build(env);
+	// mainenv = env_build(env);
 	while (1)
 	{
+		dup2(std_in, STDIN_FILENO);
+		dup2(std_out, STDOUT_FILENO);
 		line = readline("minishell$ ");
 		if (!line)
 			printf("exit\n");
 		if (line[0] != '\0')
 			add_history(line);
-		main->mainenv = mainenv;
+		main->mainenv = env;
 		main->node = node;
 		main->node->cmd = line;
 		main->node->infile.filename = NULL;
-		main->node->outfile.filename = "test";
+		main->node->outfile.filename = "ENV";
 		main->node->outfile.type = T_REDIR_TRUNC;
-		exec_single_cmd(main);
+		main->node->next == NULL;
+		check_input(main);
 		free(line);
 	}
 	sleep(30);

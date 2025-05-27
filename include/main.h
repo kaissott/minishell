@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/26 17:16:15 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/27 12:00:34 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ void	fork_error(t_main *main, char *error);
 void	free_files(t_main *main);
 void	init_simple_cmd(t_main *main);
 int		get_outfile_simple_cmd(t_main *main);
+t_env	*env_build(char **env);
+int		free_env(t_env *env);
+bool	exec_cmd(t_main *main, int fd);
 
 #endif

@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/26 17:06:55 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/26 19:18:54 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/main.h"
 
-int	pwd(t_main *main)
+int	pwd(t_main *main, int fd)
 {
 	char	path[1024];
 
 	if (getcwd(path, 1024) == NULL)
 		return (0);
-	ft_putstr_fd(path, 1);
-	write(1, "\n", 1);
+	ft_putstr_fd(path, fd);
+	write(fd, "\n", 1);
 	return (1);
 }
