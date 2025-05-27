@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:40:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/27 19:01:39 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:37:48 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ char	**env_to_tab(t_main *main)
 	return (tab);
 }
 
-int	main(int ac, char **av, char **env)
-{
-	t_main	*main;
-	t_env	*mainenv;
+// int	main(int ac, char **av, char **env)
+// {
+// 	t_main	*main;
+// 	t_env	*mainenv;
 
-	main = malloc(sizeof(t_main));
-	mainenv = env_build(env);
-	main->mainenv = mainenv;
-	env_to_tab(main);
-}
+// 	main = malloc(sizeof(t_main));
+// 	mainenv = env_build(env);
+// 	main->mainenv = mainenv;
+// 	env_to_tab(main);
+// }

@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/27 12:00:34 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:41:54 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ int		get_outfile_simple_cmd(t_main *main);
 t_env	*env_build(char **env);
 int		free_env(t_env *env);
 bool	exec_cmd(t_main *main, int fd);
+char	**env_to_tab(t_main *main);
+void	file_dup(int fd_in, int fd_out);
+int		get_infile_simple_cmd(t_main *main);
 
 #endif

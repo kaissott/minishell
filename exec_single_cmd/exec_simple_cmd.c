@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/27 14:47:29 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:39:51 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,12 @@ char	*get_path(t_main *main, char *env_path)
 	return (NULL);
 }
 
-char	*env_path_finding(t_main *main)
+char	*env_path_finding(t_main *main, char **env)
 {
 	char	*env_path;
-	char	**env;
 	int		i;
 
 	i = 0;
-	env = main->mainenv;
 	while (env[i] != NULL)
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
@@ -61,11 +59,13 @@ void	exec_simple_cmd(t_main *main, int fd_in, int fd_out)
 	char	**args;
 	char	*env_path;
 	char	*path;
+	char	**env;
 
-	args = ft_split(main->node->cmd, ' '); // a gerer
-	env_path = env_path_finding(main);
+	args = ft_split(main->node->cmd, ' ');
+	env = env_to_tab(main);
+	env_path = env_path_finding(main, env);
 	path = get_path(main, env_path);
-	execve(path, args, NULL);
+	execve(path, args, env);
 	printf("test");
 }
 
