@@ -7,6 +7,7 @@ static t_token_type	get_token_quoted_type(bool *in_double_quote,
 		return (T_ENV_STRING);
 	else if (*in_single_quote)
 		return (T_STRING);
+	return (T_ERROR);
 }
 
 static ssize_t	extract_quoted_token(t_token **lst_token, char *cmd)
@@ -80,12 +81,13 @@ int	tokenisation(t_token **lst_token, char *cmd)
 	return (0);
 }
 
-void	parse(t_token **lst_token, char *cmd)
+void	parse(t_lst_node **lst, t_token **lst_token, char *cmd)
 {
 	int	process_token;
 
 	process_token = tokenisation(lst_token, cmd);
 	if (process_token < 0)
 		printf("%s\n", get_token_error_msg(process_token));
-	print_lst(*lst_token, "\nToken lst :\n");
+	print_lst_token(*lst_token, "\nToken lst :\n");
+	create_exec_lst(lst, lst_token);
 }

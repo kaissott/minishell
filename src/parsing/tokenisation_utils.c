@@ -39,13 +39,13 @@ ssize_t	create_token_node(t_token **lst_token, const char *cmd,
 	value = ft_substr(cmd, 0, len);
 	if (!value)
 		return (-1);
-	token_node = lst_create_node(value, type);
+	token_node = lst_token_create_node(value, type);
 	if (!token_node)
 	{
 		free(value);
 		return (-1);
 	}
-	lst_add_back(lst_token, token_node);
+	lst_token_add_back(lst_token, token_node);
 	return (1);
 }
 

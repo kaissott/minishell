@@ -35,7 +35,7 @@ typedef enum e_error
 
 typedef struct s_file
 {
-	char			*filename;
+	int 			fd;
 	t_token_type	type;
 }					t_file;
 
@@ -44,6 +44,7 @@ typedef struct s_lst_node
 	char 				**cmd;
 	t_file				infile;
 	t_file				outfile;
+	struct s_lst_node	*next;
 }						t_lst_node;
 
 typedef struct s_main
