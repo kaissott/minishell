@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/28 20:10:34 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/29 00:37:51 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ int		numeric_argument_error(char *error, char **args);
 int		mini_cd(char *line, t_main *main);
 void	free_tab_exit(char **args);
 void	free_tab(char **tab1, char **tab2);
+int		mini_export(t_main *main);
 
 #endif

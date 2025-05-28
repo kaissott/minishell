@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/28 21:31:16 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/29 00:38:18 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ bool	exec_cmd(t_main *main, int fd)
 		mini_cd(main->node->cmd, main);
 	else if (ft_strncmp(cmd[0], "exit", 4) == 0 && ft_strlen(cmd[0]) == 4)
 		mini_exit(main->node->cmd, main);
+	else if (ft_strncmp(cmd[0], "export", 6) == 0 && ft_strlen(cmd[0]) == 6)
+		mini_export(main);
 	else
 		init_simple_cmd(main);
 	free_tabs(cmd, NULL);
