@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:20:20 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/27 19:01:27 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/28 21:31:48 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,26 @@ int	free_env(t_env *env)
 	}
 }
 
-t_env	*env_build(char **env)
+void	no_env_build(t_main *main)
+{
+	char	buff[1024];
+	char	*pwd;
+	char	*shlvl;
+	t_env	*mainenv;
+
+	mainenv = malloc(sizeof(t_env));
+	if (!mainenv)
+		handle_error_exit(ERR_MALLOC, 12);
+	getcwd(buff, 1024);
+	pwd = ft_strjoin("PWD=", buff);
+	mainenv = lstnew(pwd);
+	mainenv->next = NULL;
+	shlvl = ft_strdup("SHLVL=1");
+	lstadd_back(&mainenv, lstnew(shlvl));
+	main->mainenv = mainenv;
+}
+
+void	env_build(char **env, t_main *main)
 {
 	int		i;
 	char	*str;
@@ -43,5 +62,18 @@ t_env	*env_build(char **env)
 		lstadd_back(&mainenv, lstnew(str));
 		i++;
 	}
-	return (mainenv);
+	main->mainenv = mainenv;
+}
+
+int	check_env_available(char **env, t_main *main)
+{
+	char	*str;
+	t_env	*temp;
+
+	str = getenv("PATH");
+	if (str == NULL)
+		no_env_build(main);
+	else
+		env_build(env, main);
+	return (0);
 }

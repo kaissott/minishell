@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/27 19:42:38 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/28 21:31:16 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,13 @@ bool	exec_cmd(t_main *main, int fd)
 	else if (ft_strncmp(cmd[0], "pwd", 3) == 0 && ft_strlen(cmd[0]) == 3)
 		pwd(main, fd);
 	else if (ft_strncmp(cmd[0], "env", 3) == 0 && ft_strlen(cmd[0]) == 3)
-		env_print(main, fd);
+		env_print(main);
 	else if (ft_strncmp(cmd[0], "cd", 2) == 0 && ft_strlen(cmd[0]) == 2)
 		mini_cd(main->node->cmd, main);
 	else if (ft_strncmp(cmd[0], "exit", 4) == 0 && ft_strlen(cmd[0]) == 4)
 		mini_exit(main->node->cmd, main);
 	else
-	{
-		printf("caca");
 		init_simple_cmd(main);
-	}
 	free_tabs(cmd, NULL);
 	if (fd > 1)
 		close(fd);
@@ -76,7 +73,7 @@ int	main(int ac, char **av, char **env)
 	std_in = dup(STDERR_FILENO);
 	main = malloc(sizeof(t_main));
 	node = malloc(sizeof(t_lst_node));
-	mainenv = env_build(env);
+	check_env_available(env, main);
 	while (1)
 	{
 		dup2(std_in, STDIN_FILENO);
@@ -86,11 +83,10 @@ int	main(int ac, char **av, char **env)
 			printf("exit\n");
 		if (line[0] != '\0')
 			add_history(line);
-		main->mainenv = mainenv;
 		main->node = node;
 		main->node->cmd = line;
 		main->node->infile.filename = NULL;
-		main->node->outfile.filename = "ENV";
+		main->node->outfile.filename = NULL;
 		main->node->outfile.type = T_REDIR_TRUNC;
 		main->node->next = NULL;
 		check_input(main);

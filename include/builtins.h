@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/27 12:03:29 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/28 20:10:34 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		mini_echo(t_main *main);
 int		pwd(t_main *main, int fd);
 
 // env
-int		env_print(t_main *main, int fd);
+int		env_print(t_main *main);
 
 void	lstadd_back(t_env **lst, t_env *new);
 t_env	*lstnew(char *content);
