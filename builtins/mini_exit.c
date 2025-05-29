@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:06 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/26 19:33:16 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:35:10 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,6 @@ int	mini_exit(char *line, t_main *main)
 	{
 		exit_code = check_and_conv_exit_code(cmd, size);
 		errno = exit_code;
-		free_tab_exit(cmd);
-		free_env(main->mainenv);
-		free(main);
 		exit(exit_code);
 	}
 	exit(errno);
