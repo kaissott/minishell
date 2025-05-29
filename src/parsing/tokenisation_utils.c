@@ -1,35 +1,5 @@
 #include "../../includes/minishell.h"
 
-int	is_operator(const char *str)
-{
-	return (!ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "<<", 2)
-		|| str[0] == '|' || str[0] == '>' || str[0] == '<');
-}
-
-t_token_type	get_token_type(char *cmd)
-{
-	if (cmd[0] == '|')
-	{
-		if (cmd[1] == '|')
-			return (T_DOUBLE_PIPE_ERROR);
-		return (T_PIPE);
-	}
-	else if (cmd[0] == '<')
-	{
-		if (cmd[1] == '<')
-			return (T_HEREDOC);
-		return (T_REDIR_IN);
-	}
-	else if (cmd[0] == '>')
-	{
-		if (cmd[1] == '>')
-			return (T_REDIR_APPEND);
-		return (T_REDIR_TRUNC);
-	}
-	else
-		return (T_STRING);
-}
-
 ssize_t	create_token_node(t_token **lst_token, const char *cmd,
 		const ssize_t len, t_token_type type)
 {
