@@ -6,6 +6,8 @@ char	*get_token_error_msg(int err_code)
 		return ("Missing single quote (').");
 	else if (err_code == MISSING_DOUBLE_QUOTE)
 		return ("Missing double quote (\").");
+	else if (err_code == T_UNEXPECTED_TOKEN)
+		return ("syntax error near unexpected token.");
 	else if (err_code == T_DOUBLE_PIPE_ERROR)
 		return ("Double pipe.");
 	else if (err_code == -1)
@@ -35,21 +37,6 @@ char	*char_realloc(char *s, char c)
 	str[s_len] = c;
 	free(s);
 	return (str);
-}
-
-int	check_file(char *filename, t_token_type file_type)
-{
-	if (file_type == T_REDIR_IN)
-	{
-		if (access(filename, R_OK) == -1)
-			return (-1);
-		return (open(filename, O_RDONLY));
-	}
-	else if (file_type == T_REDIR_TRUNC)
-		return (open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644));
-	else if (file_type == T_REDIR_APPEND)
-		return (open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644));
-	return (-1);
 }
 
 void	free_lst(t_lst_node **lst)
