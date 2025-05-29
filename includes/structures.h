@@ -3,7 +3,8 @@
 
 typedef enum e_token_type
 {
-	T_DOUBLE_PIPE_ERROR = -2,
+	T_UNEXPECTED_TOKEN = -3,
+	T_DOUBLE_PIPE_ERROR,
 	T_ERROR,
 	T_WORD,
 	T_STRING,
