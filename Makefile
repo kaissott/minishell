@@ -12,7 +12,7 @@ NAME :=	minishell
 #Files
 LST_EXEC :=	minishell.c
 
-LST_PARSING :=	parse.c tokenisation.c tokenisation_utils.c
+LST_PARSING :=	parse.c tokenisation.c tokenisation_utils.c tokenisation_operator_utils.c
 
 LST_UTILS :=	utils.c file_utils.c
 
