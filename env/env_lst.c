@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:20:20 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/28 21:31:48 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/05/29 20:10:33 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	env_build(char **env, t_main *main)
 	mainenv = malloc(sizeof(t_env));
 	if (!mainenv)
 		handle_error_exit(ERR_MALLOC, 12);
-	mainenv = lstnew(env[0]);
+	str = ft_strdup(env[0]);
+	mainenv = lstnew(str);;
 	i = 1;
 	while (env[i] != NULL)
 	{

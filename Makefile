@@ -24,6 +24,7 @@ SRC = \
 	builtins/mini_pwd.c \
 	builtins/main.c \
 	builtins/mini_export.c \
+	builtins/mini_unset.c \
 	exec_single_cmd/exec_simple_cmd.c \
 	exec_single_cmd/exec_single_error_handling/error_free.c \
 	exec_single_cmd/exec_single_error_handling/single_cmd_error.c \

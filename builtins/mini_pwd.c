@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/26 19:18:54 by karamire         ###   ########.fr       */
+/*   Updated: 2025/05/31 20:42:05 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	pwd(t_main *main, int fd)
 
 	if (getcwd(path, 1024) == NULL)
 		return (0);
-	ft_putstr_fd(path, fd);
-	write(fd, "\n", 1);
+	ft_putendl_fd(path, fd);
 	return (1);
 }
