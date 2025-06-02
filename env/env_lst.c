@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:20:20 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/29 20:10:33 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/02 17:53:25 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,10 @@ void	env_build(char **env, t_main *main)
 	char	*str;
 	t_env	*mainenv;
 
-	mainenv = malloc(sizeof(t_env));
+	str = ft_strdup(env[0]);
+	mainenv = lstnew(str);
 	if (!mainenv)
 		handle_error_exit(ERR_MALLOC, 12);
-	str = ft_strdup(env[0]);
-	mainenv = lstnew(str);;
 	i = 1;
 	while (env[i] != NULL)
 	{

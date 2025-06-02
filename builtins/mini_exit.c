@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:06 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 15:18:54 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:50:12 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,26 +63,39 @@ int	check_and_conv_exit_code(char **exit, int size)
 	return (exit_code);
 }
 
-int	mini_exit(char *line, t_main *main)
+int	mini_exit(char **line, t_main *main)
 {
-	char	**cmd;
-	int		exit_code;
-	int		size;
+	int	exit_code;
+	int	size;
+	int	i;
 
+	i = 0;
 	exit_code = 0;
-	cmd = main->node->cmd;;
-	if (!cmd)
+	size = tab_size(line);
+	if (line[1] && line[1][0] != '\0')
 	{
-		free(line);
-		handle_error_exit(ERR_MALLOC, 12);
-	}
-	free(line);
-	size = tab_size(cmd);
-	if (cmd[1] && cmd[1][0] != '\0')
-	{
-		exit_code = check_and_conv_exit_code(cmd, size);
+		exit_code = check_and_conv_exit_code(line, size);
 		errno = exit_code;
+		while (line[i])
+		{
+			free(line[i]);
+			i++;
+		}
+		free(line);
+		free(main->node);
+		free_env_list(main->mainenv);
+		free(main);
 		exit(exit_code);
 	}
+	while (line[i])
+	{
+		free(line[i]);
+		i++;
+	}
+	free(line);
+	free(main->node);
+	free_env_list(main->mainenv);
+	free(main->mainenv);
+	free(main);
 	exit(errno);
 }

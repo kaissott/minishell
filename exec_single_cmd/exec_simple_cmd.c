@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 17:03:20 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:30:59 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_path(t_main *main, char *env_path)
 		final_path = ft_strjoin(final_env_path[i], cmd[0]);
 		if (final_path != NULL && (access(final_path, X_OK) == 0))
 		{
-			free_tabs(cmd, final_env_path);
+			// free_tabs(cmd, final_env_path);
 			return (final_path);
 		}
 		free(final_path);
@@ -63,6 +63,10 @@ void	exec_simple_cmd(t_main *main, int fd_in, int fd_out)
 	env = env_to_tab(main);
 	env_path = env_path_finding(main, env);
 	path = get_path(main, env_path);
+	printf("%s", path);
+	printf("%s", main->node->cmd[0]);
+	printf("%s", main->node->cmd[1]);
+	printf("%s", env[0]);
 	execve(path, main->node->cmd, env);
 }
 

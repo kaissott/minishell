@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 17:08:41 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:55:00 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	main(int ac, char **av, char **env)
 	t_lst_node	*node;
 	int			std_out;
 	int			std_in;
+	int			i;
 
 	std_out = dup(STDOUT_FILENO);
 	std_in = dup(STDERR_FILENO);
@@ -80,6 +81,7 @@ int	main(int ac, char **av, char **env)
 	check_env_available(env, main);
 	while (1)
 	{
+		i = 0;
 		dup2(std_in, STDIN_FILENO);
 		dup2(std_out, STDOUT_FILENO);
 		line = readline("minishell$ ");
@@ -94,6 +96,12 @@ int	main(int ac, char **av, char **env)
 		main->node->outfile.type = T_REDIR_TRUNC;
 		main->node->next = NULL;
 		check_input(main);
+		while (main->node->cmd[i])
+		{
+			free(main->node->cmd[i]);
+			i++;
+		}
+		free(main->node->cmd);
 		free(line);
 		close(main->node->infile.fd);
 		close(main->node->outfile.fd);
