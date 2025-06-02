@@ -1,0 +1,15 @@
+builtins
+Dockerfile
+env
+exec_pipe
+exec_single_cmd
+include
+leak.supp
+Libft
+lol
+Makefile
+minishell
+obj
+Out
+README.md
+tmp

@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 16:51:45 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:38:21 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*path_finding(char **env)
 		if (ft_strnstr(env[i], "PATH=", 5))
 		{
 			path = ft_strdup(env[i]);
+			dprintf(2, "%s\n", path);
 			return (path);
 		}
 		i++;
@@ -51,21 +52,19 @@ char	*cmd_path(char **cmd, char *linktopath)
 	i = 0;
 	path_poss = ft_split_slash(linktopath, ':');
 	free(linktopath);
-	if (cmd == NULL || path_poss == NULL)
-		// return (free_tab(cmd_tab, path_poss));
-		while (path_poss[i] != NULL)
+	while (path_poss[i] != NULL)
+	{
+		path = ft_strjoin(path_poss[i], cmd[0]);
+		if (path != NULL && (access(path, X_OK) == 0))
 		{
-			path = ft_strjoin(path_poss[i], cmd[0]);
-			if (path != NULL && (access(path, X_OK) == 0))
-			{
-				free_tab_pipe(cmd, path_poss);
-				return (path);
-			}
-			free(path);
-			path = NULL;
-			i++;
+			// free_tab_pipe(cmd, path_poss);
+			return (path);
 		}
-	return (free_tab_pipe(cmd, path_poss), NULL);
+		free(path);
+		path = NULL;
+		i++;
+	}
+	return (NULL);
 }
 
 int	do_cmd(char **cmd, char **env)
@@ -73,7 +72,9 @@ int	do_cmd(char **cmd, char **env)
 	char	*path;
 
 	if (cmd == NULL)
+	{
 		error_exit("Command not found.", 127, -1);
+	}
 	if (strrchr_slash(cmd[0], '/'))
 		execve(cmd[0], cmd, env);
 	else
@@ -86,6 +87,7 @@ int	do_cmd(char **cmd, char **env)
 		}
 		execve(path, cmd, env);
 	}
+	dprintf(2, "ratata");
 	error_exec_b(cmd, cmd[0]);
 	return (-1);
 }

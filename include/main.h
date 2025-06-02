@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 17:33:12 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:19:29 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ int		do_cmd(char **cmd, char **env);
 void	access_out_check(char *out, int prev_fd, int outfile, int if_hd);
 void	close_dup_failed(int fd1, int fd2, int i);
 void	error_exit(char *str, int exitnbr, int fd);
+int		create_node(t_main *main, char *line);
 
 #endif

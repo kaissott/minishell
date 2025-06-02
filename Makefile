@@ -23,6 +23,7 @@ SRC = \
 	builtins/mini_exit_free.c \
 	builtins/mini_pwd.c \
 	builtins/main.c \
+	builtins/create_node.c \
 	builtins/mini_export.c \
 	builtins/mini_unset.c \
 	exec_single_cmd/exec_simple_cmd.c \
@@ -49,7 +50,7 @@ LIBFT = $(DIR_LIBFT)libft.a
 # Commandes
 RM = rm -rf
 CC = cc
-CFLAGS =-I$(DIR_INC) -I$(DIR_LIBFT)
+CFLAGS =-I$(DIR_INC) -I$(DIR_LIBFT) -g
 
 # Build principal
 all: $(NAME)

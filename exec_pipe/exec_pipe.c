@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 16:47:46 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:37:58 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ pid_t	child_process(char **cmd, char **env, int prev_fd)
 	int		pipefd[2];
 	pid_t	pid;
 
+	// printf("%s\n", cmd[0]);
 	if (prev_fd == -1 || pipe(pipefd) == -1)
 		error_exit("Error : Pipe failed", EXIT_FAILURE, prev_fd);
 	pid = fork();
@@ -41,7 +42,9 @@ pid_t	child_process(char **cmd, char **env, int prev_fd)
 	{
 		close(pipefd[0]);
 		if (dup2(prev_fd, STDIN_FILENO) == -1)
+		{
 			close_dup_failed(pipefd[1], prev_fd, 1);
+		}
 		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 			close_dup_failed(pipefd[1], prev_fd, 1);
 		close(pipefd[1]);
@@ -53,10 +56,11 @@ pid_t	child_process(char **cmd, char **env, int prev_fd)
 	return (pipefd[0]);
 }
 
-pid_t	last_child(t_lst_node *node, int prev_fd, t_main *main)
+pid_t	last_child(t_lst_node *node, int prev_fd, t_main *main, char **env)
 {
 	pid_t	pid;
 
+	printf("%d\n", node->outfile.fd);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -73,8 +77,9 @@ pid_t	last_child(t_lst_node *node, int prev_fd, t_main *main)
 		}
 		if (dup2(node->outfile.fd, STDOUT_FILENO) == -1)
 			close_dup_failed(node->outfile.fd, prev_fd, 1);
+		dprintf(2, "yoyo");
 		close(node->outfile.fd);
-		do_cmd(node->cmd, main->mainenv);
+		do_cmd(node->cmd, env);
 	}
 	return (pid);
 }
@@ -97,6 +102,7 @@ void	wait_child(pid_t last)
 int	pipe_exec(t_main *main)
 {
 	t_lst_node	*node;
+	char		**env;
 	int			prev_fd;
 	int			i;
 	int			if_hd;
@@ -105,16 +111,18 @@ int	pipe_exec(t_main *main)
 	i = 0;
 	node = main->node;
 	prev_fd = node->infile.fd;
+	env = env_to_tab(main);
 	while (node->next != NULL)
 	{
-		prev_fd = child_process(node->cmd, main->mainenv, prev_fd);
+		prev_fd = child_process(node->cmd, env, prev_fd);
 		if (prev_fd == -1)
 			return (0);
 		node = node->next;
 	}
-	access_out_check(main, prev_fd, node->outfile.fd, if_hd);
-	last_pid = last_child(node, prev_fd, main);
-	close_fd(prev_fd, main, if_hd);
+	// access_out_check(main, prev_fd, node->outfile.fd, if_hd);
+	printf("%s\n", node->cmd[0]);
+	last_pid = last_child(node, prev_fd, main, env);
+	close_fd(prev_fd, node->outfile.fd, if_hd);
 	wait_child(last_pid);
 	return (0);
 }

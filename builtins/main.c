@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 17:55:00 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:20:12 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,23 @@ int	check_input(t_main *main)
 		close(fd_in);
 		close(fd_out);
 	}
-	// else
-	// 	pipe_exec(main);
+	else
+		pipe_exec(main);
 	return (0);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	char		*line;
-	t_main		*main;
-	t_env		*mainenv;
-	t_lst_node	*node;
-	int			std_out;
-	int			std_in;
-	int			i;
+	char	*line;
+	t_main	*main;
+	t_env	*mainenv;
+	int		std_out;
+	int		std_in;
+	int		i;
 
 	std_out = dup(STDOUT_FILENO);
 	std_in = dup(STDERR_FILENO);
 	main = malloc(sizeof(t_main));
-	node = malloc(sizeof(t_lst_node));
 	check_env_available(env, main);
 	while (1)
 	{
@@ -89,12 +87,7 @@ int	main(int ac, char **av, char **env)
 			printf("exit\n");
 		if (line[0] != '\0')
 			add_history(line);
-		main->node = node;
-		main->node->cmd = ft_split(line, ' ');
-		main->node->infile.fd = STDIN_FILENO;
-		main->node->outfile.fd = STDOUT_FILENO;
-		main->node->outfile.type = T_REDIR_TRUNC;
-		main->node->next = NULL;
+		create_node(main, line);
 		check_input(main);
 		while (main->node->cmd[i])
 		{
