@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 20:21:29 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:29:09 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	main(int ac, char **av, char **env)
 		free(line);
 		close(main->node->infile.fd);
 		close(main->node->outfile.fd);
+		free(main->node);
 	}
 	sleep(30);
 	return (0);

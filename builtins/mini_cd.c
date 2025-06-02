@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 20:21:55 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:53:20 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	env_pwd_update(t_main *main)
 {
 	t_env	*temp;
+	char	*tmp;
 	int		i;
 	char	path[1024];
 
@@ -27,9 +28,10 @@ void	env_pwd_update(t_main *main)
 	if (temp->env != NULL)
 	{
 		free(temp->env);
-		temp->env = ft_calloc(sizeof(char), (ft_strlen(path) + 1));
-		temp->env = ft_strjoin(temp->env, "PWD=");
-		temp->env = ft_strjoin(temp->env, path);
+		tmp = ft_strjoin("PWD=", path);
+		if (!tmp)
+			return ;
+		temp->env = tmp;
 	}
 }
 
@@ -101,8 +103,6 @@ bool	mini_cd(char *line, t_main *main)
 
 	env_oldpwd_update(main);
 	tab = main->node->cmd;
-	if (check_path_size(tab[1]) == false)
-		return (0);
 	if (tab[1])
 	{
 		if (chdir(tab[1]) == -1)
