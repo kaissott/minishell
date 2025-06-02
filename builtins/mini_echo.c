@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/27 12:02:52 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:18:42 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	mini_echo(t_main *main)
 {
 	char	**tab;
 
-	tab = ft_split(main->node->cmd, ' ');
+	tab = main->node->cmd;;
 	if (check_echo_flag(tab) == true)
 		print_echo_with_flag(tab);
 	else

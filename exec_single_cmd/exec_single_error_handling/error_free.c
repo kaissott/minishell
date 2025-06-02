@@ -6,38 +6,38 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:49:29 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/26 19:07:40 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:27:25 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-void	free_files(t_main *main)
-{
-	int	i;
+// void	free_files(t_main *main)
+// {
+// 	int	i;
 
-	if (main->node->outfile.filename != NULL)
-	{
-		free(main->node->infile.filename);
-	}
-	if (main->node->infile.filename != NULL)
-	{
-		if (ft_strncmp(main->node->infile.filename, "./tmp/here_doc", 14) == 0)
-		{
-			printf("oui %s\n", main->node->infile.filename);
-			if (access(main->node->infile.filename, F_OK) == -1)
-				perror("access failed before unlink");
-			if (unlink(main->node->infile.filename) == -1)
-				perror("unlink failed");
-			free(main->node->infile.filename);
-		}
-		else
-		{
-			printf("non");
-			free(main->node->infile.filename);
-		}
-	}
-}
+// 	if (main->node->outfile.fd != NULL)
+// 	{
+// 		free(main->node->infile.fd);
+// 	}
+// 	if (main->node->infile.fd != NULL)
+// 	{
+// 		if (ft_strncmp(main->node->infile.fd, "./tmp/here_doc", 14) == 0)
+// 		{
+// 			printf("oui %s\n", main->node->infile.fd);
+// 			if (access(main->node->infile.fd, F_OK) == -1)
+// 				perror("access failed before unlink");
+// 			if (unlink(main->node->infile.fd) == -1)
+// 				perror("unlink failed");
+// 			free(main->node->infile.fd);
+// 		}
+// 		else
+// 		{
+// 			printf("non");
+// 			free(main->node->infile.fd);
+// 		}
+// 	}
+// }
 void	free_tabs(char **tab1, char **tab2)
 {
 	int	i;

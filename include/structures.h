@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 03:04:19 by luca              #+#    #+#             */
-/*   Updated: 2025/05/29 00:42:02 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/02 15:31:50 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ typedef enum e_type
 
 typedef struct s_file
 {
-	char				*filename;
+	int					fd;
 	t_token_type		type;
 }						t_file;
 
 typedef struct s_lst_node
 {
-	char				*cmd;
+	char				**cmd;
 	t_file				infile;
 	t_file				outfile;
 	struct s_lst_node	*next;

@@ -31,7 +31,11 @@ SRC = \
 	exec_single_cmd/ft_split_slash.c \
 	env/env_lst.c \
 	env/env_to_tab.c \
-	env/lst_add.c
+	env/lst_add.c \
+	exec_pipe/exec_pipe.c \
+	exec_pipe/exec_pipe_utils.c \
+	exec_pipe/exec_pipe_error.c \
+	exec_pipe/strrchr_slash.c
 
 # Objets avec dossier obj/ et la hiérarchie complète
 OBJ = $(patsubst %.c, $(DIR_OBJ)%.o, $(SRC))

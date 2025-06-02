@@ -1,16 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_slash_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 16:21:25 by kkarakus          #+#    #+#             */
-/*   Updated: 2025/03/31 09:27:05 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:27:50 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/main.h"
+
+
+static char	*substr_slash(char const *s, unsigned int start, size_t len)
+{
+	char	*newstr;
+	size_t	i;
+	size_t	slen;
+
+	slen = ft_strlen(s);
+	if (s == NULL)
+		return (NULL);
+	if (start >= slen)
+		return (ft_strdup(""));
+	if (len > slen - start)
+		len = slen - start;
+	newstr = ft_calloc(len + 2, sizeof(char));
+	if (newstr == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len && s[start] != '\0')
+	{
+		newstr[i] = s[start];
+		i++;
+		start++;
+	}
+	newstr[i] = '/';
+	return (newstr);
+}
 
 static int	ft_countwords(char const *s, char c)
 {
@@ -61,7 +89,7 @@ static char	**ft_tabcomp(char **tab, char const *s, char c)
 			i++;
 		if (i > start)
 		{
-			tab[j] = ft_substr(s, start, (i - start));
+			tab[j] = substr_slash(s, start, (i - start));
 			if (tab[j] == NULL)
 				return (ft_free(tab, j));
 			j++;
@@ -71,17 +99,13 @@ static char	**ft_tabcomp(char **tab, char const *s, char c)
 	return (tab);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_slash(char const *s, char c)
 {
 	char	**tab;
-	int		count;
 
-	if (s[0] == '\0')
+	if (s == NULL)
 		return (NULL);
-	count = ft_countwords(s, c);
-	if (s == NULL || count == 0)
-		return (NULL);
-	tab = (char **)malloc(sizeof(char *) * (count + 1));
+	tab = (char **)malloc(sizeof(char *) * (ft_countwords(s, c) + 1));
 	if (tab == NULL)
 		return (NULL);
 	return (ft_tabcomp(tab, s, c));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:41:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/29 20:14:13 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/02 15:19:14 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	mini_unset(t_main *main)
 	int		i;
 
 	i = 1;
-	cmd = ft_split(main->node->cmd, ' ');
+	cmd = main->node->cmd;
 	if (cmd[1] == NULL)
 		return (0);
 	while (cmd[i])

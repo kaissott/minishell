@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/29 19:55:50 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/02 16:40:09 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		mini_echo(t_main *main);
 
 // pwd
 
-int		pwd(t_main *main, int fd);
+int		pwd(t_main *main);
 
 // env
 int		env_print(t_main *main);
@@ -40,7 +40,7 @@ int		mini_exit(char *line, t_main *main);
 int		numeric_argument_error(char *error, char **args);
 int		mini_cd(char *line, t_main *main);
 void	free_tab_exit(char **args);
-void	free_tab(char **tab1, char **tab2);
+// void	free_tab(char **tab1, char **tab2);
 int		mini_export(t_main *main);
 int		mini_unset(t_main *main);
 

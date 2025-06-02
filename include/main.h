@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/28 21:28:31 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/02 16:49:49 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,21 @@ bool	exec_cmd(t_main *main, int fd);
 char	**env_to_tab(t_main *main);
 void	file_dup(int fd_in, int fd_out);
 int		get_infile_simple_cmd(t_main *main);
+char	*free_tab_pipe(char **tab, char **path);
+// char	**ft_split_slash(char const *s, char c);
+int		heredoc(char *infile, char *limiter);
+char	*path_finding(char **env);
+char	*cmd_path(char **cmd, char *linktopath);
+int		strrchr_slash(const char *s, int c);
+void	error_exec_b(char **cmdtab, char *cmd);
+char	*free_tab(char **tab, char **path);
+int		check_args(int ac, char **av);
+void	close_fd(int prev, int outfile, int if_hd);
+int		open_input(char **av, int *i, int *if_hd);
+int		open_file(char *file, int num);
+int		do_cmd(char **cmd, char **env);
+void	access_out_check(char *out, int prev_fd, int outfile, int if_hd);
+void	close_dup_failed(int fd1, int fd2, int i);
+void	error_exit(char *str, int exitnbr, int fd);
 
 #endif

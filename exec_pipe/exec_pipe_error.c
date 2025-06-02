@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   exec_pipe_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 13:17:39 by karamire          #+#    #+#             */
-/*   Updated: 2025/04/07 11:32:09 by karamire         ###   ########.fr       */
+/*   Created: 2025/06/02 16:50:09 by karamire          #+#    #+#             */
+/*   Updated: 2025/06/02 16:50:10 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../include/main.h"
 
-int	check_args(int ac)
+int	check_args(int ac, char **av)
 {
-	if (ac != 5)
-		error_exit("Error. Please provide 5 args", 2, -1);
+	if (ac == 1)
+		error_exit("Error. Please provide 5 args", 0, -1);
+	if (ft_strcmp("here_doc", av[1]) == 0)
+		if (ac < 6)
+			error_exit("Error. Please provide 6 args", 0, -1);
+	if (ac < 5)
+		error_exit("Error. Please provide 5 args", 0, -1);
 	return (1);
 }
 
-void	error_exec(char **cmdtab, char *cmd)
+void	error_exec_b(char **cmdtab, char *cmd)
 {
 	int	i;
 
@@ -38,7 +43,7 @@ void	error_exec(char **cmdtab, char *cmd)
 	exit(127);
 }
 
-char	*free_tab(char **tab, char **path)
+char	*free_tab_pipe(char **tab, char **path)
 {
 	int	i;
 
@@ -79,8 +84,8 @@ void	close_dup_failed(int fd1, int fd2, int i)
 
 void	error_exit(char *str, int exitnbr, int fd)
 {
-	ft_putendl_fd(str, 2);
 	if (fd > 0)
 		close(fd);
+	ft_putendl_fd(str, 2);
 	exit(exitnbr);
 }

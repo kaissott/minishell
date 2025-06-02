@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/27 19:39:51 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:03:20 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_path(t_main *main, char *env_path)
 	int		i;
 
 	i = 0;
-	cmd = ft_split(main->node->cmd, ' ');
+	cmd = main->node->cmd;
 	final_env_path = ft_split_slash(env_path, ':');
 	while (final_env_path[i] != NULL)
 	{
@@ -47,7 +47,7 @@ char	*env_path_finding(t_main *main, char **env)
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
-			env_path = ft_strdup(env[i]); // a gerer
+			env_path = ft_strdup(env[i]);
 			return (env_path);
 		}
 		i++;
@@ -56,17 +56,14 @@ char	*env_path_finding(t_main *main, char **env)
 }
 void	exec_simple_cmd(t_main *main, int fd_in, int fd_out)
 {
-	char	**args;
 	char	*env_path;
 	char	*path;
 	char	**env;
 
-	args = ft_split(main->node->cmd, ' ');
 	env = env_to_tab(main);
 	env_path = env_path_finding(main, env);
 	path = get_path(main, env_path);
-	execve(path, args, env);
-	printf("test");
+	execve(path, main->node->cmd, env);
 }
 
 void	file_dup(int fd_in, int fd_out)
@@ -85,42 +82,41 @@ void	file_dup(int fd_in, int fd_out)
 	}
 }
 
-int	get_outfile_simple_cmd(t_main *main)
-{
-	int			fd_out;
-	t_lst_node	*temp;
+// int	get_outfile_simple_cmd(t_main *main)
+// {
+// 	int			fd_out;
+// 	t_lst_node	*temp;
 
-	temp = main->node;
-	if (temp->outfile.filename != NULL)
-	{
-		if (temp->outfile.type == T_REDIR_APPEND)
-			fd_out = open(temp->outfile.filename, O_WRONLY | O_CREAT | O_APPEND,
-					0644);
-		else if (temp->outfile.type == T_REDIR_TRUNC)
-			fd_out = open(temp->outfile.filename, O_WRONLY | O_CREAT | O_TRUNC,
-					0644);
-		return (fd_out);
-	}
-	else
-		return (1);
-}
+// 	temp = main->node;
+// 	if (temp->outfile.fd != NULL)
+// 	{
+// 		if (temp->outfile.type == T_REDIR_APPEND)
+// 			fd_out = open(temp->outfile.fd, O_WRONLY | O_CREAT | O_APPEND,
+// 					0644);
+// 		else if (temp->outfile.type == T_REDIR_TRUNC)
+// 			fd_out = open(temp->outfile.fd, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 		return (fd_out);
+// 	}
+// 	else
+// 		return (1);
+// }
 
-int	get_infile_simple_cmd(t_main *main)
-{
-	int			fd_in;
-	t_lst_node	*temp;
+// int	get_infile_simple_cmd(t_main *main)
+// {
+// 	int			fd_in;
+// 	t_lst_node	*temp;
 
-	temp = main->node;
-	if (temp->infile.filename != NULL)
-	{
-		fd_in = open(temp->infile.filename, O_RDONLY);
-		if (fd_in < 0)
-			dprintf(2, "infile crash\n");
-		return (fd_in);
-	}
-	else
-		return (0);
-}
+// 	temp = main->node;
+// 	if (temp->infile.fd < 0)
+// 	{
+// 		fd_in = open(temp->infile.fd, O_RDONLY);
+// 		if (fd_in < 0)
+// 			dprintf(2, "infile crash\n");
+// 		return (fd_in);
+// 	}
+// 	else
+// 		return (0);
+// }
 
 void	init_simple_cmd(t_main *main)
 {

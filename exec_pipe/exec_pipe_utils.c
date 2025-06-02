@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
+/*   Updated: 2025/06/02 16:51:45 by karamire         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:47:07 by karamire          #+#    #+#             */
-/*   Updated: 2025/04/04 16:13:05 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:35:59 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
+#include "../include/main.h"
 
 char	*path_finding(char **env)
 {
@@ -30,55 +42,51 @@ char	*path_finding(char **env)
 	return (NULL);
 }
 
-char	*cmd_path(char *cmd, char *linktopath)
+char	*cmd_path(char **cmd, char *linktopath)
 {
 	int		i;
 	char	*path;
 	char	**path_poss;
-	char	**cmd_tab;
 
 	i = 0;
-	cmd_tab = ft_split(cmd, ' ');
 	path_poss = ft_split_slash(linktopath, ':');
 	free(linktopath);
-	if (cmd_tab == NULL || path_poss == NULL)
-		return (free_tab(cmd_tab, path_poss));
-	while (path_poss[i] != NULL)
-	{
-		path = ft_strjoin(path_poss[i], cmd_tab[0]);
-		if (path != NULL && (access(path, X_OK) == 0))
+	if (cmd == NULL || path_poss == NULL)
+		// return (free_tab(cmd_tab, path_poss));
+		while (path_poss[i] != NULL)
 		{
-			free_tab(cmd_tab, path_poss);
-			return (path);
+			path = ft_strjoin(path_poss[i], cmd[0]);
+			if (path != NULL && (access(path, X_OK) == 0))
+			{
+				free_tab_pipe(cmd, path_poss);
+				return (path);
+			}
+			free(path);
+			path = NULL;
+			i++;
 		}
-		free(path);
-		path = NULL;
-		i++;
-	}
-	return (free_tab(cmd_tab, path_poss));
+	return (free_tab_pipe(cmd, path_poss), NULL);
 }
 
-int	do_cmd(char *cmd, char **env)
+int	do_cmd(char **cmd, char **env)
 {
-	char	**cmdtab;
 	char	*path;
 
-	cmdtab = ft_split(cmd, ' ');
-	if (cmdtab == NULL)
+	if (cmd == NULL)
 		error_exit("Command not found.", 127, -1);
-	if (strrchr_slash(cmdtab[0], '/'))
-		execve(cmdtab[0], cmdtab, env);
+	if (strrchr_slash(cmd[0], '/'))
+		execve(cmd[0], cmd, env);
 	else
 	{
 		path = cmd_path(cmd, path_finding(env));
 		if (path == NULL)
 		{
-			error_exec_b(cmdtab, cmdtab[0]);
+			error_exec_b(cmd, cmd[0]);
 			return (-1);
 		}
-		execve(path, cmdtab, env);
+		execve(path, cmd, env);
 	}
-	error_exec_b(cmdtab, cmdtab[0]);
+	error_exec_b(cmd, cmd[0]);
 	return (-1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/20 19:25:36 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/02 17:11:52 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	env_oldpwd_update(t_main *main)
 	temp = main->mainenv;
 	if (getcwd(pwd, 1024) == NULL)
 		return ;
-	while (ft_strstr(temp->env, "OLDPWD=") != 1 && temp != NULL)
+	while (temp != NULL && ft_strstr(temp->env, "OLDPWD=") != 1)
 		temp = temp->next;
 	if (temp != NULL)
 	{
@@ -100,7 +100,7 @@ int	mini_cd(char *line, t_main *main)
 	char	**tab;
 
 	env_oldpwd_update(main);
-	tab = ft_split(line, ' ');
+	tab = main->node->cmd;
 	if (check_path_size(tab[1]) == false)
 		return (0);
 	if (tab[1])

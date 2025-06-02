@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:34:12 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/03/16 23:03:36 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/02 16:43:06 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,24 @@ char	*ft_strjoin_GNL(char *s1, char *s2)
 	return (free(s1), str);
 }
 
-char	*ft_strchr(const char *s, int c)
-{
-	size_t	i;
+// char	*ft_strchr(const char *s, int c)
+// {
+// 	size_t	i;
 
-	c = (char)c;
-	i = 0;
-	if (!s)
-		return (NULL);
-	while (s[i])
-	{
-		if (s[i] == c)
-			return ((char *)s + i);
-		i++;
-	}
-	if (s[i] == '\0' && c == '\0')
-		return ((char *)s + i);
-	return (NULL);
-}
+// 	c = (char)c;
+// 	i = 0;
+// 	if (!s)
+// 		return (NULL);
+// 	while (s[i])
+// 	{
+// 		if (s[i] == c)
+// 			return ((char *)s + i);
+// 		i++;
+// 	}
+// 	if (s[i] == '\0' && c == '\0')
+// 		return ((char *)s + i);
+// 	return (NULL);
+// }
 
 void	*ftmemcpy(void *dest, const void *src, size_t n)
 {

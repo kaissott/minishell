@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   exec_pipe.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
+/*   Updated: 2025/06/02 16:47:46 by karamire         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:31:58 by karamire          #+#    #+#             */
-/*   Updated: 2025/04/04 16:14:25 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:40:52 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
+#include "../include/main.h"
 
-pid_t	child_process(char *cmd, char **env, int prev_fd)
+pid_t	child_process(char **cmd, char **env, int prev_fd)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -41,14 +53,14 @@ pid_t	child_process(char *cmd, char **env, int prev_fd)
 	return (pipefd[0]);
 }
 
-pid_t	last_child(char *last, int prev_fd, int outfile, char **env)
+pid_t	last_child(t_lst_node *node, int prev_fd, t_main *main)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
 	{
-		close_dup_failed(outfile, -1, 0);
+		close_dup_failed(node->outfile.fd, -1, 0);
 		error_exit("Error : Fork failed", EXIT_FAILURE, prev_fd);
 	}
 	if (pid == 0)
@@ -56,13 +68,13 @@ pid_t	last_child(char *last, int prev_fd, int outfile, char **env)
 		if (prev_fd != -1)
 		{
 			if (dup2(prev_fd, STDIN_FILENO) == -1)
-				close_dup_failed(outfile, prev_fd, 1);
+				close_dup_failed(node->outfile.fd, prev_fd, 1);
 			close(prev_fd);
 		}
-		if (dup2(outfile, STDOUT_FILENO) == -1)
-			close_dup_failed(outfile, prev_fd, 1);
-		close(outfile);
-		do_cmd(last, env);
+		if (dup2(node->outfile.fd, STDOUT_FILENO) == -1)
+			close_dup_failed(node->outfile.fd, prev_fd, 1);
+		close(node->outfile.fd);
+		do_cmd(node->cmd, main->mainenv);
 	}
 	return (pid);
 }
@@ -82,27 +94,27 @@ void	wait_child(pid_t last)
 		;
 }
 
-int	main(int ac, char **av, char **env)
+int	pipe_exec(t_main *main)
 {
-	int		outfile;
-	int		prev_fd;
-	int		i;
-	int		if_hd;
-	pid_t	last_pid;
+	t_lst_node	*node;
+	int			prev_fd;
+	int			i;
+	int			if_hd;
+	pid_t		last_pid;
 
-	if_hd = 0;
 	i = 0;
-	check_args(ac, av);
-	prev_fd = open_input(av, &i, &if_hd);
-	while (i < ac - 4)
+	node = main->node;
+	prev_fd = node->infile.fd;
+	while (node->next != NULL)
 	{
-		prev_fd = child_process(av[i + 2], env, prev_fd);
-		i++;
+		prev_fd = child_process(node->cmd, main->mainenv, prev_fd);
+		if (prev_fd == -1)
+			return (0);
+		node = node->next;
 	}
-	outfile = open_file(av[ac - 1], if_hd);
-	access_out_check(av[ac - 1], prev_fd, outfile, if_hd);
-	last_pid = last_child(av[ac - 2], prev_fd, outfile, env);
-	close_fd(prev_fd, outfile, if_hd);
+	access_out_check(main, prev_fd, node->outfile.fd, if_hd);
+	last_pid = last_child(node, prev_fd, main);
+	close_fd(prev_fd, main, if_hd);
 	wait_child(last_pid);
 	return (0);
 }

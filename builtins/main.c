@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/29 19:55:11 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/02 17:08:41 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ bool	exec_cmd(t_main *main, int fd)
 {
 	char	**cmd;
 
-	cmd = ft_split(main->node->cmd, ' ');
+	cmd = main->node->cmd;
 	if (ft_strncmp(cmd[0], "echo", 4) == 0 && ft_strlen(cmd[0]) == 4)
 		mini_echo(main);
 	else if (ft_strncmp(cmd[0], "pwd", 3) == 0 && ft_strlen(cmd[0]) == 3)
-		pwd(main, fd);
+		pwd(main);
 	else if (ft_strncmp(cmd[0], "env", 3) == 0 && ft_strlen(cmd[0]) == 3)
 		env_print(main);
 	else if (ft_strncmp(cmd[0], "cd", 2) == 0 && ft_strlen(cmd[0]) == 2)
@@ -39,9 +39,7 @@ bool	exec_cmd(t_main *main, int fd)
 		mini_unset(main);
 	else
 		init_simple_cmd(main);
-	free_tabs(cmd, NULL);
-	if (fd > 1)
-		close(fd);
+	// free_tabs(cmd, NULL);
 	return (0);
 }
 
@@ -54,13 +52,15 @@ int	check_input(t_main *main)
 	node = main->node;
 	if (node->next == NULL)
 	{
-		fd_in = get_infile_simple_cmd(main);
-		fd_out = get_outfile_simple_cmd(main);
+		fd_in = main->node->infile.fd;
+		fd_out = main->node->outfile.fd;
 		file_dup(fd_in, fd_out);
 		exec_cmd(main, fd_out);
 		close(fd_in);
 		close(fd_out);
 	}
+	// else
+	// 	pipe_exec(main);
 	return (0);
 }
 
@@ -88,13 +88,15 @@ int	main(int ac, char **av, char **env)
 		if (line[0] != '\0')
 			add_history(line);
 		main->node = node;
-		main->node->cmd = line;
-		main->node->infile.filename = NULL;
-		main->node->outfile.filename = NULL;
+		main->node->cmd = ft_split(line, ' ');
+		main->node->infile.fd = STDIN_FILENO;
+		main->node->outfile.fd = STDOUT_FILENO;
 		main->node->outfile.type = T_REDIR_TRUNC;
 		main->node->next = NULL;
 		check_input(main);
 		free(line);
+		close(main->node->infile.fd);
+		close(main->node->outfile.fd);
 	}
 	sleep(30);
 	return (0);

@@ -6,11 +6,12 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 17:35:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/03/31 09:09:03 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:28:30 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
+#include "../include/main.h"
+
 
 int	heredoc(char *infile, char *limiter)
 {

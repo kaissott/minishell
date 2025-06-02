@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 00:24:55 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/29 19:40:20 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/02 15:19:00 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	mini_export(t_main *main)
 	int		i;
 	char	**tab;
 
-	tab = ft_split(main->node->cmd, ' ');
+	tab = main->node->cmd;;
 	i = 1;
 	if (tab[1] == NULL)
 		print_export_env(main);

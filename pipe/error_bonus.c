@@ -6,11 +6,11 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 05:20:44 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/04/07 11:32:25 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:49:29 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
+#include "../include/main.h"
 
 int	check_args(int ac, char **av)
 {
@@ -43,7 +43,7 @@ void	error_exec_b(char **cmdtab, char *cmd)
 	exit(127);
 }
 
-char	*free_tab(char **tab, char **path)
+char	*free_tab_pipe(char **tab, char **path)
 {
 	int	i;
 

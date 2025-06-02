@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:06 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/29 19:35:10 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/02 15:18:54 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	mini_exit(char *line, t_main *main)
 	int		size;
 
 	exit_code = 0;
-	cmd = ft_split(line, ' ');
+	cmd = main->node->cmd;;
 	if (!cmd)
 	{
 		free(line);
