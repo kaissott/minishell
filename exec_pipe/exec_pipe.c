@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 19:37:58 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:19:49 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 #include "../include/main.h"
 
-pid_t	child_process(char **cmd, char **env, int prev_fd)
+pid_t	child_process(t_main *main, char **cmd, char **env, int prev_fd)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -49,7 +49,8 @@ pid_t	child_process(char **cmd, char **env, int prev_fd)
 			close_dup_failed(pipefd[1], prev_fd, 1);
 		close(pipefd[1]);
 		close(prev_fd);
-		do_cmd(cmd, env);
+		do_cmd(main, cmd, env);
+		dprintf(2, "exec");
 	}
 	close(pipefd[1]);
 	close(prev_fd);
@@ -77,9 +78,9 @@ pid_t	last_child(t_lst_node *node, int prev_fd, t_main *main, char **env)
 		}
 		if (dup2(node->outfile.fd, STDOUT_FILENO) == -1)
 			close_dup_failed(node->outfile.fd, prev_fd, 1);
-		dprintf(2, "yoyo");
 		close(node->outfile.fd);
-		do_cmd(node->cmd, env);
+		do_cmd(main, node->cmd, env);
+		dprintf(2, "exec");
 	}
 	return (pid);
 }
@@ -114,7 +115,7 @@ int	pipe_exec(t_main *main)
 	env = env_to_tab(main);
 	while (node->next != NULL)
 	{
-		prev_fd = child_process(node->cmd, env, prev_fd);
+		prev_fd = child_process(main, node->cmd, env, prev_fd);
 		if (prev_fd == -1)
 			return (0);
 		node = node->next;

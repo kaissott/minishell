@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 00:24:55 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 15:19:00 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:22:18 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,13 @@ void	print_export_env(t_main *main)
 	}
 }
 
-int	mini_export(t_main *main)
+bool	mini_export(t_main *main)
 {
 	int		i;
 	char	**tab;
 
-	tab = main->node->cmd;;
+	tab = main->node->cmd;
+	;
 	i = 1;
 	if (tab[1] == NULL)
 		print_export_env(main);
@@ -85,4 +86,5 @@ int	mini_export(t_main *main)
 		}
 		i++;
 	}
+	return (true);
 }

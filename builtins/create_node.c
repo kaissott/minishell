@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:14:31 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 19:42:07 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:19:06 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	create_node(t_main *main, char *line)
 	main->node->infile.fd = open("Makefile", O_RDONLY);
 	main->node->outfile.fd = STDOUT_FILENO;
 	main->node->outfile.type = T_REDIR_TRUNC;
-	// main->node->next = node2;
-	// node2->cmd = malloc(sizeof(char *) * 2);
-	// node2->cmd[0] = ft_strdup("head");
-	// node2->cmd[1] = "-2";
-	// node2->cmd[2] = NULL;
-	// node2->infile.fd = 1;
-	// node2->outfile.fd = open("0ut", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	main->node->next = NULL;
+	main->node->next = node2;
+	node2->cmd = malloc(sizeof(char *) * 3);
+	node2->cmd[0] = ft_strdup("head");
+	node2->cmd[1] = "-2";
+	node2->cmd[2] = NULL;
+	node2->infile.fd = 1;
+	node2->outfile.fd = open("0ut", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	main->node->next->next = NULL;
 	return (0);
 }

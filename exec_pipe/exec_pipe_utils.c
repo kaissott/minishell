@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 19:38:21 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:14:58 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,14 @@ char	*cmd_path(char **cmd, char *linktopath)
 	return (NULL);
 }
 
-int	do_cmd(char **cmd, char **env)
+int	do_cmd(t_main *main, char **cmd, char **env)
 {
 	char	*path;
 
+	if (exec_cmd(main, cmd, false) == true)
+	{
+		exit(0);
+	}
 	if (cmd == NULL)
 	{
 		error_exit("Command not found.", 127, -1);

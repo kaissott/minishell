@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 18:19:29 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:18:03 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		get_outfile_simple_cmd(t_main *main);
 int		check_env_available(char **env, t_main *main);
 void	env_build(char **env, t_main *main);
 int		free_env(t_env *env);
-bool	exec_cmd(t_main *main, int fd);
+bool	exec_cmd(t_main *main, char **cmd, bool simple);
 char	**env_to_tab(t_main *main);
 void	file_dup(int fd_in, int fd_out);
 int		get_infile_simple_cmd(t_main *main);
@@ -49,10 +49,11 @@ int		check_args(int ac, char **av);
 void	close_fd(int prev, int outfile, int if_hd);
 int		open_input(char **av, int *i, int *if_hd);
 int		open_file(char *file, int num);
-int		do_cmd(char **cmd, char **env);
+int		do_cmd(t_main *main, char **cmd, char **env);
 void	access_out_check(char *out, int prev_fd, int outfile, int if_hd);
 void	close_dup_failed(int fd1, int fd2, int i);
 void	error_exit(char *str, int exitnbr, int fd);
 int		create_node(t_main *main, char *line);
+int		pipe_exec(t_main *main);
 
 #endif

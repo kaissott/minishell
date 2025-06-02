@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:41:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 15:19:14 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:23:14 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	delete_env_node(t_env **env, char *var)
 	}
 }
 
-int	mini_unset(t_main *main)
+bool	mini_unset(t_main *main)
 {
 	char	**cmd;
 	int		i;
@@ -61,4 +61,5 @@ int	mini_unset(t_main *main)
 		delete_env_node(&main->mainenv, cmd[i]);
 		i++;
 	}
+	return (true);
 }

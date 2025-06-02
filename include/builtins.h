@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 17:48:54 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:23:06 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@
 // echo
 
 void	print_echo_with_flag(char **tab);
-int		mini_echo(t_main *main);
+bool	mini_echo(t_main *main);
 
 // pwd
 
-int		pwd(t_main *main);
+bool	pwd(t_main *main);
 
 // env
-int		env_print(t_main *main);
+bool	env_print(t_main *main);
 
 void	lstadd_back(t_env **lst, t_env *new);
 t_env	*lstnew(char *content);
 int		mini_exit(char **line, t_main *main);
 int		numeric_argument_error(char *error, char **args);
-int		mini_cd(char *line, t_main *main);
+bool	mini_cd(char *line, t_main *main);
 void	free_tab_exit(char **args);
 // void	free_tab(char **tab1, char **tab2);
-int		mini_export(t_main *main);
-int		mini_unset(t_main *main);
+bool	mini_export(t_main *main);
+bool	mini_unset(t_main *main);
 void	free_env_list(t_env *head);
 #endif

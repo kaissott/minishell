@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mini_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 18:52:10 by karamire          #+#    #+#             */
-/*   Updated: 2025/05/28 21:32:42 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/02 20:21:46 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/main.h"
 
-int	env_print(t_main *main)
+bool	env_print(t_main *main)
 {
 	t_env	*temp;
 
@@ -23,5 +23,5 @@ int	env_print(t_main *main)
 		write(STDOUT_FILENO, "\n", 1);
 		temp = temp->next;
 	}
-	return (0);
+	return (true);
 }

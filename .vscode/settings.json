@@ -38,10 +38,7 @@
   "C_Cpp_Runner.compilerArgs": [],
   "C_Cpp_Runner.linkerArgs": [],
   "C_Cpp_Runner.includePaths": [],
-  "C_Cpp_Runner.includeSearch": [
-    "*",
-    "**/*"
-  ],
+  "C_Cpp_Runner.includeSearch": ["*", "**/*"],
   "C_Cpp_Runner.excludeSearch": [
     "**/build",
     "**/build/**",
@@ -65,6 +62,7 @@
     "main.h": "c",
     "limits.h": "c",
     "errno.h": "c",
-    "libft.h": "c"
+    "libft.h": "c",
+    "wait.h": "c"
   }
 }

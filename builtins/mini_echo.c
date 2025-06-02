@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 15:18:42 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:20:47 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	print_echo_without_flag(char **tab)
 	write(STDOUT_FILENO, "\n", 1);
 }
 
-int	mini_echo(t_main *main)
+bool	mini_echo(t_main *main)
 {
 	char	**tab;
 
@@ -70,5 +70,5 @@ int	mini_echo(t_main *main)
 		print_echo_with_flag(tab);
 	else
 		print_echo_without_flag(tab);
-	return (0);
+	return (true);
 }

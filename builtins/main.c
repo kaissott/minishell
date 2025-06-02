@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 18:20:12 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:21:29 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-bool	exec_cmd(t_main *main, int fd)
+bool	exec_cmd(t_main *main, char **cmd, bool simple)
 {
-	char	**cmd;
-
-	cmd = main->node->cmd;
+	// char	**cmd;
+	// cmd = node->cmd;
 	if (ft_strncmp(cmd[0], "echo", 4) == 0 && ft_strlen(cmd[0]) == 4)
-		mini_echo(main);
+		return (mini_echo(main));
 	else if (ft_strncmp(cmd[0], "pwd", 3) == 0 && ft_strlen(cmd[0]) == 3)
-		pwd(main);
+		return (pwd(main));
 	else if (ft_strncmp(cmd[0], "env", 3) == 0 && ft_strlen(cmd[0]) == 3)
-		env_print(main);
+		return (env_print(main));
 	else if (ft_strncmp(cmd[0], "cd", 2) == 0 && ft_strlen(cmd[0]) == 2)
-		mini_cd(main->node->cmd, main);
+		return (mini_cd(main->node->cmd, main));
 	else if (ft_strncmp(cmd[0], "exit", 4) == 0 && ft_strlen(cmd[0]) == 4)
-		mini_exit(main->node->cmd, main);
+		return (mini_exit(main->node->cmd, main));
 	else if (ft_strncmp(cmd[0], "export", 6) == 0 && ft_strlen(cmd[0]) == 6)
-		mini_export(main);
+		return (mini_export(main));
 	else if (ft_strncmp(cmd[0], "unset", 5) == 0 && ft_strlen(cmd[0]) == 5)
-		mini_unset(main);
-	else
+		return (mini_unset(main));
+	else if (simple == true)
 		init_simple_cmd(main);
-	// free_tabs(cmd, NULL);
-	return (0);
+	return (false);
 }
 
 int	check_input(t_main *main)
@@ -55,7 +53,7 @@ int	check_input(t_main *main)
 		fd_in = main->node->infile.fd;
 		fd_out = main->node->outfile.fd;
 		file_dup(fd_in, fd_out);
-		exec_cmd(main, fd_out);
+		exec_cmd(main, node->cmd, true);
 		close(fd_in);
 		close(fd_out);
 	}

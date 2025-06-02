@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 17:11:52 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:21:55 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ bool	check_path_size(char *path)
 		return (name_size_error(dir[1], ERR_CD_NAMETOOLONG));
 	return (true);
 }
-int	mini_cd(char *line, t_main *main)
+bool	mini_cd(char *line, t_main *main)
 {
 	char	**tab;
 
@@ -114,4 +114,5 @@ int	mini_cd(char *line, t_main *main)
 			printf("nul");
 	}
 	env_pwd_update(main);
+	return (true);
 }
