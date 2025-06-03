@@ -6,12 +6,18 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 20:53:20 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:53:16 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/main.h"
 
+void	free_and_exit_error(t_main *main, char *error, int err_number)
+{
+	free_struct(main);
+	perror(error);
+	exit(err_number);
+}
 void	env_pwd_update(t_main *main)
 {
 	t_env	*temp;
@@ -21,7 +27,7 @@ void	env_pwd_update(t_main *main)
 
 	i = 0;
 	if (getcwd(path, 1024) == NULL)
-		return ;
+		free_and_exit_error(main, ERR_GETCWD, errno);
 	temp = main->mainenv;
 	while (ft_strstr(temp->env, "PWD=") != 1)
 		temp = temp->next;
@@ -30,7 +36,7 @@ void	env_pwd_update(t_main *main)
 		free(temp->env);
 		tmp = ft_strjoin("PWD=", path);
 		if (!tmp)
-			return ;
+			free_and_exit_error(main, ERR_MALLOC, 12);
 		temp->env = tmp;
 	}
 }
@@ -45,58 +51,25 @@ void	env_oldpwd_update(t_main *main)
 	i = 0;
 	temp = main->mainenv;
 	if (getcwd(pwd, 1024) == NULL)
-		return ;
+		free_and_exit_error(main, ERR_GETCWD, errno);
 	while (temp != NULL && ft_strstr(temp->env, "OLDPWD=") != 1)
 		temp = temp->next;
 	if (temp != NULL)
 	{
 		free(temp->env);
 		temp->env = ft_strjoin("OLDPWD=", pwd);
+		if (!temp->env)
+			free_and_exit_error(main, ERR_MALLOC, 12);
 	}
 	else
 	{
 		path = ft_strjoin("OLDPWD=", pwd);
+		if (!path)
+			free_and_exit_error(main, ERR_MALLOC, 12);
 		lstadd_back((&main->mainenv), lstnew(path));
 	}
 }
 
-bool	name_size_error(char *name, char *error)
-{
-	printf("bash: cd: %s%s", name, error);
-	return (false);
-}
-int	dir_name_size(char *name, int *total_size)
-{
-	int	i;
-
-	i = 0;
-	while (name[i])
-		i++;
-	total_size = total_size + i + 1;
-	if (i > 255)
-		return (name_size_error(name, ERR_CD_NAMETOOLONG));
-	return (true);
-}
-bool	check_path_size(char *path)
-{
-	int		dir_size;
-	int		total_size;
-	int		i;
-	char	**dir;
-
-	i = 0;
-	total_size = 0;
-	dir = ft_split(path, '/');
-	while (dir[i])
-	{
-		if (dir_name_size(dir[i], &total_size) == false)
-			printf("caca");
-		i++;
-	}
-	if (total_size > 4096)
-		return (name_size_error(dir[1], ERR_CD_NAMETOOLONG));
-	return (true);
-}
 bool	mini_cd(char *line, t_main *main)
 {
 	char	**tab;
@@ -106,12 +79,12 @@ bool	mini_cd(char *line, t_main *main)
 	if (tab[1])
 	{
 		if (chdir(tab[1]) == -1)
-			printf("nul");
+			free_and_exit_error(main, ERR_CHDIR, errno);
 	}
 	else
 	{
 		if (chdir("~") == -1)
-			printf("nul");
+			free_and_exit_error(main, ERR_CHDIR, errno);
 	}
 	env_pwd_update(main);
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:41:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 20:23:14 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:06:01 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	delete_env_node(t_env **env, char *var)
 	if (ft_strncmp(current->env, var, ft_strlen(var)) == 0
 		&& (current->env[ft_strlen(var)]) == '=')
 	{
-		printf("%s\n", current->env);
 		*env = current->next;
 		free(current->env);
 		free(current);
@@ -36,7 +35,6 @@ void	delete_env_node(t_env **env, char *var)
 		if (ft_strncmp(current->next->env, var, ft_strlen(var)) == 0
 			&& (current->next->env[ft_strlen(var)]) == '=')
 		{
-			printf("%s\n", current->next->env);
 			temp = current->next;
 			current->next = temp->next;
 			free(temp->env);

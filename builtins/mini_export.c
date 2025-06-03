@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 00:24:55 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 20:22:18 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:02:48 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,26 @@ void	export_new_var(t_main *main, char *var)
 {
 	int		i;
 	char	*new;
+	t_env	*export;
 
 	i = 0;
 	while (var[i] != '=')
 		i++;
 	new = ft_strdup(var);
-	lstadd_back(&main->mainenv, lstnew(new));
+	if (!new)
+		free_and_exit_error(main, ERR_MALLOC, 12);
+	export = lstnew(new);
+	if (!export)
+		free_and_exit_error(main, ERR_MALLOC, 12);
+	lstadd_back(&main->mainenv, export);
 }
 void	replace_var(t_main *main, char *var, t_env *env)
 {
 	char	*new;
 
 	new = ft_strdup(var);
+	if (!new)
+		free_and_exit_error(main, ERR_MALLOC, 12);
 	free(env->env);
 	env->env = new;
 }
@@ -61,8 +69,10 @@ void	print_export_env(t_main *main)
 	env = main->mainenv;
 	while (env != NULL)
 	{
-		write(1, "declare -x ", 11);
-		ft_putendl_fd(env->env, 1);
+		if (write(1, "declare -x ", 11) == -1)
+			free_and_exit_error(main, ERR_WRITE, errno);
+		if (ft_putendl_fd(env->env, 1) == -1)
+			free_and_exit_error(main, ERR_WRITE, errno);
 		env = env->next;
 	}
 }

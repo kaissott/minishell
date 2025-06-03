@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:06 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 17:50:12 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:19:32 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,26 +76,9 @@ int	mini_exit(char **line, t_main *main)
 	{
 		exit_code = check_and_conv_exit_code(line, size);
 		errno = exit_code;
-		while (line[i])
-		{
-			free(line[i]);
-			i++;
-		}
-		free(line);
-		free(main->node);
-		free_env_list(main->mainenv);
-		free(main);
+		free_struct(main);
 		exit(exit_code);
 	}
-	while (line[i])
-	{
-		free(line[i]);
-		i++;
-	}
-	free(line);
-	free(main->node);
-	free_env_list(main->mainenv);
-	free(main->mainenv);
-	free(main);
+	free_struct(main);
 	exit(errno);
 }

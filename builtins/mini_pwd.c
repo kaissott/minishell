@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 20:21:38 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:05:23 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ bool	pwd(t_main *main)
 	char	path[1024];
 
 	if (getcwd(path, 1024) == NULL)
-		return (0);
-	ft_putendl_fd(path, STDOUT_FILENO);
+		free_and_exit_error(main, ERR_GETCWD, errno);
+	if (ft_putendl_fd(path, STDOUT_FILENO) == -1)
+		free_and_exit_error(main, ERR_WRITE, errno);
 	return (true);
 }

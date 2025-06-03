@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 20:20:47 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:57:16 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,43 +32,53 @@ bool	check_echo_flag(char **tab)
 	return (false);
 }
 
-void	print_echo_with_flag(char **tab)
+void	print_echo_with_flag(t_main *main, char **tab)
 {
 	int	i;
 
 	i = 2;
 	while (tab[i])
 	{
-		ft_putstr_fd(tab[i], STDOUT_FILENO);
+		if (ft_putstr_fd(tab[i], STDOUT_FILENO) == -1)
+			free_and_exit_error(main, ERR_WRITE, errno);
 		i++;
 		if (tab[i])
-			write(STDOUT_FILENO, " ", 1);
+		{
+			if (write(STDOUT_FILENO, " ", 1) == -1)
+				free_and_exit_error(main, ERR_WRITE, errno);
+		}
 	}
 }
 
-void	print_echo_without_flag(char **tab)
+void	print_echo_without_flag(t_main *main, char **tab)
 {
 	int	i;
 
 	i = 1;
 	while (tab[i])
 	{
-		ft_putstr_fd(tab[i], STDOUT_FILENO);
+		if (ft_putstr_fd(tab[i], STDOUT_FILENO) == -1)
+			free_and_exit_error(main, ERR_WRITE, errno);
 		i++;
 		if (tab[i])
-			write(STDOUT_FILENO, " ", 1);
+		{
+			if (write(STDOUT_FILENO, " ", 1))
+				free_and_exit_error(main, ERR_WRITE, errno);
+		}
 	}
-	write(STDOUT_FILENO, "\n", 1);
+	if (write(STDOUT_FILENO, "\n", 1) == -1)
+		free_and_exit_error(main, ERR_WRITE, errno);
 }
 
 bool	mini_echo(t_main *main)
 {
 	char	**tab;
 
-	tab = main->node->cmd;;
+	tab = main->node->cmd;
+	;
 	if (check_echo_flag(tab) == true)
-		print_echo_with_flag(tab);
+		print_echo_with_flag(main, tab);
 	else
-		print_echo_without_flag(tab);
+		print_echo_without_flag(main, tab);
 	return (true);
 }
