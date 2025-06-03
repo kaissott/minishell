@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 20:23:06 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:31:57 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 // echo
 
-void	print_echo_with_flag(char **tab);
+void	print_echo_with_flag(t_main *main, char **tab);
 bool	mini_echo(t_main *main);
 
 // pwd

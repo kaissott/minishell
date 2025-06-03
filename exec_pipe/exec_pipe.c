@@ -6,21 +6,10 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 20:19:49 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:09:53 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 18:31:58 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 16:40:52 by karamire         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../include/main.h"
 
@@ -61,7 +50,6 @@ pid_t	last_child(t_lst_node *node, int prev_fd, t_main *main, char **env)
 {
 	pid_t	pid;
 
-	printf("%d\n", node->outfile.fd);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -80,7 +68,6 @@ pid_t	last_child(t_lst_node *node, int prev_fd, t_main *main, char **env)
 			close_dup_failed(node->outfile.fd, prev_fd, 1);
 		close(node->outfile.fd);
 		do_cmd(main, node->cmd, env);
-		dprintf(2, "exec");
 	}
 	return (pid);
 }
@@ -110,6 +97,7 @@ int	pipe_exec(t_main *main)
 	pid_t		last_pid;
 
 	i = 0;
+	if_hd = 0;
 	node = main->node;
 	prev_fd = node->infile.fd;
 	env = env_to_tab(main);
@@ -121,7 +109,7 @@ int	pipe_exec(t_main *main)
 		node = node->next;
 	}
 	// access_out_check(main, prev_fd, node->outfile.fd, if_hd);
-	printf("%s\n", node->cmd[0]);
+	// printf("%s\n", node->cmd[0]);
 	last_pid = last_child(node, prev_fd, main, env);
 	close_fd(prev_fd, node->outfile.fd, if_hd);
 	wait_child(last_pid);

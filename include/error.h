@@ -3,17 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:41:28 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/23 15:58:42 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/03 22:31:30 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
 
-# define ERR_MALLOC "Error : Malloc failed\n"
+# include "structures.h"
+
+void	free_and_exit_error(t_main *main, char *error, int err_number);
+
+# define ERR_MALLOC "Malloc failed"
 # define ERR_MANY_ARGS ": too many arguments\n"
 # define ERR_INV_ID ": not a valid identifier\n"
 # define ERR_CMD_NOT_FOUND ": command not found\n"
@@ -21,6 +25,9 @@
 # define ERR_CD_FILE ": No such file or directory\n"
 # define ERR_CD_NAMETOOLONG ": File name too long\n"
 # define ERR_CD_NOACCES ": Can't acces file"
+# define ERR_GETCWD "getcwd error"
+# define ERR_CHDIR "chdir error"
+# define ERR_WRITE "write error"
 # define ERR_CD_TOO_MANY_ARGS ": too many arguments\n"
 # define ERR_FORK "Error: fork failed\n"
 

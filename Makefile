@@ -26,6 +26,7 @@ SRC = \
 	builtins/create_node.c \
 	builtins/mini_export.c \
 	builtins/mini_unset.c \
+	builtins/free_structs.c \
 	exec_single_cmd/exec_simple_cmd.c \
 	exec_single_cmd/exec_single_error_handling/error_free.c \
 	exec_single_cmd/exec_single_error_handling/single_cmd_error.c \

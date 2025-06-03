@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 20:18:03 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:23:29 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	init_simple_cmd(t_main *main);
 int		get_outfile_simple_cmd(t_main *main);
 int		check_env_available(char **env, t_main *main);
 void	env_build(char **env, t_main *main);
-int		free_env(t_env *env);
 bool	exec_cmd(t_main *main, char **cmd, bool simple);
 char	**env_to_tab(t_main *main);
 void	file_dup(int fd_in, int fd_out);
@@ -55,5 +54,6 @@ void	close_dup_failed(int fd1, int fd2, int i);
 void	error_exit(char *str, int exitnbr, int fd);
 int		create_node(t_main *main, char *line);
 int		pipe_exec(t_main *main);
+int		free_struct(t_main *main);
 
 #endif

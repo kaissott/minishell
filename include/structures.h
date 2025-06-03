@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 03:04:19 by luca              #+#    #+#             */
-/*   Updated: 2025/06/02 15:31:50 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:23:48 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_main
 {
 	t_env				*mainenv;
 	t_lst_node			*node;
+	int					error;
 }						t_main;
 
 #endif

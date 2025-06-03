@@ -6,19 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 20:14:58 by karamire         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 10:47:07 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 15:35:59 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:09:57 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +23,6 @@ char	*path_finding(char **env)
 		if (ft_strnstr(env[i], "PATH=", 5))
 		{
 			path = ft_strdup(env[i]);
-			dprintf(2, "%s\n", path);
 			return (path);
 		}
 		i++;
@@ -91,7 +78,6 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 		}
 		execve(path, cmd, env);
 	}
-	dprintf(2, "ratata");
 	error_exec_b(cmd, cmd[0]);
 	return (-1);
 }
