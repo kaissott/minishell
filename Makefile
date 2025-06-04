@@ -12,16 +12,16 @@ NAME :=	minishell
 #Files
 LST_EXEC :=	minishell.c
 
-LST_PARSING :=	parse.c tokenisation.c tokenisation_utils.c tokenisation_operator_utils.c
+LST_PARSING :=	parse.c parse_utils.c tokenisation.c \
+				tokenisation_utils.c
 
 LST_UTILS :=	utils.c file_utils.c
 
-LST_LST_ACTIONS :=	lst_add_back.c lst_add_front.c lst_create_node.c lst_delone.c lst_last.c lst_size.c print_lst.c
+LST_LST_ACTIONS :=	lst_add_back.c lst_create_node.c lst_delone.c print_lst.c
 
-LST_LST_TOKEN_ACTIONS :=	lst_token_add_back.c lst_token_add_front.c lst_token_create_node.c \
-							lst_token_delone.c lst_token_last.c lst_token_size.c print_lst_token.c
+LST_LST_TOKEN_ACTIONS :=	lst_token_add_node.c lst_token_delone.c print_lst_token.c
 
-LST_INC :=	minishell.h structures.h lst_utils.h parsing.h
+LST_INC :=	minishell.h structures.h lst_utils.h parsing.h utils.h
 
 #Directories
 D_SRC :=	src/
