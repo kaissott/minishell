@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:14:31 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/03 21:17:48 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/04 19:51:26 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	create_node(t_main *main, char *line)
 	// node2 = malloc(sizeof(t_lst_node));
 	main->node = node;
 	main->node->cmd = ft_split(line, ' ');
-	main->node->infile.fd = open("Makefile", O_RDONLY);
+	main->node->infile.fd = STDIN_FILENO;
 	main->node->outfile.fd = STDOUT_FILENO;
 	main->node->outfile.type = T_REDIR_TRUNC;
 	// main->node->next = node2;

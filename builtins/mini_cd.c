@@ -6,18 +6,12 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/03 21:53:16 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/04 20:08:01 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/main.h"
 
-void	free_and_exit_error(t_main *main, char *error, int err_number)
-{
-	free_struct(main);
-	perror(error);
-	exit(err_number);
-}
 void	env_pwd_update(t_main *main)
 {
 	t_env	*temp;
@@ -70,22 +64,53 @@ void	env_oldpwd_update(t_main *main)
 	}
 }
 
+char	*cd_to_home(t_main *main, char *path)
+{
+	t_env	*env;
+	char	*str;
+	char	*dst;
+
+	env = main->mainenv;
+	while (env)
+	{
+		if (ft_strncmp(env->env, "HOME=", 5) == 0)
+		{
+			str = ft_strdup(env->env + 5);
+			if (!str)
+				free_and_exit_error(main, ERR_MALLOC, 12);
+		}
+		env = env->next;
+	}
+	if (path)
+	{
+		dst = ft_strjoin(str, path + 1);
+		printf("%s\n", dst);
+		if (!dst)
+			free_and_exit_error(main, ERR_MALLOC, 12);
+	}
+	else
+		dst = str;
+	return (dst);
+}
+
 bool	mini_cd(char *line, t_main *main)
 {
 	char	**tab;
+	char	*str;
 
 	env_oldpwd_update(main);
 	tab = main->node->cmd;
-	if (tab[1])
-	{
-		if (chdir(tab[1]) == -1)
-			free_and_exit_error(main, ERR_CHDIR, errno);
-	}
+	if (tab[1] == NULL || tab[1][0] == '~')
+		str = cd_to_home(main, tab[1]);
 	else
+		str = ft_strdup(tab[1]);
+	if (chdir(str) == -1)
 	{
-		if (chdir("~") == -1)
-			free_and_exit_error(main, ERR_CHDIR, errno);
+		perror("chdir error");
+		free(str);
+		return (false);
 	}
+	free(str);
 	env_pwd_update(main);
 	return (true);
 }

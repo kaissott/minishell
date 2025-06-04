@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/03 22:33:17 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/04 19:15:18 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,11 @@ int	free_struct(t_main *main)
 	if (main->node != NULL)
 		free_node(main);
 	free(main);
+}
+
+void	free_and_exit_error(t_main *main, char *error, int err_number)
+{
+	free_struct(main);
+	perror(error);
+	exit(err_number);
 }

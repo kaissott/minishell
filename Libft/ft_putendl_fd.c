@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 00:23:04 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/03 22:00:29 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/04 19:45:41 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ int	ft_putendl_fd(char *s, int fd)
 		i++;
 	}
 	write(fd, "\n", 1);
+	return (0);
 }

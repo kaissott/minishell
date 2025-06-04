@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 00:19:50 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/03 21:55:21 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/04 19:45:30 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ int	ft_putstr_fd(char *s, int fd)
 			return (-1);
 		i++;
 	}
+	return (0);
 }
