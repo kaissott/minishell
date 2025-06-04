@@ -1,45 +1,67 @@
 #include "../../includes/minishell.h"
 
-ssize_t	create_token_node(t_token **lst_token, const char *cmd,
-		const ssize_t len, t_token_type type)
+int	is_operator(const char *str)
 {
-	t_token	*token_node;
-	char	*value;
+	return (!ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "<<", 2)
+		|| str[0] == '|' || str[0] == '>' || str[0] == '<');
+}
 
-	value = ft_substr(cmd, 0, len);
-	if (!value)
-		return (-1);
-	token_node = lst_token_create_node(value, type);
-	if (!token_node)
+static t_token_type	handle_redir(char *cmd, t_error *error)
+{
+	size_t	i;
+	size_t	start;
+
+	i = 1;
+	start = 0;
+	if ((cmd[0] == '>' && cmd[i] == '>') || (cmd[0] == '<' && cmd[i] == '<'))
+		start = 1;
+	while (cmd[i + start] == ' ')
+		i++;
+	if (is_operator(&cmd[i + start]))
 	{
-		free(value);
-		return (-1);
+		set_error(error, ERR_UNEXPECTED_TOKEN, cmd[i + start]);
+		return (T_ERROR);
 	}
-	lst_token_add_back(lst_token, token_node);
-	return (1);
+	else if (start == 0)
+	{
+		if (cmd[0] == '>')
+			return (T_REDIR_TRUNC);
+		return (T_REDIR_IN);
+	}
+	else if (cmd[0] == '>')
+		return (T_REDIR_APPEND);
+	return (T_REDIR_TRUNC);
 }
 
-ssize_t	get_operator_token(t_token **lst_token, char *cmd)
+t_token_type	get_token_type(t_error *error, char *cmd)
 {
-	ssize_t			len;
-	t_token_type	token_type;
-
-	len = 1;
-	token_type = get_token_type(cmd);
-	if (token_type < 0)
-		return (token_type);
-	if (token_type == T_HEREDOC || token_type == T_REDIR_APPEND)
-		len = 2;
-	if (create_token_node(lst_token, cmd, len, token_type) == -1)
-		return (-1);
-	return (len);
+	if (cmd[0] == '|')
+	{
+		if (cmd[1] == '|')
+		{
+			set_error(error, ERR_DOUBLE_PIPE, '\0');
+			return (T_ERROR);
+		}
+		return (T_PIPE);
+	}
+	else if (cmd[0] == '<' || cmd[0] == '>')
+		return (handle_redir(cmd, error));
+	return (T_STRING);
 }
 
-void	toggle_quote_state(char quote_char, bool *in_double_quote,
-		bool *in_single_quote)
+void	toggle_quote_state(char quote_char, bool *in_dquote, bool *in_squote)
 {
-	if (quote_char == '"' && !*in_single_quote)
-		*in_double_quote = !*in_double_quote;
-	else if (quote_char == '\'' && !*in_double_quote)
-		*in_single_quote = !*in_single_quote;
+	if (quote_char == '"' && !*in_squote)
+		*in_dquote = !*in_dquote;
+	else if (quote_char == '\'' && !*in_dquote)
+		*in_squote = !*in_squote;
+}
+
+t_token_type	get_token_quoted_type(bool *in_dquote, bool *in_squote)
+{
+	if (*in_dquote)
+		return (T_ENV_STRING);
+	else if (*in_squote)
+		return (T_STRING);
+	return (T_ERROR);
 }

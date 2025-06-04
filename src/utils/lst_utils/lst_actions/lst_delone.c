@@ -1,8 +1,8 @@
 #include "../../../../includes/minishell.h"
 
-void	lst_delone(t_lst_node *lst, t_lst_node *node_to_delete)
+void	lst_delone(t_exec *lst, t_exec *node_to_delete)
 {
-	t_lst_node	*new_next_node;
+	t_exec	*new_next_node;
 
 	if (lst && node_to_delete)
 	{

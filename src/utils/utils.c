@@ -1,19 +1,26 @@
 #include "../../includes/minishell.h"
 
-char	*get_token_error_msg(int err_code)
+void	set_error(t_error *error, t_parse_error error_type,
+		char unexpected_token)
 {
-	if (err_code == MISSING_SINGLE_QUOTE)
-		return ("Missing single quote (').");
-	else if (err_code == MISSING_DOUBLE_QUOTE)
-		return ("Missing double quote (\").");
-	else if (err_code == T_UNEXPECTED_TOKEN)
-		return ("syntax error near unexpected token.");
-	else if (err_code == T_DOUBLE_PIPE_ERROR)
-		return ("Double pipe.");
-	else if (err_code == -1)
-		return ("Token creation failed (malloc error).");
-	else
-		return (NULL);
+	error->error_type = error_type;
+	if (unexpected_token)
+		error->unexpected_token = unexpected_token;
+}
+
+void	print_token_error_msg(t_parse_error err_code, char unexpected_token)
+{
+	if (err_code == ERR_MISSING_SINGLE_QUOTE)
+		fprintf(stderr, "Missing single quote (').\n");
+	else if (err_code == ERR_MISSING_DOUBLE_QUOTE)
+		fprintf(stderr, "Missing double quote (\").\n");
+	else if (err_code == ERR_UNEXPECTED_TOKEN)
+		fprintf(stderr, "%s `%c'\n", "syntax error near unexpected token ",
+			unexpected_token);
+	else if (err_code == ERR_DOUBLE_PIPE)
+		fprintf(stderr, "Double pipe.\n");
+	else if (err_code == ERR_MALLOC)
+		fprintf(stderr, "Token creation failed (malloc error).\n");
 }
 
 char	*char_realloc(char *s, char c)
@@ -39,26 +46,26 @@ char	*char_realloc(char *s, char c)
 	return (str);
 }
 
-void	free_lst(t_lst_node **lst)
+void	free_lst(t_exec **lst_exec)
 {
-	t_lst_node	*tmp;
-	size_t		i;
+	t_exec	*tmp;
+	size_t	i;
 
-	while (*lst)
+	while (*lst_exec)
 	{
 		i = 0;
-		tmp = (*lst)->next;
-		if ((*lst)->cmd)
+		tmp = (*lst_exec)->next;
+		if ((*lst_exec)->cmd)
 		{
-			while ((*lst)->cmd[i])
+			while ((*lst_exec)->cmd[i])
 			{
-				free((*lst)->cmd[i]);
+				free((*lst_exec)->cmd[i]);
 				i++;
 			}
-			free((*lst)->cmd);
+			free((*lst_exec)->cmd);
 		}
-		free(*lst);
-		*lst = tmp;
+		free(*lst_exec);
+		*lst_exec = tmp;
 	}
 }
 

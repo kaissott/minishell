@@ -1,17 +1,31 @@
 #include "../../../../includes/minishell.h"
 
-void	lst_add_back(t_lst_node **lst, t_lst_node *new)
+static t_exec	*lst_last(t_exec *lst_exec)
 {
-	t_lst_node	*last;
-
-	if (lst && new)
+	if (lst_exec)
 	{
-		if (*lst)
+		while (lst_exec)
 		{
-			last = lst_last(*lst);
+			if (lst_exec->next == NULL)
+				return (lst_exec);
+			lst_exec = lst_exec->next;
+		}
+	}
+	return (NULL);
+}
+
+void	lst_add_back(t_exec **lst_exec, t_exec *new)
+{
+	t_exec	*last;
+
+	if (lst_exec && new)
+	{
+		if (*lst_exec)
+		{
+			last = lst_last(*lst_exec);
 			last->next = new;
 		}
 		else
-			*lst = new;
+			*lst_exec = new;
 	}
 }

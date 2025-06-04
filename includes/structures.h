@@ -3,9 +3,7 @@
 
 typedef enum e_token_type
 {
-	T_UNEXPECTED_TOKEN = -3,
-	T_DOUBLE_PIPE_ERROR,
-	T_ERROR,
+	T_ERROR = -1,
 	T_WORD,
 	T_STRING,
 	T_ENV_STRING,
@@ -23,35 +21,40 @@ typedef struct s_token
 	struct s_token		*next;
 }						t_token;
 
-typedef enum e_token_error
+typedef enum e_parse_error
 {
-	MISSING_SINGLE_QUOTE = -5,
-	MISSING_DOUBLE_QUOTE,
-}						t_token_error;
+	ERR_NONE = 0,
+	ERR_MALLOC = -1,
+	ERR_MISSING_SINGLE_QUOTE = -2,
+	ERR_MISSING_DOUBLE_QUOTE = -3,
+	ERR_UNEXPECTED_TOKEN = -4,
+	ERR_DOUBLE_PIPE = -5
+}							t_parse_error;
 
-typedef enum e_error
+typedef struct s_error
 {
-	WRONG_FILE
-}						t_error;
+	t_parse_error	error_type;
+	char			unexpected_token;
+}					t_error;
 
 typedef struct s_file
 {
-	int 			fd;
+	int				fd;
 	t_token_type	type;
 }					t_file;
 
 typedef struct s_lst_node
 {
-	char 				**cmd;
+	char				**cmd;
 	t_file				infile;
 	t_file				outfile;
 	struct s_lst_node	*next;
-}						t_lst_node;
+}						t_exec;
 
 typedef struct s_main
 {
 	char				*env;
-	t_lst_node			*node;
+	t_exec				*node;
 }						t_main;
 
 #endif

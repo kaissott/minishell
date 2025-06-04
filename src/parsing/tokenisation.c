@@ -1,63 +1,78 @@
 #include "../../includes/minishell.h"
 
-static t_token_type	get_token_quoted_type(bool *in_double_quote,
-		bool *in_single_quote)
+static ssize_t	extract_quoted_token(t_token **lst_token, t_error *error,
+		char *cmd)
 {
-	if (*in_double_quote)
-		return (T_ENV_STRING);
-	else if (*in_single_quote)
-		return (T_STRING);
-	return (T_ERROR);
-}
-
-static ssize_t	extract_quoted_token(t_token **lst_token, char *cmd)
-{
-	ssize_t			len;
-	t_token_type	token_type;
-	bool			in_single_quote;
-	bool			in_double_quote;
+	ssize_t	len;
+	bool	in_squote;
+	bool	in_dquote;
 
 	len = 1;
-	in_single_quote = false;
-	in_double_quote = false;
-	toggle_quote_state(cmd[0], &in_double_quote, &in_single_quote);
-	token_type = get_token_quoted_type(&in_double_quote, &in_single_quote);
+	in_squote = false;
+	in_dquote = false;
+	toggle_quote_state(cmd[0], &in_dquote, &in_squote);
 	while (cmd[len] && cmd[len] != cmd[0])
 		len++;
 	if (cmd[len] == cmd[0] && len > 1)
 	{
-		toggle_quote_state(cmd[0], &in_double_quote, &in_single_quote);
+		toggle_quote_state(cmd[0], &in_dquote, &in_squote);
 		len++;
-		if (create_token_node(lst_token, &cmd[1], len - 2, token_type) == -1)
+		if (lst_token_add_node(lst_token, &cmd[1], len - 2,
+				get_token_quoted_type(&in_dquote, &in_squote)) == ERR_MALLOC)
+		{
+			set_error(error, ERR_MALLOC, '\0');
 			return (-1);
+		}
 		return (len);
 	}
 	else if (len == 1 && cmd[len])
 		return (2);
-	if (in_single_quote)
-		return (MISSING_SINGLE_QUOTE);
-	return (MISSING_DOUBLE_QUOTE);
+	return (-1);
 }
 
-static ssize_t	extract_word_token(t_token **lst_token, char *cmd)
+static ssize_t	extract_word_token(t_token **lst_token, t_error *error,
+		char *cmd)
 {
 	ssize_t	len;
 
 	len = 0;
 	if (cmd[0] == '"' || cmd[0] == '\'')
-		return (extract_quoted_token(lst_token, cmd));
+		return (extract_quoted_token(lst_token, error, cmd));
 	else
 	{
 		while (cmd[len] && cmd[len] != ' ' && !is_operator(&cmd[len])
 			&& cmd[len] != '"' && cmd[len] != '\'')
 			len++;
-		if (create_token_node(lst_token, cmd, len, T_WORD) == -1)
+		if (lst_token_add_node(lst_token, cmd, len, T_WORD) == ERR_MALLOC)
+		{
+			set_error(error, ERR_MALLOC, '\0');
 			return (-1);
+		}
 		return (len);
 	}
 }
 
-int	tokenisation(t_token **lst_token, char *cmd)
+static ssize_t	extract_operator_token(t_token **lst_token, t_error *error,
+		char *cmd)
+{
+	ssize_t			len;
+	t_token_type	token_type;
+
+	len = 1;
+	token_type = get_token_type(error, cmd);
+	if (token_type == T_ERROR)
+		return (-1);
+	if (token_type == T_HEREDOC || token_type == T_REDIR_APPEND)
+		len = 2;
+	if (lst_token_add_node(lst_token, cmd, len, token_type) == ERR_MALLOC)
+	{
+		set_error(error, ERR_MALLOC, '\0');
+		return (-1);
+	}
+	return (len);
+}
+
+t_parse_error	tokenisation(t_token **lst_token, t_error *error, char *cmd)
 {
 	ssize_t	i;
 	ssize_t	token_len;
@@ -67,27 +82,18 @@ int	tokenisation(t_token **lst_token, char *cmd)
 	{
 		while (cmd[i] == ' ')
 			i++;
+		if (!cmd[i])
+			break ;
 		if (is_operator(&cmd[i]))
-			token_len = get_operator_token(lst_token, &cmd[i]);
+			token_len = extract_operator_token(lst_token, error, &cmd[i]);
 		else
-			token_len = extract_word_token(lst_token, &cmd[i]);
-		if (token_len <= 0)
+			token_len = extract_word_token(lst_token, error, &cmd[i]);
+		if (token_len <= 0 || error->error_type != ERR_NONE)
 		{
 			free_lst_token(lst_token);
-			return ((int)token_len);
+			return (error->error_type);
 		}
 		i += token_len;
 	}
-	return (0);
-}
-
-void	parse(t_lst_node **lst, t_token **lst_token, char *cmd)
-{
-	int	process_token;
-
-	process_token = tokenisation(lst_token, cmd);
-	if (process_token < 0)
-		printf("%s\n", get_token_error_msg(process_token));
-	print_lst_token(*lst_token, "\nToken lst :\n");
-	create_exec_lst(lst, lst_token);
+	return (ERR_NONE);
 }

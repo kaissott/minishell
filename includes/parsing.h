@@ -4,14 +4,15 @@
 # include "minishell.h"
 # include "structures.h"
 
-void			parse(t_lst_node **lst, t_token **lst_token, char *cmd);
+t_parse_error	tokenisation(t_token **lst_token, t_error *error, char *cmd);
 int				is_operator(const char *str);
-t_token_type	get_token_type(char *cmd);
-ssize_t			create_token_node(t_token **lst_token, const char *cmd,
-					const ssize_t len, t_token_type type);
-ssize_t			get_operator_token(t_token **lst_token, char *cmd);
-void			toggle_quote_state(char quote_char, bool *in_double_quote,
-					bool *in_single_quote);
-int				create_exec_lst(t_lst_node **lst, t_token **token_lst);
-
+t_token_type	get_token_type(t_error *error, char *cmd);
+void			toggle_quote_state(char quote_char, bool *in_dquote,
+					bool *in_squote);
+t_token_type	get_token_quoted_type(bool *in_dquote, bool *in_squote);
+int				create_exec_lst(t_exec **lst_exec, t_token **token_lst);
+void			free_cmd_array(char **cmd);
+t_exec			*create_exec_node(void);
+size_t			calc_word_nbr(t_token **token_lst);
+bool			check_redirection_token(t_token_type token_type);
 #endif

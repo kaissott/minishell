@@ -1,10 +1,10 @@
 #include "../../../../includes/minishell.h"
 
-t_lst_node	*lst_create_node(void)
+t_exec	*lst_create_node(void)
 {
-	t_lst_node	*new_node;
+	t_exec	*new_node;
 
-	new_node = ft_calloc(1, sizeof(t_lst_node));
+	new_node = ft_calloc(1, sizeof(t_exec));
 	if (!new_node)
 		return (NULL);
 	// new_node->value = ft_strdup(value);
