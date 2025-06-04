@@ -15,8 +15,14 @@ void	print_token_error_msg(t_parse_error err_code, char unexpected_token)
 	else if (err_code == ERR_MISSING_DOUBLE_QUOTE)
 		fprintf(stderr, "Missing double quote (\").\n");
 	else if (err_code == ERR_UNEXPECTED_TOKEN)
-		fprintf(stderr, "%s `%c'\n", "syntax error near unexpected token ",
-			unexpected_token);
+	{
+		if (!unexpected_token)
+			fprintf(stderr, "%s `newline'\n",
+				"syntax error near unexpected token ");
+		else
+			fprintf(stderr, "%s `%c'\n", "syntax error near unexpected token ",
+				unexpected_token);
+	}
 	else if (err_code == ERR_DOUBLE_PIPE)
 		fprintf(stderr, "Double pipe.\n");
 	else if (err_code == ERR_MALLOC)

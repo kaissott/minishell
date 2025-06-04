@@ -15,9 +15,9 @@ static t_token_type	handle_redir(char *cmd, t_error *error)
 	start = 0;
 	if ((cmd[0] == '>' && cmd[i] == '>') || (cmd[0] == '<' && cmd[i] == '<'))
 		start = 1;
-	while (cmd[i + start] == ' ')
+	while (cmd[i] && cmd[i + start] == ' ')
 		i++;
-	if (is_operator(&cmd[i + start]))
+	if (is_operator(&cmd[i + start]) || !cmd[i + start])
 	{
 		set_error(error, ERR_UNEXPECTED_TOKEN, cmd[i + start]);
 		return (T_ERROR);
