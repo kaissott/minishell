@@ -51,11 +51,11 @@ typedef struct s_error
 	char			unexpected_token;
 }	t_error;
 
-typedef struct s_here_doc
+typedef struct s_heredoc
 {
 	int					fd;
 	char				*filepath;
-	struct s_here_doc	*next;
+	struct s_heredoc	*next;
 }	t_heredoc;
 
 typedef struct s_file
