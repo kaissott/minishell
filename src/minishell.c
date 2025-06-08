@@ -1,9 +1,9 @@
 #include "../includes/minishell.h"
 
-static void	parse(t_exec **lst_exec, t_token **lst_token, t_error *error,
+static void	parse(t_exec **exec_lst, t_token **token_lst, t_error *error,
 		char *cmd)
 {
-	if (tokenisation(lst_token, error, cmd) != ERR_NONE)
+	if (tokenisation(token_lst, error, cmd) != ERR_NONE)
 	{
 		print_token_error_msg(error->error_type, error->unexpected_token);
 		error->error_type = 0;
@@ -11,32 +11,37 @@ static void	parse(t_exec **lst_exec, t_token **lst_token, t_error *error,
 	}
 	else
 	{
-		print_lst_token(*lst_token, "\nToken lst :\n");
-		create_exec_lst(lst_exec, lst_token);
+		print_token_lst(*token_lst, "\nToken lst before parsing :\n");
+		create_exec_lst(exec_lst, token_lst);
+		print_lst(*exec_lst, "Exec lst : \n");
+		print_token_lst(*token_lst, "Token lst after : \n");
+		// free_token_lst(token_lst);
+		free_exec_lst(exec_lst);
 	}
 }
 
 void	start_shell(void)
 {
 	char	*rl;
-	t_exec	*lst_exec;
-	t_token	*lst_token;
+	t_exec	*exec_lst;
+	t_token	*token_lst;
 	t_error	*error;
 
-	lst_exec = NULL;
-	lst_token = NULL;
+	exec_lst = NULL;
+	token_lst = NULL;
 	error = ft_calloc(1, sizeof(t_error));
 	if (!error)
 		print_token_error_msg(ERR_MALLOC, '\0');
 	while (1)
 	{
 		rl = readline("$> ");
-		if (*rl)
-			add_history(rl);
-		parse(&lst_exec, &lst_token, error, rl);
+		if (!rl)
+			return ;
+		add_history(rl);
+		parse(&exec_lst, &token_lst, error, rl);
 		free(rl);
-		free_lst(&lst_exec);
-		// free_lst_token(&lst_token);
+		free_exec_lst(&exec_lst);
+		// free_token_lst(&token_lst);
 		rl_on_new_line();
 	}
 	clear_history();

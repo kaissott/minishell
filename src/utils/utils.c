@@ -52,38 +52,28 @@ char	*char_realloc(char *s, char c)
 	return (str);
 }
 
-void	free_lst(t_exec **lst_exec)
+int	secure_open(int *fd, const char *filepath)
 {
-	t_exec	*tmp;
-	size_t	i;
-
-	while (*lst_exec)
+	if (!fd || !filepath)
+		return (-1);
+	*fd = open(filepath, O_RDONLY);
+	if (*fd == -1)
 	{
-		i = 0;
-		tmp = (*lst_exec)->next;
-		if ((*lst_exec)->cmd)
-		{
-			while ((*lst_exec)->cmd[i])
-			{
-				free((*lst_exec)->cmd[i]);
-				i++;
-			}
-			free((*lst_exec)->cmd);
-		}
-		free(*lst_exec);
-		*lst_exec = tmp;
+		perror("open");
+		return (-1);
 	}
+	return (0);
 }
 
-void	free_lst_token(t_token **lst_token)
+int	secure_close(int *fd)
 {
-	t_token	*tmp;
-
-	while (*lst_token)
+	if (!fd || *fd < 0)
+		return (0);
+	if (close(*fd) == -1)
 	{
-		tmp = (*lst_token)->next;
-		free((*lst_token)->value);
-		free(*lst_token);
-		*lst_token = tmp;
+		perror("close");
+		return (-1);
 	}
+	*fd = -1;
+	return (0);
 }

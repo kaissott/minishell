@@ -12,6 +12,7 @@
 # include "lst_utils.h"
 # include "parsing.h"
 # include "structures.h"
+# include "tokenisation.h"
 # include "utils.h"
 
 #endif

@@ -1,58 +1,72 @@
 #include "../../includes/minishell.h"
 
-static ssize_t	extract_quoted_token(t_token **lst_token, t_error *error,
-		char *cmd)
+static ssize_t	extract_quoted_part(t_error *error, t_word_part **parts,
+		char *cmd, char quote)
 {
-	ssize_t	len;
-	bool	in_squote;
-	bool	in_dquote;
+	size_t	len;
 
 	len = 1;
-	in_squote = false;
-	in_dquote = false;
-	toggle_quote_state(cmd[0], &in_dquote, &in_squote);
-	while (cmd[len] && cmd[len] != cmd[0])
+	while (cmd[len] && cmd[len] != quote)
 		len++;
-	if (cmd[len] == cmd[0] && len > 1)
+	if (!cmd[len])
 	{
-		toggle_quote_state(cmd[0], &in_dquote, &in_squote);
-		len++;
-		if (lst_token_add_node(lst_token, &cmd[1], len - 2,
-				get_token_quoted_type(&in_dquote, &in_squote)) == ERR_MALLOC)
-		{
-			set_error(error, ERR_MALLOC, '\0');
-			return (-1);
-		}
-		return (len);
+		if (quote == '"')
+			set_error(error, ERR_MISSING_DOUBLE_QUOTE, '"');
+		else
+			set_error(error, ERR_MISSING_SINGLE_QUOTE, '\'');
+		return (-1);
 	}
-	else if (len == 1 && cmd[len])
+	if (len == 1)
 		return (2);
-	return (-1);
+	if (create_and_add_word_part(parts, &cmd[1], len - 1, quote) != ERR_NONE)
+		return (-1);
+	return (len + 1);
 }
 
-static ssize_t	extract_word_token(t_token **lst_token, t_error *error,
-		char *cmd)
+static ssize_t	extract_unquoted_part(t_word_part **parts, char *cmd)
 {
-	ssize_t	len;
+	size_t	len;
 
 	len = 0;
-	if (cmd[0] == '"' || cmd[0] == '\'')
-		return (extract_quoted_token(lst_token, error, cmd));
-	else
-	{
-		while (cmd[len] && cmd[len] != ' ' && !is_operator(&cmd[len])
-			&& cmd[len] != '"' && cmd[len] != '\'')
-			len++;
-		if (lst_token_add_node(lst_token, cmd, len, T_WORD) == ERR_MALLOC)
-		{
-			set_error(error, ERR_MALLOC, '\0');
-			return (-1);
-		}
-		return (len);
-	}
+	while (cmd[len] && cmd[len] != ' ' && cmd[len] != '"' && cmd[len] != '\''
+		&& !is_operator(&cmd[len]))
+		len++;
+	if (create_and_add_word_part(parts, cmd, len, '\0') != ERR_NONE)
+		return (-1);
+	return (len);
 }
 
-static ssize_t	extract_operator_token(t_token **lst_token, t_error *error,
+static ssize_t	extract_word_token(t_token **token_lst, t_error *error,
+		char *cmd)
+{
+	ssize_t	i;
+	ssize_t	part_len;
+	t_token	*new_token;
+
+	i = 0;
+	new_token = ft_calloc(1, sizeof(t_token));
+	if (!new_token)
+		return (-1);
+	while (cmd[i] && cmd[i] != ' ' && !is_operator(&cmd[i]))
+	{
+		if (cmd[i] == '"' || cmd[i] == '\'')
+			part_len = extract_quoted_part(error, &new_token->parts, &cmd[i],
+					cmd[i]);
+		else
+			part_len = extract_unquoted_part(&new_token->parts, &cmd[i]);
+		if (part_len <= 0)
+		{
+			free_token_lst(&new_token);
+			return (-1);
+		}
+		i += part_len;
+	}
+	if (token_lst_add_token_parts(token_lst, new_token) != ERR_NONE)
+		return (-1);
+	return (i);
+}
+
+static ssize_t	extract_operator_token(t_token **token_lst, t_error *error,
 		char *cmd)
 {
 	ssize_t			len;
@@ -64,7 +78,7 @@ static ssize_t	extract_operator_token(t_token **lst_token, t_error *error,
 		return (-1);
 	if (token_type == T_HEREDOC || token_type == T_REDIR_APPEND)
 		len = 2;
-	if (lst_token_add_node(lst_token, cmd, len, token_type) == ERR_MALLOC)
+	if (token_lst_add_node(token_lst, cmd, len, token_type) != ERR_NONE)
 	{
 		set_error(error, ERR_MALLOC, '\0');
 		return (-1);
@@ -72,7 +86,7 @@ static ssize_t	extract_operator_token(t_token **lst_token, t_error *error,
 	return (len);
 }
 
-t_parse_error	tokenisation(t_token **lst_token, t_error *error, char *cmd)
+t_parse_error	tokenisation(t_token **token_lst, t_error *error, char *cmd)
 {
 	ssize_t	i;
 	ssize_t	token_len;
@@ -85,12 +99,12 @@ t_parse_error	tokenisation(t_token **lst_token, t_error *error, char *cmd)
 		if (!cmd[i])
 			break ;
 		if (is_operator(&cmd[i]))
-			token_len = extract_operator_token(lst_token, error, &cmd[i]);
+			token_len = extract_operator_token(token_lst, error, &cmd[i]);
 		else
-			token_len = extract_word_token(lst_token, error, &cmd[i]);
+			token_len = extract_word_token(token_lst, error, &cmd[i]);
 		if (token_len <= 0 || error->error_type != ERR_NONE)
 		{
-			free_lst_token(lst_token);
+			free_token_lst(token_lst);
 			return (error->error_type);
 		}
 		i += token_len;
