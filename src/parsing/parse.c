@@ -1,108 +1,120 @@
 #include "../../includes/minishell.h"
 
-t_lst_node	*create_string_node(t_token **token_lst, t_lst_node *new_node,
-		size_t word_nbr)
+static int	handle_redirection(t_exec *new_cmd, t_token **token_lst,
+		t_token *token)
 {
-	size_t	i;
-	size_t	node_value_len;
-
-	i = 0;
-	new_node->cmd = ft_calloc(word_nbr + 1, sizeof(char *));
-	if (!new_node->cmd)
-		return (NULL);
-	while (*token_lst && word_nbr > 0)
+	if (token->next->value && token->next->type == T_WORD)
 	{
-		node_value_len = ft_strlen((*token_lst)->value);
-		new_node->cmd[i] = ft_calloc(node_value_len + 1, sizeof(char));
-		if (!new_node->cmd[i])
-			return (NULL);
-		ft_memcpy(new_node->cmd[i], (*token_lst)->value, node_value_len);
-		i++;
-		word_nbr--;
-		lst_token_delone(token_lst, *token_lst);
-	}
-	return (new_node);
-}
-
-t_lst_node	*handle_redirection(t_token **token_lst, t_token *node,
-		t_lst_node *new_node)
-{
-	if (node->next->value)
-	{
-		if (node->type == T_REDIR_IN)
+		if (token->type == T_REDIR_IN)
 		{
-			new_node->infile.fd = check_file(node->next->value, node->type);
-			new_node->infile.type = node->type;
+			if (new_cmd->infile.fd > 0)
+				if (secure_close(&new_cmd->infile.fd) == -1)
+					return (-1);
+			new_cmd->infile.fd = check_file(token->next->value, token->type);
+			new_cmd->infile.type = token->type;
 		}
 		else
 		{
-			new_node->outfile.fd = check_file(node->next->value, node->type);
-			new_node->outfile.type = node->type;
+			if (new_cmd->outfile.fd > 0)
+				if (secure_close(&new_cmd->outfile.fd) == -1)
+					return (-1);
+			new_cmd->outfile.fd = check_file(token->next->value, token->type);
+			new_cmd->outfile.type = token->type;
 		}
+		token_lst_delone(token_lst, token->next);
+		token_lst_delone(token_lst, token);
+		return (0);
 	}
-	lst_token_delone(token_lst, node->next);
-	lst_token_delone(token_lst, node);
-	return (new_node);
+	return (-1);
 }
 
-int	create_exec_lst(t_lst_node **lst, t_token **token_lst)
+static t_exec	*handle_pipe(t_exec **exec_lst, t_exec *new_cmd,
+		t_token **token_lst, t_token *token)
 {
-	size_t		i;
-	t_token		*tmp;
-	t_lst_node	*new_node;
+	lst_add_back(exec_lst, new_cmd);
+	token_lst_delone(token_lst, token);
+	new_cmd = create_exec_cmd();
+	if (!new_cmd)
+		return (NULL);
+	return (new_cmd);
+}
 
-	i = 0;
-	new_node = ft_calloc(1, sizeof(t_lst_node));
-	if (!new_node)
+static int	handle_heredoc(t_exec *new_cmd, t_token **token_lst, t_token *token,
+		t_heredoc **heredoc_lst)
+{
+	t_heredoc	*new_heredoc;
+
+	if (!token->next || token->next->type != T_WORD)
+		return (-1);
+	new_heredoc = create_heredoc(heredoc_lst);
+	if (!new_heredoc)
+		return (-1);
+	new_heredoc->fd = open(new_heredoc->filepath, O_WRONLY | O_CREAT | O_TRUNC,
+			0644);
+	if (new_heredoc->fd == -1)
+		return (-1);
+	if (write_in_heredoc(&new_heredoc->fd, token->next->value) == -1)
+		return (-1);
+	if (secure_close(&new_heredoc->fd) == -1)
+		return (-1);
+	if (new_cmd->infile.fd > 0)
+		close(new_cmd->infile.fd);
+	new_cmd->infile.fd = open(new_heredoc->filepath, O_RDONLY);
+	new_cmd->infile.type = T_HEREDOC;
+	token_lst_delone(token_lst, token->next);
+	token_lst_delone(token_lst, token);
+	return (0);
+}
+
+static int	handle_token(t_exec *new_cmd, t_token **token_lst, t_token *token,
+		t_heredoc **heredoc_lst)
+{
+	if (token->type == T_WORD)
+	{
+		new_cmd->cmd = expand_args(new_cmd->cmd, token->value);
+		if (!new_cmd->cmd)
+			return (-1);
+		token_lst_delone(token_lst, token);
+		return (0);
+	}
+	else if (token->type == T_HEREDOC)
+	{
+		if (handle_heredoc(new_cmd, token_lst, token, heredoc_lst) == -1)
+			return (-1);
+	}
+	else if (token->type >= T_REDIR_IN && token->type <= T_REDIR_APPEND)
+	{
+		if (handle_redirection(new_cmd, token_lst, token) == -1)
+			return (-1);
+	}
+	else
+		return (-1);
+	return (0);
+}
+
+int	create_exec_lst(t_exec **exec_lst, t_token **token_lst)
+{
+	t_exec		*new_cmd;
+	t_heredoc	*heredoc_lst;
+
+	heredoc_lst = NULL;
+	new_cmd = create_exec_cmd();
+	if (!new_cmd)
 		return (-1);
 	while (*token_lst)
 	{
-		if (!(*token_lst)->next || (*token_lst)->type == T_PIPE)
+		if ((*token_lst)->type == T_PIPE)
 		{
-			printf("in t_pipe or end \n");
-			lst_add_back(lst, new_node);
-			lst_token_delone(token_lst, *token_lst);
-			new_node = ft_calloc(1, sizeof(t_lst_node));
-			if (!new_node)
+			new_cmd = handle_pipe(exec_lst, new_cmd, token_lst, *token_lst);
+			if (!new_cmd)
 				return (-1);
 		}
-		if ((*token_lst)->type == T_HEREDOC && (*token_lst)->next)
-		{
-		}
-		if (((*token_lst)->type == T_REDIR_IN
-				|| (*token_lst)->type == T_REDIR_TRUNC
-				|| (*token_lst)->type == T_REDIR_APPEND) && (*token_lst)->next
-			&& (*token_lst)->next->value)
-		{
-			printf("in t_file \n");
-			new_node = handle_redirection(token_lst, *token_lst, new_node);
-			if (!new_node)
-				return (-1);
-			printf("new_node->infile.fd : %d\n", new_node->infile.fd);
-			printf("new_node->outfile.fd : %d\n", new_node->outfile.fd);
-		}
-		else if ((*token_lst)->type == T_WORD
-			|| (*token_lst)->type == T_ENV_STRING)
-		{
-			printf("in t_word \n");
-			tmp = *token_lst;
-			while (tmp && (tmp->type >= T_WORD && tmp->type <= T_ENV_STRING))
-			{
-				i++;
-				tmp = tmp->next;
-			}
-			printf("i : %zu\n", i);
-			new_node = create_string_node(token_lst, new_node, i);
-			if (!new_node)
-				return (-1);
-			printf("new_node->cmd[0] : %s\n", new_node->cmd[0]);
-			i = 0;
-		}
+		if (handle_token(new_cmd, token_lst, *token_lst, &heredoc_lst) == -1)
+			return (-1);
 	}
-	if (new_node && (new_node->cmd || new_node->infile.fd != -1
-			|| new_node->outfile.fd != -1))
-		lst_add_back(lst, new_node);
-	print_lst(*lst, "Exec lst : \n");
-	print_lst_token(*token_lst, "Token lst after : \n");
+	if (new_cmd)
+		lst_add_back(exec_lst, new_cmd);
+	print_lst_hd(heredoc_lst, "LST HEREDOC AT END : \n");
+	free_heredoc_lst(&heredoc_lst);
 	return (0);
 }

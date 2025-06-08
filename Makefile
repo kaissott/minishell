@@ -13,15 +13,15 @@ NAME :=	minishell
 LST_EXEC :=	minishell.c
 
 LST_PARSING :=	parse.c parse_utils.c tokenisation.c \
-				tokenisation_utils.c
+				tokenisation_utils.c parse_heredoc.c
 
-LST_UTILS :=	utils.c file_utils.c
+LST_UTILS :=	file_utils.c free_utils.c utils.c
 
-LST_LST_ACTIONS :=	lst_add_back.c lst_create_node.c lst_delone.c print_lst.c
+LST_EXEC_LST_ACTIONS :=	lst_add_back.c lst_create_node.c lst_delone.c print_lst.c
 
-LST_LST_TOKEN_ACTIONS :=	lst_token_add_node.c lst_token_delone.c print_lst_token.c
+LST_TOKEN_LST_ACTIONS :=	token_lst_add_node.c token_lst_delone.c print_token_lst.c
 
-LST_INC :=	minishell.h structures.h lst_utils.h parsing.h utils.h
+LST_INC :=	minishell.h structures.h lst_utils.h parsing.h tokenisation.h utils.h
 
 #Directories
 D_SRC :=	src/
@@ -35,7 +35,7 @@ D_LST_UTILS :=	lst_utils/
 
 D_LST_ACTIONS :=	lst_actions/
 
-D_LST_TOKEN_ACTIONS :=	lst_token_actions/
+D_TOKEN_LST_ACTIONS :=	token_lst_actions/
 
 D_OBJ :=	.obj/
 
@@ -43,8 +43,8 @@ D_OBJ :=	.obj/
 SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
 		$(addprefix $(D_SRC)$(D_PARSING), $(LST_PARSING)) \
 		$(addprefix $(D_SRC)$(D_UTILS), $(LST_UTILS)) \
-		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS)$(D_LST_ACTIONS), $(LST_LST_ACTIONS)) \
-		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS)$(D_LST_TOKEN_ACTIONS), $(LST_LST_TOKEN_ACTIONS)) \
+		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS)$(D_LST_ACTIONS), $(LST_EXEC_LST_ACTIONS)) \
+		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS)$(D_TOKEN_LST_ACTIONS), $(LST_TOKEN_LST_ACTIONS)) \
 
 INC :=	$(addprefix $(D_INC), $(LST_INC))
 
