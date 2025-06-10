@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:06 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/03 21:19:32 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:03:43 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
