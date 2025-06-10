@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/10 20:28:41 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/10 21:39:06 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,8 @@ bool	mini_cd(char *line, t_main *main)
 	}
 	else
 	{
-		perror("chdir error");
-		main->error = 1;
 		free(str);
-		return (false);
+		return (set_return_err_code(main, "chdir", errno));
 	}
 	return (true);
 }

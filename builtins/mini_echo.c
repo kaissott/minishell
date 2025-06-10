@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/03 21:57:16 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/10 21:43:28 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_echo_without_flag(t_main *main, char **tab)
 		i++;
 		if (tab[i])
 		{
-			if (write(STDOUT_FILENO, " ", 1))
+			if (write(STDOUT_FILENO, " ", 1) == -1)
 				free_and_exit_error(main, ERR_WRITE, errno);
 		}
 	}
@@ -75,7 +75,6 @@ bool	mini_echo(t_main *main)
 	char	**tab;
 
 	tab = main->node->cmd;
-	;
 	if (check_echo_flag(tab) == true)
 		print_echo_with_flag(main, tab);
 	else

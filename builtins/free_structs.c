@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/04 19:15:18 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/10 21:37:32 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,10 @@ void	free_and_exit_error(t_main *main, char *error, int err_number)
 	free_struct(main);
 	perror(error);
 	exit(err_number);
+}
+int	set_return_err_code(t_main *main, char *error, int err_number)
+{
+	perror(error);
+	main->error = err_number;
+	return (err_number);
 }
