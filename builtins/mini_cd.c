@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/04 20:08:01 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:03:10 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,25 @@ bool	mini_cd(char *line, t_main *main)
 	char	**tab;
 	char	*str;
 
-	env_oldpwd_update(main);
 	tab = main->node->cmd;
 	if (tab[1] == NULL || tab[1][0] == '~')
 		str = cd_to_home(main, tab[1]);
 	else
 		str = ft_strdup(tab[1]);
-	if (chdir(str) == -1)
+	if (access(str, F_OK) == 0)
+	{
+		env_oldpwd_update(main);
+		if (chdir(str) != -1)
+		{
+			env_pwd_update(main);
+			free(str);
+		}
+	}
+	else
 	{
 		perror("chdir error");
 		free(str);
 		return (false);
 	}
-	free(str);
-	env_pwd_update(main);
 	return (true);
 }

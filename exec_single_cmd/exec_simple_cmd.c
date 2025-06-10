@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/02 17:30:59 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/10 13:49:48 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,6 @@ void	exec_simple_cmd(t_main *main, int fd_in, int fd_out)
 	env = env_to_tab(main);
 	env_path = env_path_finding(main, env);
 	path = get_path(main, env_path);
-	printf("%s", path);
-	printf("%s", main->node->cmd[0]);
-	printf("%s", main->node->cmd[1]);
-	printf("%s", env[0]);
 	execve(path, main->node->cmd, env);
 }
 
@@ -86,41 +82,6 @@ void	file_dup(int fd_in, int fd_out)
 	}
 }
 
-// int	get_outfile_simple_cmd(t_main *main)
-// {
-// 	int			fd_out;
-// 	t_lst_node	*temp;
-
-// 	temp = main->node;
-// 	if (temp->outfile.fd != NULL)
-// 	{
-// 		if (temp->outfile.type == T_REDIR_APPEND)
-// 			fd_out = open(temp->outfile.fd, O_WRONLY | O_CREAT | O_APPEND,
-// 					0644);
-// 		else if (temp->outfile.type == T_REDIR_TRUNC)
-// 			fd_out = open(temp->outfile.fd, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 		return (fd_out);
-// 	}
-// 	else
-// 		return (1);
-// }
-
-// int	get_infile_simple_cmd(t_main *main)
-// {
-// 	int			fd_in;
-// 	t_lst_node	*temp;
-
-// 	temp = main->node;
-// 	if (temp->infile.fd < 0)
-// 	{
-// 		fd_in = open(temp->infile.fd, O_RDONLY);
-// 		if (fd_in < 0)
-// 			dprintf(2, "infile crash\n");
-// 		return (fd_in);
-// 	}
-// 	else
-// 		return (0);
-// }
 
 void	init_simple_cmd(t_main *main)
 {
