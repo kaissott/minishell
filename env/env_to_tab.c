@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:40:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/10 13:50:44 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/10 20:31:56 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	**env_to_tab(t_main *main)
 		i++;
 	}
 	tab = malloc(sizeof(char *) * (i + 1));
+	if (!tab)
+		free_and_exit_error(main, ERR_MALLOC, 12);
 	tmp = main->mainenv;
 	j = 0;
 	while (i > 0)
@@ -39,14 +41,3 @@ char	**env_to_tab(t_main *main)
 	tab[j] = NULL;
 	return (tab);
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	t_main	*main;
-// 	t_env	*mainenv;
-
-// 	main = malloc(sizeof(t_main));
-// 	mainenv = env_build(env);
-// 	main->mainenv = mainenv;
-// 	env_to_tab(main);
-// }

@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/03 21:23:29 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:28:15 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ void	error_exit(char *str, int exitnbr, int fd);
 int		create_node(t_main *main, char *line);
 int		pipe_exec(t_main *main);
 int		free_struct(t_main *main);
+void	free_node(t_main *main);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/10 14:03:10 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/10 20:28:41 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	env_pwd_update(t_main *main)
 	if (getcwd(path, 1024) == NULL)
 		free_and_exit_error(main, ERR_GETCWD, errno);
 	temp = main->mainenv;
-	while (ft_strstr(temp->env, "PWD=") != 1)
+	while (temp != NULL && ft_strnstr(temp->env, "PWD=", 4) == -1)
 		temp = temp->next;
-	if (temp->env != NULL)
+	if (temp != NULL)
 	{
 		free(temp->env);
 		tmp = ft_strjoin("PWD=", path);
@@ -33,6 +33,8 @@ void	env_pwd_update(t_main *main)
 			free_and_exit_error(main, ERR_MALLOC, 12);
 		temp->env = tmp;
 	}
+	else
+		pwd(main);
 }
 
 void	env_oldpwd_update(t_main *main)
@@ -84,9 +86,9 @@ char	*cd_to_home(t_main *main, char *path)
 	if (path)
 	{
 		dst = ft_strjoin(str, path + 1);
-		printf("%s\n", dst);
 		if (!dst)
 			free_and_exit_error(main, ERR_MALLOC, 12);
+		free(str);
 	}
 	else
 		dst = str;
@@ -115,6 +117,7 @@ bool	mini_cd(char *line, t_main *main)
 	else
 	{
 		perror("chdir error");
+		main->error = 1;
 		free(str);
 		return (false);
 	}

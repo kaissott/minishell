@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/03 22:44:41 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:29:17 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,21 +83,15 @@ int	main(int ac, char **av, char **env)
 		dup2(std_out, STDOUT_FILENO);
 		line = readline("minishell$ ");
 		if (!line)
-			free_and_exit_error(main, "exit", errno);
+			free_and_exit_error(main, "", errno);
 		if (line[0] != '\0')
 			add_history(line);
 		create_node(main, line);
 		check_input(main);
-		while (main->node->cmd[i])
-		{
-			free(main->node->cmd[i]);
-			i++;
-		}
-		free(main->node->cmd);
-		free(line);
-		close(main->node->infile.fd);
 		close(main->node->outfile.fd);
-		free(main->node);
+		close(main->node->infile.fd);
+		free_node(main);
+		free(line);
 		main->node = NULL;
 	}
 	sleep(30);
