@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static ssize_t	extract_quoted_part(t_error *error, t_word_part **parts,
+static ssize_t	extract_quoted_chunk(t_error *error, t_token_chunk **chunks,
 		char *cmd, char quote)
 {
 	size_t	len;
@@ -11,19 +11,18 @@ static ssize_t	extract_quoted_part(t_error *error, t_word_part **parts,
 	if (!cmd[len])
 	{
 		if (quote == '"')
-			set_error(error, ERR_MISSING_DOUBLE_QUOTE, '"');
+			return (set_error(error, ERR_MISSING_DOUBLE_QUOTE, '\0'));
 		else
-			set_error(error, ERR_MISSING_SINGLE_QUOTE, '\'');
-		return (-1);
+			return (set_error(error, ERR_MISSING_SINGLE_QUOTE, '\0'));
 	}
 	if (len == 1)
 		return (2);
-	if (create_and_add_word_part(parts, &cmd[1], len - 1, quote) != ERR_NONE)
+	if (create_and_add_word_chunk(chunks, &cmd[1], len - 1, quote) != ERR_NONE)
 		return (-1);
 	return (len + 1);
 }
 
-static ssize_t	extract_unquoted_part(t_word_part **parts, char *cmd)
+static ssize_t	extract_unquoted_chunk(t_token_chunk **chunks, char *cmd)
 {
 	size_t	len;
 
@@ -31,16 +30,16 @@ static ssize_t	extract_unquoted_part(t_word_part **parts, char *cmd)
 	while (cmd[len] && cmd[len] != ' ' && cmd[len] != '"' && cmd[len] != '\''
 		&& !is_operator(&cmd[len]))
 		len++;
-	if (create_and_add_word_part(parts, cmd, len, '\0') != ERR_NONE)
+	if (create_and_add_word_chunk(chunks, cmd, len, '\0') != ERR_NONE)
 		return (-1);
 	return (len);
 }
 
-static ssize_t	extract_word_token(t_token **token_lst, t_error *error,
-		char *cmd)
+static ssize_t	extract_word_token(t_env **env_lst, t_token **token_lst,
+		t_error *error, char *cmd)
 {
 	ssize_t	i;
-	ssize_t	part_len;
+	ssize_t	chunk_len;
 	t_token	*new_token;
 
 	i = 0;
@@ -50,18 +49,18 @@ static ssize_t	extract_word_token(t_token **token_lst, t_error *error,
 	while (cmd[i] && cmd[i] != ' ' && !is_operator(&cmd[i]))
 	{
 		if (cmd[i] == '"' || cmd[i] == '\'')
-			part_len = extract_quoted_part(error, &new_token->parts, &cmd[i],
+			chunk_len = extract_quoted_chunk(error, &new_token->chunks, &cmd[i],
 					cmd[i]);
 		else
-			part_len = extract_unquoted_part(&new_token->parts, &cmd[i]);
-		if (part_len <= 0)
+			chunk_len = extract_unquoted_chunk(&new_token->chunks, &cmd[i]);
+		if (chunk_len <= 0)
 		{
 			free_token_lst(&new_token);
 			return (-1);
 		}
-		i += part_len;
+		i += chunk_len;
 	}
-	if (token_lst_add_token_parts(token_lst, new_token) != ERR_NONE)
+	if (token_lst_add_token_chunks(env_lst, token_lst, new_token) != ERR_NONE)
 		return (-1);
 	return (i);
 }
@@ -79,14 +78,12 @@ static ssize_t	extract_operator_token(t_token **token_lst, t_error *error,
 	if (token_type == T_HEREDOC || token_type == T_REDIR_APPEND)
 		len = 2;
 	if (token_lst_add_node(token_lst, cmd, len, token_type) != ERR_NONE)
-	{
-		set_error(error, ERR_MALLOC, '\0');
-		return (-1);
-	}
+		return (set_error(error, ERR_MALLOC, '\0'));
 	return (len);
 }
 
-t_parse_error	tokenisation(t_token **token_lst, t_error *error, char *cmd)
+t_parse_error	tokenisation(t_env **env_lst, t_token **token_lst,
+		t_error *error, char *cmd)
 {
 	ssize_t	i;
 	ssize_t	token_len;
@@ -101,7 +98,7 @@ t_parse_error	tokenisation(t_token **token_lst, t_error *error, char *cmd)
 		if (is_operator(&cmd[i]))
 			token_len = extract_operator_token(token_lst, error, &cmd[i]);
 		else
-			token_len = extract_word_token(token_lst, error, &cmd[i]);
+			token_len = extract_word_token(env_lst, token_lst, error, &cmd[i]);
 		if (token_len <= 0 || error->error_type != ERR_NONE)
 		{
 			free_token_lst(token_lst);

@@ -2,19 +2,19 @@
 
 static void	free_token(t_token *node)
 {
-	t_word_part	*next;
+	t_token_chunk	*next;
 
 	if (!node)
 		return ;
 	if (node->value)
 		free(node->value);
-	while (node->parts)
+	while (node->chunks)
 	{
-		next = node->parts->next;
-		if (node->parts->value)
-			free(node->parts->value);
-		free(node->parts);
-		node->parts = next;
+		next = node->chunks->next;
+		if (node->chunks->value)
+			free(node->chunks->value);
+		free(node->chunks);
+		node->chunks = next;
 	}
 	free(node);
 }

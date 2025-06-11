@@ -19,13 +19,13 @@ void	print_token_lst(t_token *lst, char *msg)
 		else
 			printf("value: [NULL] ");
 		printf("type: [%d]\n", lst->type);
-		if (lst->parts)
+		if (lst->chunks)
 		{
-			while (lst->parts)
+			while (lst->chunks)
 			{
-				printf("\tpart value: [%s] type : [%d]\n", lst->parts->value,
-					lst->parts->type);
-				lst->parts = lst->parts->next;
+				printf("\tchunk value: [%s] type : [%d]\n", lst->chunks->value,
+					lst->chunks->type);
+				lst->chunks = lst->chunks->next;
 			}
 		}
 		lst = lst->next;
