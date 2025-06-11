@@ -2,46 +2,51 @@
 
 void	free_exec_lst(t_exec **exec_lst)
 {
-	t_exec	*tmp;
 	size_t	i;
+	t_exec	*current;
+	t_exec	*next;
 
-	while (*exec_lst)
+	if (!exec_lst || !*exec_lst)
+		return ;
+	current = *exec_lst;
+	while (current)
 	{
-		i = 0;
-		tmp = (*exec_lst)->next;
-		if ((*exec_lst)->cmd)
+		next = current->next;
+		if (current->cmd)
 		{
-			while ((*exec_lst)->cmd[i])
+			i = 0;
+			while (current->cmd[i])
 			{
-				free((*exec_lst)->cmd[i]);
+				free(current->cmd[i]);
 				i++;
 			}
-			free((*exec_lst)->cmd);
+			free(current->cmd);
 		}
-		free(*exec_lst);
-		*exec_lst = tmp;
+		free(current);
+		current = next;
 	}
+	*exec_lst = NULL;
 }
 
 void	free_token_lst(t_token **token_lst)
 {
-	t_token		*tmp;
-	t_word_part	*tmp_word;
+	t_token			*tmp;
+	t_token_chunk	*tmp_word;
 
 	while (*token_lst)
 	{
 		tmp = (*token_lst)->next;
 		if ((*token_lst)->value)
 			free((*token_lst)->value);
-		else if ((*token_lst)->parts)
+		else if ((*token_lst)->chunks)
 		{
-			while ((*token_lst)->parts)
+			while ((*token_lst)->chunks)
 			{
-				tmp_word = (*token_lst)->parts->next;
-				if ((*token_lst)->parts->value)
-					free((*token_lst)->parts->value);
-				free((*token_lst)->parts);
-				(*token_lst)->parts = tmp_word;
+				tmp_word = (*token_lst)->chunks->next;
+				if ((*token_lst)->chunks->value)
+					free((*token_lst)->chunks->value);
+				free((*token_lst)->chunks);
+				(*token_lst)->chunks = tmp_word;
 			}
 		}
 		free(*token_lst);
@@ -49,21 +54,48 @@ void	free_token_lst(t_token **token_lst)
 	}
 }
 
-void	free_heredoc_lst(t_heredoc **heredoc_lst)
+void	free_env_lst(t_env **env_lst)
 {
-	t_heredoc	*tmp;
+	t_env	*current;
+	t_env	*next;
 
-	while (*heredoc_lst)
+	if (!env_lst || !*env_lst)
+		return ;
+	current = *env_lst;
+	while (current)
 	{
-		tmp = (*heredoc_lst)->next;
-		if ((*heredoc_lst)->filepath)
-		{
-			unlink((*heredoc_lst)->filepath);
-			free((*heredoc_lst)->filepath);
-		}
-		if ((*heredoc_lst)->fd > 0)
-			secure_close(&(*heredoc_lst)->fd);
-		free(*heredoc_lst);
-		*heredoc_lst = tmp;
+		next = current->next;
+		if (current->var)
+			free(current->var);
+		if (current->value)
+			free(current->value);
+		free(current);
+		current = next;
 	}
+	*env_lst = NULL;
+}
+
+void	free_expand_lst(t_expand **expand_lst)
+{
+	t_expand	*current;
+	t_expand	*next;
+
+	if (!expand_lst || !*expand_lst)
+		return ;
+	current = *expand_lst;
+	while (current)
+	{
+		next = current->next;
+		free(current->value);
+		free(current);
+		current = next;
+	}
+	*expand_lst = NULL;
+}
+
+void	clear_and_exit(t_main *main, char *error, int err_number)
+{
+	// free_struct(main);
+	perror(error);
+	exit(err_number);
 }

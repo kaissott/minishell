@@ -1,11 +1,12 @@
 #include "../../includes/minishell.h"
 
-void	set_error(t_error *error, t_parse_error error_type,
+ssize_t	set_error(t_error *error, t_parse_error error_type,
 		char unexpected_token)
 {
 	error->error_type = error_type;
 	if (unexpected_token)
 		error->unexpected_token = unexpected_token;
+	return (error_type);
 }
 
 void	print_token_error_msg(t_parse_error err_code, char unexpected_token)
@@ -29,27 +30,16 @@ void	print_token_error_msg(t_parse_error err_code, char unexpected_token)
 		fprintf(stderr, "Token creation failed (malloc error).\n");
 }
 
-char	*char_realloc(char *s, char c)
+char	*join_or_dup(char *prev, char *next)
 {
-	char	*str;
-	size_t	s_len;
+	char	*new_val;
 
-	if (!s)
-	{
-		str = ft_calloc(2, sizeof(char));
-		if (!str)
-			return (NULL);
-		str[0] = c;
-		return (str);
-	}
-	s_len = ft_strlen(s);
-	str = ft_calloc(s_len + 2, sizeof(char));
-	if (!str)
-		return (NULL);
-	ft_memcpy(str, s, s_len);
-	str[s_len] = c;
-	free(s);
-	return (str);
+	if (prev)
+		new_val = ft_strjoin(prev, next);
+	else
+		new_val = ft_strdup(next);
+	free(prev);
+	return (new_val);
 }
 
 int	secure_open(int *fd, const char *filepath)

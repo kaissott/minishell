@@ -12,16 +12,20 @@ NAME :=	minishell
 #Files
 LST_EXEC :=	minishell.c
 
-LST_PARSING :=	parse.c parse_utils.c tokenisation.c \
-				tokenisation_utils.c parse_heredoc.c
+LST_PARSING :=	expand_utils.c expand_chunk.c parse_utils.c parse.c \
+				tokenisation_utils.c tokenisation.c
 
-LST_UTILS :=	file_utils.c free_utils.c utils.c
+LST_UTILS :=	env_utils.c file_utils.c free_utils.c utils.c
 
 LST_EXEC_LST_ACTIONS :=	lst_add_back.c lst_create_node.c lst_delone.c print_lst.c
 
 LST_TOKEN_LST_ACTIONS :=	token_lst_add_node.c token_lst_delone.c print_token_lst.c
 
-LST_INC :=	minishell.h structures.h lst_utils.h parsing.h tokenisation.h utils.h
+LST_INC :=	minishell.h structures.h
+
+LST_INC_PARSING :=	expand_chunk.h parse.h tokenisation.h
+
+LST_INC_UTILS :=	lst_utils.h utils.h
 
 #Directories
 D_SRC :=	src/
@@ -37,6 +41,10 @@ D_LST_ACTIONS :=	lst_actions/
 
 D_TOKEN_LST_ACTIONS :=	token_lst_actions/
 
+D_INC_PARSING :=	parsing/
+
+D_INC_UTILS :=	utils/
+
 D_OBJ :=	.obj/
 
 #Files full path
@@ -46,7 +54,9 @@ SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
 		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS)$(D_LST_ACTIONS), $(LST_EXEC_LST_ACTIONS)) \
 		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS)$(D_TOKEN_LST_ACTIONS), $(LST_TOKEN_LST_ACTIONS)) \
 
-INC :=	$(addprefix $(D_INC), $(LST_INC))
+INC :=	$(addprefix $(D_INC), $(LST_INC)) \
+		$(addprefix $(D_INC)$(D_INC_PARSING), $(LST_INC_PARSING)) \
+		$(addprefix $(D_INC)$(D_INC_UTILS), $(LST_INC_UTILS))
 
 OBJ :=	$(subst $(D_SRC), $(D_OBJ), $(SRC:.c=.o))
 
@@ -59,8 +69,8 @@ LIBFT := $(D_LIBFT)libft.a
 #################################################################################
 
 CC := cc
-CFLAGS := -Wall -Wextra
-IFLAGS := -I$(D_INC)
+CFLAGS := -Wall -Wextra -g3
+IFLAGS := -I$(D_INC) -I$(D_INC)$(D_INC_PARSING) -I$(D_INC)$(D_INC_UTILS)
 
 RM := rm -rf
 MAKE_CMD := @$(MAKE) --no-print-directory

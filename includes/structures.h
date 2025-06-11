@@ -1,6 +1,34 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
+typedef enum e_expand_type
+{
+	ERR_SEG = -1,
+	T_EXPAND_WORD,
+	T_EXPAND_VAR,
+}	t_expand_type;
+
+typedef struct s_expand
+{
+	char			*value;
+	t_expand_type	type;
+	struct s_expand	*next;
+}	t_expand;
+
+typedef enum e_token_chunk_type
+{
+	T_ERROR_WORD = -1,
+	T_STRING,
+	T_ENV_STRING,
+}	t_token_chunk_type;
+
+typedef struct s_token_chunk
+{
+	t_token_chunk_type		type;
+	char					*value;
+	struct s_token_chunk	*next;
+}	t_token_chunk;
+
 typedef enum e_token_type
 {
 	T_ERROR = -1,
@@ -12,25 +40,10 @@ typedef enum e_token_type
 	T_HEREDOC,
 }	t_token_type;
 
-typedef enum e_word_part_type
-{
-	T_ERROR_WORD = -1,
-	T_STRING,
-	T_ENV_STRING,
-	T_EOF
-}	t_word_part_type;
-
-typedef struct s_word_part
-{
-	t_word_part_type	type;
-	char				*value;
-	struct s_word_part	*next;
-}	t_word_part;
-
 typedef struct s_token
 {
 	char			*value;
-	t_word_part		*parts;
+	t_token_chunk	*chunks;
 	t_token_type	type;
 	struct s_token	*next;
 }	t_token;
@@ -42,21 +55,20 @@ typedef enum e_parse_error
 	ERR_MISSING_SINGLE_QUOTE = -2,
 	ERR_MISSING_DOUBLE_QUOTE = -3,
 	ERR_UNEXPECTED_TOKEN = -4,
-	ERR_DOUBLE_PIPE = -5
+	ERR_DOUBLE_PIPE = -5,
+	ERR_EMPTY_COMMAND = -6,
+	ERR_UNFINISHED_REDIR = -7,
+	ERR_OPEN = -8,
+	ERR_CLOSE = -9,
+	ERR_EXPAND = -10
 }	t_parse_error;
+
 
 typedef struct s_error
 {
 	t_parse_error	error_type;
 	char			unexpected_token;
 }	t_error;
-
-typedef struct s_heredoc
-{
-	int					fd;
-	char				*filepath;
-	struct s_heredoc	*next;
-}	t_heredoc;
 
 typedef struct s_file
 {
@@ -72,10 +84,18 @@ typedef struct s_exec
 	struct s_exec	*next;
 }	t_exec;
 
+typedef struct s_env
+{
+	char			*var;
+	char 			*value;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_main
 {
-	char	*env;
-	t_exec	*node;
+	t_env	*env;
+	t_exec	*exec;
+	t_token	*token;
 }	t_main;
 
 #endif
