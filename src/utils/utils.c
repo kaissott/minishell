@@ -41,29 +41,3 @@ char	*join_or_dup(char *prev, char *next)
 	free(prev);
 	return (new_val);
 }
-
-int	secure_open(int *fd, const char *filepath)
-{
-	if (!fd || !filepath)
-		return (-1);
-	*fd = open(filepath, O_RDONLY);
-	if (*fd == -1)
-	{
-		perror("open");
-		return (-1);
-	}
-	return (0);
-}
-
-int	secure_close(int *fd)
-{
-	if (!fd || *fd < 0)
-		return (0);
-	if (close(*fd) == -1)
-	{
-		perror("close");
-		return (-1);
-	}
-	*fd = -1;
-	return (0);
-}

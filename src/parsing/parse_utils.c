@@ -37,23 +37,30 @@ char	**expand_args(char **cmd, char *new_arg)
 	return (new_cmd);
 }
 
-char	*create_heredoc_filepath(size_t *heredoc_nbr)
+t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)
 {
-	char	*filepath;
-	char	*heredoc_nbr_str;
+	int		i;
+	char	*cmd_nbr;
+	t_exec	*tmp;
 
-	heredoc_nbr_str = ft_itoa(*heredoc_nbr);
-	if (!heredoc_nbr_str)
-		return (NULL);
-	filepath = ft_strjoin("tmp/.ms_hd_", heredoc_nbr_str);
-	free(heredoc_nbr_str);
-	if (!filepath)
-		return (NULL);
-	*heredoc_nbr += 1;
-	return (filepath);
+	i = 0;
+	tmp = *exec_lst;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	cmd_nbr = ft_itoa(i);
+	if (!cmd_nbr)
+		return (ERR_MALLOC);
+	new_node->heredoc_path = ft_strjoin("tmp/.ms_hd_", cmd_nbr);
+	free(cmd_nbr);
+	if (!new_node->heredoc_path)
+		return (ERR_MALLOC);
+	return (ERR_NONE);
 }
 
-int	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
+t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 {
 	char	*rl;
 
@@ -61,11 +68,7 @@ int	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 	{
 		rl = readline("heredoc>");
 		if (!rl)
-		{
-			if (secure_close(fd_heredoc) == -1)
-				return (-1);
-			return (0);
-		}
+			return (ERR_NONE);
 		if (ft_strcmp(rl, next_token_value) == 0)
 		{
 			free(rl);
@@ -74,5 +77,7 @@ int	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 		ft_putendl_fd(rl, *fd_heredoc);
 		free(rl);
 	}
-	return (0);
+	if (secure_close(fd_heredoc) != ERR_NONE)
+		return (ERR_CLOSE);
+	return (ERR_NONE);
 }

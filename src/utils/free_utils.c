@@ -22,10 +22,32 @@ void	free_exec_lst(t_exec **exec_lst)
 			}
 			free(current->cmd);
 		}
+		if (current->heredoc_path)
+			free(current->heredoc_path);
 		free(current);
 		current = next;
 	}
-	*exec_lst = NULL;
+}
+
+void	free_new_cmd(t_exec *new_cmd)
+{
+	size_t	i;
+
+	if (!new_cmd)
+		return ;
+	if (new_cmd->cmd)
+	{
+		i = 0;
+		while (new_cmd->cmd[i])
+		{
+			free(new_cmd->cmd[i]);
+			i++;
+		}
+		free(new_cmd->cmd);
+	}
+	if (new_cmd->heredoc_path)
+		free(new_cmd->heredoc_path);
+	free(new_cmd);
 }
 
 void	free_token_lst(t_token **token_lst)

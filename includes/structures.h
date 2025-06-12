@@ -58,9 +58,10 @@ typedef enum e_parse_error
 	ERR_DOUBLE_PIPE = -5,
 	ERR_EMPTY_COMMAND = -6,
 	ERR_UNFINISHED_REDIR = -7,
-	ERR_OPEN = -8,
-	ERR_CLOSE = -9,
-	ERR_EXPAND = -10
+	ERR_EXPAND = -8,
+	ERR_TOKEN = -9,
+	ERR_OPEN = -10,
+	ERR_CLOSE = -11
 }	t_parse_error;
 
 
@@ -81,6 +82,7 @@ typedef struct s_exec
 	char			**cmd;
 	t_file			infile;
 	t_file			outfile;
+	char 			*heredoc_path;
 	struct s_exec	*next;
 }	t_exec;
 
