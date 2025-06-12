@@ -68,9 +68,10 @@ static ssize_t	handle_var(t_expand **expand_lst, char *var)
 		return (ERR_MALLOC);
 	if (i == 1)
 	{
-		if (var[i])
+		if (var[i] == '$' || var[i] == '?')
 			return (2);
-		return (1);
+		if (!ft_isalnum(var[i]))
+			return (1);
 	}
 	return (i);
 }

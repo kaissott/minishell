@@ -95,7 +95,8 @@ t_parse_error	create_exec_lst(t_exec **exec_lst, t_token **token_lst)
 		if ((*token_lst)->type == T_PIPE)
 		{
 			new_cmd = handle_pipe(exec_lst, new_cmd, token_lst, *token_lst);
-			return (ERR_MALLOC);
+			if (!new_cmd)
+				return (ERR_MALLOC);
 		}
 		else
 		{
