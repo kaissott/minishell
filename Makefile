@@ -15,9 +15,12 @@ LST_EXEC :=	minishell.c
 LST_PARSING :=	expand_utils.c expand_chunk.c parse_utils.c parse.c \
 				tokenisation_utils.c tokenisation.c
 
-LST_UTILS :=	env_utils.c file_utils.c free_utils.c utils.c
+LST_UTILS :=	file_utils.c free_utils.c utils.c
 
-LST_LST_UTILS :=	exec_lst_utils.c token_lst_add_utils.c token_lst_utils.c
+LST_LST_UTILS :=	chunk_lst_utils.c env_lst_utils.c exec_lst_utils.c \
+					expand_lst_utils.c token_lst_utils.c
+
+LST_LST_FREE_UTILS :=	exec_free_utils.c token_free_utils.c
 
 LST_INC :=	minishell.h structures.h
 
@@ -35,6 +38,8 @@ D_UTILS :=	utils/
 
 D_LST_UTILS :=	lst_utils/
 
+D_LST_FREE_UTILS :=	lst_free_utils/
+
 D_INC_PARSING :=	parsing/
 
 D_INC_UTILS :=	utils/
@@ -45,7 +50,8 @@ D_OBJ :=	.obj/
 SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
 		$(addprefix $(D_SRC)$(D_PARSING), $(LST_PARSING)) \
 		$(addprefix $(D_SRC)$(D_UTILS), $(LST_UTILS)) \
-		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS), $(LST_LST_UTILS))
+		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS), $(LST_LST_UTILS)) \
+		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS)$(D_LST_FREE_UTILS), $(LST_LST_FREE_UTILS))
 
 INC :=	$(addprefix $(D_INC), $(LST_INC)) \
 		$(addprefix $(D_INC)$(D_INC_PARSING), $(LST_INC_PARSING)) \

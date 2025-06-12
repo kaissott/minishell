@@ -36,13 +36,48 @@ bool	create_env_lst(t_env **env_lst, char **env)
 		if (!new_env)
 			return (false);
 		new_env->var = ft_substr(env[i], 0, equal_sign - env[i]);
+		if (!new_env->var)
+		{
+			free(new_env);
+			break ;
+		}
 		new_env->value = ft_strdup(equal_sign + 1);
-		if (!new_env->var || !new_env->value)
-			return (false);
+		if (!new_env->value)
+		{
+			free(new_env->var);
+			free(new_env);
+			break ;
+		}
 		env_lst_add_back(env_lst, new_env);
 		i++;
 	}
+	if (env[i])
+	{
+		free_env_lst(env_lst);
+		return (false);
+	}
 	return (true);
+}
+
+void	free_env_lst(t_env **env_lst)
+{
+	t_env	*current;
+	t_env	*next;
+
+	if (!env_lst || !*env_lst)
+		return ;
+	current = *env_lst;
+	while (current)
+	{
+		next = current->next;
+		if (current->var)
+			free(current->var);
+		if (current->value)
+			free(current->value);
+		free(current);
+		current = next;
+	}
+	*env_lst = NULL;
 }
 
 void	print_env_lst(t_env *lst, char *msg)

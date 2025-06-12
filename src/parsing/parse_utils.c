@@ -1,17 +1,5 @@
 #include "../../includes/minishell.h"
 
-t_exec	*create_exec_cmd(void)
-{
-	t_exec	*new_cmd;
-
-	new_cmd = ft_calloc(1, sizeof(t_exec));
-	if (!new_cmd)
-		return (NULL);
-	new_cmd->infile.fd = -1;
-	new_cmd->outfile.fd = -1;
-	return (new_cmd);
-}
-
 char	**expand_args(char **cmd, char *new_arg)
 {
 	size_t	i;
@@ -53,7 +41,7 @@ t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)
 	cmd_nbr = ft_itoa(i);
 	if (!cmd_nbr)
 		return (ERR_MALLOC);
-	new_node->heredoc_path = ft_strjoin("tmp/.ms_hd_", cmd_nbr);
+	new_node->heredoc_path = ft_strjoin("/tmp/.ms_hd_", cmd_nbr);
 	free(cmd_nbr);
 	if (!new_node->heredoc_path)
 		return (ERR_MALLOC);

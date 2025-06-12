@@ -82,7 +82,7 @@ static t_parse_error	handle_token(t_exec **exec_lst, t_exec *new_cmd,
 	return (ERR_TOKEN);
 }
 
-t_parse_error	create_exec_lst(t_exec **exec_lst, t_token **token_lst)
+t_parse_error	parsing(t_exec **exec_lst, t_token **token_lst)
 {
 	t_exec			*new_cmd;
 	t_parse_error	ret;
@@ -103,7 +103,7 @@ t_parse_error	create_exec_lst(t_exec **exec_lst, t_token **token_lst)
 			ret = handle_token(exec_lst, new_cmd, token_lst, *token_lst);
 			if (ret != ERR_NONE)
 			{
-				free_new_cmd(new_cmd);
+				free_exec(new_cmd);
 				return (ret);
 			}
 		}

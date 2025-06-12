@@ -1,9 +1,9 @@
 #include "../../includes/minishell.h"
 
-static ssize_t	extract_quoted_chunk(t_error *error, t_token_chunk **chunks,
-		char *cmd, char quote)
+static ssize_t	extract_quoted_chunk(t_token_chunk **chunks, char *cmd,
+		char quote)
 {
-	size_t	len;
+	ssize_t	len;
 
 	len = 1;
 	while (cmd[len] && cmd[len] != quote)
@@ -11,20 +11,20 @@ static ssize_t	extract_quoted_chunk(t_error *error, t_token_chunk **chunks,
 	if (!cmd[len])
 	{
 		if (quote == '"')
-			return (set_error(error, ERR_MISSING_DOUBLE_QUOTE, '\0'));
+			return (ERR_MISSING_DOUBLE_QUOTE);
 		else
-			return (set_error(error, ERR_MISSING_SINGLE_QUOTE, '\0'));
+			return (ERR_MISSING_SINGLE_QUOTE);
 	}
 	if (len == 1)
 		return (2);
 	if (create_and_add_chunk(chunks, &cmd[1], len - 1, quote) != ERR_NONE)
-		return (-1);
+		return (ERR_MALLOC);
 	return (len + 1);
 }
 
 static ssize_t	extract_unquoted_chunk(t_token_chunk **chunks, char *cmd)
 {
-	size_t	len;
+	ssize_t	len;
 
 	len = 0;
 	while (cmd[len] && cmd[len] != ' ' && cmd[len] != '"' && cmd[len] != '\''
@@ -45,23 +45,23 @@ static ssize_t	extract_word_token(t_env **env_lst, t_token **token_lst,
 	i = 0;
 	new_token = ft_calloc(1, sizeof(t_token));
 	if (!new_token)
-		return (-1);
+		return (ERR_MALLOC);
 	while (cmd[i] && cmd[i] != ' ' && !is_operator(&cmd[i]))
 	{
 		if (cmd[i] == '"' || cmd[i] == '\'')
-			chunk_len = extract_quoted_chunk(error, &new_token->chunks, &cmd[i],
+			chunk_len = extract_quoted_chunk(&new_token->chunks, &cmd[i],
 					cmd[i]);
 		else
 			chunk_len = extract_unquoted_chunk(&new_token->chunks, &cmd[i]);
 		if (chunk_len <= 0)
 		{
-			free_token_lst(&new_token);
-			return (-1);
+			free_token(new_token);
+			return (chunk_len);
 		}
 		i += chunk_len;
 	}
 	if (token_lst_add_chunks(env_lst, token_lst, new_token) != ERR_NONE)
-		return (-1);
+		return (set_error(error, ERR_MALLOC, '\0'));
 	return (i);
 }
 
@@ -100,10 +100,7 @@ t_parse_error	tokenisation(t_env **env_lst, t_token **token_lst,
 		else
 			token_len = extract_word_token(env_lst, token_lst, error, &cmd[i]);
 		if (token_len <= 0 || error->error_type != ERR_NONE)
-		{
-			free_token_lst(token_lst);
-			return (error->error_type);
-		}
+			return (token_len);
 		i += token_len;
 	}
 	return (ERR_NONE);

@@ -35,8 +35,9 @@ static ssize_t	handle_word(t_expand **expand_lst, char *word)
 	while (word[i] && word[i] != '$')
 		i++;
 	new_expand = create_expand(T_EXPAND_WORD, ft_substr(word, 0, i));
-	if (!new_expand || !lst_expand_add_back(expand_lst, new_expand))
+	if (!new_expand)
 		return (ERR_MALLOC);
+	expand_lst_add_back(expand_lst, new_expand);
 	return (i);
 }
 
@@ -49,8 +50,9 @@ static ssize_t	handle_var(t_expand **expand_lst, char *var)
 	if (!var[i])
 	{
 		new_expand = create_expand(T_EXPAND_VAR, ft_substr(var, 0, 1));
-		if (!new_expand || !lst_expand_add_back(expand_lst, new_expand))
+		if (!new_expand)
 			return (ERR_MALLOC);
+		expand_lst_add_back(expand_lst, new_expand);
 		return (1);
 	}
 	if (var[i] == '$' || var[i] == '?')
@@ -64,8 +66,9 @@ static ssize_t	handle_var(t_expand **expand_lst, char *var)
 		else
 			new_expand = create_expand(T_EXPAND_VAR, ft_substr(var, 1, i - 1));
 	}
-	if (!new_expand || !lst_expand_add_back(expand_lst, new_expand))
+	if (!new_expand)
 		return (ERR_MALLOC);
+	expand_lst_add_back(expand_lst, new_expand);
 	if (i == 1)
 	{
 		if (var[i] == '$' || var[i] == '?')

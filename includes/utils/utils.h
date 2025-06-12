@@ -4,17 +4,14 @@
 # include "../minishell.h"
 # include "../structures.h"
 
-bool			create_env_lst(t_env **env_lst, char **env);
-void			print_env_lst(t_env *lst, char *msg);
 int				open_file(const char *filepath, t_token_type file_type);
 t_parse_error	secure_close(int *fd);
 t_parse_error	check_std_cmd(int std, t_exec *new_cmd);
-void			free_exec_lst(t_exec **exec_lst);
-void			free_new_cmd(t_exec *new_cmd);
-void			free_token_lst(t_token **token_lst);
-void			free_env_lst(t_env **env_lst);
+
 void			free_expand_lst(t_expand **expand_lst);
-void			clear_and_exit(t_main *main, char *error, int err_number);
+void			free_main_struct(t_main **main_struct);
+void			clear_and_exit(t_main *main_struct);
+
 ssize_t			set_error(t_error *error, t_parse_error error_type,
 					char unexpected_token);
 void			print_token_error_msg(t_parse_error err_code,

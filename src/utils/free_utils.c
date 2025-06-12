@@ -1,103 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	free_exec_lst(t_exec **exec_lst)
-{
-	size_t	i;
-	t_exec	*current;
-	t_exec	*next;
-
-	current = *exec_lst;
-	while (current)
-	{
-		next = current->next;
-		if (current->cmd)
-		{
-			i = 0;
-			while (current->cmd[i])
-			{
-				free(current->cmd[i]);
-				i++;
-			}
-			free(current->cmd);
-		}
-		if (current->heredoc_path)
-			free(current->heredoc_path);
-		free(current);
-		current = next;
-	}
-	*exec_lst = NULL;
-}
-
-void	free_new_cmd(t_exec *new_cmd)
-{
-	size_t	i;
-
-	if (!new_cmd)
-		return ;
-	if (new_cmd->cmd)
-	{
-		i = 0;
-		while (new_cmd->cmd[i])
-		{
-			free(new_cmd->cmd[i]);
-			i++;
-		}
-		free(new_cmd->cmd);
-	}
-	if (new_cmd->heredoc_path)
-		free(new_cmd->heredoc_path);
-	free(new_cmd);
-	new_cmd = NULL;
-}
-
-void	free_token_lst(t_token **token_lst)
-{
-	t_token			*tmp;
-	t_token_chunk	*tmp_word;
-
-	while (*token_lst)
-	{
-		tmp = (*token_lst)->next;
-		if ((*token_lst)->value)
-			free((*token_lst)->value);
-		else if ((*token_lst)->chunks)
-		{
-			while ((*token_lst)->chunks)
-			{
-				tmp_word = (*token_lst)->chunks->next;
-				if ((*token_lst)->chunks->value)
-					free((*token_lst)->chunks->value);
-				free((*token_lst)->chunks);
-				(*token_lst)->chunks = tmp_word;
-			}
-		}
-		free(*token_lst);
-		*token_lst = tmp;
-	}
-	*token_lst = NULL;
-}
-
-void	free_env_lst(t_env **env_lst)
-{
-	t_env	*current;
-	t_env	*next;
-
-	if (!env_lst || !*env_lst)
-		return ;
-	current = *env_lst;
-	while (current)
-	{
-		next = current->next;
-		if (current->var)
-			free(current->var);
-		if (current->value)
-			free(current->value);
-		free(current);
-		current = next;
-	}
-	*env_lst = NULL;
-}
-
 void	free_expand_lst(t_expand **expand_lst)
 {
 	t_expand	*current;
@@ -116,9 +18,27 @@ void	free_expand_lst(t_expand **expand_lst)
 	*expand_lst = NULL;
 }
 
-// void	clear_and_exit(t_main *main, char *error, int err_number)
-// {
-// 	// free_struct(main);
-// 	perror(error);
-// 	exit(err_number);
-// }
+void	free_main_struct(t_main **main_struct)
+{
+	if ((*main_struct)->env)
+		free_env_lst(&(*main_struct)->env);
+	if ((*main_struct)->token)
+		free_token_lst(&(*main_struct)->token);
+	if ((*main_struct)->exec)
+		free_env_lst(&(*main_struct)->env);
+	(*main_struct)->error.error_type = ERR_NONE;
+	(*main_struct)->error.unexpected_token = '\0';
+}
+
+void	clear_and_exit(t_main *main_struct)
+{
+	int	errcode;
+
+	errcode = main_struct->error.error_type;
+	if (errcode != ERR_NONE)
+	{
+		print_token_error_msg(errcode, main_struct->error.unexpected_token);
+		free_main_struct(&main_struct);
+	}
+	exit(errcode);
+}
