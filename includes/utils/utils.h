@@ -21,6 +21,4 @@ void			print_token_error_msg(t_parse_error err_code,
 					char unexpected_token);
 char			*join_or_dup(char *prev, char *next);
 
-
-
 #endif

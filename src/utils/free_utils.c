@@ -115,9 +115,9 @@ void	free_expand_lst(t_expand **expand_lst)
 	*expand_lst = NULL;
 }
 
-void	clear_and_exit(t_main *main, char *error, int err_number)
-{
-	// free_struct(main);
-	perror(error);
-	exit(err_number);
-}
+// void	clear_and_exit(t_main *main, char *error, int err_number)
+// {
+// 	// free_struct(main);
+// 	perror(error);
+// 	exit(err_number);
+// }

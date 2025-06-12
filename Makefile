@@ -17,9 +17,7 @@ LST_PARSING :=	expand_utils.c expand_chunk.c parse_utils.c parse.c \
 
 LST_UTILS :=	env_utils.c file_utils.c free_utils.c utils.c
 
-LST_EXEC_LST_ACTIONS :=	lst_add_back.c lst_create_node.c lst_delone.c print_lst.c
-
-LST_TOKEN_LST_ACTIONS :=	token_lst_add_node.c token_lst_delone.c print_token_lst.c
+LST_LST_UTILS :=	exec_lst_utils.c token_lst_add_utils.c token_lst_utils.c
 
 LST_INC :=	minishell.h structures.h
 
@@ -37,10 +35,6 @@ D_UTILS :=	utils/
 
 D_LST_UTILS :=	lst_utils/
 
-D_LST_ACTIONS :=	lst_actions/
-
-D_TOKEN_LST_ACTIONS :=	token_lst_actions/
-
 D_INC_PARSING :=	parsing/
 
 D_INC_UTILS :=	utils/
@@ -51,8 +45,7 @@ D_OBJ :=	.obj/
 SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
 		$(addprefix $(D_SRC)$(D_PARSING), $(LST_PARSING)) \
 		$(addprefix $(D_SRC)$(D_UTILS), $(LST_UTILS)) \
-		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS)$(D_LST_ACTIONS), $(LST_EXEC_LST_ACTIONS)) \
-		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS)$(D_TOKEN_LST_ACTIONS), $(LST_TOKEN_LST_ACTIONS)) \
+		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS), $(LST_LST_UTILS))
 
 INC :=	$(addprefix $(D_INC), $(LST_INC)) \
 		$(addprefix $(D_INC)$(D_INC_PARSING), $(LST_INC_PARSING)) \

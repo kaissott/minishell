@@ -1,43 +1,43 @@
-#include "../../../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-static bool	token_lst_add_back(t_token **lst, t_token *new)
+static void	token_lst_add_back(t_token **lst, t_token *new)
 {
 	t_token	*tmp;
 
 	if (!lst || !new)
-		return (false);
+		return ;
 	if (!*lst)
 	{
 		*lst = new;
-		return (true);
+		return ;
 	}
 	tmp = *lst;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
-	return (true);
+	return ;
 }
 
-static bool	lst_token_chunk_add_back(t_token_chunk **lst, t_token_chunk *new)
+static void	chunk_lst_add_back(t_token_chunk **lst, t_token_chunk *new)
 {
 	t_token_chunk	*tmp;
 
 	if (!lst || !new)
-		return (false);
+		return ;
 	if (!*lst)
 	{
 		*lst = new;
-		return (true);
+		return ;
 	}
 	tmp = *lst;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
-	return (true);
+	return ;
 }
 
-t_parse_error	create_and_add_word_chunk(t_token_chunk **lst_chunk,
-		const char *cmd, const ssize_t len, char quote)
+t_parse_error	create_and_add_chunk(t_token_chunk **lst_chunk, char *cmd,
+		ssize_t len, char quote)
 {
 	t_token_chunk	*new_word_chunk;
 
@@ -54,17 +54,12 @@ t_parse_error	create_and_add_word_chunk(t_token_chunk **lst_chunk,
 		free(new_word_chunk);
 		return (ERR_MALLOC);
 	}
-	if (!lst_token_chunk_add_back(lst_chunk, new_word_chunk))
-	{
-		free(new_word_chunk->value);
-		free(new_word_chunk);
-		return (ERR_MALLOC);
-	}
+	chunk_lst_add_back(lst_chunk, new_word_chunk);
 	return (ERR_NONE);
 }
 
-t_parse_error	token_lst_add_node(t_token **token_lst, const char *cmd,
-		const ssize_t len, t_token_type token_type)
+t_parse_error	token_lst_add_node(t_token **token_lst, char *cmd, ssize_t len,
+		t_token_type token_type)
 {
 	t_token	*new_token;
 
@@ -75,16 +70,11 @@ t_parse_error	token_lst_add_node(t_token **token_lst, const char *cmd,
 	new_token->value = ft_substr(cmd, 0, len);
 	if (!new_token->value)
 		return (ERR_MALLOC);
-	if (!token_lst_add_back(token_lst, new_token))
-	{
-		free(new_token->value);
-		free(new_token);
-		return (ERR_MALLOC);
-	}
+	token_lst_add_back(token_lst, new_token);
 	return (ERR_NONE);
 }
 
-t_parse_error	token_lst_add_token_chunks(t_env **env_lst, t_token **token_lst,
+t_parse_error	token_lst_add_chunks(t_env **env_lst, t_token **token_lst,
 		t_token *new_token)
 {
 	t_token_chunk	*tmp;
@@ -92,8 +82,8 @@ t_parse_error	token_lst_add_token_chunks(t_env **env_lst, t_token **token_lst,
 
 	tmp = new_token->chunks;
 	new_token->type = T_WORD;
-	if (expand_chunk(env_lst, new_token) == -1)
-		return (-1);
+	if (expand_chunk(env_lst, new_token) != ERR_NONE)
+		return (ERR_EXPAND);
 	while (tmp)
 	{
 		prev = new_token->value;
@@ -102,8 +92,11 @@ t_parse_error	token_lst_add_token_chunks(t_env **env_lst, t_token **token_lst,
 			break ;
 		tmp = tmp->next;
 	}
-	if (new_token->value && token_lst_add_back(token_lst, new_token))
-		return (ERR_NONE);
-	free_token_lst(&new_token);
-	return (ERR_MALLOC);
+	if (!new_token->value)
+	{
+		free_token_lst(&new_token);
+		return (ERR_MALLOC);
+	}
+	token_lst_add_back(token_lst, new_token);
+	return (ERR_NONE);
 }

@@ -3,7 +3,7 @@
 static t_exec	*handle_pipe(t_exec **exec_lst, t_exec *new_cmd,
 		t_token **token_lst, t_token *token)
 {
-	lst_add_back(exec_lst, new_cmd);
+	exec_lst_add_back(exec_lst, new_cmd);
 	token_lst_delone(token_lst, token);
 	return (create_exec_cmd());
 }
@@ -109,6 +109,6 @@ t_parse_error	create_exec_lst(t_exec **exec_lst, t_token **token_lst)
 		}
 	}
 	if (new_cmd)
-		lst_add_back(exec_lst, new_cmd);
+		exec_lst_add_back(exec_lst, new_cmd);
 	return (ERR_NONE);
 }

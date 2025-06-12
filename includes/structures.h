@@ -64,7 +64,6 @@ typedef enum e_parse_error
 	ERR_CLOSE = -11
 }	t_parse_error;
 
-
 typedef struct s_error
 {
 	t_parse_error	error_type;
@@ -82,14 +81,14 @@ typedef struct s_exec
 	char			**cmd;
 	t_file			infile;
 	t_file			outfile;
-	char 			*heredoc_path;
+	char			*heredoc_path;
 	struct s_exec	*next;
 }	t_exec;
 
 typedef struct s_env
 {
 	char			*var;
-	char 			*value;
+	char			*value;
 	struct s_env	*next;
 }	t_env;
 

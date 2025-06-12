@@ -2,33 +2,42 @@
 
 static void	parse(t_env **env_lst, char *cmd)
 {
-	t_exec	*exec_lst;
-	t_token	*token_lst;
-	t_error	*error;
+	t_exec			*exec_lst;
+	t_token			*token_lst;
+	t_error			*error;
+	t_parse_error	ret;
 
 	exec_lst = NULL;
 	token_lst = NULL;
 	error = ft_calloc(1, sizeof(t_error));
 	if (!error)
 		print_token_error_msg(ERR_MALLOC, '\0');
-	if (tokenisation(env_lst, &token_lst, error, cmd) != ERR_NONE)
+	ret = tokenisation(env_lst, &token_lst, error, cmd);
+	printf("Return tokenisation : %d\n", ret);
+	if (ret != ERR_NONE)
 	{
-		print_token_error_msg(error->error_type, error->unexpected_token);
+		print_token_error_msg(ret, error->unexpected_token);
 		error->error_type = 0;
 		error->unexpected_token = 0;
 	}
 	else
 	{
-		print_token_lst(token_lst, "\nToken lst before parsing :\n");
-		if (create_exec_lst(&exec_lst, &token_lst) != ERR_NONE)
+		// print_token_lst(token_lst, "\nToken lst before parsing :\n");
+		ret = create_exec_lst(&exec_lst, &token_lst);
+		if (ret != ERR_NONE)
 		{
-			print_token_error_msg(error->error_type, error->unexpected_token);
+			print_token_error_msg(ret, error->unexpected_token);
 			error->error_type = 0;
 			error->unexpected_token = 0;
 		}
-		print_lst(exec_lst, "Exec lst : \n");
-		print_token_lst(token_lst, "Token lst after : \n");
-		// free_token_lst(token_lst);
+		printf("Return create exec : %d\n", ret);
+		print_exec_lst(exec_lst, "Exec lst : \n");
+		if (token_lst)
+		{
+			printf("Token lst not empty after parsing <- error\n");
+			free_token_lst(&token_lst);
+		}
+		// print_token_lst(token_lst, "Token lst after : \n");
 		free_exec_lst(&exec_lst);
 	}
 }
@@ -58,7 +67,6 @@ int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	(void)env;
 	start_shell(env);
 	return (EXIT_SUCCESS);
 }

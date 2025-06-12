@@ -95,7 +95,6 @@ static t_parse_error	handle_chunk_value(t_env **env_lst,
 	}
 	free(chunk->value);
 	chunk->value = NULL;
-	print_expand_lst(*expand_lst, "EXPAND LST BEFORE CONCAT");
 	replace_chunk_value(env_lst, expand_lst, chunk);
 	return (ERR_NONE);
 }

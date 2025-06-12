@@ -16,11 +16,7 @@ t_parse_error	secure_close(int *fd)
 	if (*fd >= 0)
 	{
 		if (close(*fd) == -1)
-		{
-			printf("error in close\n");
-			perror("close");
 			return (ERR_CLOSE);
-		}
 		*fd = -1;
 	}
 	return (ERR_NONE);

@@ -17,7 +17,7 @@ static ssize_t	extract_quoted_chunk(t_error *error, t_token_chunk **chunks,
 	}
 	if (len == 1)
 		return (2);
-	if (create_and_add_word_chunk(chunks, &cmd[1], len - 1, quote) != ERR_NONE)
+	if (create_and_add_chunk(chunks, &cmd[1], len - 1, quote) != ERR_NONE)
 		return (-1);
 	return (len + 1);
 }
@@ -30,7 +30,7 @@ static ssize_t	extract_unquoted_chunk(t_token_chunk **chunks, char *cmd)
 	while (cmd[len] && cmd[len] != ' ' && cmd[len] != '"' && cmd[len] != '\''
 		&& !is_operator(&cmd[len]))
 		len++;
-	if (create_and_add_word_chunk(chunks, cmd, len, '\0') != ERR_NONE)
+	if (create_and_add_chunk(chunks, cmd, len, '\0') != ERR_NONE)
 		return (-1);
 	return (len);
 }
@@ -60,7 +60,7 @@ static ssize_t	extract_word_token(t_env **env_lst, t_token **token_lst,
 		}
 		i += chunk_len;
 	}
-	if (token_lst_add_token_chunks(env_lst, token_lst, new_token) != ERR_NONE)
+	if (token_lst_add_chunks(env_lst, token_lst, new_token) != ERR_NONE)
 		return (-1);
 	return (i);
 }

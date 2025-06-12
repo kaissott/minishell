@@ -2,7 +2,7 @@
 *.d
 
 # Tmp files
-/tmp/*
+tmp/*
 
 # Object files
 *.o
