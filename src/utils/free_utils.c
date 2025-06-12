@@ -6,8 +6,6 @@ void	free_exec_lst(t_exec **exec_lst)
 	t_exec	*current;
 	t_exec	*next;
 
-	if (!exec_lst || !*exec_lst)
-		return ;
 	current = *exec_lst;
 	while (current)
 	{
@@ -27,6 +25,7 @@ void	free_exec_lst(t_exec **exec_lst)
 		free(current);
 		current = next;
 	}
+	*exec_lst = NULL;
 }
 
 void	free_new_cmd(t_exec *new_cmd)
@@ -48,6 +47,7 @@ void	free_new_cmd(t_exec *new_cmd)
 	if (new_cmd->heredoc_path)
 		free(new_cmd->heredoc_path);
 	free(new_cmd);
+	new_cmd = NULL;
 }
 
 void	free_token_lst(t_token **token_lst)
@@ -74,6 +74,7 @@ void	free_token_lst(t_token **token_lst)
 		free(*token_lst);
 		*token_lst = tmp;
 	}
+	*token_lst = NULL;
 }
 
 void	free_env_lst(t_env **env_lst)

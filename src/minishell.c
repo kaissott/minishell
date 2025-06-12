@@ -1,72 +1,75 @@
 #include "../includes/minishell.h"
 
-static void	parse(t_env **env_lst, char *cmd)
+static void	parse(t_main **main_struct, char *cmd)
 {
-	t_exec			*exec_lst;
-	t_token			*token_lst;
-	t_error			*error;
 	t_parse_error	ret;
 
-	exec_lst = NULL;
-	token_lst = NULL;
-	error = ft_calloc(1, sizeof(t_error));
-	if (!error)
-		print_token_error_msg(ERR_MALLOC, '\0');
-	ret = tokenisation(env_lst, &token_lst, error, cmd);
+	ret = tokenisation(&(*main_struct)->env, &(*main_struct)->token,
+			&(*main_struct)->error, cmd);
 	printf("Return tokenisation : %d\n", ret);
 	if (ret != ERR_NONE)
 	{
-		print_token_error_msg(ret, error->unexpected_token);
-		error->error_type = 0;
-		error->unexpected_token = 0;
+		print_token_error_msg(ret, (*main_struct)->error.unexpected_token);
+		(*main_struct)->error.error_type = 0;
+		(*main_struct)->error.unexpected_token = 0;
+		free_token_lst(&(*main_struct)->token);
 	}
 	else
 	{
-		// print_token_lst(token_lst, "\nToken lst before parsing :\n");
-		ret = create_exec_lst(&exec_lst, &token_lst);
+		print_token_lst((*main_struct)->token,
+			"\nToken lst before parsing :\n");
+		ret = create_exec_lst(&(*main_struct)->exec, &(*main_struct)->token);
 		if (ret != ERR_NONE)
 		{
-			print_token_error_msg(ret, error->unexpected_token);
-			error->error_type = 0;
-			error->unexpected_token = 0;
+			print_token_error_msg(ret, (*main_struct)->error.unexpected_token);
+			(*main_struct)->error.error_type = 0;
+			(*main_struct)->error.unexpected_token = 0;
+			free_token_lst(&(*main_struct)->token);
 		}
 		printf("Return create exec : %d\n", ret);
-		print_exec_lst(exec_lst, "Exec lst : \n");
-		if (token_lst)
+		print_exec_lst((*main_struct)->exec, "Exec lst : \n");
+		if ((*main_struct)->token)
 		{
 			printf("Token lst not empty after parsing <- error\n");
-			free_token_lst(&token_lst);
+			free_token_lst(&(*main_struct)->token);
 		}
-		// print_token_lst(token_lst, "Token lst after : \n");
-		free_exec_lst(&exec_lst);
+		print_token_lst((*main_struct)->token, "Token lst after : \n");
+		free_exec_lst(&(*main_struct)->exec);
 	}
 }
 
-void	start_shell(char **env)
+void	start_shell(t_main **main_struct)
 {
 	char	*rl;
-	t_env	*env_lst;
 
-	env_lst = NULL;
-	create_env_lst(&env_lst, env);
-	// print_env_lst(env_lst, "ENV LST :\n");
 	while (1)
 	{
 		rl = readline("$> ");
 		if (!rl)
 			return ;
 		add_history(rl);
-		parse(&env_lst, rl);
+		parse(main_struct, rl);
 		free(rl);
 		rl_on_new_line();
 	}
 	clear_history();
+	free_env_lst(&(*main_struct)->env);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	(void)ac;
+	t_main	*main_struct;
+
 	(void)av;
-	start_shell(env);
-	return (EXIT_SUCCESS);
+	main_struct = ft_calloc(1, sizeof(t_main));
+	if (!main_struct)
+		return (EXIT_FAILURE);
+	create_env_lst(&main_struct->env, env);
+	// print_env_lst(main_struct->env, "ENV LST :\n");
+	if (ac == 1)
+	{
+		start_shell(&main_struct);
+		return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
 }

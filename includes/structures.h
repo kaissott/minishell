@@ -97,6 +97,7 @@ typedef struct s_main
 	t_env	*env;
 	t_exec	*exec;
 	t_token	*token;
+	t_error	error;
 }	t_main;
 
 #endif
