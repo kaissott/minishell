@@ -6,12 +6,13 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/03 21:09:53 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:50:00 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../include/main.h"
+#include "../../includes/minishell.h"
+
 
 pid_t	child_process(t_main *main, char **cmd, char **env, int prev_fd)
 {
@@ -46,7 +47,7 @@ pid_t	child_process(t_main *main, char **cmd, char **env, int prev_fd)
 	return (pipefd[0]);
 }
 
-pid_t	last_child(t_lst_node *node, int prev_fd, t_main *main, char **env)
+pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 {
 	pid_t	pid;
 
@@ -89,7 +90,7 @@ void	wait_child(pid_t last)
 
 int	pipe_exec(t_main *main)
 {
-	t_lst_node	*node;
+	t_exec	*node;
 	char		**env;
 	int			prev_fd;
 	int			i;
@@ -98,7 +99,7 @@ int	pipe_exec(t_main *main)
 
 	i = 0;
 	if_hd = 0;
-	node = main->node;
+	node = main->exec;
 	prev_fd = node->infile.fd;
 	env = env_to_tab(main);
 	while (node->next != NULL)

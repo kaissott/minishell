@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:41:28 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/10 21:38:10 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:25:59 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	free_and_exit_error(t_main *main, char *error, int err_number);
 int		set_return_err_code(t_main *main, char *error, int err_number);
 
-# define ERR_MALLOC "Malloc failed"
+# define ERR_MEM "Malloc failed"
 # define ERR_MANY_ARGS ": too many arguments\n"
 # define ERR_INV_ID ": not a valid identifier\n"
 # define ERR_CMD_NOT_FOUND ": command not found\n"

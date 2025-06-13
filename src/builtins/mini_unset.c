@@ -6,13 +6,12 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:41:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/03 22:06:01 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:48:57 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
-#include <stdlib.h>
-#include <string.h>
+#include "../../includes/minishell.h"
+
 
 void	delete_env_node(t_env **env, char *var)
 {
@@ -51,12 +50,12 @@ bool	mini_unset(t_main *main)
 	int		i;
 
 	i = 1;
-	cmd = main->node->cmd;
+	cmd = main->exec->cmd;
 	if (cmd[1] == NULL)
 		return (0);
 	while (cmd[i])
 	{
-		delete_env_node(&main->mainenv, cmd[i]);
+		delete_env_node(&main->env, cmd[i]);
 		i++;
 	}
 	return (true);

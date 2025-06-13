@@ -6,11 +6,11 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/03 22:05:23 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:48:43 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/main.h"
+#include "../../includes/minishell.h"
 
 bool	pwd(t_main *main)
 {

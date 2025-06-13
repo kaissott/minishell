@@ -42,6 +42,7 @@ void	start_shell(t_main **main_struct)
 
 	while (1)
 	{
+		dprintf(2, "caca\n");
 		rl = readline("$> ");
 		if (!rl)
 		{
@@ -64,15 +65,16 @@ int	main(int ac, char **av, char **env)
 	main_struct = ft_calloc(1, sizeof(t_main));
 	if (!main_struct)
 		return (EXIT_FAILURE);
-	if (!create_env_lst(&main_struct->env, env))
-	{
-		printf("error in env lst\n");
-		free_env_lst(&main_struct->env);
-		// free(main_struct);
-		// return (EXIT_FAILURE);
-	}
-	else
-		print_env_lst(main_struct->env, "ENV LST :\n");
+	// if (!create_env_lst(&main_struct->env, env))
+	// {
+	// 	printf("error in env lst\n");
+	// 	free_env_lst(&main_struct->env);
+	// 	// free(main_struct);
+	// 	// return (EXIT_FAILURE);
+	// }
+	check_env_available(env, main_struct);
+	dprintf(2, "%s\n", main_struct->env->env);
+	// else print_env_lst(main_struct->env, "ENV LST :\n");
 	if (ac == 1)
 	{
 		start_shell(&main_struct);

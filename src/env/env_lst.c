@@ -6,11 +6,11 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:20:20 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/10 20:31:17 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:49:13 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/main.h"
+#include "../../includes/minishell.h"
 
 void	no_env_build(t_main *main)
 {
@@ -32,7 +32,7 @@ void	no_env_build(t_main *main)
 	mainenv->next = NULL;
 	shlvl = ft_strdup("SHLVL=1");
 	lstadd_back(&mainenv, lstnew(shlvl));
-	main->mainenv = mainenv;
+	main->env = mainenv;
 }
 
 void	env_build(char **env, t_main *main)
@@ -56,7 +56,7 @@ void	env_build(char **env, t_main *main)
 		lstadd_back(&mainenv, lstnew(str));
 		i++;
 	}
-	main->mainenv = mainenv;
+	main->env = mainenv;
 }
 
 int	check_env_available(char **env, t_main *main)

@@ -114,7 +114,7 @@ all:
 # Step 4 : Links edition (Linking)
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "✅ Compilation done.\n\n🔗 Linking $(NAME)..."
-	@$(CC) $(OBJ) $(LIBFT) -lreadline -lpthread -o $@
+	@$(CC) $(OBJ)  -lreadline -lpthread $(LIBFT) -o $@
 	@echo "✅ Linking done.\n\n🎉 ./$(NAME) ready to run!\n"
 
 # Step 2 & 3 : Compilation + Assembly (Generate all .o)

@@ -6,11 +6,11 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/10 21:39:06 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:47:44 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/main.h"
+#include "../../includes/minishell.h"
 
 void	env_pwd_update(t_main *main)
 {
@@ -22,7 +22,7 @@ void	env_pwd_update(t_main *main)
 	i = 0;
 	if (getcwd(path, 1024) == NULL)
 		free_and_exit_error(main, ERR_GETCWD, errno);
-	temp = main->mainenv;
+	temp = main->env;
 	while (temp != NULL && ft_strnstr(temp->env, "PWD=", 4) == -1)
 		temp = temp->next;
 	if (temp != NULL)
@@ -45,7 +45,7 @@ void	env_oldpwd_update(t_main *main)
 	char	pwd[1024];
 
 	i = 0;
-	temp = main->mainenv;
+	temp = main->env;
 	if (getcwd(pwd, 1024) == NULL)
 		free_and_exit_error(main, ERR_GETCWD, errno);
 	while (temp != NULL && ft_strstr(temp->env, "OLDPWD=") != 1)
@@ -62,7 +62,7 @@ void	env_oldpwd_update(t_main *main)
 		path = ft_strjoin("OLDPWD=", pwd);
 		if (!path)
 			free_and_exit_error(main, ERR_MALLOC, 12);
-		lstadd_back((&main->mainenv), lstnew(path));
+		lstadd_back((&main->env), lstnew(path));
 	}
 }
 
@@ -72,7 +72,7 @@ char	*cd_to_home(t_main *main, char *path)
 	char	*str;
 	char	*dst;
 
-	env = main->mainenv;
+	env = main->env;
 	while (env)
 	{
 		if (ft_strncmp(env->env, "HOME=", 5) == 0)
@@ -100,7 +100,7 @@ bool	mini_cd(char *line, t_main *main)
 	char	**tab;
 	char	*str;
 
-	tab = main->node->cmd;
+	tab = main->exec->cmd;
 	if (tab[1] == NULL || tab[1][0] == '~')
 		str = cd_to_home(main, tab[1]);
 	else

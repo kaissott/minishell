@@ -6,11 +6,11 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/10 19:29:17 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:52:25 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/main.h"
+#include "../../includes/minishell.h"
 #include <errno.h>
 #include <limits.h>
 #include <readline/history.h>
@@ -29,9 +29,9 @@ bool	exec_cmd(t_main *main, char **cmd, bool simple)
 	else if (ft_strncmp(cmd[0], "env", 3) == 0 && ft_strlen(cmd[0]) == 3)
 		return (env_print(main));
 	else if (ft_strncmp(cmd[0], "cd", 2) == 0 && ft_strlen(cmd[0]) == 2)
-		return (mini_cd(main->node->cmd, main));
+		return (mini_cd(main->exec->cmd, main));
 	else if (ft_strncmp(cmd[0], "exit", 4) == 0 && ft_strlen(cmd[0]) == 4)
-		return (mini_exit(main->node->cmd, main));
+		return (mini_exit(main->exec->cmd, main));
 	else if (ft_strncmp(cmd[0], "export", 6) == 0 && ft_strlen(cmd[0]) == 6)
 		return (mini_export(main));
 	else if (ft_strncmp(cmd[0], "unset", 5) == 0 && ft_strlen(cmd[0]) == 5)
@@ -43,15 +43,15 @@ bool	exec_cmd(t_main *main, char **cmd, bool simple)
 
 int	check_input(t_main *main)
 {
-	t_lst_node	*node;
+	t_exec	*node;
 	int			fd_out;
 	int			fd_in;
 
-	node = main->node;
+	node = main->exec;
 	if (node->next == NULL)
 	{
-		fd_in = main->node->infile.fd;
-		fd_out = main->node->outfile.fd;
+		fd_in = main->exec->infile.fd;
+		fd_out = main->exec->outfile.fd;
 		file_dup(fd_in, fd_out);
 		exec_cmd(main, node->cmd, true);
 		close(fd_in);
@@ -62,7 +62,7 @@ int	check_input(t_main *main)
 	return (0);
 }
 
-int	main(int ac, char **av, char **env)
+/* int	main(int ac, char **av, char **env)
 {
 	char	*line;
 	t_main	*main;
@@ -96,4 +96,4 @@ int	main(int ac, char **av, char **env)
 	}
 	sleep(30);
 	return (0);
-}
+} */

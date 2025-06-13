@@ -17,5 +17,8 @@
 # include "parsing/tokenisation.h"
 # include "utils/lst_utils.h"
 # include "utils/utils.h"
+# include "exec/main.h"
+# include "exec/error.h"
+
 
 #endif

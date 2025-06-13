@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   mini_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:06 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/09 19:03:43 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/13 16:48:21 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/main.h"
+#include "../../includes/minishell.h"
+
 
 int	tab_size(char **tab)
 {

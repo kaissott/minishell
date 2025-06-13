@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/10 17:11:44 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/13 16:50:30 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/main.h"
+#include "../../includes/minishell.h"
 
 char	*get_path(t_main *main, char *env_path)
 {
@@ -20,7 +20,7 @@ char	*get_path(t_main *main, char *env_path)
 	int		i;
 
 	i = 0;
-	cmd = main->node->cmd;
+	cmd = main->exec->cmd;
 	final_env_path = ft_split_slash(env_path, ':');
 	while (final_env_path[i] != NULL)
 	{
@@ -63,11 +63,11 @@ void	exec_simple_cmd(t_main *main, int fd_in, int fd_out)
 	char	**env;
 
 	env = env_to_tab(main);
-	if (strrchr_slash(main->node->cmd[0], '/'))
-		execve(main->node->cmd[0], main->node->cmd, env);
+	if (strrchr_slash(main->exec->cmd[0], '/'))
+		execve(main->exec->cmd[0], main->exec->cmd, env);
 	env_path = env_path_finding(main, env);
 	path = get_path(main, env_path);
-	execve(path, main->node->cmd, env);
+	execve(path, main->exec->cmd, env);
 }
 
 void	file_dup(int fd_in, int fd_out)

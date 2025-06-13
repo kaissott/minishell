@@ -6,11 +6,11 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:50:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 16:50:10 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:49:29 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/main.h"
+#include "../../includes/minishell.h"
 
 int	check_args(int ac, char **av)
 {

@@ -6,14 +6,14 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/03 22:31:57 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:46:08 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "../Libft/libft.h"
+# include "../libft/libft.h"
 # include "error.h"
 # include "structures.h"
 # include <errno.h>

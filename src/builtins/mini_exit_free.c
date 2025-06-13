@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mini_exit_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:45:28 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/23 00:40:28 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/13 16:48:14 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/main.h"
+#include "../../includes/minishell.h"
 
 void	free_tab_exit(char **args)
 {

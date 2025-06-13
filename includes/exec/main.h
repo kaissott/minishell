@@ -6,17 +6,16 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/10 19:28:15 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:55:07 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
 
-# include "../Libft/libft.h"
+# include "../libft/libft.h"
 # include "builtins.h"
 # include "error.h"
-# include "exec.h"
 # include "structures.h"
 # include <fcntl.h> // pour open()
 # include <stdio.h>
@@ -47,7 +46,6 @@ char	*free_tab(char **tab, char **path);
 int		check_args(int ac, char **av);
 void	close_fd(int prev, int outfile, int if_hd);
 int		open_input(char **av, int *i, int *if_hd);
-int		open_file(char *file, int num);
 int		do_cmd(t_main *main, char **cmd, char **env);
 void	access_out_check(char *out, int prev_fd, int outfile, int if_hd);
 void	close_dup_failed(int fd1, int fd2, int i);

@@ -6,11 +6,12 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 00:24:55 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/03 22:02:48 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:48:39 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "../../includes/minishell.h"
+
 
 void	export_new_var(t_main *main, char *var)
 {
@@ -27,7 +28,7 @@ void	export_new_var(t_main *main, char *var)
 	export = lstnew(new);
 	if (!export)
 		free_and_exit_error(main, ERR_MALLOC, 12);
-	lstadd_back(&main->mainenv, export);
+	lstadd_back(&main->env, export);
 }
 void	replace_var(t_main *main, char *var, t_env *env)
 {
@@ -49,7 +50,7 @@ int	check_var_exist(t_main *main, char *var)
 	i = 0;
 	while (var[i] != '=')
 		i++;
-	env = main->mainenv;
+	env = main->env;
 	while (env != NULL)
 	{
 		if (ft_strncmp(var, env->env, i) == 0)
@@ -66,7 +67,7 @@ void	print_export_env(t_main *main)
 {
 	t_env	*env;
 
-	env = main->mainenv;
+	env = main->env;
 	while (env != NULL)
 	{
 		if (write(1, "declare -x ", 11) == -1)
@@ -82,7 +83,7 @@ bool	mini_export(t_main *main)
 	int		i;
 	char	**tab;
 
-	tab = main->node->cmd;
+	tab = main->exec->cmd;
 	;
 	i = 1;
 	if (tab[1] == NULL)
