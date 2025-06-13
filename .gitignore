@@ -1,6 +1,7 @@
 # Prerequisites
 *.d
 
+
 # Tmp files
 tmp/*
 
@@ -8,6 +9,10 @@ tmp/*
 *.o
 *.ko
 *.obj
+
+
+# Executables
+./a.out
 .obj/
 *.elf
 
@@ -33,7 +38,9 @@ tmp/*
 *.dylib
 
 # Executables
+
 minishell
+
 *.exe
 *.out
 *.app
