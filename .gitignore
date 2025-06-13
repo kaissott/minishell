@@ -13,8 +13,8 @@ Libft/*.o
 
 # Executables
 
-./minishell
-./a.out
+minishell
+a.out
 *.exe
 *.out
 *.app
