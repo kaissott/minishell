@@ -15,8 +15,6 @@ static ssize_t	extract_quoted_chunk(t_token_chunk **chunks, char *cmd,
 		else
 			return (ERR_MISSING_SINGLE_QUOTE);
 	}
-	if (len == 1)
-		return (2);
 	if (create_and_add_chunk(chunks, &cmd[1], len - 1, quote) != ERR_NONE)
 		return (ERR_MALLOC);
 	return (len + 1);
@@ -31,7 +29,7 @@ static ssize_t	extract_unquoted_chunk(t_token_chunk **chunks, char *cmd)
 		&& !is_operator(&cmd[len]))
 		len++;
 	if (create_and_add_chunk(chunks, cmd, len, '\0') != ERR_NONE)
-		return (-1);
+		return (ERR_MALLOC);
 	return (len);
 }
 
@@ -74,7 +72,7 @@ static ssize_t	extract_operator_token(t_token **token_lst, t_error *error,
 	len = 1;
 	token_type = get_token_type(error, cmd);
 	if (token_type == T_ERROR)
-		return (-1);
+		return (ERR_UNEXPECTED_TOKEN);
 	if (token_type == T_HEREDOC || token_type == T_REDIR_APPEND)
 		len = 2;
 	if (token_lst_add_node(token_lst, cmd, len, token_type) != ERR_NONE)

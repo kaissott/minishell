@@ -54,7 +54,39 @@ t_parse_error	token_lst_add_node(t_token **token_lst, char *cmd, ssize_t len,
 	new_token->type = token_type;
 	new_token->value = ft_substr(cmd, 0, len);
 	if (!new_token->value)
+	{
+		free(new_token);
 		return (ERR_MALLOC);
+	}
+	token_lst_add_back(token_lst, new_token);
+	return (ERR_NONE);
+}
+
+t_parse_error	token_lst_add_chunks(t_env **env_lst, t_token **token_lst,
+		t_token *new_token)
+{
+	t_token_chunk	*tmp;
+	char			*prev;
+
+	tmp = new_token->chunks;
+	new_token->type = T_WORD;
+	if (expand_chunk(env_lst, new_token) != ERR_NONE)
+	{
+		free_token(new_token);
+		return (ERR_EXPAND);
+	}
+	while (tmp)
+	{
+		prev = new_token->value;
+		new_token->value = join_or_dup(prev, tmp->value);
+		if (!new_token->value)
+		{
+			free_token(new_token);
+			return (ERR_MALLOC);
+		}
+		tmp = tmp->next;
+	}
+	free_chunk_lst(new_token->chunks);
 	token_lst_add_back(token_lst, new_token);
 	return (ERR_NONE);
 }

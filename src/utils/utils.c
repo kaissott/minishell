@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-ssize_t	set_error(t_error *error, t_parse_error error_type,
+t_parse_error	set_error(t_error *error, t_parse_error error_type,
 		char unexpected_token)
 {
 	error->error_type = error_type;

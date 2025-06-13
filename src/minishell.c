@@ -9,7 +9,7 @@ static void	parse(t_main **main_struct, char *cmd)
 	printf("\nReturn tokenisation : %d\n", ret);
 	if (ret != ERR_NONE)
 	{
-		clear_and_exit(*main_struct);
+		clear_and_exit(*main_struct, ret);
 		return ;
 	}
 	else
@@ -20,14 +20,14 @@ static void	parse(t_main **main_struct, char *cmd)
 		printf("\nReturn create exec : %d\n", ret);
 		if (ret != ERR_NONE)
 		{
-			clear_and_exit(*main_struct);
+			clear_and_exit(*main_struct, ret);
 			return ;
 		}
 		print_exec_lst((*main_struct)->exec, "Exec lst : \n");
 		if ((*main_struct)->token)
 		{
 			printf("Token lst not empty after parsing <- error\n");
-			clear_and_exit(*main_struct);
+			clear_and_exit(*main_struct, ret);
 			return ;
 		}
 		print_token_lst((*main_struct)->token, "Token lst after : \n");
@@ -44,13 +44,16 @@ void	start_shell(t_main **main_struct)
 	{
 		rl = readline("$> ");
 		if (!rl)
+		{
+			clear_and_exit(*main_struct, ERR_NONE);
 			return ;
+		}
 		add_history(rl);
 		parse(main_struct, rl);
 		free(rl);
 		rl_on_new_line();
 	}
-	rl_clear_history();
+	clear_history();
 }
 
 int	main(int ac, char **av, char **env)

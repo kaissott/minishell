@@ -4,19 +4,18 @@ static t_parse_error	replace_chunk_value(t_env **env_lst,
 		t_expand **expand_lst, t_token_chunk *chunk)
 {
 	t_expand	*tmp;
-	char		*prev;
 	char		*var_value;
 
 	tmp = *expand_lst;
+	chunk->value = NULL;
 	while (tmp)
 	{
-		prev = chunk->value;
 		if (tmp->type == T_EXPAND_VAR)
 			var_value = get_var_value(env_lst, tmp->value);
 		else
 			var_value = tmp->value;
 		if (var_value)
-			chunk->value = join_or_dup(prev, var_value);
+			chunk->value = join_or_dup(chunk->value, var_value);
 		if (tmp->type == T_EXPAND_VAR)
 			free(var_value);
 		if (!chunk->value)
@@ -49,11 +48,11 @@ static ssize_t	handle_var(t_expand **expand_lst, char *var)
 	i = 1;
 	if (!var[i])
 	{
-		new_expand = create_expand(T_EXPAND_VAR, ft_substr(var, 0, 1));
+		new_expand = create_expand(T_EXPAND_VAR, ft_strdup("$"));
 		if (!new_expand)
 			return (ERR_MALLOC);
 		expand_lst_add_back(expand_lst, new_expand);
-		return (1);
+		return (i);
 	}
 	if (var[i] == '$' || var[i] == '?')
 		new_expand = create_expand(T_EXPAND_VAR, ft_substr(var, 0, 2));
