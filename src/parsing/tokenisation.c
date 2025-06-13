@@ -1,0 +1,105 @@
+#include "../../includes/minishell.h"
+
+static ssize_t	extract_quoted_chunk(t_token_chunk **chunks, char *cmd,
+		char quote)
+{
+	ssize_t	len;
+
+	len = 1;
+	while (cmd[len] && cmd[len] != quote)
+		len++;
+	if (!cmd[len])
+	{
+		if (quote == '"')
+			return (ERR_MISSING_DOUBLE_QUOTE);
+		else
+			return (ERR_MISSING_SINGLE_QUOTE);
+	}
+	if (create_and_add_chunk(chunks, &cmd[1], len - 1, quote) != ERR_NONE)
+		return (ERR_MALLOC);
+	return (len + 1);
+}
+
+static ssize_t	extract_unquoted_chunk(t_token_chunk **chunks, char *cmd)
+{
+	ssize_t	len;
+
+	len = 0;
+	while (cmd[len] && cmd[len] != ' ' && cmd[len] != '"' && cmd[len] != '\''
+		&& !is_operator(&cmd[len]))
+		len++;
+	if (create_and_add_chunk(chunks, cmd, len, '\0') != ERR_NONE)
+		return (ERR_MALLOC);
+	return (len);
+}
+
+static ssize_t	extract_word_token(t_env **env_lst, t_token **token_lst,
+		t_error *error, char *cmd)
+{
+	ssize_t	i;
+	ssize_t	chunk_len;
+	t_token	*new_token;
+
+	i = 0;
+	new_token = ft_calloc(1, sizeof(t_token));
+	if (!new_token)
+		return (ERR_MALLOC);
+	while (cmd[i] && cmd[i] != ' ' && !is_operator(&cmd[i]))
+	{
+		if (cmd[i] == '"' || cmd[i] == '\'')
+			chunk_len = extract_quoted_chunk(&new_token->chunks, &cmd[i],
+					cmd[i]);
+		else
+			chunk_len = extract_unquoted_chunk(&new_token->chunks, &cmd[i]);
+		if (chunk_len <= 0)
+		{
+			free_token(new_token);
+			return (chunk_len);
+		}
+		i += chunk_len;
+	}
+	if (token_lst_add_chunks(env_lst, token_lst, new_token) != ERR_NONE)
+		return (set_error(error, ERR_MALLOC, '\0'));
+	return (i);
+}
+
+static ssize_t	extract_operator_token(t_token **token_lst, t_error *error,
+		char *cmd)
+{
+	ssize_t			len;
+	t_token_type	token_type;
+
+	len = 1;
+	token_type = get_token_type(error, cmd);
+	if (token_type == T_ERROR)
+		return (ERR_UNEXPECTED_TOKEN);
+	if (token_type == T_HEREDOC || token_type == T_REDIR_APPEND)
+		len = 2;
+	if (token_lst_add_node(token_lst, cmd, len, token_type) != ERR_NONE)
+		return (set_error(error, ERR_MALLOC, '\0'));
+	return (len);
+}
+
+t_parse_error	tokenisation(t_env **env_lst, t_token **token_lst,
+		t_error *error, char *cmd)
+{
+	ssize_t	i;
+	ssize_t	token_len;
+
+	i = 0;
+	while (cmd[i])
+	{
+		while (cmd[i] == ' ')
+			i++;
+		if (!cmd[i])
+			break ;
+		if (is_operator(&cmd[i]))
+			token_len = extract_operator_token(token_lst, error, &cmd[i]);
+		else
+			token_len = extract_word_token(env_lst, token_lst, error, &cmd[i]);
+		if (token_len <= 0 || error->error_type != ERR_NONE)
+			return (token_len);
+		i += token_len;
+	}
+	return (ERR_NONE);
+}
