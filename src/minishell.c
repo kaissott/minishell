@@ -64,7 +64,7 @@ void	start_shell(t_main **main_struct)
 		rl = NULL;
 		dprintf(2, "finit\n");
 
-		// rl_on_new_line();
+		rl_on_new_line();
 	}
 	rl_clear_history();
 }
