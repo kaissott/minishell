@@ -9,7 +9,7 @@ tmp/*
 *.o
 *.ko
 *.obj
-
+Libft/*.o
 
 # Executables
 ./a.out
