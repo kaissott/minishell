@@ -57,6 +57,7 @@ void	start_shell(t_main **main_struct)
 			clear_and_exit(*main_struct, ERR_NONE);
 			return ;
 		}
+		caca;
 		add_history(rl);
 		parse(main_struct, rl);
 		check_input(*main_struct);
