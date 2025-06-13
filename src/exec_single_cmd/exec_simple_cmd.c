@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/13 16:50:30 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 20:20:03 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ char	*get_path(t_main *main, char *env_path)
 			free_and_exit_error(main, ERR_MALLOC, 12);
 		if ((access(final_path, X_OK) == 0))
 		{
-			// free_tabs(cmd, final_env_path);
+			free_tabs(NULL, final_env_path);
 			return (final_path);
 		}
 		free(final_path);
 		final_path = NULL;
 		i++;
 	}
+	free_tabs(NULL, final_env_path);
 	return (NULL);
 }
 
@@ -66,7 +67,15 @@ void	exec_simple_cmd(t_main *main, int fd_in, int fd_out)
 	if (strrchr_slash(main->exec->cmd[0], '/'))
 		execve(main->exec->cmd[0], main->exec->cmd, env);
 	env_path = env_path_finding(main, env);
+	dprintf(2, "%s\n", env_path);
 	path = get_path(main, env_path);
+	if (path == NULL)
+	{
+		free(env_path);
+		free(path);
+		free(env);
+		return;
+	}
 	execve(path, main->exec->cmd, env);
 }
 

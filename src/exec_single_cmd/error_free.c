@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:49:29 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 16:50:10 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 20:21:28 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ void	free_tabs(char **tab1, char **tab2)
 			free(tab1[i]);
 			i++;
 		}
+		free(tab1);
 	}
 	i = 0;
 	if (tab2)
 	{
 		while (tab2[i])
 			free(tab2[i++]);
+		free(tab2);
 	}
 }

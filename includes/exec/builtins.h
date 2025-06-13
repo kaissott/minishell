@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 16:46:08 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:06:31 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ void	free_tab_exit(char **args);
 // void	free_tab(char **tab1, char **tab2);
 bool	mini_export(t_main *main);
 bool	mini_unset(t_main *main);
-void	free_env_list(t_env *head);
+
 #endif

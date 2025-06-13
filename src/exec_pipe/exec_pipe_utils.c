@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 18:49:24 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:09:52 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 
 	if (exec_cmd(main, cmd, false) == true)
 	{
+		free(env);
+		free_struct(main);
+		free(main);
 		exit(0);
 	}
 	if (cmd == NULL)

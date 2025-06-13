@@ -67,6 +67,7 @@
     "utils.h": "c",
     "minishell.h": "c",
     "stdbool.h": "c",
-    "lst_utils.h": "c"
+    "lst_utils.h": "c",
+    "fcntl.h": "c"
   }
 }

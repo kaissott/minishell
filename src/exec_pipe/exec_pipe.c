@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 18:47:48 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:10:59 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,13 @@ pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 				close_dup_failed(node->outfile.fd, prev_fd, 1);
 			close(prev_fd);
 		}
-		if (dup2(node->outfile.fd, STDOUT_FILENO) == -1)
-			close_dup_failed(node->outfile.fd, prev_fd, 1);
-		close(node->outfile.fd);
+		dprintf(2, "%d\n",node->outfile.fd);
+		if (node->outfile.fd != STDOUT_FILENO)
+		{
+			if (dup2(node->outfile.fd, STDOUT_FILENO) == -1)
+				close_dup_failed(node->outfile.fd, prev_fd, 1);
+			close(node->outfile.fd);
+		}
 		do_cmd(main, node->cmd, env);
 	}
 	return (pid);
@@ -111,5 +115,6 @@ int	pipe_exec(t_main *main)
 	last_pid = last_child(node, prev_fd, main, env);
 	close_fd(prev_fd, node->outfile.fd, if_hd);
 	wait_child(last_pid);
+	free(env);
 	return (0);
 }

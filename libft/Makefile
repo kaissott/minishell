@@ -51,13 +51,11 @@ SRC = ft_atoi.c \
 	ft_putendl_fd.c \
 	ft_putnbr_fd.c \
 	ft_strcmp.c \
-	GNL/get_next_line.c \
 	ft_lstadd_back_bonus.c \
-	GNL/get_next_line_utils.c \
 	handle_error_exit.c \
 	handle_error.c \
 	ft_atoll.c \
-	ft_isspace.c 
+	ft_isspace.c
 
 OBJ = $(SRC:.c=.o)
 

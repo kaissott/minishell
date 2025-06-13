@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/13 19:23:35 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:17:03 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void check_and_change(t_main *main)
 {
 	if (main->exec->infile.fd == -1 && main->exec->infile.type == 0)
 		main->exec->infile.fd = STDIN_FILENO;
-	if (main->exec->outfile.fd == -1 && main->exec->outfile.type == 0)
+	if (main->exec->next->outfile.fd == -1 && main->exec->next->outfile.type == 0)
 		main->exec->outfile.fd = STDOUT_FILENO;
 }
 
@@ -84,38 +84,3 @@ int	check_input(t_main *main)
 	return (0);
 }
 
-/* int	main(int ac, char **av, char **env)
-{
-	char	*line;
-	t_main	*main;
-	t_env	*mainenv;
-	int		std_out;
-	int		std_in;
-	int		i;
-
-	std_out = dup(STDOUT_FILENO);
-	std_in = dup(STDERR_FILENO);
-	main = malloc(sizeof(t_main));
-	main->node = NULL;
-	check_env_available(env, main);
-	while (1)
-	{
-		i = 0;
-		dup2(std_in, STDIN_FILENO);
-		dup2(std_out, STDOUT_FILENO);
-		line = readline("minishell$ ");
-		if (!line)
-			free_and_exit_error(main, "", errno);
-		if (line[0] != '\0')
-			add_history(line);
-		create_node(main, line);
-		check_input(main);
-		close(main->node->outfile.fd);
-		close(main->node->infile.fd);
-		free_node(main);
-		free(line);
-		main->node = NULL;
-	}
-	sleep(30);
-	return (0);
-} */
