@@ -9,6 +9,23 @@ t_parse_error	set_error(t_error *error, t_parse_error error_type,
 	return (error_type);
 }
 
+void	get_errcode(t_main **main_struct)
+{
+	t_parse_error	err;
+
+	err = (*main_struct)->error.error_type;
+	if (err == ERR_MALLOC)
+		(*main_struct)->errcode = 12;
+	else if (err >= ERR_MISSING_SINGLE_QUOTE && err <= ERR_UNFINISHED_REDIR)
+		(*main_struct)->errcode = 2;
+	else if (err == ERR_TOKEN || err == ERR_EXPAND)
+		(*main_struct)->errcode = 1;
+	else if (err >= ERR_OPEN && err <= ERR_CLOSE)
+		(*main_struct)->errcode = 1;
+	else
+		(*main_struct)->errcode = 1;
+}
+
 void	print_token_error_msg(t_parse_error err_code, char unexpected_token)
 {
 	if (err_code == ERR_MISSING_SINGLE_QUOTE)

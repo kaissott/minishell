@@ -70,11 +70,11 @@ t_parse_error	token_lst_add_chunks(t_env **env_lst, t_token **token_lst,
 
 	tmp = new_token->chunks;
 	new_token->type = T_WORD;
-	// if (expand_chunk(env_lst, new_token) != ERR_NONE)
-	// {
-	// 	free_token(new_token);
-	// 	return (ERR_EXPAND);
-	// }
+	if (expand_chunk(env_lst, new_token) != ERR_NONE)
+	{
+		free_token(new_token);
+		return (ERR_EXPAND);
+	}
 	while (tmp)
 	{
 		prev = new_token->value;

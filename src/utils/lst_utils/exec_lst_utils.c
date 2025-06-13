@@ -7,8 +7,8 @@ t_exec	*create_exec_cmd(void)
 	new_cmd = ft_calloc(1, sizeof(t_exec));
 	if (!new_cmd)
 		return (NULL);
-	new_cmd->infile.fd = -1;
-	new_cmd->outfile.fd = -1;
+	new_cmd->infile.fd = STDIN_FILENO;
+	new_cmd->outfile.fd = STDOUT_FILENO;
 	new_cmd->next = NULL;
 	return (new_cmd);
 }

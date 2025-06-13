@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-/.vscode
+.vscode/
 
 # Tmp files
 tmp/*
@@ -12,9 +12,15 @@ tmp/*
 Libft/*.o
 
 # Executables
+
+./minishell
 ./a.out
-.obj/
-*.elf
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
 
 # Linker output
 *.ilk
@@ -36,16 +42,6 @@ Libft/*.o
 *.so
 *.so.*
 *.dylib
-
-# Executables
-
-./minishell
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
 
 # Debug files
 *.dSYM/

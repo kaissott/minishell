@@ -15,8 +15,8 @@ char	*get_var_value(t_env **env_lst, char *var_name)
 		return (ft_strdup("$"));
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->var, var_name) == 0)
-			return (ft_strdup(tmp->value));
+		if (ft_strncmp(tmp->env, var_name, ft_strlen(var_name)) == 0)
+			return (ft_strdup(&tmp->env[ft_strlen(var_name) + 1]));
 		tmp = tmp->next;
 	}
 	return (NULL);

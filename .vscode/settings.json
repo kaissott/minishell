@@ -67,6 +67,9 @@
     "utils.h": "c",
     "minishell.h": "c",
     "stdbool.h": "c",
-    "lst_utils.h": "c"
+    "lst_utils.h": "c",
+    "unistd.h": "c",
+    "*.a": "c",
+    "get_next_line.h": "c"
   }
 }

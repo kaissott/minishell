@@ -56,16 +56,16 @@ typedef enum e_parse_error
 	ERR_MISSING_DOUBLE_QUOTE = -3,
 	ERR_UNEXPECTED_TOKEN = -4,
 	ERR_DOUBLE_PIPE = -5,
-	ERR_EMPTY_COMMAND = -6,
-	ERR_UNFINISHED_REDIR = -7,
-	ERR_EXPAND = -8,
-	ERR_TOKEN = -9,
-	ERR_OPEN = -10,
-	ERR_CLOSE = -11
+	ERR_UNFINISHED_REDIR = -6,
+	ERR_EXPAND = -7,
+	ERR_TOKEN = -8,
+	ERR_OPEN = -9,
+	ERR_CLOSE = -10
 }							t_parse_error;
 
 typedef struct s_error
 {
+	int						errcode;
 	t_parse_error			error_type;
 	char					unexpected_token;
 }							t_error;

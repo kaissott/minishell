@@ -20,8 +20,8 @@ void	free_expand_lst(t_expand **expand_lst)
 
 void	free_main_struct(t_main **main_struct)
 {
-	if ((*main_struct)->env)
-		free_env_lst(&(*main_struct)->env);
+	// if ((*main_struct)->env)
+	// 	free_env_lst(&(*main_struct)->env);
 	if ((*main_struct)->token)
 		free_token_lst(&(*main_struct)->token);
 	if ((*main_struct)->exec)
@@ -34,7 +34,8 @@ void	clear_and_exit(t_main *main_struct, ssize_t errcode)
 {
 	if (errcode != ERR_NONE)
 	{
-		print_token_error_msg(main_struct->error.error_type, main_struct->error.unexpected_token);
+		print_token_error_msg(main_struct->error.error_type,
+			main_struct->error.unexpected_token);
 		free_main_struct(&main_struct);
 		free(main_struct);
 	}
