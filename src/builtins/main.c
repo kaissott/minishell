@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/13 19:00:40 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:23:35 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,16 @@ bool	exec_cmd(t_main *main, char **cmd, bool simple)
 		init_simple_cmd(main);
 	return (false);
 }
-
+void	reset_struct(char *rl, t_main *main)
+{
+	int i;
+	if (rl)
+		free(rl);
+	if (main->exec)
+	{
+		free_node(main);
+	}
+}
 void check_and_change(t_main *main)
 {
 	if (main->exec->infile.fd == -1 && main->exec->infile.type == 0)

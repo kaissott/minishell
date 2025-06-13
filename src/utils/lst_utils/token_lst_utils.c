@@ -86,7 +86,6 @@ t_parse_error	token_lst_add_chunks(t_env **env_lst, t_token **token_lst,
 		}
 		tmp = tmp->next;
 	}
-	// free_chunk_lst(new_token->chunks);
 	token_lst_add_back(token_lst, new_token);
 	return (ERR_NONE);
 }

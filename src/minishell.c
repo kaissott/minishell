@@ -54,17 +54,13 @@ void	start_shell(t_main **main_struct)
 		if (!rl)
 		{
 			dprintf(2, "caca");
-			clear_and_exit(*main_struct, ERR_NONE);
+			free_struct(*main_struct);
 			return ;
 		}
-		caca;
 		add_history(rl);
 		parse(main_struct, rl);
 		check_input(*main_struct);
-		free(rl);
-		rl = NULL;
-		dprintf(2, "finit\n");
-
+		reset_struct(rl, *main_struct);
 		rl_on_new_line();
 	}
 	rl_clear_history();
@@ -78,19 +74,11 @@ int	main(int ac, char **av, char **env)
 	main_struct = ft_calloc(1, sizeof(t_main));
 	if (!main_struct)
 		return (EXIT_FAILURE);
-	// if (!create_env_lst(&main_struct->env, env))
-	// {
-	// 	printf("error in env lst\n");
-	// 	free_env_lst(&main_struct->env);
-	// 	// free(main_struct);
-	// 	// return (EXIT_FAILURE);
-	// }
 	check_env_available(env, main_struct);
-	// else print_env_lst(main_struct->env, "ENV LST :\n");
 	if (ac == 1)
 	{
 		start_shell(&main_struct);
-		free_env_lst(&main_struct->env);
+		// free_env_lst(&main_struct->env);
 		free(main_struct);
 		return (EXIT_SUCCESS);
 	}

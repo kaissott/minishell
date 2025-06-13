@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/13 17:55:07 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:22:00 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ int		create_node(t_main *main, char *line);
 int		pipe_exec(t_main *main);
 int		free_struct(t_main *main);
 void	free_node(t_main *main);
+void	reset_struct(char *rl, t_main *main);
+
 
 #endif

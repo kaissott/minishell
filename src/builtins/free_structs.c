@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 16:51:32 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:30:48 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ void	free_node(t_main *main)
 		if (temp->cmd)
 		{
 			while (temp->cmd[i])
+			{
 				free(temp->cmd[i++]);
+			}
 			free(temp->cmd);
 		}
 		free(temp);
@@ -60,7 +62,7 @@ int	free_struct(t_main *main)
 		free_env(main);
 	if (main->exec != NULL)
 		free_node(main);
-	free(main);
+	// free(main);
 }
 
 void	free_and_exit_error(t_main *main, char *error, int err_number)
