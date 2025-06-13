@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/13 20:20:03 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:25:45 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	exec_simple_cmd(t_main *main, int fd_in, int fd_out)
 	if (strrchr_slash(main->exec->cmd[0], '/'))
 		execve(main->exec->cmd[0], main->exec->cmd, env);
 	env_path = env_path_finding(main, env);
-	dprintf(2, "%s\n", env_path);
 	path = get_path(main, env_path);
 	if (path == NULL)
 	{

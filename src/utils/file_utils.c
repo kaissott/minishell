@@ -33,6 +33,10 @@ t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 		}
 		if (new_cmd->infile.fd > 0)
 		{
+
+				// if (close(fd) == -1)
+				// 	return (ERR_CLOSE);
+				// *fd = -1;
 			if (secure_close(&new_cmd->infile.fd) != ERR_NONE)
 				return (ERR_CLOSE);
 		}

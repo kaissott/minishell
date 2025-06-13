@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 21:10:59 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:35:54 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 				close_dup_failed(node->outfile.fd, prev_fd, 1);
 			close(prev_fd);
 		}
-		dprintf(2, "%d\n",node->outfile.fd);
 		if (node->outfile.fd != STDOUT_FILENO)
 		{
 			if (dup2(node->outfile.fd, STDOUT_FILENO) == -1)
@@ -103,6 +102,9 @@ int	pipe_exec(t_main *main)
 	if_hd = 0;
 	node = main->exec;
 	prev_fd = node->infile.fd;
+	dprintf(2, "%d\n", node->infile.fd);
+	dprintf(2, "%d\n", node->outfile.fd);
+	dprintf(2, "%d\n", node->next->outfile.fd);
 	env = env_to_tab(main);
 	while (node->next != NULL)
 	{

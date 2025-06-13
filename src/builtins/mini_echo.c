@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 16:48:01 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:43:09 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ bool	mini_echo(t_main *main)
 	char	**tab;
 
 	tab = main->exec->cmd;
+	dprintf(2, "%s\n", tab[0]);
+	dprintf(2, "%s\n", tab[1]);
 	if (check_echo_flag(tab) == true)
 		print_echo_with_flag(main, tab);
 	else

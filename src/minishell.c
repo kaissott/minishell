@@ -54,6 +54,8 @@ void	start_shell(t_main **main_struct)
 		if (!rl)
 		{
 			free_struct(*main_struct);
+			close(std_out);
+			close(std_in);
 			return ;
 		}
 		add_history(rl);
