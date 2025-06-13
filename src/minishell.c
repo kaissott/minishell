@@ -6,7 +6,7 @@ static void	parse(t_main **main_struct, char *cmd)
 
 	ret = tokenisation(&(*main_struct)->env, &(*main_struct)->token,
 			&(*main_struct)->error, cmd);
-	printf("\nReturn tokenisation : %d\n", ret);
+	// printf("\nReturn tokenisation : %d\n", ret);
 	if (ret != ERR_NONE)
 	{
 		clear_and_exit(*main_struct, ret);
@@ -14,24 +14,25 @@ static void	parse(t_main **main_struct, char *cmd)
 	}
 	else
 	{
-		print_token_lst((*main_struct)->token,
-			"\nToken lst before parsing :\n");
+		// (*main_struct)->exec = ft_calloc(1, sizeof(t_exec));
+		// print_token_lst((*main_struct)->token,
+		// 	"\nToken lst before parsing :\n");
 		ret = parsing(&(*main_struct)->exec, &(*main_struct)->token);
-		printf("\nReturn create exec : %d\n", ret);
+		// printf("\nReturn create exec : %d\n", ret);
 		if (ret != ERR_NONE)
 		{
 			clear_and_exit(*main_struct, ret);
 			return ;
 		}
-		print_exec_lst((*main_struct)->exec, "Exec lst : \n");
+		// print_exec_lst((*main_struct)->exec, "Exec lst : \n");
 		if ((*main_struct)->token)
 		{
-			printf("Token lst not empty after parsing <- error\n");
+			// printf("Token lst not empty after parsing <- error\n");
 			clear_and_exit(*main_struct, ret);
 			return ;
 		}
-		print_token_lst((*main_struct)->token, "Token lst after : \n");
-		free_main_struct(main_struct);
+		// print_token_lst((*main_struct)->token, "Token lst after : \n");
+		// free_main_struct(main_struct);
 		return ;
 	}
 }
@@ -39,22 +40,33 @@ static void	parse(t_main **main_struct, char *cmd)
 void	start_shell(t_main **main_struct)
 {
 	char	*rl;
+	int std_out;
+	int std_in;
+
+	std_out = dup(STDOUT_FILENO);
+	std_in = dup(STDERR_FILENO);
 
 	while (1)
 	{
-		dprintf(2, "caca\n");
+		dup2(std_in, STDIN_FILENO);
+		dup2(std_out, STDOUT_FILENO);
 		rl = readline("$> ");
 		if (!rl)
 		{
+			dprintf(2, "caca");
 			clear_and_exit(*main_struct, ERR_NONE);
 			return ;
 		}
 		add_history(rl);
 		parse(main_struct, rl);
+		check_input(*main_struct);
 		free(rl);
-		rl_on_new_line();
+		rl = NULL;
+		dprintf(2, "finit\n");
+
+		// rl_on_new_line();
 	}
-	clear_history();
+	rl_clear_history();
 }
 
 int	main(int ac, char **av, char **env)
@@ -73,7 +85,6 @@ int	main(int ac, char **av, char **env)
 	// 	// return (EXIT_FAILURE);
 	// }
 	check_env_available(env, main_struct);
-	dprintf(2, "%s\n", main_struct->env->env);
 	// else print_env_lst(main_struct->env, "ENV LST :\n");
 	if (ac == 1)
 	{

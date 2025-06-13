@@ -9,6 +9,7 @@ t_exec	*create_exec_cmd(void)
 		return (NULL);
 	new_cmd->infile.fd = -1;
 	new_cmd->outfile.fd = -1;
+	new_cmd->next = NULL;
 	return (new_cmd);
 }
 

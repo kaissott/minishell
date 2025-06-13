@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/13 16:52:25 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:50:29 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ bool	exec_cmd(t_main *main, char **cmd, bool simple)
 	return (false);
 }
 
+void check_and_change(t_main *main)
+{
+	if (main->exec->infile.fd == -1 && main->exec->infile.type == 0)
+		main->exec->infile.fd = STDIN_FILENO;
+	if (main->exec->outfile.fd == -1 && main->exec->outfile.type == 0)
+		main->exec->outfile.fd = STDOUT_FILENO;
+}
+
 int	check_input(t_main *main)
 {
 	t_exec	*node;
@@ -50,6 +58,7 @@ int	check_input(t_main *main)
 	node = main->exec;
 	if (node->next == NULL)
 	{
+		check_and_change(main);
 		fd_in = main->exec->infile.fd;
 		fd_out = main->exec->outfile.fd;
 		file_dup(fd_in, fd_out);
@@ -58,7 +67,9 @@ int	check_input(t_main *main)
 		close(fd_out);
 	}
 	else
+	{
 		pipe_exec(main);
+	}
 	return (0);
 }
 

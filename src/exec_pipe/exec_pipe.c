@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 16:50:00 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:47:48 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ pid_t	child_process(t_main *main, char **cmd, char **env, int prev_fd)
 	int		pipefd[2];
 	pid_t	pid;
 
-	// printf("%s\n", cmd[0]);
 	if (prev_fd == -1 || pipe(pipefd) == -1)
 		error_exit("Error : Pipe failed", EXIT_FAILURE, prev_fd);
 	pid = fork();
@@ -40,7 +39,6 @@ pid_t	child_process(t_main *main, char **cmd, char **env, int prev_fd)
 		close(pipefd[1]);
 		close(prev_fd);
 		do_cmd(main, cmd, env);
-		dprintf(2, "exec");
 	}
 	close(pipefd[1]);
 	close(prev_fd);
@@ -110,7 +108,6 @@ int	pipe_exec(t_main *main)
 		node = node->next;
 	}
 	// access_out_check(main, prev_fd, node->outfile.fd, if_hd);
-	// printf("%s\n", node->cmd[0]);
 	last_pid = last_child(node, prev_fd, main, env);
 	close_fd(prev_fd, node->outfile.fd, if_hd);
 	wait_child(last_pid);

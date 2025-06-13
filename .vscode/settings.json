@@ -66,6 +66,7 @@
     "wait.h": "c",
     "utils.h": "c",
     "minishell.h": "c",
-    "stdbool.h": "c"
+    "stdbool.h": "c",
+    "lst_utils.h": "c"
   }
 }
