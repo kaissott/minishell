@@ -87,8 +87,7 @@ typedef struct s_exec
 
 typedef struct s_env
 {
-	char			*var;
-	char			*value;
+	char			*env;
 	struct s_env	*next;
 }	t_env;
 
@@ -98,6 +97,7 @@ typedef struct s_main
 	t_exec	*exec;
 	t_token	*token;
 	t_error	error;
+	int		errcode;
 }	t_main;
 
 #endif

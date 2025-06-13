@@ -13,6 +13,16 @@ NAME :=	minishell
 #Files
 LST_EXEC :=	minishell.c
 
+LST_BUILTINS :=	free_structs.c main.c mini_cd.c mini_echo.c \
+				mini_env.c mini_exit_free.c mini_exit.c mini_export.c \
+				mini_pwd.c mini_unset.c
+
+LST_ENV :=		env_lst.c env_to_tab.c lst_add.c
+
+LST_EXEC_PIPE :=	exec_pipe_error.c exec_pipe_utils.c exec_pipe.c strrchr_slash.c
+
+LST_EXEC_SINGLE_CMD :=	error_free.c exec_simple_cmd.c ft_split_slash.c single_cmd_error.c
+
 LST_PARSING :=	expand_utils.c expand_chunk.c parse_utils.c parse.c \
 				tokenisation_utils.c tokenisation.c
 
@@ -27,11 +37,21 @@ LST_INC :=	minishell.h structures.h
 
 LST_INC_PARSING :=	expand_chunk.h parse.h tokenisation.h
 
+LST_INC_EXEC :=	builtins.h error.h main.h
+
 LST_INC_UTILS :=	lst_utils.h utils.h
 
 #Directories
 D_SRC :=	src/
 D_INC :=	includes/
+
+D_BUILTINS :=	builtins/
+
+D_ENV :=	env/
+
+D_EXEC_PIPE :=	exec_pipe/
+
+D_EXEC_SINGLE_CMD :=	exec_single_cmd/
 
 D_PARSING :=	parsing/
 
@@ -43,12 +63,18 @@ D_LST_FREE_UTILS :=	lst_free_utils/
 
 D_INC_PARSING :=	parsing/
 
+D_INC_EXEC :=	exec/
+
 D_INC_UTILS :=	utils/
 
 D_OBJ :=	.obj/
 
 #Files full path
 SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
+		$(addprefix $(D_SRC)$(D_BUILTINS), $(LST_BUILTINS)) \
+		$(addprefix $(D_SRC)$(D_ENV), $(LST_ENV)) \
+		$(addprefix $(D_SRC)$(D_EXEC_PIPE), $(LST_EXEC_PIPE)) \
+		$(addprefix $(D_SRC)$(D_EXEC_SINGLE_CMD), $(LST_EXEC_SINGLE_CMD)) \
 		$(addprefix $(D_SRC)$(D_PARSING), $(LST_PARSING)) \
 		$(addprefix $(D_SRC)$(D_UTILS), $(LST_UTILS)) \
 		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS), $(LST_LST_UTILS)) \
@@ -56,6 +82,7 @@ SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
 
 INC :=	$(addprefix $(D_INC), $(LST_INC)) \
 		$(addprefix $(D_INC)$(D_INC_PARSING), $(LST_INC_PARSING)) \
+		$(addprefix $(D_INC)$(D_INC_EXEC), $(LST_INC_EXEC)) \
 		$(addprefix $(D_INC)$(D_INC_UTILS), $(LST_INC_UTILS))
 
 OBJ :=	$(subst $(D_SRC), $(D_OBJ), $(SRC:.c=.o))

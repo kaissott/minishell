@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:49:29 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/02 16:27:25 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:32:53 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/main.h"
+#include "../include/main.h"
 
 // void	free_files(t_main *main)
 // {
