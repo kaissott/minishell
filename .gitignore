@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-
+/.vscode
 
 # Tmp files
 tmp/*
@@ -39,8 +39,7 @@ Libft/*.o
 
 # Executables
 
-minishell
-
+./minishell
 *.exe
 *.out
 *.app
