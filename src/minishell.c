@@ -60,8 +60,8 @@ void	start_shell(t_main **main_struct)
 		}
 		add_history(rl);
 		parse(main_struct, rl);
+		print_exec_lst((*main_struct)->exec, "coucou :");
 		check_input(*main_struct);
-		// print_exec_lst(*main_struct, "coucou :");
 		reset_struct(rl, *main_struct);
 		rl_on_new_line();
 	}
