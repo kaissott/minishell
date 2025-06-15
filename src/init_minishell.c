@@ -6,12 +6,11 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:20:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/15 23:57:28 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:40:31 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-void	free_env(t_main *main);
 
 void	print_ascii_logo(void)
 {
@@ -29,14 +28,37 @@ void	print_ascii_logo(void)
 	printf("%s", reset);
 }
 
-void	exit_error_init_minishell(t_main *main, int errcode)
+void	exit_error_init_minishell(t_main *main, int errcode, char *err)
 {
 	if (main)
 	{
 		free_struct(main);
 		free(main);
 	}
+	perror(err);
 	exit(errcode);
+}
+
+void	exit_error_dup_init_minishell(t_main *main_struct)
+{
+	if (main_struct->std_out > 1)
+	{
+		if (close(main_struct->std_out) == -1)
+		{
+			if (main_struct->std_in > 1)
+			{
+				if (close(main_struct->std_in) == -1)
+					exit_error_init_minishell(main_struct, errno,"Close failed");
+			}
+			exit_error_init_minishell(main_struct, errno,"Close failed");
+		}
+	}
+	if (main_struct->std_in > 1)
+	{
+		if (close(main_struct->std_in) == -1)
+			exit_error_init_minishell(main_struct, errno,"Close failed");
+	}
+	exit_error_init_minishell(main_struct, errno, "Dup failed");
 }
 
 t_main	*init_minishell(char **env)
@@ -47,17 +69,11 @@ t_main	*init_minishell(char **env)
 	main_struct = ft_calloc(1, sizeof(t_main));
 	main_struct->env = NULL;
 	if (!main_struct)
-		exit_error_init_minishell(main_struct, errno);
+		exit_error_init_minishell(main_struct, errno, ERR_MEM);
 	check_env_available(env, main_struct);
 	main_struct->std_out = dup(STDOUT_FILENO);
 	main_struct->std_in = dup(STDIN_FILENO);
 	if (main_struct->std_out == -1 || main_struct->std_in == -1)
-	{
-		if (main_struct->std_out)
-			close(main_struct->std_out);
-		if (main_struct->std_in)
-			close(main_struct->std_in);
-		exit_error_init_minishell(main_struct, errno);
-	}
+		exit_error_dup_init_minishell(main_struct);
 	return(main_struct);
 }
