@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 20:17:17 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:14:05 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,12 @@ void	free_tab_2(char **tab)
 	free(tab);
 	return;
 }
-void	free_and_exit_error(t_main *main, char *error, int err_number)
+void	free_and_exit_error(t_main *main, char *tmp, char *error, int err_number)
 {
 	free_struct(main);
+	if (tmp)
+		free(tmp);
+	free(main);
 	perror(error);
 	exit(err_number);
 }

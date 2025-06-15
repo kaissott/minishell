@@ -10,7 +10,7 @@ NAME :=	minishell
 #################################################################################
 
 #Files
-LST_EXEC :=	minishell.c
+LST_EXEC :=	minishell.c init_minishell.c
 
 LST_BUILTINS :=	free_structs.c main.c mini_cd.c mini_echo.c \
 				mini_env.c mini_exit_free.c mini_exit.c mini_export.c \

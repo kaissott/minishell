@@ -38,10 +38,7 @@
   "C_Cpp_Runner.compilerArgs": [],
   "C_Cpp_Runner.linkerArgs": [],
   "C_Cpp_Runner.includePaths": [],
-  "C_Cpp_Runner.includeSearch": [
-    "*",
-    "**/*"
-  ],
+  "C_Cpp_Runner.includeSearch": ["*", "**/*"],
   "C_Cpp_Runner.excludeSearch": [
     "**/build",
     "**/build/**",
@@ -71,6 +68,9 @@
     "minishell.h": "c",
     "stdbool.h": "c",
     "lst_utils.h": "c",
-    "fcntl.h": "c"
+    "fcntl.h": "c",
+    "structures.h": "c",
+    "tokenisation.h": "c",
+    "error.h": "c"
   }
 }

@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/15 22:34:43 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:16:00 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	print_echo_with_flag(t_main *main, char **tab)
 	while (tab[i])
 	{
 		if (ft_putstr_fd(tab[i], STDOUT_FILENO) == -1)
-			free_and_exit_error(main, ERR_WRITE, errno);
+			free_and_exit_error(main, NULL, ERR_WRITE, errno);
 		i++;
 		if (tab[i])
 		{
 			if (write(STDOUT_FILENO, " ", 1) == -1)
-				free_and_exit_error(main, ERR_WRITE, errno);
+				free_and_exit_error(main, NULL, ERR_WRITE, errno);
 		}
 	}
 }
@@ -58,16 +58,16 @@ void	print_echo_without_flag(t_main *main, char **tab)
 	while (tab[i])
 	{
 		if (ft_putstr_fd(tab[i], STDOUT_FILENO) == -1)
-			free_and_exit_error(main, ERR_WRITE, errno);
+			free_and_exit_error(main, NULL, ERR_WRITE, errno);
 		i++;
 		if (tab[i])
 		{
 			if (write(STDOUT_FILENO, " ", 1) == -1)
-				free_and_exit_error(main, ERR_WRITE, errno);
+				free_and_exit_error(main, NULL, ERR_WRITE, errno);
 		}
 	}
 	if (write(STDOUT_FILENO, "\n", 1) == -1)
-		free_and_exit_error(main, ERR_WRITE, errno);
+		free_and_exit_error(main, NULL, ERR_WRITE, errno);
 }
 
 bool	mini_echo(t_main *main, char **cmd)

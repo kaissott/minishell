@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:41:28 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/13 17:25:59 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:13:32 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "structures.h"
 
-void	free_and_exit_error(t_main *main, char *error, int err_number);
+void	free_and_exit_error(t_main *main, char *tmp, char *error, int err_number);
 int		set_return_err_code(t_main *main, char *error, int err_number);
 
 # define ERR_MEM "Malloc failed"

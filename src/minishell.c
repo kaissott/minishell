@@ -40,22 +40,17 @@ static void	parse(t_main **main_struct, char *cmd)
 void	start_shell(t_main **main_struct)
 {
 	char	*rl;
-	int std_out;
-	int std_in;
-
-	std_out = dup(STDOUT_FILENO);
-	std_in = dup(STDERR_FILENO);
 
 	while (1)
 	{
-		dup2(std_in, STDIN_FILENO);
-		dup2(std_out, STDOUT_FILENO);
+		dup2((*main_struct)->std_in, STDIN_FILENO);
+		dup2((*main_struct)->std_out, STDOUT_FILENO);
 		rl = readline("$> ");
 		if (!rl)
 		{
 			free_struct(*main_struct);
-			close(std_out);
-			close(std_in);
+			close((*main_struct)->std_in);
+			close((*main_struct)->std_out);
 			return ;
 		}
 		add_history(rl);
@@ -70,18 +65,13 @@ void	start_shell(t_main **main_struct)
 
 int	main(int ac, char **av, char **env)
 {
+	(void)av;
 	t_main	*main_struct;
 
-	(void)av;
-	main_struct = ft_calloc(1, sizeof(t_main));
-	if (!main_struct)
-		return (EXIT_FAILURE);
-	check_env_available(env, main_struct);
 	if (ac == 1)
 	{
-		init_minishell(env);
+		main_struct = init_minishell(env);
 		start_shell(&main_struct);
-		// free_env_lst(&main_struct->env);
 		free(main_struct);
 		return (EXIT_SUCCESS);
 	}
