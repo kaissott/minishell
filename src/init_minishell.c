@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:20:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/16 00:40:31 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:46:38 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	exit_error_init_minishell(t_main *main, int errcode, char *err)
 	exit(errcode);
 }
 
-void	exit_error_dup_init_minishell(t_main *main_struct)
+void	exit_error_close_init_minishell(t_main *main_struct)
 {
 	if (main_struct->std_out > 1)
 	{
@@ -58,7 +58,6 @@ void	exit_error_dup_init_minishell(t_main *main_struct)
 		if (close(main_struct->std_in) == -1)
 			exit_error_init_minishell(main_struct, errno,"Close failed");
 	}
-	exit_error_init_minishell(main_struct, errno, "Dup failed");
 }
 
 t_main	*init_minishell(char **env)
@@ -74,6 +73,9 @@ t_main	*init_minishell(char **env)
 	main_struct->std_out = dup(STDOUT_FILENO);
 	main_struct->std_in = dup(STDIN_FILENO);
 	if (main_struct->std_out == -1 || main_struct->std_in == -1)
-		exit_error_dup_init_minishell(main_struct);
+	{
+		exit_error_close_init_minishell(main_struct);
+		exit_error_init_minishell(main_struct, errno, "Dup failed");
+	}
 	return(main_struct);
 }

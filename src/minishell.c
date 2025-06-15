@@ -48,14 +48,13 @@ void	start_shell(t_main **main_struct)
 		rl = readline("$> ");
 		if (!rl)
 		{
+			exit_error_close_init_minishell(*main_struct);
 			free_struct(*main_struct);
-			close((*main_struct)->std_in);
-			close((*main_struct)->std_out);
+			printf("exit\n");
 			return ;
 		}
 		add_history(rl);
 		parse(main_struct, rl);
-		// print_exec_lst((*main_struct)->exec, "coucou :");
 		check_input(*main_struct);
 		reset_struct(rl, *main_struct);
 		rl_on_new_line();

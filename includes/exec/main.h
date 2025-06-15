@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/15 23:46:35 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:46:45 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	free_node(t_main *main);
 void	reset_struct(char *rl, t_main *main);
 int	check_input(t_main *main);
 void	free_tab_2(char **tab);
+void	exit_error_close_init_minishell(t_main *main_struct);
 
 
 #endif
