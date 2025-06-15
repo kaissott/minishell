@@ -6,15 +6,50 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/15 20:37:07 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:11:06 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/minishell.h"
 
+pid_t	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
+{
+	if (node->infile.fd > 0)
+	{
+		if (dup2(node->infile.fd, STDIN_FILENO) == -1)
+			close_dup_failed(pipefd, prev_fd, 1);
+		close(node->infile.fd);
+	}
+	else
+	{
+		if (dup2(prev_fd, STDIN_FILENO) == -1)
+			close_dup_failed(pipefd, prev_fd, 1);
+	}
+	if (node->outfile.fd > 1)
+	{
+		if (dup2(node->outfile.fd, STDOUT_FILENO) == -1)
+			close_dup_failed(pipefd, prev_fd, 1);
+		close(node->outfile.fd);
+	}
+	else
+		if (dup2(pipefd, STDOUT_FILENO) == -1)
+			close_dup_failed(pipefd, prev_fd, 1);
+}
 
-pid_t	child_process(t_main *main, char **cmd, char **env, int prev_fd)
+void	close_fds(int fd1, int fd2, int fd3, int fd4)
+{
+	if (fd1 > 1)
+		close(fd1);
+	if (fd2 > 1)
+		close(fd2);
+	if (fd3 > 1)
+		close(fd3);
+	if (fd4 > 1)
+		close(fd4);
+}
+
+pid_t	child_process(t_main *main, t_exec *node, char **env, int prev_fd)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -30,18 +65,12 @@ pid_t	child_process(t_main *main, char **cmd, char **env, int prev_fd)
 	if (pid == 0)
 	{
 		close(pipefd[0]);
-		if (dup2(prev_fd, STDIN_FILENO) == -1)
-		{
-			close_dup_failed(pipefd[1], prev_fd, 1);
-		}
-		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-			close_dup_failed(pipefd[1], prev_fd, 1);
+		dup_process_child(main, node, prev_fd, pipefd[1]);
 		close(pipefd[1]);
 		close(prev_fd);
-		do_cmd(main, cmd, env);
+		do_cmd(main, node->cmd, env);
 	}
-	close(pipefd[1]);
-	close(prev_fd);
+	close_fds(pipefd[1], prev_fd, node->infile.fd, node->outfile.fd);
 	return (pipefd[0]);
 }
 
@@ -57,19 +86,7 @@ pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 	}
 	if (pid == 0)
 	{
-		if (prev_fd != -1)
-		{
-			if (dup2(prev_fd, STDIN_FILENO) == -1)
-				close_dup_failed(node->outfile.fd, prev_fd, 1);
-			close(prev_fd);
-		}
-		if (node->outfile.fd != STDOUT_FILENO)
-		{
-			dprintf("%d\n", node->outfile.fd);
-			if (dup2(node->outfile.fd, STDOUT_FILENO) == -1)
-				close_dup_failed(node->outfile.fd, prev_fd, 1);
-			close(node->outfile.fd);
-		}
+		dup_process_child(main, node, prev_fd, 0);
 		do_cmd(main, node->cmd, env);
 	}
 	return (pid);
@@ -106,7 +123,7 @@ int	pipe_exec(t_main *main)
 	env = env_to_tab(main);
 	while (node->next != NULL)
 	{
-		prev_fd = child_process(main, node->cmd, env, prev_fd);
+		prev_fd = child_process(main, node, env, prev_fd);
 		if (prev_fd == -1)
 			return (0);
 		node = node->next;

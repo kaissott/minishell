@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 21:09:52 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:13:42 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*path_finding(char **env)
 		if (ft_strnstr(env[i], "PATH=", 5) == 1)
 		{
 			path = ft_strdup(env[i]);
-			dprintf(2, " PATH :%s\n", path);
+			// dprintf(2, " PATH :%s\n", path);
 			return (path);
 		}
 		i++;

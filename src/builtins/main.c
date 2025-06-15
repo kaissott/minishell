@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/15 20:38:10 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:11:38 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ int	check_input(t_main *main)
 	}
 	else
 	{
-		dprintf(2,"1 er commande infile : %d\n", main->exec->infile.fd);
-		dprintf(2, "1 er commande outfile : %d\n",main->exec->outfile.fd);
-		dprintf(2, "2 er commande infile : %d\n",main->exec->next->infile.fd);
-		dprintf(2, "2 er commande outfile : %d\n",main->exec->next->outfile.fd);
+		// dprintf(2,"1 er commande infile : %d\n", main->exec->infile.fd);
+		// dprintf(2, "1 er commande outfile : %d\n",main->exec->outfile.fd);
+		// dprintf(2, "2 er commande infile : %d\n",main->exec->next->infile.fd);
+		// dprintf(2, "2 er commande outfile : %d\n",main->exec->next->outfile.fd);
 		pipe_exec(main);
 	}
 	return (0);
