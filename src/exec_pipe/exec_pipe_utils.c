@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/15 22:13:42 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:41:36 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 {
 	char	*path;
 
-	if (exec_cmd(main, cmd, false) == true)
-	{
-		free(env);
-		free_struct(main);
-		free(main);
-		exit(0);
+		if (exec_cmd(main, cmd, false) == true)
+		{
+			free(env);
+			free_struct(main);
+			free(main);
+			exit(0);
 	}
 	if (cmd == NULL)
 	{

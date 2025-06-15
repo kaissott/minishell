@@ -79,6 +79,7 @@ int	main(int ac, char **av, char **env)
 	check_env_available(env, main_struct);
 	if (ac == 1)
 	{
+		init_minishell(env);
 		start_shell(&main_struct);
 		// free_env_lst(&main_struct->env);
 		free(main_struct);

@@ -43,7 +43,7 @@ t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 	}
 	else
 	{
-		if (new_cmd->outfile.fd > 0)
+		if (new_cmd->outfile.fd > 1)
 		{
 			if (secure_close(&new_cmd->outfile.fd) != ERR_NONE)
 				return (ERR_CLOSE);

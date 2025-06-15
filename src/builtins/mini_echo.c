@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 21:43:09 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:34:43 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,11 @@ void	print_echo_without_flag(t_main *main, char **tab)
 		free_and_exit_error(main, ERR_WRITE, errno);
 }
 
-bool	mini_echo(t_main *main)
+bool	mini_echo(t_main *main, char **cmd)
 {
-	char	**tab;
-
-	tab = main->exec->cmd;
-	dprintf(2, "%s\n", tab[0]);
-	dprintf(2, "%s\n", tab[1]);
-	if (check_echo_flag(tab) == true)
-		print_echo_with_flag(main, tab);
+	if (check_echo_flag(cmd) == true)
+		print_echo_with_flag(main, cmd);
 	else
-		print_echo_without_flag(main, tab);
+		print_echo_without_flag(main, cmd);
 	return (true);
 }

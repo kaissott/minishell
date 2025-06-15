@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/15 22:11:06 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:40:58 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	wait_child(pid_t last)
 
 	while (waitpid(last, &status, 0) > 0)
 	{
+		// exit(status);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 127)
 			exit(127);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
@@ -130,7 +131,7 @@ int	pipe_exec(t_main *main)
 	}
 	// access_out_check(main, prev_fd, node->outfile.fd, if_hd);
 	last_pid = last_child(node, prev_fd, main, env);
-	close_fd(prev_fd, node->outfile.fd, if_hd);
+	close_fds(0, prev_fd, node->infile.fd, node->outfile.fd);
 	wait_child(last_pid);
 	free(env);
 	return (0);
