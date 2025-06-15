@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/16 00:46:45 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 01:23:19 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		check_env_available(char **env, t_main *main);
 void	env_build(char **env, t_main *main);
 bool	exec_cmd(t_main *main, char **cmd, bool simple);
 char	**env_to_tab(t_main *main);
-void	file_dup(int fd_in, int fd_out);
+void	file_dup(t_main *main, int fd_in, int fd_out);
 char	*free_tab_pipe(char **tab, char **path);
 // char	**ft_split_slash(char const *s, char c);
 char	*path_finding(char **env);
@@ -50,7 +50,8 @@ void	free_node(t_main *main);
 void	reset_struct(char *rl, t_main *main);
 int	check_input(t_main *main);
 void	free_tab_2(char **tab);
-void	exit_error_close_init_minishell(t_main *main_struct);
+void	exit_error_two_close(t_main *main_struct, int fd1, int fd2);
+void	exit_error_minishell(t_main *main, int errcode, char *err);
 
 
 #endif

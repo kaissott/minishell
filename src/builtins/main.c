@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/15 22:34:12 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 01:20:15 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	check_input(t_main *main)
 	{
 		fd_in = main->exec->infile.fd;
 		fd_out = main->exec->outfile.fd;
-		file_dup(fd_in, fd_out);
+		file_dup(main, fd_in, fd_out);
 		exec_cmd(main, node->cmd, true);
 		close(fd_in);
 		close(fd_out);

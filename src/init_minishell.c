@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:20:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/16 00:46:38 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 01:19:14 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,37 +28,6 @@ void	print_ascii_logo(void)
 	printf("%s", reset);
 }
 
-void	exit_error_init_minishell(t_main *main, int errcode, char *err)
-{
-	if (main)
-	{
-		free_struct(main);
-		free(main);
-	}
-	perror(err);
-	exit(errcode);
-}
-
-void	exit_error_close_init_minishell(t_main *main_struct)
-{
-	if (main_struct->std_out > 1)
-	{
-		if (close(main_struct->std_out) == -1)
-		{
-			if (main_struct->std_in > 1)
-			{
-				if (close(main_struct->std_in) == -1)
-					exit_error_init_minishell(main_struct, errno,"Close failed");
-			}
-			exit_error_init_minishell(main_struct, errno,"Close failed");
-		}
-	}
-	if (main_struct->std_in > 1)
-	{
-		if (close(main_struct->std_in) == -1)
-			exit_error_init_minishell(main_struct, errno,"Close failed");
-	}
-}
 
 t_main	*init_minishell(char **env)
 {
@@ -68,14 +37,14 @@ t_main	*init_minishell(char **env)
 	main_struct = ft_calloc(1, sizeof(t_main));
 	main_struct->env = NULL;
 	if (!main_struct)
-		exit_error_init_minishell(main_struct, errno, ERR_MEM);
+		exit_error_minishell(main_struct, errno, ERR_MEM);
 	check_env_available(env, main_struct);
 	main_struct->std_out = dup(STDOUT_FILENO);
 	main_struct->std_in = dup(STDIN_FILENO);
 	if (main_struct->std_out == -1 || main_struct->std_in == -1)
 	{
-		exit_error_close_init_minishell(main_struct);
-		exit_error_init_minishell(main_struct, errno, "Dup failed");
+		exit_error_two_close(main_struct, main_struct->std_out, main_struct->std_in);
+		exit_error_minishell(main_struct, errno, "Dup failed");
 	}
 	return(main_struct);
 }

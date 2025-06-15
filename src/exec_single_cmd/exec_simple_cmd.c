@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/16 00:17:11 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 01:33:08 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,28 @@ void	exec_simple_cmd(t_main *main, int fd_in, int fd_out)
 	execve(path, main->exec->cmd, env);
 }
 
-void	file_dup(int fd_in, int fd_out)
+static void	safe_dup_close(t_main *main, int oldfd, int newfd)
+{
+	if (dup2(oldfd, newfd) == -1)
+	{
+		exit_error_two_close(main, main->exec->infile.fd, main->exec->outfile.fd);
+		exit_error_two_close(main, main->std_in, main->std_out);
+		exit_error_minishell(main, errno, "Dup2 failed");
+	}
+	if (close(oldfd) == -1)
+	{
+		exit_error_two_close(main, main->exec->infile.fd, main->exec->outfile.fd);
+		exit_error_two_close(main, main->std_in, main->std_out);
+		exit_error_minishell(main, errno, "Close failed");
+	}
+}
+
+void	file_dup(t_main *main, int fd_in, int fd_out)
 {
 	if (fd_in != STDIN_FILENO)
-	{
-		if (dup2(fd_in, STDIN_FILENO) == -1)
-			printf("sheesh");
-		close(fd_in);
-	}
+		safe_dup_close(main, fd_in, STDIN_FILENO);
 	if (fd_out != STDOUT_FILENO)
-	{
-		if (dup2(fd_out, STDOUT_FILENO) == -1)
-			printf("sheesh2");
-		close(fd_out);
-	}
+		safe_dup_close(main, fd_out, STDOUT_FILENO);
 }
 
 void	init_simple_cmd(t_main *main)
