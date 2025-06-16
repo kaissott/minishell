@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:10:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/16 01:47:26 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:05:22 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,26 @@
 
 void	exit_error_minishell(t_main *main, int errcode, char *err)
 {
+	t_exec *tmp;
+
 	if (main)
 	{
-		exit_error_two_close(main, main->std_in, main->std_out);
 		free_struct(main);
 		free(main);
 	}
-	perror(err);
+	ft_putendl_fd(err, 2);
 	exit(errcode);
 }
 
-void	exit_error_one_close(t_main *main_struct, int fd1)
+void	exit_error_one_close(t_main *main_struct, int *fd1)
 {
-	if (fd1 > 1)
+	if (*fd1 > 1)
 	{
-		if (close(fd1) == -1)
+		if (close(*fd1) == -1)
 		{
 			exit_error_minishell(main_struct, errno,"Close failed");
 		}
+		*fd1 = -1;
 	}
 }
 void	exit_error_two_close(t_main *main_struct, int fd1, int fd2)
@@ -45,13 +47,16 @@ void	exit_error_two_close(t_main *main_struct, int fd1, int fd2)
 			{
 				if (close(fd2) == -1)
 					exit_error_minishell(main_struct, errno,"Close failed");
+				fd2 = -1;
 			}
 			exit_error_minishell(main_struct, errno,"Close failed");
 		}
+		fd1 = -1;
 	}
 	if (fd2 > 1)
 	{
 		if (close(fd2) == -1)
 			exit_error_minishell(main_struct, errno,"Close failed");
+		fd2 = -1;
 	}
 }

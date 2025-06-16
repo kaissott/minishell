@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:50:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 16:49:29 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:34:44 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,13 @@ char	*free_tab_pipe(char **tab, char **path)
 	return (NULL);
 }
 
-void	close_dup_failed(int fd1, int fd2, int i)
+void	close_fork_failed(int fd1, int fd2, int fd3, t_main *main)
 {
 	while (wait(NULL) > 0)
 		;
-	if (fd1 > 0)
-		close(fd1);
-	if (fd2 > 0)
-		close(fd2);
-	if (i == 1)
-		error_exit("Error. Dup2 failed.", EXIT_FAILURE, -1);
+	close(fd3);
+	exit_error_two_close(main, fd1, fd2);
+	exit_error_minishell(main, errno, "Dup failed");
 }
 
 void	error_exit(char *str, int exitnbr, int fd)

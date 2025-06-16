@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/16 01:49:35 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:54:55 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,8 @@ static void	safe_dup_close(t_main *main, int oldfd, int newfd)
 {
 	if (dup2(oldfd, newfd) == -1)
 	{
-		exit_error_two_close(main, main->exec->infile.fd, main->exec->outfile.fd);
+		exit_error_two_close(main, &main->exec->infile.fd, &main->exec->outfile.fd);
 		exit_error_minishell(main, errno, "Dup2 failed");
-	}
-	if (close(oldfd) == -1)
-	{
-		exit_error_two_close(main, main->exec->infile.fd, main->exec->outfile.fd);
-		exit_error_minishell(main, errno, "Close failed");
 	}
 }
 
@@ -34,26 +29,57 @@ void	file_dup(t_main *main, int fd_in, int fd_out)
 		safe_dup_close(main, fd_out, STDOUT_FILENO);
 }
 
-pid_t	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
+void	close_main_fds(t_main *main)
 {
-	if (node->infile.fd > 0)
+	t_exec *exec;
+
+	exec = main->exec;
+	while(exec != NULL)
+	{
+		exit_error_two_close(main, &exec->infile.fd, &exec->outfile.fd);
+		exec = exec->next;
+	}
+	exit_error_two_close(main, &main->std_in, &main->std_out);
+}
+int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
+{
+	if (node->infile.fd > 1)
 	{
 		if (dup2(node->infile.fd, STDIN_FILENO) == -1)
-			close_dup_failed(pipefd, prev_fd, 1);
-		close(node->infile.fd);
+		{
+			exit_error_one_close(main, &node->infile.fd);
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{
 		if (dup2(prev_fd, STDIN_FILENO) == -1)
-			close_dup_failed(pipefd, prev_fd, 1);
+		{
+			exit_error_one_close(main, &prev_fd);
+			exit(EXIT_FAILURE);
+		}
 	}
 	if (node->outfile.fd > 1)
 	{
 		if (dup2(node->outfile.fd, STDOUT_FILENO) == -1)
-			close_dup_failed(pipefd, prev_fd, 1);
-		close(node->outfile.fd);
+		{
+			exit_error_one_close(main, &node->outfile.fd);
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
+	{
 		if (dup2(pipefd, STDOUT_FILENO) == -1)
-			close_dup_failed(pipefd, prev_fd, 1);
+		{
+			exit_error_one_close(main, &pipefd);
+			exit(EXIT_FAILURE);
+		}
+	}
+	dprintf(2, "okey");
+	close(prev_fd);
+	close(pipefd);
+	return (0);
 }
+
+
+

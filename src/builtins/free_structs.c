@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/16 02:43:31 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:03:20 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	free_node(t_main *main)
 		next = temp->next;
 		if (temp->cmd)
 		{
+			exit_error_two_close(main, temp->infile.fd, temp->outfile.fd);
 			while (temp->cmd[i])
 			{
 				free(temp->cmd[i++]);
@@ -79,7 +80,6 @@ void	free_tab_2(char **tab)
 }
 void	free_and_exit_error(t_main *main, char *tmp, char *error, int err_number)
 {
-	exit_error_two_close(main, main->exec->infile.fd, main->exec->outfile.fd);
 	if (tmp != NULL)
 		free(tmp);
 	exit_error_minishell(main, err_number, error);

@@ -48,7 +48,7 @@ void	start_shell(t_main **main_struct)
 		rl = readline("$> ");
 		if (!rl)
 		{
-			exit_error_two_close((*main_struct), (*main_struct)->std_out, (*main_struct)->std_in);;
+			exit_error_two_close((*main_struct), &(*main_struct)->std_out, &(*main_struct)->std_in);;
 			free_struct(*main_struct);
 			printf("exit\n");
 			return ;

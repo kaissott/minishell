@@ -6,13 +6,13 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/16 03:06:56 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:07:06 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*try_paths(t_main *main, char **paths, char **env, char *env_path)
+static char	*try_paths(t_main *main, char **paths, char *env_path, char **env)
 {
 	char	*full_path;
 	int		i;
@@ -30,6 +30,7 @@ static char	*try_paths(t_main *main, char **paths, char **env, char *env_path)
 		if (access(full_path, X_OK) == 0)
 		{
 			free_tab_2(paths);
+			free(env_path);
 			return (full_path);
 		}
 		free(full_path);
@@ -65,13 +66,19 @@ char	*env_path_finding(t_main *main, char **env)
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
 			env_path = ft_strdup(env[i]);
-			if (env_path == NULL)
+			if (!env_path)
 				free_and_exit_error(main, env, ERR_MEM, 12);
 			return (env_path);
 		}
 		i++;
 	}
 	return (NULL);
+}
+
+void	execve_error(t_main *main, char **env, char *path)
+{
+	free(env);
+	free_and_exit_error(main, path, "Command not found", 12);
 }
 void	exec_simple_cmd(t_main *main)
 {
@@ -88,13 +95,13 @@ void	exec_simple_cmd(t_main *main)
 	path = get_path(main, env_path, env);
 	if (path == NULL)
 	{
-		free(env_path);
 		free(path);
 		free(env);
 		free_and_exit_error(main, env_path, "Command not found", 12);
 		return;
 	}
 	execve(path, main->exec->cmd, env);
+	execve_error(main, env, path);
 }
 
 
@@ -106,6 +113,10 @@ void	init_simple_cmd(t_main *main)
 	if (pid == -1)
 		fork_error(main, ERR_FORK);
 	if (pid == 0)
+	{
+		exit_error_two_close(main, main->std_in, main->std_out);
+		exit_error_two_close(main, main->exec->infile.fd, main->exec->outfile.fd);
 		exec_simple_cmd(main);
+	}
 	wait(NULL);
 }

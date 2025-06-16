@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:20:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/16 01:19:14 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 08:47:18 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_main	*init_minishell(char **env)
 	main_struct->std_in = dup(STDIN_FILENO);
 	if (main_struct->std_out == -1 || main_struct->std_in == -1)
 	{
-		exit_error_two_close(main_struct, main_struct->std_out, main_struct->std_in);
+		exit_error_two_close(main_struct, &main_struct->std_out, &main_struct->std_in);
 		exit_error_minishell(main_struct, errno, "Dup failed");
 	}
 	return(main_struct);

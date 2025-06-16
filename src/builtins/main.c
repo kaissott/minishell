@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/16 02:00:23 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:00:09 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	reset_struct(char *rl, t_main *main)
 	{
 		free_node(main);
 	}
+
 }
 
 
@@ -67,8 +68,8 @@ int	check_input(t_main *main)
 		fd_out = main->exec->outfile.fd;
 		file_dup(main, fd_in, fd_out);
 		exec_cmd(main, node->cmd, true);
-		close(fd_in);
-		close(fd_out);
+		// close(fd_in);
+		// close(fd_out);
 	}
 	else
 	{
