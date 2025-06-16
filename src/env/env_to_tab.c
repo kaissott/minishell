@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:40:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/16 00:16:52 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 02:47:21 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,14 @@ char	**env_to_tab(t_main *main)
 		i++;
 	}
 	tab = malloc(sizeof(char *) * (i + 1));
-	if (!tab)
-		free_and_exit_error(main, NULL, ERR_MALLOC, 12);
+	if (tab == NULL)
+		free_and_exit_error(main, NULL, ERR_MEM, 12);
 	tmp = main->env;
 	j = 0;
-	while (i > 0)
+	while (i-- > 0)
 	{
-		tab[j] = tmp->env;
+		tab[j++] = tmp->env;
 		tmp = tmp->next;
-		i--;
-		j++;
 	}
 	tab[j] = NULL;
 	return (tab);

@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/16 01:23:19 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 01:52:58 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	check_input(t_main *main);
 void	free_tab_2(char **tab);
 void	exit_error_two_close(t_main *main_struct, int fd1, int fd2);
 void	exit_error_minishell(t_main *main, int errcode, char *err);
+void	exit_error_one_close(t_main *main_struct, int fd1);
+pid_t	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd);
 
 
 #endif

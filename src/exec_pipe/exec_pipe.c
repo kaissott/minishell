@@ -6,36 +6,13 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/15 22:40:58 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 01:55:58 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/minishell.h"
 
-pid_t	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
-{
-	if (node->infile.fd > 0)
-	{
-		if (dup2(node->infile.fd, STDIN_FILENO) == -1)
-			close_dup_failed(pipefd, prev_fd, 1);
-		close(node->infile.fd);
-	}
-	else
-	{
-		if (dup2(prev_fd, STDIN_FILENO) == -1)
-			close_dup_failed(pipefd, prev_fd, 1);
-	}
-	if (node->outfile.fd > 1)
-	{
-		if (dup2(node->outfile.fd, STDOUT_FILENO) == -1)
-			close_dup_failed(pipefd, prev_fd, 1);
-		close(node->outfile.fd);
-	}
-	else
-		if (dup2(pipefd, STDOUT_FILENO) == -1)
-			close_dup_failed(pipefd, prev_fd, 1);
-}
 
 void	close_fds(int fd1, int fd2, int fd3, int fd4)
 {
@@ -86,7 +63,7 @@ pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 	}
 	if (pid == 0)
 	{
-		dup_process_child(main, node, prev_fd, 0);
+		dup_process_child(main, node, prev_fd, 1);
 		do_cmd(main, node->cmd, env);
 	}
 	return (pid);

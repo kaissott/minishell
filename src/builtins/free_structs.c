@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/16 00:14:05 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/16 02:43:31 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,10 @@ void	free_tab_2(char **tab)
 }
 void	free_and_exit_error(t_main *main, char *tmp, char *error, int err_number)
 {
-	free_struct(main);
-	if (tmp)
+	exit_error_two_close(main, main->exec->infile.fd, main->exec->outfile.fd);
+	if (tmp != NULL)
 		free(tmp);
-	free(main);
-	perror(error);
-	exit(err_number);
+	exit_error_minishell(main, err_number, error);
 }
 int	set_return_err_code(t_main *main, char *error, int err_number)
 {
