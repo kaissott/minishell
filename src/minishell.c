@@ -57,6 +57,7 @@ void	start_shell(t_main **main_struct)
 		parse(main_struct, rl);
 		check_input(*main_struct);
 		reset_struct(rl, *main_struct);
+		// free(rl);
 		rl_on_new_line();
 	}
 	rl_clear_history();

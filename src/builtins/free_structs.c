@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/16 11:03:20 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:30:38 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	free_node(t_main *main)
 		next = temp->next;
 		if (temp->cmd)
 		{
-			exit_error_two_close(main, temp->infile.fd, temp->outfile.fd);
 			while (temp->cmd[i])
 			{
 				free(temp->cmd[i++]);
@@ -55,6 +54,18 @@ void	free_node(t_main *main)
 		i = 0;
 	}
 	main->exec = NULL;
+}
+
+void	close_node(t_main *main)
+{
+	t_exec	*temp;
+
+	temp = main->exec;
+	while (temp != NULL)
+	{
+		exit_error_two_close(main, temp->infile.fd, temp->outfile.fd);
+		temp = temp->next;
+	}
 }
 
 int	free_struct(t_main *main)

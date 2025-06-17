@@ -6,11 +6,11 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/16 10:54:55 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:16:55 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	safe_dup_close(t_main *main, int oldfd, int newfd)
 {
@@ -31,15 +31,7 @@ void	file_dup(t_main *main, int fd_in, int fd_out)
 
 void	close_main_fds(t_main *main)
 {
-	t_exec *exec;
-
-	exec = main->exec;
-	while(exec != NULL)
-	{
-		exit_error_two_close(main, &exec->infile.fd, &exec->outfile.fd);
-		exec = exec->next;
-	}
-	exit_error_two_close(main, &main->std_in, &main->std_out);
+	free_struct(main);
 }
 int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
 {
@@ -76,8 +68,6 @@ int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
 		}
 	}
 	dprintf(2, "okey");
-	close(prev_fd);
-	close(pipefd);
 	return (0);
 }
 

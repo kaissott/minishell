@@ -1,12 +1,2 @@
-Dockerfile
-includes
-leak.supp
-libft
-Makefile
-minishell
-obj
-out
-out2
-README.md
-src
-tmp
+#################################################################################
+################					MAKEFILE					#################
