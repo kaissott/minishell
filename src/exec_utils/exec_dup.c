@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 18:16:55 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:05:58 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
 			exit(EXIT_FAILURE);
 		}
 	}
-	dprintf(2, "okey");
 	return (0);
 }
 

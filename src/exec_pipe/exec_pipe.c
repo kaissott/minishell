@@ -6,19 +6,26 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 18:34:12 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:05:23 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/minishell.h"
 
-void safe_close(int *fd)
+void safe_close(int fd, t_main *main)
 {
-	if (*fd > 2) {
-		close(*fd);
-		*fd = -1;
+	t_exec *tmp;
+
+	tmp = main->exec;
+
+	while(tmp && fd != tmp->outfile.fd && fd != tmp->infile.fd)
+	{
+		tmp = tmp->next;
 	}
+	if (tmp == NULL && fd > 1)
+		close(fd);
+	return;
 }
 
 void	close_fork(int fd1, int fd2, t_exec *node, t_main *main)
@@ -46,7 +53,6 @@ void	close_fork(int fd1, int fd2, t_exec *node, t_main *main)
 	}
 }
 
-// pid_t fork_process(t_main *main, int prevfd, int pipein, int pipeout);
 pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 {
 	int		pipefd[2];
@@ -67,8 +73,8 @@ pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 		close_fork(prev_fd, pipefd[1], node, main);
 		do_cmd(main, node->cmd, env);
 	}
+	safe_close(prev_fd, main);
 	close(pipefd[1]);
-	// close(prev_fd);
 	return (pipefd[0]);
 }
 
@@ -130,9 +136,10 @@ int	pipe_exec(t_main *main)
 	}
 	// access_out_check(main, prev_fd, node->outfile.fd, if_hd);
 	last_pid = last_child(node, prev_fd, main, env);
-	wait_child(last_pid);
 	close(prev_fd);
 	close_node(main);
+	wait_child(last_pid);
+	free(env);
 	// reset_struct(NULL, main);
 	return (0);
 }
