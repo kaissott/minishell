@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/16 11:00:09 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:20:59 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 
 bool	exec_cmd(t_main *main, char **cmd, bool simple)
 {
-	// char	**cmd;
-	// cmd = node->cmd;
 	if (ft_strncmp(cmd[0], "echo", 4) == 0 && ft_strlen(cmd[0]) == 4)
 		return (mini_echo(main, cmd));
 	else if (ft_strncmp(cmd[0], "pwd", 3) == 0 && ft_strlen(cmd[0]) == 3)
@@ -68,17 +66,10 @@ int	check_input(t_main *main)
 		fd_out = main->exec->outfile.fd;
 		file_dup(main, fd_in, fd_out);
 		exec_cmd(main, node->cmd, true);
-		// close(fd_in);
-		// close(fd_out);
+		close_node(main);
 	}
 	else
-	{
-		// dprintf(2,"1 er commande infile : %d\n", main->exec->infile.fd);
-		// dprintf(2, "1 er commande outfile : %d\n",main->exec->outfile.fd);
-		// dprintf(2, "2 er commande infile : %d\n",main->exec->next->infile.fd);
-		// dprintf(2, "2 er commande outfile : %d\n",main->exec->next->outfile.fd);
 		pipe_exec(main);
-	}
 	return (0);
 }
 

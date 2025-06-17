@@ -1,0 +1,11 @@
+Dockerfile
+includes
+leak.supp
+libft
+Makefile
+minishell
+obj
+out
+README.md
+src
+tmp

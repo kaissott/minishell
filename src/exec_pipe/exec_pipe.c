@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 20:05:23 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:21:33 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,15 +114,11 @@ void	wait_child(pid_t last)
 
 int	pipe_exec(t_main *main)
 {
-	t_exec	*node;
+	t_exec		*node;
 	char		**env;
 	int			prev_fd;
-	int			i;
-	int			if_hd;
 	pid_t		last_pid;
 
-	i = 0;
-	if_hd = 0;
 	node = main->exec;
 	prev_fd = node->infile.fd;
 	env = env_to_tab(main);
@@ -132,14 +128,12 @@ int	pipe_exec(t_main *main)
 		if (prev_fd == -1)
 			return (0);
 		node = node->next;
-		i++;
 	}
 	// access_out_check(main, prev_fd, node->outfile.fd, if_hd);
 	last_pid = last_child(node, prev_fd, main, env);
 	close(prev_fd);
-	close_node(main);
 	wait_child(last_pid);
+	close_node(main);
 	free(env);
-	// reset_struct(NULL, main);
 	return (0);
 }
