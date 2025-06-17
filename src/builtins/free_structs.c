@@ -1,3 +1,16 @@
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_structs.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
+/*   Updated: 2025/06/17 18:30:38 by karamire         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	free_env(t_main *main)
@@ -31,7 +44,9 @@ void	free_node(t_main *main)
 		if (temp->cmd)
 		{
 			while (temp->cmd[i])
+			{
 				free(temp->cmd[i++]);
+			}
 			free(temp->cmd);
 		}
 		free(temp);
@@ -41,20 +56,44 @@ void	free_node(t_main *main)
 	main->exec = NULL;
 }
 
+void	close_node(t_main *main)
+{
+	t_exec	*temp;
+
+	temp = main->exec;
+	while (temp != NULL)
+	{
+		exit_error_two_close(main, temp->infile.fd, temp->outfile.fd);
+		temp = temp->next;
+	}
+}
+
 int	free_struct(t_main *main)
 {
 	if (main->env != NULL)
 		free_env(main);
 	if (main->exec != NULL)
 		free_node(main);
-	free(main);
+	// free(main);
 }
-
-void	free_and_exit_error(t_main *main, char *error, int err_number)
+void	free_tab_2(char **tab)
 {
-	free_struct(main);
-	perror(error);
-	exit(err_number);
+	int i;
+
+	i = 0;
+	while(tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+	return;
+}
+void	free_and_exit_error(t_main *main, char *tmp, char *error, int err_number)
+{
+	if (tmp != NULL)
+		free(tmp);
+	exit_error_minishell(main, err_number, error);
 }
 int	set_return_err_code(t_main *main, char *error, int err_number)
 {

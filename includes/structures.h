@@ -99,6 +99,10 @@ typedef struct s_main
 	t_token					*token;
 	t_error					error;
 	int						errcode;
+	int						std_in;
+	int						std_out;
 }							t_main;
+
+t_main	*init_minishell(char **env);
 
 #endif

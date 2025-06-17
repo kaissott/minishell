@@ -10,7 +10,7 @@ NAME :=	minishell
 #################################################################################
 
 #Files
-LST_EXEC :=	minishell.c
+LST_EXEC :=	minishell.c init_minishell.c close_error_handler.c
 
 LST_BUILTINS :=	free_structs.c main.c mini_cd.c mini_echo.c \
 				mini_env.c mini_exit_free.c mini_exit.c mini_export.c \
@@ -18,9 +18,11 @@ LST_BUILTINS :=	free_structs.c main.c mini_cd.c mini_echo.c \
 
 LST_ENV :=		env_lst.c env_to_tab.c lst_add.c
 
-LST_EXEC_PIPE :=	exec_pipe_error.c exec_pipe_utils.c exec_pipe.c strrchr_slash.c
+LST_EXEC_PIPE :=	exec_pipe_error.c exec_pipe_utils.c exec_pipe.c
 
-LST_EXEC_SINGLE_CMD :=	error_free.c exec_simple_cmd.c ft_split_slash.c single_cmd_error.c
+LST_EXEC_SINGLE_CMD :=	error_free.c exec_simple_cmd.c  single_cmd_error.c
+
+LST_EXEC_UTILS := exec_dup.c strrchr_slash.c ft_split_slash.c
 
 LST_PARSING :=	expand_utils.c expand_chunk.c parse_utils.c parse.c \
 				tokenisation_utils.c tokenisation.c
@@ -52,6 +54,8 @@ D_EXEC_PIPE :=	exec_pipe/
 
 D_EXEC_SINGLE_CMD :=	exec_single_cmd/
 
+D_EXEC_UTILS :=	exec_utils/
+
 D_PARSING :=	parsing/
 
 D_UTILS :=	utils/
@@ -74,6 +78,7 @@ SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
 		$(addprefix $(D_SRC)$(D_ENV), $(LST_ENV)) \
 		$(addprefix $(D_SRC)$(D_EXEC_PIPE), $(LST_EXEC_PIPE)) \
 		$(addprefix $(D_SRC)$(D_EXEC_SINGLE_CMD), $(LST_EXEC_SINGLE_CMD)) \
+		$(addprefix $(D_SRC)$(D_EXEC_UTILS), $(LST_EXEC_UTILS)) \
 		$(addprefix $(D_SRC)$(D_PARSING), $(LST_PARSING)) \
 		$(addprefix $(D_SRC)$(D_UTILS), $(LST_UTILS)) \
 		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS), $(LST_LST_UTILS)) \

@@ -41,20 +41,18 @@ void	start_shell(t_main *shell)
 		// 		rl = trimmed;
 		// 	}
 		// }
-		printf("shell->errcode before parsing : %d\n", shell->errcode);
 		rl = readline("$> ");
 		if (!rl)
 		{
-			clear_and_exit(shell, ERR_NONE);
+			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);;
+			free_struct(shell);
+			printf("exit\n");
 			return ;
 		}
 		add_history(rl);
 		parse(shell, rl);
-		printf("shell->errcode after parsing : %d\n", shell->errcode);
-		// check_input(shell);
-		free_exec_lst(&shell->exec);
-		free(rl);
-		rl = NULL;
+		check_input(shell);
+		reset_struct(rl, shell);
 		rl_on_new_line();
 	}
 	clear_history();
@@ -62,23 +60,14 @@ void	start_shell(t_main *shell)
 
 int	main(int ac, char **av, char **env)
 {
-	t_main	*shell;
-	size_t	i;
-
-	i = 0;
-	// while (env[i])
-	// {
-	// 	printf("\nenv[%zu] :\n\t[%s]\n", i, env[i]);
-	// 	i++;
-	// }
 	(void)av;
-	shell = ft_calloc(1, sizeof(t_main));
-	if (!shell)
-		return (EXIT_FAILURE);
-	check_env_available(env, shell);
+	t_main	*shell;
+
 	if (ac == 1)
 	{
-		start_shell(shell);
+		shell = init_minishell(env);
+		start_shell(&shell);
+		free(shell);
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);

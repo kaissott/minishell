@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/08 19:41:28 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/06/17 22:07:08 by karamire         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ERROR_H
 # define ERROR_H
 
 # include "structures.h"
 
-void	free_and_exit_error(t_main *main, char *error, int err_number);
+void	free_and_exit_error(t_main *main, char *tmp, char *error, int err_number);
 int		set_return_err_code(t_main *main, char *error, int err_number);
 
 # define ERR_MEM "Malloc failed"

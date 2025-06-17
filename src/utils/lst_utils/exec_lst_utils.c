@@ -57,21 +57,21 @@ void	print_exec_lst(t_exec *lst, char *msg)
 	size_t	j;
 
 	i = 1;
-	printf("\n%s\n", msg);
+	dprintf(2,"\n%s\n", msg);
 	if (!lst)
 	{
-		printf("The list is empty\n");
+		dprintf(2,"The list is empty\n");
 		return ;
 	}
 	while (lst)
 	{
-		printf("Node [%zu]\n", i++);
+		dprintf(2,"Node [%zu]\n", i++);
 		if (lst->cmd)
 		{
 			j = 0;
 			while (lst->cmd[j])
 			{
-				printf("\tcmd[%zu]: [%s]\n", j, lst->cmd[j]);
+				dprintf(2,"\tcmd[%zu]: [%s]\n", j, lst->cmd[j]);
 				j++;
 			}
 		}

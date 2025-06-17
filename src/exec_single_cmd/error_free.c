@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_free.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/22 16:49:29 by karamire          #+#    #+#             */
+/*   Updated: 2025/06/17 22:14:15 by karamire         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 // void	free_files(t_main *main)
@@ -38,11 +50,13 @@ void	free_tabs(char **tab1, char **tab2)
 			free(tab1[i]);
 			i++;
 		}
+		free(tab1);
 	}
 	i = 0;
 	if (tab2)
 	{
 		while (tab2[i])
 			free(tab2[i++]);
+		free(tab2);
 	}
 }

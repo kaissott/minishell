@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
+/*   Updated: 2025/06/17 22:06:46 by karamire         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
@@ -13,7 +25,7 @@
 // echo
 
 void	print_echo_with_flag(t_main *main, char **tab);
-bool	mini_echo(t_main *main);
+bool	mini_echo(t_main *main, char **cmd);
 
 // pwd
 
@@ -31,5 +43,5 @@ void	free_tab_exit(char **args);
 // void	free_tab(char **tab1, char **tab2);
 bool	mini_export(t_main *main);
 bool	mini_unset(t_main *main);
-void	free_env_list(t_env *head);
+
 #endif

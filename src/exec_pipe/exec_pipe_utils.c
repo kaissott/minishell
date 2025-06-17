@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
+/*   Updated: 2025/06/17 22:13:37 by karamire         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 char	*path_finding(char **env)
@@ -11,7 +23,7 @@ char	*path_finding(char **env)
 		if (ft_strnstr(env[i], "PATH=", 5) == 1)
 		{
 			path = ft_strdup(env[i]);
-			dprintf(2, " PATH :%s\n", path);
+			// dprintf(2, " PATH :%s\n", path);
 			return (path);
 		}
 		i++;
@@ -49,7 +61,10 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 
 	if (exec_cmd(main, cmd, false) == true)
 	{
-		exit(0);
+			free(env);
+			free_struct(main);
+			free(main);
+			exit(0);
 	}
 	if (cmd == NULL)
 	{
@@ -67,6 +82,7 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 		}
 		execve(path, cmd, env);
 	}
+	free(env);
 	error_exec_b(cmd, cmd[0]);
 	return (-1);
 }
