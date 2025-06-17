@@ -1,18 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec_pipe.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 18:47:48 by karamire         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-
 #include "../../includes/minishell.h"
-
 
 pid_t	child_process(t_main *main, char **cmd, char **env, int prev_fd)
 {
@@ -89,11 +75,11 @@ void	wait_child(pid_t last)
 int	pipe_exec(t_main *main)
 {
 	t_exec	*node;
-	char		**env;
-	int			prev_fd;
-	int			i;
-	int			if_hd;
-	pid_t		last_pid;
+	char	**env;
+	int		prev_fd;
+	int		i;
+	int		if_hd;
+	pid_t	last_pid;
 
 	i = 0;
 	if_hd = 0;

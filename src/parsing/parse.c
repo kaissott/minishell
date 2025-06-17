@@ -24,9 +24,19 @@ static t_parse_error	handle_redirection(t_exec *new_cmd, t_token **token_lst,
 	if (check_std_cmd(std, new_cmd) != ERR_NONE)
 		return (ERR_CLOSE);
 	if (std == 0)
+	{
+		new_cmd->infile.filepath = ft_strdup(token->next->value);
+		if (!new_cmd->infile.filepath)
+			return (ERR_MALLOC);
 		new_cmd->infile.fd = open_file(token->next->value, token->type);
+		if (new_cmd->infile.fd == -1)
+			return (ERR_OPEN);
+	}
 	else
 	{
+		new_cmd->outfile.filepath = ft_strdup(token->next->value);
+		if (!new_cmd->outfile.filepath)
+			return (ERR_MALLOC);
 		new_cmd->outfile.fd = open_file(token->next->value, token->type);
 		if (new_cmd->outfile.fd == -1)
 			return (ERR_OPEN);

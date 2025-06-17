@@ -20,6 +20,10 @@ char	**expand_args(char **cmd, char *new_arg)
 	return (new_cmd);
 }
 
+t_parse_error	create_filepath(t_exec **exec_lst, t_exec *new_node)
+{
+}
+
 t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)
 {
 	int		i;

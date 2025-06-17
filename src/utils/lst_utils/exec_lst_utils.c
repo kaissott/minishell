@@ -75,10 +75,12 @@ void	print_exec_lst(t_exec *lst, char *msg)
 				j++;
 			}
 		}
-		printf("\tinfile fd : [%d] type : [%d]\n", lst->infile.fd,
-			lst->infile.type);
-		printf("\toutfile fd : [%d] type : [%d]\n", lst->outfile.fd,
-			lst->outfile.type);
+		if (lst->infile.filepath)
+			printf("\tinfile filepath : %s\n", lst->infile.filepath);
+		printf("\tfd : [%d] type : [%d]\n", lst->infile.fd, lst->infile.type);
+		if (lst->outfile.filepath)
+			printf("\toutfile filepath : %s\n", lst->outfile.filepath);
+		printf("\tfd : [%d] type : [%d]\n", lst->outfile.fd, lst->outfile.type);
 		lst = lst->next;
 	}
 }

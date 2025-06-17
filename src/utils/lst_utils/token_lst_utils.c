@@ -13,9 +13,9 @@ void	token_lst_delone(t_token **token_lst, t_token *node_to_delete)
 		return ;
 	}
 	tmp = *token_lst;
-	while (tmp)
+	while (tmp && tmp->next != node_to_delete)
 		tmp = tmp->next;
-	if (tmp->next == node_to_delete)
+	if (tmp && tmp->next == node_to_delete)
 	{
 		tmp->next = node_to_delete->next;
 		free_token(node_to_delete);
