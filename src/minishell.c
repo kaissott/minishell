@@ -4,31 +4,29 @@ static void	parse(t_main *shell, char *cmd)
 {
 	t_parse_error	errcode;
 
+	if (errcode != ERR_NONE)
+
 	errcode = tokenisation(shell, cmd);
-	printf("\nReturn tokenisation : %d\n", errcode);
+	// printf("\nReturn tokenisation : %d\n", errcode);
 	if (!check_parsing(shell, errcode))
 		return ;
-	print_token_lst(shell->token, "\nToken lst before parsing :\n");
+	// print_token_lst(shell->token, "\nToken lst before parsing :\n");
 	errcode = parsing(&shell->exec, &shell->token);
-	printf("\nReturn create exec : %d\n", errcode);
+	// printf("\nReturn create exec : %d\n", errcode);
 	check_parsing(shell, errcode);
-	print_token_lst(shell->token, "\nToken lst after parsing :\n");
+	// print_token_lst(shell->token, "\nToken lst after parsing :\n");
 }
 
 void	start_shell(t_main *shell)
 {
 	char	*rl;
-	int		std_out;
-	int		std_in;
 	char	*line;
 	char	*trimmed;
 
-	std_out = dup(STDOUT_FILENO);
-	std_in = dup(STDERR_FILENO);
 	while (1)
 	{
-		dup2(std_in, STDIN_FILENO);
-		dup2(std_out, STDOUT_FILENO);
+		dup2(shell->std_in, STDIN_FILENO);
+		dup2(shell->std_out, STDOUT_FILENO);
 		// if (isatty(fileno(stdin)))
 		// 	rl = readline("$> ");
 		// else
@@ -66,7 +64,7 @@ int	main(int ac, char **av, char **env)
 	if (ac == 1)
 	{
 		shell = init_minishell(env);
-		start_shell(&shell);
+		start_shell(shell);
 		free(shell);
 		return (EXIT_SUCCESS);
 	}

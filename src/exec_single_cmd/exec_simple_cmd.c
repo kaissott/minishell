@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/17 22:14:35 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/17 22:43:46 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*env_path_finding(t_main *main, char **env)
 void	execve_error(t_main *main, char **env, char *path)
 {
 	free(env);
-	free_and_exit_error(main, path, "Command not found", 12);
+	free_and_exit_error(main, path, "Command not found", 127);
 }
 void	exec_simple_cmd(t_main *main)
 {
@@ -108,6 +108,7 @@ void	exec_simple_cmd(t_main *main)
 void	init_simple_cmd(t_main *main)
 {
 	pid_t	pid;
+	int	tmp;
 
 	pid = fork();
 	if (pid == -1)
@@ -118,5 +119,8 @@ void	init_simple_cmd(t_main *main)
 		exit_error_two_close(main, main->exec->infile.fd, main->exec->outfile.fd);
 		exec_simple_cmd(main);
 	}
-	wait(NULL);
+	while (waitpid(pid, &tmp, 0) > 0)
+		;
+	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 127)
+		main->errcode = 127;
 }

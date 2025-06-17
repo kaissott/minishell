@@ -5,7 +5,7 @@ void	get_errcode(t_main *shell, t_parse_error errcode)
 	if (errcode == ERR_MALLOC)
 		shell->errcode = 12;
 	else if (errcode >= ERR_SYNTAX && errcode <= ERR_MISSING_SINGLE_QUOTE)
-		shell->errcode = 258;
+		shell->errcode = 2;
 	else if (errcode == ERR_TOKEN)
 		shell->errcode = 1;
 	else if (errcode >= ERR_OPEN && errcode <= ERR_CLOSE)

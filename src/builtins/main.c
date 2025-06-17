@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/17 22:08:28 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/17 22:35:42 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	check_input(t_main *main)
 	int		fd_in;
 
 	node = main->exec;
-	if (node->cmd == NULL)
+	if (node == NULL || node->cmd == NULL)
 		return (-1);
 	if (node->next == NULL)
 	{

@@ -116,6 +116,6 @@ t_parse_error	parsing(t_exec **exec_lst, t_token **token_lst)
 	}
 	if (new_cmd)
 		exec_lst_add_back(exec_lst, new_cmd);
-	print_exec_lst(*exec_lst, "EXEC LST BEFORE EXEC :\n");
+	// print_exec_lst(*exec_lst, "EXEC LST BEFORE EXEC :\n");
 	return (ERR_NONE);
 }
