@@ -67,8 +67,6 @@ static t_parse_error	handle_chunk_value(t_main *shell, t_expand **expand_lst,
 			return (len);
 		i += len;
 	}
-	free(chunk->value);
-	chunk->value = NULL;
 	if (*expand_lst != NULL)
 		replace_chunk_value(shell, expand_lst, chunk);
 	return (ERR_NONE);

@@ -6,8 +6,6 @@ static char	*get_var_value(t_main *shell, char *var_name)
 	pid_t	pid;
 	size_t	name_len;
 
-	if (!var_name)
-		return (NULL);
 	if (ft_strcmp(var_name, "$") == 0)
 		return (ft_strdup("$"));
 	if (ft_strcmp(var_name, "$$") == 0)
@@ -26,6 +24,7 @@ static char	*get_var_value(t_main *shell, char *var_name)
 			return (ft_strdup(tmp->env + name_len + 1));
 		tmp = tmp->next;
 	}
+	return (ft_strdup(""));
 }
 
 t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
@@ -34,17 +33,21 @@ t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
 	t_expand	*tmp;
 	char		*var_value;
 
-	tmp = *expand_lst;
+	free(chunk->value);
 	chunk->value = NULL;
+	tmp = *expand_lst;
 	while (tmp)
 	{
 		if (tmp->type == T_EXPAND_VAR)
+		{
 			var_value = get_var_value(shell, tmp->value);
+			if (!var_value)
+				return (ERR_MALLOC);
+		}
 		else
 			var_value = tmp->value;
-		if (var_value)
-			chunk->value = join_or_dup(chunk->value, var_value);
-		if (tmp->type == T_EXPAND_VAR)
+		chunk->value = join_or_dup(chunk->value, var_value);
+		if (tmp->type == T_EXPAND_VAR && var_value)
 			free(var_value);
 		if (!chunk->value)
 			return (ERR_MALLOC);
