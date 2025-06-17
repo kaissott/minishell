@@ -17,7 +17,7 @@ static t_token_type	handle_redir(char *cmd, t_error *error)
 		i++;
 	if (is_operator(&cmd[i]) || !cmd[i])
 	{
-		set_error(error, ERR_UNEXPECTED_TOKEN, cmd[i]);
+		set_error(error, ERR_SYNTAX, cmd[i]);
 		return (T_ERROR);
 	}
 	if (cmd[0] == '>')
@@ -48,7 +48,7 @@ t_token_type	get_token_type(t_error *error, char *cmd)
 			i++;
 		if (!cmd[i] || !cmd[-1])
 		{
-			set_error(error, ERR_UNEXPECTED_TOKEN, '|');
+			set_error(error, ERR_SYNTAX, '|');
 			return (T_ERROR);
 		}
 		return (T_PIPE);

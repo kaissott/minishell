@@ -14,14 +14,11 @@ void	token_lst_delone(t_token **token_lst, t_token *node_to_delete)
 	}
 	tmp = *token_lst;
 	while (tmp)
-	{
-		if (tmp->next == node_to_delete)
-		{
-			tmp->next = node_to_delete->next;
-			free_token(node_to_delete);
-			return ;
-		}
 		tmp = tmp->next;
+	if (tmp->next == node_to_delete)
+	{
+		tmp->next = node_to_delete->next;
+		free_token(node_to_delete);
 	}
 }
 
@@ -62,19 +59,18 @@ t_parse_error	token_lst_add_node(t_token **token_lst, char *cmd, ssize_t len,
 	return (ERR_NONE);
 }
 
-t_parse_error	token_lst_add_chunks(t_env **env_lst, t_token **token_lst,
-		t_token *new_token)
+t_parse_error	token_lst_add_chunks(t_main *shell, t_token *new_token)
 {
 	t_token_chunk	*tmp;
 	char			*prev;
 
-	tmp = new_token->chunks;
-	new_token->type = T_WORD;
-	if (expand_chunk(env_lst, new_token) != ERR_NONE)
+	if (expand_chunk(shell, new_token) != ERR_NONE)
 	{
 		free_token(new_token);
-		return (ERR_EXPAND);
+		return (ERR_MALLOC);
 	}
+	tmp = new_token->chunks;
+	new_token->type = T_WORD;
 	while (tmp)
 	{
 		prev = new_token->value;
@@ -86,14 +82,14 @@ t_parse_error	token_lst_add_chunks(t_env **env_lst, t_token **token_lst,
 		}
 		tmp = tmp->next;
 	}
-	// free_chunk_lst(new_token->chunks);
-	token_lst_add_back(token_lst, new_token);
+	token_lst_add_back(&shell->token, new_token);
 	return (ERR_NONE);
 }
 
 void	print_token_lst(t_token *lst, char *msg)
 {
-	size_t	i;
+	size_t			i;
+	t_token_chunk	*tmp;
 
 	i = 1;
 	printf("\n%s\n", msg);
@@ -112,11 +108,12 @@ void	print_token_lst(t_token *lst, char *msg)
 		printf("type: [%d]\n", lst->type);
 		if (lst->chunks)
 		{
-			while (lst->chunks)
+			tmp = lst->chunks;
+			while (tmp)
 			{
-				printf("\tchunk value: [%s] type : [%d]\n", lst->chunks->value,
-					lst->chunks->type);
-				lst->chunks = lst->chunks->next;
+				printf("\tchunk value: [%s] type : [%d]\n", tmp->value,
+					tmp->type);
+				tmp = tmp->next;
 			}
 		}
 		lst = lst->next;

@@ -54,13 +54,11 @@ typedef enum e_parse_error
 	ERR_MALLOC = -1,
 	ERR_MISSING_SINGLE_QUOTE = -2,
 	ERR_MISSING_DOUBLE_QUOTE = -3,
-	ERR_UNEXPECTED_TOKEN = -4,
+	ERR_SYNTAX = -4,
 	ERR_DOUBLE_PIPE = -5,
-	ERR_UNFINISHED_REDIR = -6,
-	ERR_EXPAND = -7,
-	ERR_TOKEN = -8,
-	ERR_OPEN = -9,
-	ERR_CLOSE = -10
+	ERR_TOKEN = -6,
+	ERR_OPEN = -7,
+	ERR_CLOSE = -8,
 }							t_parse_error;
 
 typedef struct s_error
@@ -73,6 +71,7 @@ typedef struct s_error
 typedef struct s_file
 {
 	int						fd;
+	char					*filepath;
 	t_token_type			type;
 }							t_file;
 

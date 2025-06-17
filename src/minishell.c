@@ -1,44 +1,21 @@
 #include "../includes/minishell.h"
 
-static void	parse(t_main **main_struct, char *cmd)
+static void	parse(t_main *shell, char *cmd)
 {
-	t_parse_error	ret;
+	t_parse_error	errcode;
 
-	ret = tokenisation(&(*main_struct)->env, &(*main_struct)->token,
-			&(*main_struct)->error, cmd);
-	// printf("\nReturn tokenisation : %d\n", ret);
-	if (ret != ERR_NONE)
-	{
-		(*main_struct)->error.errcode = ret;
-		clear_and_exit(*main_struct, ret);
+	errcode = tokenisation(shell, cmd);
+	printf("\nReturn tokenisation : %d\n", errcode);
+	if (!check_parsing(shell, errcode))
 		return ;
-	}
-	free_main_struct(main_struct);
-	// else
-	// {
-	// 	print_token_lst((*main_struct)->token,
-	// 		"\nToken lst before parsing :\n");
-	// 	ret = parsing(&(*main_struct)->exec, &(*main_struct)->token);
-	// 	// printf("\nReturn create exec : %d\n", ret);
-	// 	if (ret != ERR_NONE)
-	// 	{
-	// 		clear_and_exit(*main_struct, ret);
-	// 		return ;
-	// 	}
-	// 	// print_exec_lst((*main_struct)->exec, "Exec lst : \n");
-	// 	if ((*main_struct)->token)
-	// 	{
-	// 		// printf("Token lst not empty after parsing <- error\n");
-	// 		clear_and_exit(*main_struct, ret);
-	// 		return ;
-	// 	}
-	// 	// print_token_lst((*main_struct)->token, "Token lst after : \n");
-	// 	// free_main_struct(main_struct);
-	// 	return ;
-	// }
+	print_token_lst(shell->token, "\nToken lst before parsing :\n");
+	errcode = parsing(&shell->exec, &shell->token);
+	printf("\nReturn create exec : %d\n", errcode);
+	check_parsing(shell, errcode);
+	print_token_lst(shell->token, "\nToken lst after parsing :\n");
 }
 
-void	start_shell(t_main **main_struct)
+void	start_shell(t_main *shell)
 {
 	char	*rl;
 	int		std_out;
@@ -64,39 +41,44 @@ void	start_shell(t_main **main_struct)
 		// 		rl = trimmed;
 		// 	}
 		// }
-		if ((*main_struct)->errcode > 0)
-		{
-		}
+		printf("shell->errcode before parsing : %d\n", shell->errcode);
 		rl = readline("$> ");
 		if (!rl)
 		{
-			clear_and_exit(*main_struct, ERR_NONE);
+			clear_and_exit(shell, ERR_NONE);
 			return ;
 		}
 		add_history(rl);
-		parse(main_struct, rl);
-		(*main_struct)->errcode = 0;
-		printf("main_struct->errcode : %d\n", (*main_struct)->errcode);
-		// check_input(*main_struct);
+		parse(shell, rl);
+		printf("shell->errcode after parsing : %d\n", shell->errcode);
+		// check_input(shell);
+		free_exec_lst(&shell->exec);
 		free(rl);
 		rl = NULL;
 		rl_on_new_line();
 	}
-	rl_clear_history();
+	clear_history();
 }
 
 int	main(int ac, char **av, char **env)
 {
-	t_main	*main_struct;
+	t_main	*shell;
+	size_t	i;
 
+	i = 0;
+	// while (env[i])
+	// {
+	// 	printf("\nenv[%zu] :\n\t[%s]\n", i, env[i]);
+	// 	i++;
+	// }
 	(void)av;
-	main_struct = ft_calloc(1, sizeof(t_main));
-	if (!main_struct)
+	shell = ft_calloc(1, sizeof(t_main));
+	if (!shell)
 		return (EXIT_FAILURE);
-	// check_env_available(env, main_struct);
+	check_env_available(env, shell);
 	if (ac == 1)
 	{
-		start_shell(&main_struct);
+		start_shell(shell);
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);

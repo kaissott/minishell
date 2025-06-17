@@ -4,8 +4,7 @@
 # include "../minishell.h"
 # include "../structures.h"
 
-t_parse_error	tokenisation(t_env **env_lst, t_token **token_lst,
-					t_error *error, char *cmd);
+t_parse_error	tokenisation(t_main *shell, char *cmd);
 int				is_operator(const char *str);
 t_token_type	get_token_type(t_error *error, char *cmd);
 

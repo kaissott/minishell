@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/13 16:50:30 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/14 05:22:52 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_path(t_main *main, char *env_path)
 	{
 		final_path = ft_strjoin(final_env_path[i], cmd[0]);
 		if (!final_path)
-			free_and_exit_error(main, ERR_MALLOC, 12);
+			free_and_exit_error(main, ERR_MEM, 12);
 		if ((access(final_path, X_OK) == 0))
 		{
 			// free_tabs(cmd, final_env_path);

@@ -33,8 +33,7 @@ static ssize_t	extract_unquoted_chunk(t_token_chunk **chunks, char *cmd)
 	return (len);
 }
 
-static ssize_t	extract_word_token(t_env **env_lst, t_token **token_lst,
-		t_error *error, char *cmd)
+static ssize_t	extract_word_token(t_main *shell, char *cmd)
 {
 	ssize_t	i;
 	ssize_t	chunk_len;
@@ -58,30 +57,28 @@ static ssize_t	extract_word_token(t_env **env_lst, t_token **token_lst,
 		}
 		i += chunk_len;
 	}
-	if (token_lst_add_chunks(env_lst, token_lst, new_token) != ERR_NONE)
-		return (set_error(error, ERR_MALLOC, '\0'));
+	if (token_lst_add_chunks(shell, new_token) != ERR_NONE)
+		return (ERR_MALLOC);
 	return (i);
 }
 
-static ssize_t	extract_operator_token(t_token **token_lst, t_error *error,
-		char *cmd)
+static ssize_t	extract_operator_token(t_main *shell, char *cmd)
 {
 	ssize_t			len;
 	t_token_type	token_type;
 
 	len = 1;
-	token_type = get_token_type(error, cmd);
+	token_type = get_token_type(&shell->error, cmd);
 	if (token_type == T_ERROR)
-		return (ERR_UNEXPECTED_TOKEN);
+		return (ERR_SYNTAX);
 	if (token_type == T_HEREDOC || token_type == T_REDIR_APPEND)
 		len = 2;
-	if (token_lst_add_node(token_lst, cmd, len, token_type) != ERR_NONE)
-		return (set_error(error, ERR_MALLOC, '\0'));
+	if (token_lst_add_node(&shell->token, cmd, len, token_type) != ERR_NONE)
+		return (ERR_MALLOC);
 	return (len);
 }
 
-t_parse_error	tokenisation(t_env **env_lst, t_token **token_lst,
-		t_error *error, char *cmd)
+t_parse_error	tokenisation(t_main *shell, char *cmd)
 {
 	ssize_t	i;
 	ssize_t	token_len;
@@ -94,10 +91,10 @@ t_parse_error	tokenisation(t_env **env_lst, t_token **token_lst,
 		if (!cmd[i])
 			break ;
 		if (is_operator(&cmd[i]))
-			token_len = extract_operator_token(token_lst, error, &cmd[i]);
+			token_len = extract_operator_token(shell, &cmd[i]);
 		else
-			token_len = extract_word_token(env_lst, token_lst, error, &cmd[i]);
-		if (token_len <= 0 || error->error_type != ERR_NONE)
+			token_len = extract_word_token(shell, &cmd[i]);
+		if (token_len <= 0 || shell->error.error_type != ERR_NONE)
 			return (token_len);
 		i += token_len;
 	}
