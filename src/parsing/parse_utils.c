@@ -2,27 +2,26 @@
 
 char	**expand_args(char **cmd, char *new_arg)
 {
-	size_t	i;
 	size_t	len;
 	char	**new_cmd;
 
-	i = 0;
 	len = 0;
 	while (cmd && cmd[len])
 		len++;
 	new_cmd = ft_calloc(len + 2, sizeof(char *));
 	if (!new_cmd)
 		return (NULL);
-	while (i < len)
-	{
-		new_cmd[i] = cmd[i];
-		i++;
-	}
+	if (cmd)
+		ft_memcpy(new_cmd, cmd, len * sizeof(char *));
 	new_cmd[len] = ft_strdup(new_arg);
 	if (!new_cmd[len])
 		return (NULL);
 	free(cmd);
 	return (new_cmd);
+}
+
+t_parse_error	create_filepath(t_exec **exec_lst, t_exec *new_node)
+{
 }
 
 t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)

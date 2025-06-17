@@ -21,14 +21,22 @@ static t_parse_error	handle_redirection(t_exec *new_cmd, t_token **token_lst,
 	}
 	else
 		new_cmd->outfile.type = token->type;
-	if (!token->next || token->next->type != T_WORD)
-		return (ERR_UNFINISHED_REDIR);
 	if (check_std_cmd(std, new_cmd) != ERR_NONE)
 		return (ERR_CLOSE);
 	if (std == 0)
+	{
+		new_cmd->infile.filepath = ft_strdup(token->next->value);
+		if (!new_cmd->infile.filepath)
+			return (ERR_MALLOC);
 		new_cmd->infile.fd = open_file(token->next->value, token->type);
+		if (new_cmd->infile.fd == -1)
+			return (ERR_OPEN);
+	}
 	else
 	{
+		new_cmd->outfile.filepath = ft_strdup(token->next->value);
+		if (!new_cmd->outfile.filepath)
+			return (ERR_MALLOC);
 		new_cmd->outfile.fd = open_file(token->next->value, token->type);
 		if (new_cmd->outfile.fd == -1)
 			return (ERR_OPEN);
@@ -42,8 +50,6 @@ static t_parse_error	handle_heredoc(t_exec **exec_lst, t_exec *new_cmd,
 		t_token **token_lst, t_token *token)
 {
 	new_cmd->infile.type = T_HEREDOC;
-	if (!token->next || token->next->type != T_WORD)
-		return (ERR_UNFINISHED_REDIR);
 	if (check_std_cmd(0, new_cmd) != ERR_NONE)
 		return (ERR_CLOSE);
 	if (create_heredoc_filepath(exec_lst, new_cmd) != ERR_NONE)
@@ -110,5 +116,6 @@ t_parse_error	parsing(t_exec **exec_lst, t_token **token_lst)
 	}
 	if (new_cmd)
 		exec_lst_add_back(exec_lst, new_cmd);
+	print_exec_lst(*exec_lst, "EXEC LST BEFORE EXEC :\n");
 	return (ERR_NONE);
 }

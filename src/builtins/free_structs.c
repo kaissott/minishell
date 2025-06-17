@@ -1,17 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   free_structs.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 16:51:32 by karamire         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
-
 
 void	free_env(t_main *main)
 {
@@ -34,7 +21,7 @@ void	free_node(t_main *main)
 {
 	t_exec	*temp;
 	t_exec	*next;
-	int			i;
+	int		i;
 
 	i = 0;
 	temp = main->exec;

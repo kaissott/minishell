@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/13 19:00:40 by karamire         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 #include <errno.h>
 #include <limits.h>
@@ -41,7 +29,7 @@ bool	exec_cmd(t_main *main, char **cmd, bool simple)
 	return (false);
 }
 
-void check_and_change(t_main *main)
+void	check_and_change(t_main *main)
 {
 	if (main->exec->infile.fd == -1 && main->exec->infile.type == 0)
 		main->exec->infile.fd = STDIN_FILENO;
@@ -52,8 +40,8 @@ void check_and_change(t_main *main)
 int	check_input(t_main *main)
 {
 	t_exec	*node;
-	int			fd_out;
-	int			fd_in;
+	int		fd_out;
+	int		fd_in;
 
 	node = main->exec;
 	if (node->cmd == NULL)

@@ -1,30 +1,5 @@
 #include "../../includes/minishell.h"
 
-static t_parse_error	replace_chunk_value(t_env **env_lst,
-		t_expand **expand_lst, t_token_chunk *chunk)
-{
-	t_expand	*tmp;
-	char		*var_value;
-
-	tmp = *expand_lst;
-	chunk->value = NULL;
-	while (tmp)
-	{
-		if (tmp->type == T_EXPAND_VAR)
-			var_value = get_var_value(env_lst, tmp->value);
-		else
-			var_value = tmp->value;
-		if (var_value)
-			chunk->value = join_or_dup(chunk->value, var_value);
-		if (tmp->type == T_EXPAND_VAR)
-			free(var_value);
-		if (!chunk->value)
-			return (ERR_MALLOC);
-		tmp = tmp->next;
-	}
-	return (ERR_NONE);
-}
-
 static ssize_t	handle_word(t_expand **expand_lst, char *word)
 {
 	ssize_t		i;
@@ -40,7 +15,17 @@ static ssize_t	handle_word(t_expand **expand_lst, char *word)
 	return (i);
 }
 
-static ssize_t	handle_var(t_expand **expand_lst, char *var)
+static t_expand	*extract_expand_var(char *var, ssize_t *i)
+{
+	if (var[*i] == '$' || var[*i] == '?')
+		return (create_expand(T_EXPAND_VAR, ft_substr(var, 0, 2)));
+	while (var[*i] && (ft_isalnum(var[*i]) || var[*i] == '_'))
+		(*i)++;
+	return (create_expand(T_EXPAND_VAR, ft_substr(var, 1, *i - 1)));
+}
+
+static ssize_t	handle_var(t_expand **expand_lst, char *var,
+		t_token_chunk *chunk)
 {
 	ssize_t		i;
 	t_expand	*new_expand;
@@ -48,38 +33,25 @@ static ssize_t	handle_var(t_expand **expand_lst, char *var)
 	i = 1;
 	if (!var[i])
 	{
+		if (chunk->next)
+			return (i);
 		new_expand = create_expand(T_EXPAND_VAR, ft_strdup("$"));
 		if (!new_expand)
 			return (ERR_MALLOC);
 		expand_lst_add_back(expand_lst, new_expand);
 		return (i);
 	}
-	if (var[i] == '$' || var[i] == '?')
-		new_expand = create_expand(T_EXPAND_VAR, ft_substr(var, 0, 2));
-	else
-	{
-		while (var[i] && (ft_isalnum(var[i]) || var[i] == '_'))
-			i++;
-		if (i == 1)
-			new_expand = create_expand(T_EXPAND_VAR, ft_substr(var, 0, i));
-		else
-			new_expand = create_expand(T_EXPAND_VAR, ft_substr(var, 1, i - 1));
-	}
+	new_expand = extract_expand_var(var, &i);
 	if (!new_expand)
 		return (ERR_MALLOC);
 	expand_lst_add_back(expand_lst, new_expand);
-	if (i == 1)
-	{
-		if (var[i] == '$' || var[i] == '?')
-			return (2);
-		if (!ft_isalnum(var[i]))
-			return (1);
-	}
+	if (i == 1 && (var[i] == '$' || var[i] == '?'))
+		return (2);
 	return (i);
 }
 
-static t_parse_error	handle_chunk_value(t_env **env_lst,
-		t_expand **expand_lst, t_token_chunk *chunk)
+static t_parse_error	handle_chunk_value(t_main *shell, t_expand **expand_lst,
+		t_token_chunk *chunk)
 {
 	size_t	i;
 	ssize_t	len;
@@ -88,21 +60,23 @@ static t_parse_error	handle_chunk_value(t_env **env_lst,
 	while (chunk->value[i])
 	{
 		if (chunk->value[i] == '$')
-			len = handle_var(expand_lst, &chunk->value[i]);
+			len = handle_var(expand_lst, &chunk->value[i], chunk);
 		else
 			len = handle_word(expand_lst, &chunk->value[i]);
 		if (len <= 0)
-			return (ERR_EXPAND);
+			return (len);
 		i += len;
 	}
 	free(chunk->value);
 	chunk->value = NULL;
-	replace_chunk_value(env_lst, expand_lst, chunk);
+	if (*expand_lst != NULL)
+		replace_chunk_value(shell, expand_lst, chunk);
 	return (ERR_NONE);
 }
 
-t_parse_error	expand_chunk(t_env **env_lst, t_token *new_token)
+t_parse_error	expand_chunk(t_main *shell, t_token *new_token)
 {
+	int				errcode;
 	t_token_chunk	*tmp;
 	t_expand		*expand_lst;
 
@@ -111,8 +85,12 @@ t_parse_error	expand_chunk(t_env **env_lst, t_token *new_token)
 	{
 		expand_lst = NULL;
 		if (tmp->type == T_ENV_STRING && ft_strchr(tmp->value, '$'))
-			handle_chunk_value(env_lst, &expand_lst, tmp);
-		free_expand_lst(&expand_lst);
+		{
+			errcode = handle_chunk_value(shell, &expand_lst, tmp);
+			free_expand_lst(&expand_lst);
+			if (errcode != ERR_NONE)
+				return (errcode);
+		}
 		tmp = tmp->next;
 	}
 	return (ERR_NONE);

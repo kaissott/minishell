@@ -7,8 +7,8 @@ t_exec	*create_exec_cmd(void)
 	new_cmd = ft_calloc(1, sizeof(t_exec));
 	if (!new_cmd)
 		return (NULL);
-	new_cmd->infile.fd = -1;
-	new_cmd->outfile.fd = -1;
+	new_cmd->infile.fd = STDIN_FILENO;
+	new_cmd->outfile.fd = STDOUT_FILENO;
 	new_cmd->next = NULL;
 	return (new_cmd);
 }
@@ -75,10 +75,12 @@ void	print_exec_lst(t_exec *lst, char *msg)
 				j++;
 			}
 		}
-		printf("\tinfile fd : [%d] type : [%d]\n", lst->infile.fd,
-			lst->infile.type);
-		printf("\toutfile fd : [%d] type : [%d]\n", lst->outfile.fd,
-			lst->outfile.type);
+		if (lst->infile.filepath)
+			printf("\tinfile filepath : %s\n", lst->infile.filepath);
+		printf("\tfd : [%d] type : [%d]\n", lst->infile.fd, lst->infile.type);
+		if (lst->outfile.filepath)
+			printf("\toutfile filepath : %s\n", lst->outfile.filepath);
+		printf("\tfd : [%d] type : [%d]\n", lst->outfile.fd, lst->outfile.type);
 		lst = lst->next;
 	}
 }

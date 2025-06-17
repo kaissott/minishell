@@ -1,16 +1,41 @@
 #include "../../../../includes/minishell.h"
 
-void	free_chunk_lst(t_token_chunk *chunk)
+void	print_chunk_lst(t_token_chunk *lst, char *msg)
 {
-	t_token_chunk	*tmp;
+	size_t	i;
 
-	while (chunk)
+	i = 1;
+	printf("\n%s\n", msg);
+	if (!lst)
 	{
-		tmp = chunk->next;
-		if (chunk->value)
-			free(chunk->value);
-		free(chunk);
-		chunk = tmp;
+		printf("The chunk list is empty\n");
+		return ;
+	}
+	while (lst)
+	{
+		printf("Node [%zu] :\n", i++);
+		if (lst->value)
+			printf("\tvalue : %s\n", lst->value);
+		else
+			printf("\tNo chunk value\n");
+		printf("\ttype : %d\n", lst->type);
+		lst = lst->next;
+	}
+}
+
+static void	free_chunk_lst(t_token_chunk **chunk)
+{
+	t_token_chunk	*current;
+	t_token_chunk	*next;
+
+	current = *chunk;
+	while (current)
+	{
+		next = current->next;
+		if (current->value)
+			free(current->value);
+		free(current);
+		current = next;
 	}
 }
 
@@ -18,7 +43,7 @@ void	free_token(t_token *token)
 {
 	if (!token)
 		return ;
-	free_chunk_lst(token->chunks);
+	free_chunk_lst(&token->chunks);
 	if (token->value)
 		free(token->value);
 	free(token);

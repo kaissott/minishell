@@ -1,17 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env_to_tab.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 19:40:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 16:52:45 by karamire         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
-
 
 char	**env_to_tab(t_main *main)
 {
@@ -29,7 +16,7 @@ char	**env_to_tab(t_main *main)
 	}
 	tab = malloc(sizeof(char *) * (i + 1));
 	if (!tab)
-		free_and_exit_error(main, ERR_MALLOC, 12);
+		free_and_exit_error(main, ERR_MEM, 12);
 	tmp = main->env;
 	j = 0;
 	while (i > 0)

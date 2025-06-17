@@ -1,42 +1,47 @@
 #include "../../includes/minishell.h"
 
-void	free_expand_lst(t_expand **expand_lst)
+void	get_errcode(t_main *shell, t_parse_error errcode)
 {
-	t_expand	*current;
-	t_expand	*next;
-
-	if (!expand_lst || !*expand_lst)
-		return ;
-	current = *expand_lst;
-	while (current)
-	{
-		next = current->next;
-		free(current->value);
-		free(current);
-		current = next;
-	}
-	*expand_lst = NULL;
+	if (errcode == ERR_MALLOC)
+		shell->errcode = 12;
+	else if (errcode >= ERR_SYNTAX && errcode <= ERR_MISSING_SINGLE_QUOTE)
+		shell->errcode = 258;
+	else if (errcode == ERR_TOKEN)
+		shell->errcode = 1;
+	else if (errcode >= ERR_OPEN && errcode <= ERR_CLOSE)
+		shell->errcode = 1;
+	else
+		shell->errcode = 0;
 }
 
-void	free_main_struct(t_main **main_struct)
+void	free_shell(t_main *shell, t_parse_error errcode)
 {
-	if ((*main_struct)->env)
-		free_env_lst(&(*main_struct)->env);
-	if ((*main_struct)->token)
-		free_token_lst(&(*main_struct)->token);
-	if ((*main_struct)->exec)
-		free_exec_lst(&(*main_struct)->exec);
-	(*main_struct)->error.error_type = ERR_NONE;
-	(*main_struct)->error.unexpected_token = '\0';
+	// if (shell->env)
+	// 	free_env_lst(&shell->env);
+	if (shell->token)
+		free_token_lst(&shell->token);
+	if (shell->exec)
+		free_exec_lst(&shell->exec);
+	shell->error.error_type = ERR_NONE;
+	shell->error.unexpected_token = '\0';
+	printf("shell->errcode after free shell : %d\n", shell->errcode);
 }
 
-void	clear_and_exit(t_main *main_struct, ssize_t errcode)
+void	clear_and_exit(t_main *shell, t_parse_error errcode)
 {
-	if (errcode != ERR_NONE)
-	{
-		print_token_error_msg(main_struct->error.error_type, main_struct->error.unexpected_token);
-		free_main_struct(&main_struct);
-		free(main_struct);
-	}
-	exit(errcode);
+	get_errcode(shell, errcode);
+	print_token_error_msg(shell->error.error_type,
+		shell->error.unexpected_token);
+	free_shell(shell, errcode);
+	free(shell);
+}
+
+bool	check_parsing(t_main *shell, t_parse_error errcode)
+{
+	get_errcode(shell, errcode);
+	if (errcode == ERR_NONE)
+		return (true);
+	print_token_error_msg(errcode, shell->error.unexpected_token);
+	free_shell(shell, errcode);
+	return (false);
 }

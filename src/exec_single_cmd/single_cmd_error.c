@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   single_cmd_error.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 16:47:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/13 16:50:37 by karamire         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
-void	output_fd_error_one (t_main *main, char *error, int fd_in)
+void	output_fd_error_one(t_main *main, char *error, int fd_in)
 {
 	// free_tabs(main->mainenv, NULL);a!
 	// free_files(main);

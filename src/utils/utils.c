@@ -1,5 +1,13 @@
 #include "../../includes/minishell.h"
 
+// void	handle_error(t_main *shell, t_parse_error err)
+// {
+// 	set_error(shell, err, shell->error.unexpected_token);
+// 	print_error(shell);
+// 	shell->errcode = convert_errno(err);
+// 	clear_shell(shell);
+// }
+
 t_parse_error	set_error(t_error *error, t_parse_error error_type,
 		char unexpected_token)
 {
@@ -15,7 +23,7 @@ void	print_token_error_msg(t_parse_error err_code, char unexpected_token)
 		fprintf(stderr, "Missing single quote (').\n");
 	else if (err_code == ERR_MISSING_DOUBLE_QUOTE)
 		fprintf(stderr, "Missing double quote (\").\n");
-	else if (err_code == ERR_UNEXPECTED_TOKEN)
+	else if (err_code == ERR_SYNTAX)
 	{
 		if (!unexpected_token)
 			fprintf(stderr, "%s `newline'\n",
@@ -34,10 +42,14 @@ char	*join_or_dup(char *prev, char *next)
 {
 	char	*new_val;
 
-	if (prev)
+	if (prev && next)
 		new_val = ft_strjoin(prev, next);
-	else
+	else if (prev)
+		new_val = ft_strdup(prev);
+	else if (next)
 		new_val = ft_strdup(next);
+	else
+		new_val = ft_strdup("");
 	free(prev);
 	return (new_val);
 }

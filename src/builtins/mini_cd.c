@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   mini_cd.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/13 16:47:44 by karamire         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 void	env_pwd_update(t_main *main)
@@ -30,7 +18,7 @@ void	env_pwd_update(t_main *main)
 		free(temp->env);
 		tmp = ft_strjoin("PWD=", path);
 		if (!tmp)
-			free_and_exit_error(main, ERR_MALLOC, 12);
+			free_and_exit_error(main, ERR_MEM, 12);
 		temp->env = tmp;
 	}
 	else
@@ -55,13 +43,13 @@ void	env_oldpwd_update(t_main *main)
 		free(temp->env);
 		temp->env = ft_strjoin("OLDPWD=", pwd);
 		if (!temp->env)
-			free_and_exit_error(main, ERR_MALLOC, 12);
+			free_and_exit_error(main, ERR_MEM, 12);
 	}
 	else
 	{
 		path = ft_strjoin("OLDPWD=", pwd);
 		if (!path)
-			free_and_exit_error(main, ERR_MALLOC, 12);
+			free_and_exit_error(main, ERR_MEM, 12);
 		lstadd_back((&main->env), lstnew(path));
 	}
 }
@@ -79,7 +67,7 @@ char	*cd_to_home(t_main *main, char *path)
 		{
 			str = ft_strdup(env->env + 5);
 			if (!str)
-				free_and_exit_error(main, ERR_MALLOC, 12);
+				free_and_exit_error(main, ERR_MEM, 12);
 		}
 		env = env->next;
 	}
@@ -87,7 +75,7 @@ char	*cd_to_home(t_main *main, char *path)
 	{
 		dst = ft_strjoin(str, path + 1);
 		if (!dst)
-			free_and_exit_error(main, ERR_MALLOC, 12);
+			free_and_exit_error(main, ERR_MEM, 12);
 		free(str);
 	}
 	else

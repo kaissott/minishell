@@ -13,7 +13,7 @@ int	open_file(const char *filepath, t_token_type file_type)
 
 t_parse_error	secure_close(int *fd)
 {
-	if (*fd >= 0)
+	if (*fd > 1)
 	{
 		if (close(*fd) == -1)
 			return (ERR_CLOSE);
@@ -31,19 +31,12 @@ t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 			unlink(new_cmd->heredoc_path);
 			free(new_cmd->heredoc_path);
 		}
-		if (new_cmd->infile.fd > 0)
-		{
-			if (secure_close(&new_cmd->infile.fd) != ERR_NONE)
-				return (ERR_CLOSE);
-		}
+		if (new_cmd->infile.filepath)
+			free(new_cmd->infile.filepath);
+		if (secure_close(&new_cmd->infile.fd) != ERR_NONE)
+			return (ERR_CLOSE);
 	}
-	else
-	{
-		if (new_cmd->outfile.fd > 0)
-		{
-			if (secure_close(&new_cmd->outfile.fd) != ERR_NONE)
-				return (ERR_CLOSE);
-		}
-	}
+	else if (secure_close(&new_cmd->outfile.fd) != ERR_NONE)
+		return (ERR_CLOSE);
 	return (ERR_NONE);
 }
