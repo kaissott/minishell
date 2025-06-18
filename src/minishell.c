@@ -4,8 +4,6 @@ static void	parse(t_main *shell, char *cmd)
 {
 	t_parse_error	errcode;
 
-	if (errcode != ERR_NONE)
-
 	errcode = tokenisation(shell, cmd);
 	// printf("\nReturn tokenisation : %d\n", errcode);
 	if (!check_parsing(shell, errcode))

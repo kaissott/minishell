@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/17 22:43:46 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/18 02:15:38 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ char	*env_path_finding(t_main *main, char **env)
 	i = 0;
 	while (env[i] != NULL)
 	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+		if (ft_strnstr(env[i], "PATH=", 5))
 		{
-			env_path = ft_strdup(env[i]);
+			env_path = ft_strdup(ft_strnstr(env[i], "PATH=", 5));
 			if (!env_path)
 				free_and_exit_error(main, env, ERR_MEM, 12);
 			return (env_path);
