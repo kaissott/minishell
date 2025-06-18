@@ -6,13 +6,24 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 22:14:09 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/19 01:05:26 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/minishell.h"
 
+void	execve_err(t_main *main, char **env, char *path, char *cmd)
+{
+	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": command not found\n", 2);
+	if (env)
+		free(env);
+	if (path)
+		free(path);
+	exit_error_minishell(main, errno, NULL);
+}
 void safe_close(int fd, t_main *main)
 {
 	t_exec *tmp;
@@ -53,6 +64,29 @@ void	close_fork(int fd1, int fd2, t_exec *node, t_main *main)
 	}
 }
 
+void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main)
+{
+	while(wait(NULL) > 0)
+		;
+	if(pipefd == NULL)
+	{
+		close_fork(prevfd, -1, node, main);
+		free_struct(main);
+		free(main);
+	}
+	else
+	{
+		if (pipefd[0] > 1 && close(pipefd[0]) == -1)
+		{
+			return;
+		}
+		close_fork(prevfd, pipefd[1], node, main);
+		free_struct(main);
+		free(main);
+	}
+	exit(errno);
+}
+
 pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 {
 	int		pipefd[2];
@@ -63,8 +97,8 @@ pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 	pid = fork();
 	if (pid == -1)
 	{
-		// close_dup_failed(pipefd[1], pipefd[0], 0);
-		error_exit("Error : Fork failed", EXIT_FAILURE, prev_fd);
+		free(env);
+		error_fork(pipefd, prev_fd, node, main);
 	}
 	if (pid == 0)
 	{
@@ -85,8 +119,8 @@ pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 	pid = fork();
 	if (pid == -1)
 	{
-		// close_dup_failed(node->outfile.fd, -1, 0);
-		error_exit("Error : Fork failed", EXIT_FAILURE, prev_fd);
+		free(env);
+		error_fork(NULL, prev_fd, node, main);
 	}
 	if (pid == 0)
 	{
@@ -132,8 +166,8 @@ int	pipe_exec(t_main *main)
 	// access_out_check(main, prev_fd, node->outfile.fd, if_hd);
 	last_pid = last_child(node, prev_fd, main, env);
 	close(prev_fd);
-	wait_child(last_pid);
 	close_node(main);
+	wait_child(last_pid);
 	free(env);
 	return (0);
 }
