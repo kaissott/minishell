@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/19 01:05:26 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:30:06 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ void	close_fork(int fd1, int fd2, t_exec *node, t_main *main)
 	if (fd1 != node->infile.fd && fd1 > 1 && close(fd1) == -1)
 	{
 		i = 1;
+		dprintf(2, "ici");
 	}
 	if (fd2 > 1 && close(fd2) == -1)
 	{
 		i = 1;
+		dprintf(2, "la");
 	}
 	if (i == 0)
 	{
@@ -149,25 +151,24 @@ void	wait_child(pid_t last)
 int	pipe_exec(t_main *main)
 {
 	t_exec		*node;
-	char		**env;
 	int			prev_fd;
 	pid_t		last_pid;
 
 	node = main->exec;
 	prev_fd = node->infile.fd;
-	env = env_to_tab(main);
+	main->envtab = env_to_tab(main);
 	while (node->next != NULL)
 	{
-		prev_fd = child_process(node, prev_fd, main, env);
+		prev_fd = child_process(node, prev_fd, main, main->envtab);
 		if (prev_fd == -1)
 			return (0);
 		node = node->next;
 	}
 	// access_out_check(main, prev_fd, node->outfile.fd, if_hd);
-	last_pid = last_child(node, prev_fd, main, env);
+	last_pid = last_child(node, prev_fd, main, main->envtab);
 	close(prev_fd);
 	close_node(main);
 	wait_child(last_pid);
-	free(env);
+	free(main->envtab);
 	return (0);
 }

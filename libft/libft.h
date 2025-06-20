@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:38:10 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/18 02:08:21 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/20 21:05:10 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+#include "get_next_line/get_next_line.h"
 
 typedef struct s_list
 {

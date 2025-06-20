@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:20:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 23:55:26 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:41:40 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_main	*init_minishell(char **env)
 {
 	t_main	*main_struct;
 
-	print_ascii_logo();
+	// print_ascii_logo();
 	main_struct = ft_calloc(1, sizeof(t_main));
 	main_struct->env = NULL;
 	if (!main_struct)

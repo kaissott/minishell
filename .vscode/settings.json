@@ -74,6 +74,7 @@
     "fcntl.h": "c",
     "structures.h": "c",
     "tokenisation.h": "c",
-    "error.h": "c"
+    "error.h": "c",
+    "unistd.h": "c"
   }
 }

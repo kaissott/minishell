@@ -64,6 +64,10 @@ void	close_node(t_main *main)
 	while (temp != NULL)
 	{
 		exit_error_two_close(main, temp->infile.fd, temp->outfile.fd);
+		if (temp->infile.filepath)
+			free(temp->infile.filepath);
+		if (temp->outfile.filepath)
+			free(temp->outfile.filepath);
 		temp = temp->next;
 	}
 }

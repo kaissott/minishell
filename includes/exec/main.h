@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/19 01:02:14 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/20 19:58:46 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	exit_error_one_close(t_main *main_struct, int *fd1);
 pid_t	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd);
 void	close_main_fds(t_main *main);
 void	close_node(t_main *main);
+void	close_fork(int fd1, int fd2, t_exec *node, t_main *main);
 
 
 #endif

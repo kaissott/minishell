@@ -19,30 +19,31 @@ void	start_shell(t_main *shell)
 {
 	char	*rl;
 	char	*line;
-	char	*trimmed;
 
 	while (1)
 	{
 		dup2(shell->std_in, STDIN_FILENO);
 		dup2(shell->std_out, STDOUT_FILENO);
-		// if (isatty(fileno(stdin)))
-		// 	rl = readline("$> ");
-		// else
-		// {
-		// 	rl = get_next_line(fileno(stdin));
-		// 	if (rl)
-		// 	{
-		// 		trimmed = ft_strtrim(rl, "\n");
-		// 		free(rl);
-		// 		rl = trimmed;
-		// 	}
-		// }
-		rl = readline("$> ");
+		if (isatty(fileno(stdin)))
+		{
+			rl = readline("> ");
+		}
+		else
+		{
+			rl = get_next_line(fileno(stdin));
+			if (rl)
+			{
+				line = ft_strtrim(rl, "\n");
+				free(rl);
+				rl = line;
+			}
+		}
+		// rl = readline("$> ");
 		if (!rl)
 		{
 			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);;
 			free_struct(shell);
-			printf("exit\n");
+			// prinetf("exit\n");
 			return ;
 		}
 		add_history(rl);
