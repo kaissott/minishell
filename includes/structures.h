@@ -26,6 +26,7 @@ typedef struct s_token_chunk
 {
 	t_token_chunk_type		type;
 	char					*value;
+	bool					is_expanded;
 	struct s_token_chunk	*next;
 }							t_token_chunk;
 
@@ -95,14 +96,16 @@ typedef struct s_env
 typedef struct s_main
 {
 	t_env					*env;
+	char					**env_tab;
 	t_exec					*exec;
 	t_token					*token;
 	t_error					error;
 	int						errcode;
+	int						exec_errcode;
 	int						std_in;
 	int						std_out;
 }							t_main;
 
-t_main	*init_minishell(char **env);
+t_main						*init_minishell(char **env);
 
 #endif

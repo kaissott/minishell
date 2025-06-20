@@ -14,7 +14,11 @@ static char	*get_var_value(t_main *shell, char *var_name)
 		return (ft_itoa(pid));
 	}
 	if (ft_strcmp(var_name, "$?") == 0)
+	{
+		if (shell->exec_errcode != ERR_NONE)
+			return (ft_itoa(shell->exec_errcode));
 		return (ft_itoa(shell->errcode));
+	}
 	tmp = shell->env;
 	name_len = ft_strlen(var_name);
 	while (tmp)
