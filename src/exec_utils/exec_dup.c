@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 20:20:10 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:27:37 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,40 +33,34 @@ void	close_main_fds(t_main *main)
 {
 	free_struct(main);
 }
+
+void	dup_failed_err(t_main *main, int prev_fd, int pipefd, t_exec *node)
+{
+	close_fork(prev_fd, pipefd, node, main);
+	if (main->envtab)
+		free(main->envtab);
+	free_struct(main);
+	free(main);
+	ft_putstr_fd("Dup failed\n", 2);
+	exit(errno);
+}
 int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
 {
+
 	if (node->infile.fd > 1)
 	{
 		if (dup2(node->infile.fd, STDIN_FILENO) == -1)
-		{
-			exit_error_one_close(main, &node->infile.fd);
-			exit(EXIT_FAILURE);
-		}
+			dup_failed_err(main, prev_fd, pipefd, node);
 	}
-	else
-	{
-		if (dup2(prev_fd, STDIN_FILENO) == -1)
-		{
-			exit_error_one_close(main, &prev_fd);
-			exit(EXIT_FAILURE);
-		}
-	}
+	else if (dup2(prev_fd, STDIN_FILENO) == -1)
+		dup_failed_err(main, prev_fd, pipefd, node);
 	if (node->outfile.fd > 1)
 	{
 		if (dup2(node->outfile.fd, STDOUT_FILENO) == -1)
-		{
-			exit_error_one_close(main, &node->outfile.fd);
-			exit(EXIT_FAILURE);
-		}
+			dup_failed_err(main, prev_fd, pipefd, node);
 	}
-	else
-	{
-		if (dup2(pipefd, STDOUT_FILENO) == -1)
-		{
-			exit_error_one_close(main, &pipefd);
-			exit(EXIT_FAILURE);
-		}
-	}
+	else if (dup2(pipefd, STDOUT_FILENO) == -1)
+		dup_failed_err(main, prev_fd, pipefd, node);
 	return (0);
 }
 

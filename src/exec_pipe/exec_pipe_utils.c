@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 22:13:37 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/19 01:02:51 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ char	*path_finding(char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strnstr(env[i], "PATH=", 5) == 1)
+		if (ft_strnstr(env[i], "PATH=", 5))
 		{
-			path = ft_strdup(env[i]);
-			// dprintf(2, " PATH :%s\n", path);
+			path = ft_strdup(ft_strnstr(env[i], "PATH=", 5));
 			return (path);
 		}
 		i++;
@@ -45,13 +44,14 @@ char	*cmd_path(char **cmd, char *linktopath)
 		path = ft_strjoin(path_poss[i], cmd[0]);
 		if (path != NULL && (access(path, X_OK) == 0))
 		{
-			// free_tab_pipe(cmd, path_poss);
+			free_tab_2(path_poss);
 			return (path);
 		}
 		free(path);
 		path = NULL;
 		i++;
 	}
+	free_tab_2(path_poss);
 	return (NULL);
 }
 
@@ -59,6 +59,7 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 {
 	char	*path;
 
+	path == NULL;
 	if (exec_cmd(main, cmd, false) == true)
 	{
 			free(env);
@@ -77,13 +78,13 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 		path = cmd_path(cmd, path_finding(env));
 		if (path == NULL)
 		{
-			error_exec_b(cmd, cmd[0]);
+			execve_err(main, env, path, cmd[0]);
+			// error_exec_b(cmd, cmd[0]);
 			return (-1);
 		}
 		execve(path, cmd, env);
 	}
-	free(env);
-	error_exec_b(cmd, cmd[0]);
+	execve_err(main, env, path, cmd[0]);
 	return (-1);
 }
 

@@ -119,6 +119,7 @@ bool	mini_cd(char *line, t_main *main)
 	{
 		free(str);
 		return (set_return_err_code(main, "chdir", errno));
+		main->errcode == 1;
 	}
 	return (true);
 }

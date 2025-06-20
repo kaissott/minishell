@@ -104,6 +104,7 @@ typedef struct s_main
 	int						exec_errcode;
 	int						std_in;
 	int						std_out;
+	char					**envtab;
 }							t_main;
 
 t_main						*init_minishell(char **env);

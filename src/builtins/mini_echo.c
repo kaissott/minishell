@@ -13,21 +13,18 @@
 
 #include "../../includes/minishell.h"
 
-bool	check_echo_flag(char **tab)
+bool	check_echo_flag(char *tab)
 {
 	int	i;
 
 	i = 1;
-	if (tab[1])
+	if (tab[0] == '-')
 	{
-		if (tab[1][0] == '-')
+		while (tab[i] == 'n')
 		{
-			while (tab[1][i] == 'n')
-			{
-				i++;
-				if (tab[1][i] == '\0')
-					return (true);
-			}
+			i++;
+			if (tab[i] == '\0')
+				return (true);
 		}
 	}
 	return (false);
@@ -36,17 +33,25 @@ bool	check_echo_flag(char **tab)
 void	print_echo_with_flag(t_main *main, char **tab)
 {
 	int	i;
+	int j;
 
-	i = 2;
+	j = 0;
+	i = 1;
 	while (tab[i])
 	{
-		if (ft_putstr_fd(tab[i], STDOUT_FILENO) == -1)
-			free_and_exit_error(main, NULL, ERR_WRITE, errno);
-		i++;
-		if (tab[i])
+		if (j == 0 && check_echo_flag(tab[i]) == true)
+			i++;
+		else
 		{
-			if (write(STDOUT_FILENO, " ", 1) == -1)
+			j = 1;
+			if (ft_putstr_fd(tab[i], STDOUT_FILENO) == -1)
 				free_and_exit_error(main, NULL, ERR_WRITE, errno);
+			i++;
+			if (tab[i])
+			{
+				if (write(STDOUT_FILENO, " ", 1) == -1)
+					free_and_exit_error(main, NULL, ERR_WRITE, errno);
+			}
 		}
 	}
 }
@@ -73,7 +78,7 @@ void	print_echo_without_flag(t_main *main, char **tab)
 
 bool	mini_echo(t_main *main, char **cmd)
 {
-	if (check_echo_flag(cmd) == true)
+	if (check_echo_flag(cmd[1]) == true)
 		print_echo_with_flag(main, cmd);
 	else
 		print_echo_without_flag(main, cmd);

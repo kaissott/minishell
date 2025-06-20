@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:50:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 22:13:32 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/18 00:42:58 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ void	error_exec_b(char **cmdtab, char *cmd)
 	i = 0;
 	ft_putstr_fd(cmd, 2);
 	ft_putendl_fd(" : Command not found", 2);
-	if (cmdtab[i])
-	{
-		while (cmdtab[i] != NULL)
-		{
-			free(cmdtab[i]);
-			i++;
-		}
-	}
-	free(cmdtab);
+	// if (cmdtab[i])
+	// {
+	// 	while (cmdtab[i] != NULL)
+	// 	{
+	// 		free(cmdtab[i]);
+	// 		i++;
+	// 	}
+	// }
+	// free(cmdtab);
 	exit(127);
 }
 
