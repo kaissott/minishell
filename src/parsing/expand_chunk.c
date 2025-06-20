@@ -68,7 +68,10 @@ static t_parse_error	handle_chunk_value(t_main *shell, t_expand **expand_lst,
 		i += len;
 	}
 	if (*expand_lst != NULL)
+	{
+		chunk->is_expanded = true;
 		replace_chunk_value(shell, expand_lst, chunk);
+	}
 	return (ERR_NONE);
 }
 

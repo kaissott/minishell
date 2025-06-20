@@ -8,7 +8,7 @@ void	get_errcode(t_main *shell, t_parse_error errcode)
 		shell->errcode = 2;
 	else if (errcode == ERR_TOKEN)
 		shell->errcode = 1;
-	else if (errcode >= ERR_OPEN && errcode <= ERR_CLOSE)
+	else if (errcode >= ERR_CLOSE && errcode <= ERR_OPEN)
 		shell->errcode = 1;
 	else
 		shell->errcode = 0;
@@ -24,7 +24,7 @@ void	free_shell(t_main *shell, t_parse_error errcode)
 		free_exec_lst(&shell->exec);
 	shell->error.error_type = ERR_NONE;
 	shell->error.unexpected_token = '\0';
-	printf("shell->errcode after free shell : %d\n", shell->errcode);
+	// printf("shell->errcode after free shell : %d\n", shell->errcode);
 }
 
 void	clear_and_exit(t_main *shell, t_parse_error errcode)

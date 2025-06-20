@@ -25,8 +25,8 @@ static ssize_t	extract_unquoted_chunk(t_token_chunk **chunks, char *cmd)
 	ssize_t	len;
 
 	len = 0;
-	while (cmd[len] && cmd[len] != ' ' && cmd[len] != '"' && cmd[len] != '\''
-		&& !is_operator(&cmd[len]))
+	while (cmd[len] && cmd[len] != ' ' && cmd[len] != '\t' && cmd[len] != '"'
+		&& cmd[len] != '\'' && !is_operator(&cmd[len]))
 		len++;
 	if (create_and_add_chunk(chunks, cmd, len, '\0') != ERR_NONE)
 		return (ERR_MALLOC);
@@ -43,7 +43,7 @@ static ssize_t	extract_word_token(t_main *shell, char *cmd)
 	new_token = ft_calloc(1, sizeof(t_token));
 	if (!new_token)
 		return (ERR_MALLOC);
-	while (cmd[i] && cmd[i] != ' ' && !is_operator(&cmd[i]))
+	while (cmd[i] && cmd[i] != ' ' && cmd[i] != '\t' && !is_operator(&cmd[i]))
 	{
 		if (cmd[i] == '"' || cmd[i] == '\'')
 			chunk_len = extract_quoted_chunk(&new_token->chunks, &cmd[i],
@@ -86,7 +86,7 @@ t_parse_error	tokenisation(t_main *shell, char *cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		while (cmd[i] == ' ')
+		while (cmd[i] == ' ' || cmd[i] == '\t')
 			i++;
 		if (!cmd[i])
 			break ;
