@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/21 02:36:03 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/21 03:13:36 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	execve_err(t_main *main, char **env, char *path, char *cmd)
 	ft_putstr_fd(": command not found\n", 2);
 	if (env)
 		free(env);
-	if (path)
+	if (path != NULL)
 		free(path);
 	exit_error_minishell(main, 127, NULL);
 }

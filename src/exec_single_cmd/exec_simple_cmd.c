@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/21 01:47:42 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/21 03:16:20 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,22 @@ void	exec_simple_cmd(t_main *main)
 	char	*path;
 
 	main->envtab = env_to_tab(main);
-	if (strrchr_slash(main->exec->cmd[0], '/'))
+	if (strrchr_slash(main->exec->cmd[0], '/') == 1)
 	{
+		if (access(main->exec->cmd[0], F_OK) != 0)
+			free_and_exit_error(main, NULL, "No such file or directory", 127);
+		if (access(main->exec->cmd[0], X_OK) != 0)
+			free_and_exit_error(main, NULL, "Permission denied", 126);
 		execve(main->exec->cmd[0], main->exec->cmd, main->envtab);
+		execve_err(main, main->envtab, NULL, main->exec->cmd[0]);
 	}
 	env_path = env_path_finding(main, main->envtab);
 	path = get_path(main, env_path, main->envtab);
 	if (path == NULL)
 	{
 		free(path);
-		free(main->envtab);
-		free_and_exit_error(main, env_path, "Command not found", 12);
+		free(env_path);
+		execve_err(main, main->envtab, path, main->exec->cmd[0]);
 		return;
 	}
 	execve(path, main->exec->cmd, main->envtab);
