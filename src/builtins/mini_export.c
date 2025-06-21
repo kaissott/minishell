@@ -63,6 +63,22 @@ int	check_var_exist(t_main *main, char *var)
 	return (-1);
 }
 
+bool	is_valid_identifier(const char *str)
+{
+	int	i;
+
+	if (!str || (!ft_isalpha(str[0]) && str[0] != '_'))
+		return (false);
+	i = 1;
+	while (str[i] && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 void	print_export_env(t_main *main)
 {
 	t_env	*env;
@@ -90,7 +106,14 @@ bool	mini_export(t_main *main)
 		print_export_env(main);
 	while (tab[i])
 	{
-		if (ft_strchr(tab[i], '=') != NULL)
+		if (!is_valid_identifier(tab[i]))
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(tab[i], 2);
+			ft_putendl_fd("': not a valid identifier", 2);
+			main->exec_errcode = 1;
+		}
+		else if (ft_strchr(tab[i], '=') != NULL)
 		{
 			if (check_var_exist(main, tab[i]) == -1)
 				export_new_var(main, tab[i]);

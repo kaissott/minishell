@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/20 20:30:06 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/21 02:36:03 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	execve_err(t_main *main, char **env, char *path, char *cmd)
 		free(env);
 	if (path)
 		free(path);
-	exit_error_minishell(main, errno, NULL);
+	exit_error_minishell(main, 127, NULL);
 }
 void safe_close(int fd, t_main *main)
 {
@@ -133,16 +133,16 @@ pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 	return (pid);
 }
 
-void	wait_child(pid_t last)
+void	wait_child(pid_t last, t_main *main)
 {
 	int	status;
 
 	while (waitpid(last, &status, 0) > 0)
 	{
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 127)
-			exit(127);
+			main->exec_errcode = 127;
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
-			exit(1);
+			main->exec_errcode = 1;
 	}
 	while (wait(NULL) > 0)
 		;
@@ -168,7 +168,7 @@ int	pipe_exec(t_main *main)
 	last_pid = last_child(node, prev_fd, main, main->envtab);
 	close(prev_fd);
 	close_node(main);
-	wait_child(last_pid);
+	wait_child(last_pid, main);
 	free(main->envtab);
 	return (0);
 }
