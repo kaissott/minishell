@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
 static void	env_lst_add_back(t_env **env_lst, t_env *new_node)
 {

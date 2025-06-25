@@ -1,4 +1,4 @@
-#include "../../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
 t_exec	*create_exec_cmd(void)
 {
@@ -57,21 +57,21 @@ void	print_exec_lst(t_exec *lst, char *msg)
 	size_t	j;
 
 	i = 1;
-	dprintf(2,"\n%s\n", msg);
+	dprintf(2, "\n%s\n", msg);
 	if (!lst)
 	{
-		dprintf(2,"The list is empty\n");
+		dprintf(2, "The list is empty\n");
 		return ;
 	}
 	while (lst)
 	{
-		dprintf(2,"Node [%zu]\n", i++);
+		dprintf(2, "Node [%zu]\n", i++);
 		if (lst->cmd)
 		{
 			j = 0;
 			while (lst->cmd[j])
 			{
-				dprintf(2,"\tcmd[%zu]: [%s]\n", j, lst->cmd[j]);
+				dprintf(2, "\tcmd[%zu]: [%s]\n", j, lst->cmd[j]);
 				j++;
 			}
 		}

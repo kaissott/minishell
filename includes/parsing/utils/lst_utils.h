@@ -1,8 +1,8 @@
 #ifndef LST_UTILS_H
 # define LST_UTILS_H
 
-# include "../minishell.h"
-# include "../structures.h"
+# include "../../minishell.h"
+# include "../../structures.h"
 
 t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, char *cmd,
 					ssize_t len, char quote);

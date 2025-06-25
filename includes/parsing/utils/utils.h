@@ -1,8 +1,8 @@
 #ifndef UTILS_H
 # define UTILS_H
 
-# include "../minishell.h"
-# include "../structures.h"
+# include "../../minishell.h"
+# include "../../structures.h"
 
 int				open_file(const char *filepath, t_token_type file_type);
 t_parse_error	secure_close(int *fd);

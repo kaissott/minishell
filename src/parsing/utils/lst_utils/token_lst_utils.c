@@ -1,4 +1,4 @@
-#include "../../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
 t_token	*token_lst_last(t_token *lst)
 {

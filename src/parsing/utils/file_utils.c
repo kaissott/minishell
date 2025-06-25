@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 int	open_file(const char *filepath, t_token_type file_type)
 {
