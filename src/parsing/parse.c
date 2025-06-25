@@ -71,7 +71,7 @@ static t_parse_error	handle_token(t_main *shell, t_token *token,
 {
 	if (token->type == T_WORD)
 	{
-		new_cmd->cmd = expand_args(new_cmd->cmd, token->value);
+		new_cmd->cmd = resize_cmd_args(new_cmd->cmd, token->value);
 		if (!new_cmd->cmd)
 			return (ERR_MALLOC);
 		token_lst_delone(&shell->token, token);
@@ -90,7 +90,7 @@ static t_parse_error	handle_token(t_main *shell, t_token *token,
 t_parse_error	parsing(t_main *shell)
 {
 	t_exec			*new_cmd;
-	t_parse_error	ret;
+	t_parse_error	errcode;
 
 	new_cmd = create_exec_cmd();
 	if (!new_cmd)
@@ -102,19 +102,15 @@ t_parse_error	parsing(t_main *shell)
 			new_cmd = handle_pipe(shell, shell->token, new_cmd);
 			if (!new_cmd)
 				return (ERR_MALLOC);
+			continue ;
 		}
-		else
+		errcode = handle_token(shell, shell->token, new_cmd);
+		if (errcode != ERR_NONE)
 		{
-			ret = handle_token(shell, shell->token, new_cmd);
-			if (ret != ERR_NONE)
-			{
-				free_exec(new_cmd);
-				return (ret);
-			}
+			free_exec(new_cmd);
+			return (errcode);
 		}
 	}
-	if (new_cmd)
-		exec_lst_add_back(&shell->exec, new_cmd);
-	// print_exec_lst(shell->exec, "EXEC LST BEFORE EXEC :\n");
+	exec_lst_add_back(&shell->exec, new_cmd);
 	return (ERR_NONE);
 }

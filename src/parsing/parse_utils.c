@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-char	**expand_args(char **cmd, char *new_arg)
+char	**resize_cmd_args(char **cmd, char *new_arg)
 {
 	size_t	len;
 	char	**new_cmd;
