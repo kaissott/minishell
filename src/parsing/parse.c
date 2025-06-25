@@ -54,13 +54,13 @@ static t_parse_error	handle_heredoc(t_main *shell, t_token *token,
 	if (create_heredoc_filepath(&shell->exec, new_cmd) != ERR_NONE)
 		return (ERR_MALLOC);
 	new_cmd->infile.fd = open_file(new_cmd->infile.filepath, token->type);
-	// if (new_cmd->infile.fd == -1)
-	// 	return (ERR_OPEN);
+	if (new_cmd->infile.fd == -1)
+		return (ERR_OPEN);
 	if (write_in_heredoc(&new_cmd->infile.fd, token->next->value) != ERR_NONE)
 		return (ERR_CLOSE);
 	new_cmd->infile.fd = open(new_cmd->infile.filepath, O_RDONLY);
-	// if (new_cmd->infile.fd == -1)
-	// 	return (ERR_OPEN);
+	if (new_cmd->infile.fd == -1)
+		perror(new_cmd->infile.filepath);
 	token_lst_delone(&shell->token, token->next);
 	token_lst_delone(&shell->token, token);
 	return (ERR_NONE);
@@ -71,7 +71,7 @@ static t_parse_error	handle_token(t_main *shell, t_token *token,
 {
 	if (token->type == T_WORD)
 	{
-		new_cmd->cmd = expand_args(new_cmd->cmd, token->value);
+		new_cmd->cmd = resize_cmd_args(new_cmd->cmd, token->value);
 		if (!new_cmd->cmd)
 			return (ERR_MALLOC);
 		token_lst_delone(&shell->token, token);
@@ -90,7 +90,7 @@ static t_parse_error	handle_token(t_main *shell, t_token *token,
 t_parse_error	parsing(t_main *shell)
 {
 	t_exec			*new_cmd;
-	t_parse_error	ret;
+	t_parse_error	errcode;
 
 	new_cmd = create_exec_cmd();
 	if (!new_cmd)
@@ -102,15 +102,13 @@ t_parse_error	parsing(t_main *shell)
 			new_cmd = handle_pipe(shell, shell->token, new_cmd);
 			if (!new_cmd)
 				return (ERR_MALLOC);
+			continue ;
 		}
-		else
+		errcode = handle_token(shell, shell->token, new_cmd);
+		if (errcode != ERR_NONE)
 		{
-			ret = handle_token(shell, shell->token, new_cmd);
-			if (ret != ERR_NONE)
-			{
-				free_exec(new_cmd);
-				return (ret);
-			}
+			free_exec(new_cmd);
+			return (errcode);
 		}
 	}
 	if (new_cmd)

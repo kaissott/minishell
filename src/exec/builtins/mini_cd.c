@@ -1,0 +1,131 @@
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_cd.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
+/*   Updated: 2025/06/16 00:15:42 by karamire         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../../includes/minishell.h"
+
+void	env_pwd_update(t_main *main)
+{
+	t_env	*temp;
+	char	*tmp;
+	int		i;
+	char	path[1024];
+
+	i = 0;
+	if (getcwd(path, 1024) == NULL)
+		free_and_exit_error(main, NULL, ERR_GETCWD, errno);
+	temp = main->env;
+	while (temp != NULL && ft_strnstr(temp->env, "PWD=", 4) == -1)
+		temp = temp->next;
+	if (temp != NULL)
+	{
+		free(temp->env);
+		tmp = ft_strjoin("PWD=", path);
+		if (!tmp)
+			free_and_exit_error(main, NULL, ERR_MEM, 12);
+		temp->env = tmp;
+	}
+	else
+		pwd(main);
+}
+
+void	env_oldpwd_update(t_main *main)
+{
+	t_env	*temp;
+	int		i;
+	char	*path;
+	char	pwd[1024];
+
+	i = 0;
+	temp = main->env;
+	if (getcwd(pwd, 1024) == NULL)
+		free_and_exit_error(main, NULL, ERR_GETCWD, errno);
+	while (temp != NULL && ft_strstr(temp->env, "OLDPWD=") != 1)
+		temp = temp->next;
+	if (temp != NULL)
+	{
+		free(temp->env);
+		temp->env = ft_strjoin("OLDPWD=", pwd);
+		if (!temp->env)
+			free_and_exit_error(main, NULL, ERR_MEM, 12);
+	}
+	else
+	{
+		path = ft_strjoin("OLDPWD=", pwd);
+		if (!path)
+			free_and_exit_error(main, NULL, ERR_MEM, 12);
+		lstadd_back((&main->env), lstnew(path));
+	}
+}
+
+char	*cd_to_home(t_main *main, char *path)
+{
+	t_env	*env;
+	char	*str;
+	char	*dst;
+
+	env = main->env;
+	while (env)
+	{
+		if (ft_strncmp(env->env, "HOME=", 5) == 0)
+		{
+			str = ft_strdup(env->env + 5);
+			if (!str)
+				free_and_exit_error(main, NULL, ERR_MEM, 12);
+		}
+		env = env->next;
+	}
+	if (path)
+	{
+		dst = ft_strjoin(str, path + 1);
+		if (!dst)
+			free_and_exit_error(main, NULL, ERR_MEM, 12);
+		free(str);
+	}
+	else
+		dst = str;
+	return (dst);
+}
+
+bool	mini_cd(char *line, t_main *main)
+{
+	char	**tab;
+	char	*str;
+
+	tab = main->exec->cmd;
+	if (tab[2])
+	{
+		ft_putstr_fd("bash: cd: too many arguments", 2);
+		return(true);
+	}
+	if (tab[1] == NULL || tab[1][0] == '~')
+		str = cd_to_home(main, tab[1]);
+	else
+		str = ft_strdup(tab[1]);
+	if (access(str, F_OK) == 0)
+	{
+		env_oldpwd_update(main);
+		if (chdir(str) != -1)
+		{
+			env_pwd_update(main);
+			free(str);
+		}
+	}
+	else
+	{
+		free(str);
+		ft_putstr_fd("bash: cd: ", 2);
+		return (set_return_err_code(main, main->exec->cmd[1], 1));
+		main->errcode = 1;
+	}
+	return (true);
+}

@@ -1,5 +1,19 @@
 #include "../../includes/minishell.h"
 
+bool	contains_ifs_chars(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 static char	*get_var_value(t_main *shell, char *var_name)
 {
 	t_env	*tmp;

@@ -54,6 +54,8 @@ D_EXEC_PIPE :=	exec_pipe/
 
 D_EXEC_SINGLE_CMD :=	exec_single_cmd/
 
+D_EXEC :=	exec/
+
 D_EXEC_UTILS :=	exec_utils/
 
 D_PARSING :=	parsing/
@@ -74,20 +76,20 @@ D_OBJ :=	.obj/
 
 #Files full path
 SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
-		$(addprefix $(D_SRC)$(D_BUILTINS), $(LST_BUILTINS)) \
-		$(addprefix $(D_SRC)$(D_ENV), $(LST_ENV)) \
-		$(addprefix $(D_SRC)$(D_EXEC_PIPE), $(LST_EXEC_PIPE)) \
-		$(addprefix $(D_SRC)$(D_EXEC_SINGLE_CMD), $(LST_EXEC_SINGLE_CMD)) \
-		$(addprefix $(D_SRC)$(D_EXEC_UTILS), $(LST_EXEC_UTILS)) \
+		$(addprefix $(D_SRC)$(D_EXEC)$(D_BUILTINS), $(LST_BUILTINS)) \
+		$(addprefix $(D_SRC)$(D_EXEC)$(D_ENV), $(LST_ENV)) \
+		$(addprefix $(D_SRC)$(D_EXEC)$(D_EXEC_PIPE), $(LST_EXEC_PIPE)) \
+		$(addprefix $(D_SRC)$(D_EXEC)$(D_EXEC_SINGLE_CMD), $(LST_EXEC_SINGLE_CMD)) \
+		$(addprefix $(D_SRC)$(D_EXEC)$(D_EXEC_UTILS), $(LST_EXEC_UTILS)) \
 		$(addprefix $(D_SRC)$(D_PARSING), $(LST_PARSING)) \
-		$(addprefix $(D_SRC)$(D_UTILS), $(LST_UTILS)) \
-		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS), $(LST_LST_UTILS)) \
-		$(addprefix $(D_SRC)$(D_UTILS)$(D_LST_UTILS)$(D_LST_FREE_UTILS), $(LST_LST_FREE_UTILS))
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS), $(LST_UTILS)) \
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS)$(D_LST_UTILS), $(LST_LST_UTILS)) \
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS)$(D_LST_UTILS)$(D_LST_FREE_UTILS), $(LST_LST_FREE_UTILS))
 
 INC :=	$(addprefix $(D_INC), $(LST_INC)) \
 		$(addprefix $(D_INC)$(D_INC_PARSING), $(LST_INC_PARSING)) \
 		$(addprefix $(D_INC)$(D_INC_EXEC), $(LST_INC_EXEC)) \
-		$(addprefix $(D_INC)$(D_INC_UTILS), $(LST_INC_UTILS))
+		$(addprefix $(D_INC)$(D_INC_PARSING)$(D_INC_UTILS), $(LST_INC_UTILS))
 
 OBJ :=	$(subst $(D_SRC), $(D_OBJ), $(SRC:.c=.o))
 

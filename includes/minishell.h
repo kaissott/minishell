@@ -15,8 +15,8 @@
 # include "parsing/expand_chunk.h"
 # include "parsing/parse.h"
 # include "parsing/tokenisation.h"
-# include "utils/lst_utils.h"
-# include "utils/utils.h"
+# include "parsing/utils/lst_utils.h"
+# include "parsing/utils/utils.h"
 # include "exec/main.h"
 # include "exec/error.h"
 
