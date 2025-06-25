@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	lstadd_back(t_env **lst, t_env *new)
 {

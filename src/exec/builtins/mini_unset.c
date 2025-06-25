@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	delete_env_node(t_env **env, char *var)
 {

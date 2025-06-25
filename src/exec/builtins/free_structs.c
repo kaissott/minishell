@@ -11,7 +11,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	free_env(t_main *main)
 {
@@ -82,18 +82,19 @@ int	free_struct(t_main *main)
 }
 void	free_tab_2(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(tab[i])
+	while (tab[i])
 	{
 		free(tab[i]);
 		i++;
 	}
 	free(tab);
-	return;
+	return ;
 }
-void	free_and_exit_error(t_main *main, char *tmp, char *error, int err_number)
+void	free_and_exit_error(t_main *main, char *tmp, char *error,
+		int err_number)
 {
 	if (tmp != NULL)
 		free(tmp);

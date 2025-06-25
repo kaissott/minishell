@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/25 03:39:08 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/25 04:13:15 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	execve_err(t_main *main, char **env, char *path, char *cmd)
 {
@@ -24,24 +23,23 @@ void	execve_err(t_main *main, char **env, char *path, char *cmd)
 		free(path);
 	exit_error_minishell(main, 127, NULL);
 }
-void safe_close(int fd, t_main *main)
+void	safe_close(int fd, t_main *main)
 {
-	t_exec *tmp;
+	t_exec	*tmp;
 
 	tmp = main->exec;
-
-	while(tmp && fd != tmp->outfile.fd && fd != tmp->infile.fd)
+	while (tmp && fd != tmp->outfile.fd && fd != tmp->infile.fd)
 	{
 		tmp = tmp->next;
 	}
 	if (tmp == NULL && fd > 1)
 		close(fd);
-	return;
+	return ;
 }
 
 void	close_fork(int fd1, int fd2, t_exec *node, t_main *main)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (fd1 != node->infile.fd && fd1 > 1 && close(fd1) == -1)
@@ -68,9 +66,9 @@ void	close_fork(int fd1, int fd2, t_exec *node, t_main *main)
 
 void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main)
 {
-	while(wait(NULL) > 0)
+	while (wait(NULL) > 0)
 		;
-	if(pipefd == NULL)
+	if (pipefd == NULL)
 	{
 		close_fork(prevfd, -1, node, main);
 		free_struct(main);
@@ -80,7 +78,7 @@ void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main)
 	{
 		if (pipefd[0] > 1 && close(pipefd[0]) == -1)
 		{
-			return;
+			return ;
 		}
 		close_fork(prevfd, pipefd[1], node, main);
 		free_struct(main);
@@ -152,9 +150,9 @@ void	wait_child(pid_t last, t_main *main)
 
 int	pipe_exec(t_main *main)
 {
-	t_exec		*node;
-	int			prev_fd;
-	pid_t		last_pid;
+	t_exec	*node;
+	int		prev_fd;
+	pid_t	last_pid;
 
 	node = main->exec;
 	prev_fd = node->infile.fd;

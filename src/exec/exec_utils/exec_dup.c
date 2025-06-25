@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/25 03:00:05 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/25 04:13:32 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 static void	safe_dup_close(t_main *main, int oldfd, int newfd)
 {

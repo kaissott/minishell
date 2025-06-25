@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	output_fd_error_one(t_main *main, char *error, int fd_in)
 {

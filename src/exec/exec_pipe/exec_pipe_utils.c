@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/19 01:02:51 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/25 04:13:11 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 char	*path_finding(char **env)
 {
@@ -62,10 +62,10 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 	path == NULL;
 	if (exec_cmd(main, cmd, false) == true)
 	{
-			free(env);
-			free_struct(main);
-			free(main);
-			exit(0);
+		free(env);
+		free_struct(main);
+		free(main);
+		exit(0);
 	}
 	if (cmd == NULL)
 	{

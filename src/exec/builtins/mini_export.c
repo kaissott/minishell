@@ -11,7 +11,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	export_new_var(t_main *main, char *var)
 {

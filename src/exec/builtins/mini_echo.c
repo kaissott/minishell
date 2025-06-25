@@ -11,7 +11,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 bool	check_echo_flag(char *tab)
 {
@@ -36,7 +36,7 @@ bool	check_echo_flag(char *tab)
 void	print_echo_with_flag(t_main *main, char **tab)
 {
 	int	i;
-	int j;
+	int	j;
 
 	j = 0;
 	i = 1;

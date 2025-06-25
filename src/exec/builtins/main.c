@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/25 03:39:18 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/25 04:12:25 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 #include <errno.h>
 #include <limits.h>
 #include <readline/history.h>
@@ -41,16 +41,15 @@ bool	exec_cmd(t_main *main, char **cmd, bool simple)
 
 void	reset_struct(char *rl, t_main *main)
 {
-	int i;
+	int	i;
+
 	if (rl)
 		free(rl);
 	if (main->exec)
 	{
 		free_node(main);
 	}
-
 }
-
 
 int	check_input(t_main *main)
 {
@@ -73,4 +72,3 @@ int	check_input(t_main *main)
 		pipe_exec(main);
 	return (0);
 }
-

@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 int	strrchr_slash(const char *s, int c)
 {

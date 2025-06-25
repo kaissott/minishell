@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:49:29 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 22:14:15 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/25 04:13:18 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 // void	free_files(t_main *main)
 // {

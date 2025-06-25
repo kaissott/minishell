@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:50:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/18 00:42:58 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/25 04:13:07 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 int	check_args(int ac, char **av)
 {

@@ -11,7 +11,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	no_env_build(t_main *main)
 {

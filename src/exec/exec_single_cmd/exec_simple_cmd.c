@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/21 03:16:20 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/25 04:13:22 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 static char	*try_paths(t_main *main, char **paths, char *env_path, char **env)
 {
@@ -102,17 +102,16 @@ void	exec_simple_cmd(t_main *main)
 		free(path);
 		free(env_path);
 		execve_err(main, main->envtab, path, main->exec->cmd[0]);
-		return;
+		return ;
 	}
 	execve(path, main->exec->cmd, main->envtab);
 	execve_err(main, main->envtab, path, main->exec->cmd[0]);
 }
 
-
 void	init_simple_cmd(t_main *main)
 {
 	pid_t	pid;
-	int	tmp;
+	int		tmp;
 
 	pid = fork();
 	if (pid == -1)
@@ -120,7 +119,8 @@ void	init_simple_cmd(t_main *main)
 	if (pid == 0)
 	{
 		exit_error_two_close(main, main->std_in, main->std_out);
-		exit_error_two_close(main, main->exec->infile.fd, main->exec->outfile.fd);
+		exit_error_two_close(main, main->exec->infile.fd,
+			main->exec->outfile.fd);
 		exec_simple_cmd(main);
 	}
 	while (waitpid(pid, &tmp, 0) > 0)

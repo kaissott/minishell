@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_to_tab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:40:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 22:13:26 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/25 04:12:58 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 char	**env_to_tab(t_main *main)
 {

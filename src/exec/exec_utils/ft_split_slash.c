@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 static char	*substr_slash(char const *s, unsigned int start, size_t len)
 {
