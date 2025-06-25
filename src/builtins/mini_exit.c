@@ -17,12 +17,10 @@ int	parse_sign(char *exit)
 	i = 0;
 	if (exit[i] == '+')
 	{
-		while (exit[i] == '+')
 			i++;
 	}
 	else if (exit[i] == '-')
 	{
-		while (exit[i] == '-')
 			i++;
 	}
 	return (i);
@@ -40,13 +38,13 @@ int	check_and_conv_exit_code(char **exit, int size)
 	while (exit[1][i])
 	{
 		if (ft_isdigit(exit[1][i]) == 0)
-			return (2);
+			numeric_argument_error("caca", exit);
 		i++;
 	}
 	if (size > 2)
 		return (1);
 	exit_code = ft_atoll(exit[1], &error) % 256;
-	if (error == -1)
+	if (error == -1 || exit[1][0] == '\0')
 		numeric_argument_error("caca", exit);
 	return (exit_code);
 }
@@ -60,13 +58,35 @@ int	mini_exit(char **line, t_main *main)
 	i = 0;
 	exit_code = 0;
 	size = tab_size(line);
-	if (line[1] && line[1][0] != '\0')
+
+	// if (line[2])
+	// {
+	// 	while(line[2][i])
+	// 	{
+	// 		if (line[2][i] == '\0')
+	// 		{
+	// 			ft_putendl_fd("bash: exit: too many arguments", 2);
+	// 			main->errcode = 1;
+	// 			return(0);
+	// 		}
+	// 		if (!ft_isdigit(line[2][i]))
+	// 			break;
+	// 		i++;
+	// 	}
+
+	// }
+	if (line[1])
 	{
 		exit_code = check_and_conv_exit_code(line, size);
-		errno = exit_code;
+		if (line[2])
+		{
+			ft_putendl_fd("bash: exit: too many arguments", 2);
+			main->errcode = 1;
+	 		return(0);
+		}
 		free_struct(main);
 		exit(exit_code);
 	}
 	free_struct(main);
-	exit(errno);
+	exit(0);
 }

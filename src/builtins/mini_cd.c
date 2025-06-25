@@ -102,6 +102,11 @@ bool	mini_cd(char *line, t_main *main)
 	char	*str;
 
 	tab = main->exec->cmd;
+	if (tab[2])
+	{
+		ft_putstr_fd("bash: cd: too many arguments", 2);
+		return(true);
+	}
 	if (tab[1] == NULL || tab[1][0] == '~')
 		str = cd_to_home(main, tab[1]);
 	else
@@ -118,8 +123,9 @@ bool	mini_cd(char *line, t_main *main)
 	else
 	{
 		free(str);
-		return (set_return_err_code(main, "chdir", errno));
-		main->errcode == 1;
+		ft_putstr_fd("bash: cd: ", 2);
+		return (set_return_err_code(main, main->exec->cmd[1], 1));
+		main->errcode = 1;
 	}
 	return (true);
 }

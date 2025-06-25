@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 22:06:46 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:56:25 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	mini_echo(t_main *main, char **cmd);
 bool	pwd(t_main *main);
 
 // env
-bool	env_print(t_main *main);
+bool	env_print(t_main *main, char **cmd);
 
 void	lstadd_back(t_env **lst, t_env *new);
 t_env	*lstnew(char *content);

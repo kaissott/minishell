@@ -52,8 +52,8 @@ void	print_echo_with_flag(t_main *main, char **tab)
 			i++;
 			if (tab[i])
 			{
-				if (write(STDOUT_FILENO, " ", 1) == -1)
-					free_and_exit_error(main, NULL, ERR_WRITE, errno);
+				ft_putchar_fd(' ', STDOUT_FILENO);
+					// free_and_exit_error(main, NULL, ERR_WRITE, errno
 			}
 		}
 	}

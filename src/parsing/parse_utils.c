@@ -46,10 +46,22 @@ t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)
 t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 {
 	char	*rl;
+	char	*line;
 
 	while (1)
 	{
-		rl = readline("heredoc>");
+		if (isatty(fileno(stdin)))
+			rl = readline("HD >");
+		else
+		{
+			rl = get_next_line(fileno(stdin));
+			if (rl)
+			{
+				line = ft_strtrim(rl, "\n");
+				free(rl);
+				rl = line;
+			}
+		}
 		if (!rl)
 			return (ERR_NONE);
 		if (ft_strcmp(rl, next_token_value) == 0)

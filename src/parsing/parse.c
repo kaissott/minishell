@@ -115,6 +115,6 @@ t_parse_error	parsing(t_main *shell)
 	}
 	if (new_cmd)
 		exec_lst_add_back(&shell->exec, new_cmd);
-	// print_exec_lst(*exec_lst, "EXEC LST BEFORE EXEC :\n");
+	// print_exec_lst(shell->exec, "EXEC LST BEFORE EXEC :\n");
 	return (ERR_NONE);
 }

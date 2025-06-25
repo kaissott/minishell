@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/25 02:43:38 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/25 15:26:22 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 	int		pipefd[2];
 	pid_t	pid;
 
-	if (prev_fd == -1 || pipe(pipefd) == -1)
+	if (pipe(pipefd) == -1)
 		error_exit("Error : Pipe failed", EXIT_FAILURE, prev_fd);
 	pid = fork();
 	if (pid == -1)

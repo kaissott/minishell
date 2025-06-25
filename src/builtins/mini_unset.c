@@ -40,6 +40,14 @@ bool	mini_unset(t_main *main)
 	cmd = main->exec->cmd;
 	if (cmd[1] == NULL)
 		return (0);
+	if (cmd[1][0] == '-')
+	{
+		ft_putstr_fd("minishell: unset: `", 2);
+		ft_putstr_fd(cmd[1], 2);
+		ft_putendl_fd("': invalid option", 2);
+		main->errcode = 2;
+		return (0);
+	}
 	while (cmd[i])
 	{
 		delete_env_node(&main->env, cmd[i]);
