@@ -111,7 +111,7 @@ bool	mini_export(t_main *main)
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(tab[i], 2);
 			ft_putendl_fd("': not a valid identifier", 2);
-			main->exec_errcode = 1;
+			main->errcode = 1;
 		}
 		else if (ft_strchr(tab[i], '=') != NULL)
 		{

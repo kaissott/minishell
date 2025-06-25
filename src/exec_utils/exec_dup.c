@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/23 15:35:15 by luca             ###   ########.fr       */
+/*   Updated: 2025/06/25 03:00:05 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	safe_dup_close(t_main *main, int oldfd, int newfd)
 	{
 		exit_error_two_close(main, main->exec->infile.fd,
 			main->exec->outfile.fd);
-		exit_error_minishell(main, errno, "Dup2 failed");
+		exit_error_minishell(main, 1, "Dup2 failed");
 	}
 }
 
@@ -43,7 +43,8 @@ void	dup_failed_err(t_main *main, int prev_fd, int pipefd, t_exec *node)
 	free_struct(main);
 	free(main);
 	ft_putstr_fd("Dup failed\n", 2);
-	exit(errno);
+	main->errcode = 1;
+	exit(1);
 }
 int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
 {

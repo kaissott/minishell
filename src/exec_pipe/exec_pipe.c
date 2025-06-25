@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/21 03:13:36 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/25 02:43:38 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,9 +140,9 @@ void	wait_child(pid_t last, t_main *main)
 	while (waitpid(last, &status, 0) > 0)
 	{
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 127)
-			main->exec_errcode = 127;
+			main->errcode = 127;
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
-			main->exec_errcode = 1;
+			main->errcode = 1;
 	}
 	while (wait(NULL) > 0)
 		;

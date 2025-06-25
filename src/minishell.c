@@ -55,7 +55,6 @@ void	start_shell(t_main *shell)
 		if (!rl)
 		{
 			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);
-			free_struct(shell);
 			return ;
 		}
 		add_history(rl);
@@ -70,14 +69,17 @@ void	start_shell(t_main *shell)
 int	main(int ac, char **av, char **env)
 {
 	t_main	*shell;
+	int errcode;
 
 	(void)av;
 	if (ac == 1)
 	{
 		shell = init_minishell(env);
 		start_shell(shell);
+		errcode = shell->errcode;
+		free_struct(shell);
 		free(shell);
-		return (EXIT_SUCCESS);
+		return (errcode);
 	}
 	return (EXIT_FAILURE);
 }
