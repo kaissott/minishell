@@ -15,8 +15,9 @@ static char	*get_var_value(t_main *shell, char *var_name)
 	}
 	if (ft_strcmp(var_name, "$?") == 0)
 	{
-		if (shell->exec_errcode != ERR_NONE)
-			return (ft_itoa(shell->exec_errcode));
+		printf("shell errcode get var value expand : %d\n", shell->errcode);
+		// if (shell->exec_errcode != ERR_NONE)
+		// 	return (ft_itoa(shell->exec_errcode));
 		return (ft_itoa(shell->errcode));
 	}
 	tmp = shell->env;

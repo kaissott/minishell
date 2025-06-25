@@ -31,7 +31,7 @@ static ssize_t	handle_var(t_expand **expand_lst, char *var,
 	t_expand	*new_expand;
 
 	i = 1;
-	if (!var[i])
+	if (!var[i] || var[i] == ' ')
 	{
 		if (chunk->next)
 			return (i);
@@ -75,24 +75,136 @@ static t_parse_error	handle_chunk_value(t_main *shell, t_expand **expand_lst,
 	return (ERR_NONE);
 }
 
-t_parse_error	expand_chunk(t_main *shell, t_token *new_token)
+static bool	contains_ifs_chars(char *str)
 {
-	int				errcode;
-	t_token_chunk	*tmp;
-	t_expand		*expand_lst;
+	int	i;
 
-	tmp = new_token->chunks;
-	while (tmp)
+	i = 0;
+	while (str[i])
 	{
-		expand_lst = NULL;
-		if (tmp->type == T_ENV_STRING && ft_strchr(tmp->value, '$'))
+		if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+static t_parse_error	apply_word_splitting(t_token **new_tokens,
+		t_token_chunk *chunk)
+{
+	size_t			i;
+	char			**words;
+	t_token			*new_token;
+	t_token_chunk	*new_chunk;
+
+	i = 0;
+	words = ft_split(chunk->value, ' ');
+	if (!words)
+		return (ERR_MALLOC);
+	while (words[i])
+	{
+		new_token = ft_calloc(1, sizeof(t_token));
+		if (!new_token)
+			return (ERR_MALLOC);
+		new_token->value = ft_strdup(words[i]);
+		if (!new_token->value)
+			return (ERR_MALLOC);
+		new_chunk = ft_calloc(1, sizeof(t_token_chunk));
+		new_chunk->value = ft_strdup(words[i]);
+		free(words[i]);
+		if (!new_chunk->value)
+			return (ERR_MALLOC);
+		new_chunk->type = T_STRING;
+		new_chunk->is_expanded = true;
+		new_token->chunks = new_chunk;
+		token_lst_add_back(new_tokens, new_token);
+		i++;
+	}
+	free(words);
+	return (ERR_NONE);
+}
+
+t_parse_error	split_by_ifs(t_main *shell)
+{
+	bool			splitted;
+	t_token			*token;
+	t_token			*prev;
+	t_token			*last;
+	t_token			*to_free;
+	t_token			*new_tokens;
+	t_token_chunk	*chunk;
+	t_parse_error	errcode;
+
+	prev = NULL;
+	token = shell->token;
+	while (token)
+	{
+		new_tokens = NULL;
+		splitted = false;
+		chunk = token->chunks;
+		while (chunk)
 		{
-			errcode = handle_chunk_value(shell, &expand_lst, tmp);
-			free_expand_lst(&expand_lst);
+			if (chunk->is_expanded && chunk->type == T_STRING
+				&& contains_ifs_chars(chunk->value))
+			{
+				errcode = apply_word_splitting(&new_tokens, chunk);
+				if (errcode != ERR_NONE)
+					return (errcode);
+				last = token_lst_last(new_tokens);
+				if (prev)
+					prev->next = new_tokens;
+				else
+					shell->token = new_tokens;
+				last->next = token->next;
+				prev = last;
+				to_free = token;
+				token = last->next;
+				free_token(to_free);
+				splitted = true;
+				break ;
+			}
+			chunk = chunk->next;
+		}
+		if (!splitted)
+		{
+			errcode = cat_chunks(token);
 			if (errcode != ERR_NONE)
 				return (errcode);
+			prev = token;
+			token = token->next;
 		}
-		tmp = tmp->next;
 	}
+	return (ERR_NONE);
+}
+
+t_parse_error	expansion(t_main *shell)
+{
+	t_parse_error	errcode;
+	t_token			*token;
+	t_token_chunk	*chunk;
+	t_expand		*expand_lst;
+
+	token = shell->token;
+	while (token)
+	{
+		chunk = token->chunks;
+		while (chunk)
+		{
+			expand_lst = NULL;
+			if ((chunk->type == T_STRING || chunk->type == T_DOUBLE_QUOTED)
+				&& ft_strchr(chunk->value, '$') && !token->is_delimiter)
+			{
+				errcode = handle_chunk_value(shell, &expand_lst, chunk);
+				free_expand_lst(&expand_lst);
+				if (errcode != ERR_NONE)
+					return (errcode);
+			}
+			chunk = chunk->next;
+		}
+		token = token->next;
+	}
+	errcode = split_by_ifs(shell);
+	if (errcode != ERR_NONE)
+		return (errcode);
 	return (ERR_NONE);
 }

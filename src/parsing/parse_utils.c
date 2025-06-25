@@ -20,10 +20,6 @@ char	**expand_args(char **cmd, char *new_arg)
 	return (new_cmd);
 }
 
-t_parse_error	create_filepath(t_exec **exec_lst, t_exec *new_node)
-{
-}
-
 t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)
 {
 	int		i;
@@ -40,9 +36,9 @@ t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)
 	cmd_nbr = ft_itoa(i);
 	if (!cmd_nbr)
 		return (ERR_MALLOC);
-	new_node->heredoc_path = ft_strjoin("/tmp/.ms_hd_", cmd_nbr);
+	new_node->infile.filepath = ft_strjoin("tmp/.ms_hd_", cmd_nbr);
 	free(cmd_nbr);
-	if (!new_node->heredoc_path)
+	if (!new_node->infile.filepath)
 		return (ERR_MALLOC);
 	return (ERR_NONE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/20 20:27:37 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:35:15 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static void	safe_dup_close(t_main *main, int oldfd, int newfd)
 {
 	if (dup2(oldfd, newfd) == -1)
 	{
-		exit_error_two_close(main, &main->exec->infile.fd, &main->exec->outfile.fd);
+		exit_error_two_close(main, main->exec->infile.fd,
+			main->exec->outfile.fd);
 		exit_error_minishell(main, errno, "Dup2 failed");
 	}
 }
@@ -46,7 +47,6 @@ void	dup_failed_err(t_main *main, int prev_fd, int pipefd, t_exec *node)
 }
 int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
 {
-
 	if (node->infile.fd > 1)
 	{
 		if (dup2(node->infile.fd, STDIN_FILENO) == -1)
@@ -63,6 +63,3 @@ int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
 		dup_failed_err(main, prev_fd, pipefd, node);
 	return (0);
 }
-
-
-

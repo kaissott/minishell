@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 16:21:25 by kkarakus          #+#    #+#             */
-/*   Updated: 2025/06/18 01:21:44 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/23 20:10:31 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,16 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (ft_tabcomp(tab, s, c));
 }
-int	main(void)
-{
-	char const	*phrase;
-	char		**resultat;
+// int	main(void)
+// {
+// 	char const	*phrase;
+// 	char		**resultat;
 
-	phrase = "Hello,World,From,Split";
-	resultat = ft_split(phrase, 'a');
-	printf("%s\n", resultat[0]);
-	printf("%s\n", resultat[1]);
-	printf("%s\n", resultat[2]);
-	printf("%s\n", resultat[3]);
-	printf("%s\n", resultat[4]);
-}
-// --> Compiler avec split, substr, strlen et strdup
+// 	phrase = "Hello,World,From,Split";
+// 	resultat = ft_split(phrase, 'a');
+// 	printf("%s\n", resultat[0]);
+// 	printf("%s\n", resultat[1]);
+// 	printf("%s\n", resultat[2]);
+// 	printf("%s\n", resultat[3]);
+// 	printf("%s\n", resultat[4]);
+// }

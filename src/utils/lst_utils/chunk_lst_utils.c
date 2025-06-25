@@ -1,5 +1,32 @@
 #include "../../../includes/minishell.h"
 
+void	chunk_lst_delone(t_token_chunk **chunk_lst,
+		t_token_chunk *node_to_delete)
+{
+	t_token_chunk	*tmp;
+
+	if (!chunk_lst || !*chunk_lst || !node_to_delete)
+		return ;
+	if (*chunk_lst == node_to_delete)
+	{
+		*chunk_lst = node_to_delete->next;
+		if (node_to_delete->value)
+			free(node_to_delete->value);
+		free(node_to_delete);
+		return ;
+	}
+	tmp = *chunk_lst;
+	while (tmp && tmp->next != node_to_delete)
+		tmp = tmp->next;
+	if (tmp && tmp->next == node_to_delete)
+	{
+		tmp->next = node_to_delete->next;
+		if (node_to_delete->value)
+			free(node_to_delete->value);
+		free(node_to_delete);
+	}
+}
+
 static void	chunk_lst_add_back(t_token_chunk **chunk_lst, t_token_chunk *new)
 {
 	t_token_chunk	*tmp;
@@ -26,9 +53,11 @@ t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, char *cmd,
 	if (!new_chunk)
 		return (ERR_MALLOC);
 	if (quote == '\'')
-		new_chunk->type = T_STRING;
+		new_chunk->type = T_SINGLE_QUOTED;
+	else if (quote == '"')
+		new_chunk->type = T_DOUBLE_QUOTED;
 	else
-		new_chunk->type = T_ENV_STRING;
+		new_chunk->type = T_STRING;
 	new_chunk->value = ft_substr(cmd, 0, len);
 	if (!new_chunk->value)
 	{
@@ -39,40 +68,25 @@ t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, char *cmd,
 	return (ERR_NONE);
 }
 
-// void	add_expand_token(t_token **tokens, char *chunk)
-// {
-// 	size_t	i;
-// 	char	**splited_chunk;
-// 	t_token	*new_token;
+t_parse_error	cat_chunks(t_token *token)
+{
+	t_token_chunk	*chunk;
+	char			*prev;
 
-// 	i = 0;
-// 	splited_chunk = ft_split(chunk, ' ');
-// 	if (!splited_chunk)
-// 		return (NULL);
-// 	while (splited_chunk[i])
-// 	{
-// 		new_token = ft_calloc(1, sizeof(t_token));
-// 		if (!new_token)
-// 			return (NULL);
-// 		new_token->value = splited_chunk[i];
-// 		token_lst_add_back(tokens, new_token);
-// 		i++;
-// 	}
-// 	print_token_lst(tokens, "TOKENS LST AFETER EXPAND : \n");
-// 	free(splited_chunk);
-// }
-
-// t_token	*split_expanded_token(t_token *token)
-// {
-// 	t_token			*tokens;
-// 	t_token_chunk	*tmp;
-
-// 	token = NULL;
-// 	tmp = token->chunks;
-// 	while (tmp)
-// 	{
-// 		if (ft_strchr(tmp->value, ' '))
-// 			add_expand_token(tokens, tmp->value);
-// 		tmp = tmp->next;
-// 	}
-// }
+	prev = NULL;
+	chunk = token->chunks;
+	if (token->type == T_WORD)
+		free(token->value);
+	while (chunk)
+	{
+		token->value = join_or_dup(prev, chunk->value);
+		if (!token->value)
+		{
+			free_token(token);
+			return (ERR_MALLOC);
+		}
+		prev = token->value;
+		chunk = chunk->next;
+	}
+	return (ERR_NONE);
+}
