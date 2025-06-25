@@ -100,7 +100,6 @@ bool	mini_export(t_main *main)
 	char	**tab;
 
 	tab = main->exec->cmd;
-	;
 	i = 1;
 	if (tab[1] == NULL)
 		print_export_env(main);

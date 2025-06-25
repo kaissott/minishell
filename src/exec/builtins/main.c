@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/25 21:23:26 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:27:26 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ int	check_input(t_main *main)
 	int		fd_in;
 
 	node = main->exec;
-	if (node == NULL)
+	if (node == NULL || node->cmd == NULL)
+	{
+		main->errcode = 2;
 		return (-1);
+	}
 	if (node->next == NULL)
 	{
 		fd_in = main->exec->infile.fd;
