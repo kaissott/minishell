@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 01:14:36 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/05/09 01:42:03 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/21 02:40:59 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ long long	ft_atoll(const char *str, int *error)
 	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
-		{
-			printf("je suis négatif bb");
 			sign = -1;
-		}
 		str++;
 	}
 	if (!ft_accumulate_digits(str, &result, sign, error))

@@ -18,13 +18,16 @@ bool	check_echo_flag(char *tab)
 	int	i;
 
 	i = 1;
-	if (tab[0] == '-')
+	if (tab)
 	{
-		while (tab[i] == 'n')
+		if (tab[0] == '-')
 		{
-			i++;
-			if (tab[i] == '\0')
-				return (true);
+			while (tab[i] == 'n')
+			{
+				i++;
+				if (tab[i] == '\0')
+					return (true);
+			}
 		}
 	}
 	return (false);

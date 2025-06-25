@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/18 02:15:38 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/21 03:16:20 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,24 +84,28 @@ void	exec_simple_cmd(t_main *main)
 {
 	char	*env_path;
 	char	*path;
-	char	**env;
 
-	env = env_to_tab(main);
-	if (strrchr_slash(main->exec->cmd[0], '/'))
+	main->envtab = env_to_tab(main);
+	if (strrchr_slash(main->exec->cmd[0], '/') == 1)
 	{
-		execve(main->exec->cmd[0], main->exec->cmd, env);
+		if (access(main->exec->cmd[0], F_OK) != 0)
+			free_and_exit_error(main, NULL, "No such file or directory", 127);
+		if (access(main->exec->cmd[0], X_OK) != 0)
+			free_and_exit_error(main, NULL, "Permission denied", 126);
+		execve(main->exec->cmd[0], main->exec->cmd, main->envtab);
+		execve_err(main, main->envtab, NULL, main->exec->cmd[0]);
 	}
-	env_path = env_path_finding(main, env);
-	path = get_path(main, env_path, env);
+	env_path = env_path_finding(main, main->envtab);
+	path = get_path(main, env_path, main->envtab);
 	if (path == NULL)
 	{
 		free(path);
-		free(env);
-		free_and_exit_error(main, env_path, "Command not found", 12);
+		free(env_path);
+		execve_err(main, main->envtab, path, main->exec->cmd[0]);
 		return;
 	}
-	execve(path, main->exec->cmd, env);
-	execve_error(main, env, path);
+	execve(path, main->exec->cmd, main->envtab);
+	execve_err(main, main->envtab, path, main->exec->cmd[0]);
 }
 
 
