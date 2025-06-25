@@ -121,8 +121,8 @@ static ssize_t	handle_var(t_expand **expand_lst, char *var,
 	i = 1;
 	if (!var[i] || var[i] == ' ' || var[i] == '\t' || var[i] == '\n')
 	{
-		if (chunk->next)
-			return (i);
+		// if (chunk->next)
+		// 	return (i);
 		new_expand = create_expand(T_EXPAND_VAR, ft_strdup("$"));
 		if (!new_expand)
 			return (ERR_MALLOC);
@@ -153,13 +153,13 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 			len = handle_var(expand_lst, &chunk->value[i], chunk);
 		else
 			len = handle_word(expand_lst, &chunk->value[i]);
-		// if (len == 1 && i == 0 && chunk->next
-		// 	&& (chunk->next->type == T_SINGLE_QUOTED
-		// 		|| chunk->next->type == T_DOUBLE_QUOTED))
-		// {
-		// 	chunk_lst_delone(&token->chunks, chunk);
-		// 	return (next);
-		// }
+		if (len == 1 && i == 0 && chunk->type != T_DOUBLE_QUOTED && chunk->next
+			&& (chunk->next->type == T_SINGLE_QUOTED
+				|| chunk->next->type == T_DOUBLE_QUOTED))
+		{
+			chunk_lst_delone(&token->chunks, chunk);
+			return (next);
+		}
 		if (len <= 0)
 			return (NULL);
 		i += len;
@@ -186,9 +186,15 @@ t_parse_error	expansion(t_main *shell)
 		while (chunk)
 		{
 			expand_lst = NULL;
+			// && ft_isalnum(*ft_strchr(chunk->value, '$') + 1)
 			if ((chunk->type == T_STRING || chunk->type == T_DOUBLE_QUOTED)
 				&& ft_strchr(chunk->value, '$') && !token->is_delimiter)
 			{
+				// printf("*ft_strchr(chunk->value, '$') : %c\n",
+				// 	*ft_strchr(chunk->value, '$'));
+				// printf("ft_isalnum(*ft_strchr(chunk->value, '$') + 1) :
+				// %d\n",
+				// 	ft_isalnum(*ft_strchr(chunk->value, '$') + 1));
 				chunk = handle_chunk_value(shell, &expand_lst, token, chunk);
 				free_expand_lst(&expand_lst);
 				if (!chunk && expand_lst)

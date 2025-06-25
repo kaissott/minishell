@@ -54,13 +54,13 @@ static t_parse_error	handle_heredoc(t_main *shell, t_token *token,
 	if (create_heredoc_filepath(&shell->exec, new_cmd) != ERR_NONE)
 		return (ERR_MALLOC);
 	new_cmd->infile.fd = open_file(new_cmd->infile.filepath, token->type);
-	// if (new_cmd->infile.fd == -1)
-	// 	return (ERR_OPEN);
+	if (new_cmd->infile.fd == -1)
+		return (ERR_OPEN);
 	if (write_in_heredoc(&new_cmd->infile.fd, token->next->value) != ERR_NONE)
 		return (ERR_CLOSE);
 	new_cmd->infile.fd = open(new_cmd->infile.filepath, O_RDONLY);
-	// if (new_cmd->infile.fd == -1)
-	// 	return (ERR_OPEN);
+	if (new_cmd->infile.fd == -1)
+		perror(new_cmd->infile.filepath);
 	token_lst_delone(&shell->token, token->next);
 	token_lst_delone(&shell->token, token);
 	return (ERR_NONE);
@@ -115,6 +115,6 @@ t_parse_error	parsing(t_main *shell)
 	}
 	if (new_cmd)
 		exec_lst_add_back(&shell->exec, new_cmd);
-	//print_exec_lst(shell->exec, "EXEC LST BEFORE EXEC :\n");
+	// print_exec_lst(shell->exec, "EXEC LST BEFORE EXEC :\n");
 	return (ERR_NONE);
 }
