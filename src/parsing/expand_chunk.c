@@ -164,10 +164,12 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 			return (NULL);
 		i += len;
 	}
+	// print_expand_lst(*expand_lst,
+	// 	"EXPAND LIST BEFORE REPLACE CHUNK VALUE : \n");
 	if (*expand_lst != NULL)
 	{
 		chunk->is_expanded = true;
-		replace_chunk_value(shell, expand_lst, chunk);
+		replace_chunk_value(shell, expand_lst, token, chunk);
 	}
 	return (chunk->next);
 }
@@ -186,15 +188,9 @@ t_parse_error	expansion(t_main *shell)
 		while (chunk)
 		{
 			expand_lst = NULL;
-			// && ft_isalnum(*ft_strchr(chunk->value, '$') + 1)
 			if ((chunk->type == T_STRING || chunk->type == T_DOUBLE_QUOTED)
 				&& ft_strchr(chunk->value, '$') && !token->is_delimiter)
 			{
-				// printf("*ft_strchr(chunk->value, '$') : %c\n",
-				// 	*ft_strchr(chunk->value, '$'));
-				// printf("ft_isalnum(*ft_strchr(chunk->value, '$') + 1) :
-				// %d\n",
-				// 	ft_isalnum(*ft_strchr(chunk->value, '$') + 1));
 				chunk = handle_chunk_value(shell, &expand_lst, token, chunk);
 				free_expand_lst(&expand_lst);
 				if (!chunk && expand_lst)

@@ -14,12 +14,13 @@ bool	contains_ifs_chars(char *str)
 	return (false);
 }
 
-static char	*get_var_value(t_main *shell, char *var_name)
+static char	*get_var_value(t_main *shell, char *var_name, bool *var_found)
 {
 	t_env	*tmp;
 	pid_t	pid;
 	size_t	name_len;
 
+	*var_found = true;
 	if (ft_strcmp(var_name, "$") == 0)
 		return (ft_strdup("$"));
 	if (ft_strcmp(var_name, "$$") == 0)
@@ -38,28 +39,52 @@ static char	*get_var_value(t_main *shell, char *var_name)
 			return (ft_strdup(tmp->env + name_len + 1));
 		tmp = tmp->next;
 	}
+	*var_found = false;
 	return (ft_strdup(""));
 }
 
 t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
-		t_token_chunk *chunk)
+		t_token *token, t_token_chunk *chunk)
 {
 	t_expand	*tmp;
 	char		*var_value;
+	t_expand	*next;
+	bool		var_found;
 
 	free(chunk->value);
 	chunk->value = NULL;
 	tmp = *expand_lst;
+	var_found = false;
+	next = NULL;
 	while (tmp)
 	{
+		next = tmp->next;
 		if (tmp->type == T_EXPAND_VAR)
 		{
-			var_value = get_var_value(shell, tmp->value);
+			var_value = get_var_value(shell, tmp->value, &var_found);
 			if (!var_value)
 				return (ERR_MALLOC);
 		}
 		else
+		{
+			var_found = true;
 			var_value = tmp->value;
+		}
+		printf("var found : %s\n", var_found ? "true" : "false");
+		if (!var_found)
+		{
+			expand_lst_delone(expand_lst, tmp);
+			print_expand_lst(*expand_lst,
+				"EXPAND LIST AFTER DELONE BLANK : \n");
+			chunk_lst_delone(&token->chunks, chunk);
+			if (!token->chunks)
+			{
+				token_lst_delone(&shell->token, token);
+				print_token_lst(shell->token,
+					"TOKEN LIST AFTER CHUNK DELONE : \n");
+				return (ERR_NONE);
+			}
+		}
 		chunk->value = join_or_dup(chunk->value, var_value);
 		if (tmp->type == T_EXPAND_VAR && var_value)
 			free(var_value);
@@ -81,7 +106,8 @@ void	free_expand_lst(t_expand **expand_lst)
 	while (current)
 	{
 		next = current->next;
-		free(current->value);
+		if (current->value)
+			free(current->value);
 		free(current);
 		current = next;
 	}
