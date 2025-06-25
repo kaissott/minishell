@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/21 03:16:20 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/25 03:54:45 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,10 @@ void	init_simple_cmd(t_main *main)
 		;
 	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 127)
 		main->errcode = 127;
+	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 1)
+		main->errcode = 1;
+	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 0)
+		main->errcode = 0;
+	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 126)
+		main->errcode = 126;
 }
