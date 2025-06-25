@@ -10,7 +10,7 @@ static void	parse(t_main *shell, char *cmd)
 	// printf("\nReturn tokenisation : %d\n", errcode);
 	if (!check_parsing(shell, errcode, false))
 		return ;
-	// print_token_lst(shell->token, "\nToken lst before parsing :\n");
+	print_token_lst(shell->token, "\nToken lst after tokenisation :\n");
 	tmp = shell->token;
 	while (tmp)
 	{
@@ -20,15 +20,15 @@ static void	parse(t_main *shell, char *cmd)
 	}
 	// print_token_lst(shell->token, "\nToken lst after hd :\n");
 	errcode = expansion(shell);
-	printf("\nReturn expansion : %d\n", errcode);
+	// printf("\nReturn expansion : %d\n", errcode);
 	if (!check_parsing(shell, errcode, false))
 		return ;
-	print_token_lst(shell->token, "\nToken lst after expansion :\n");
+	// print_token_lst(shell->token, "\nToken lst after expansion :\n");
 	errcode = parsing(shell);
 	// printf("\nReturn create exec : %d\n", errcode);
 	check_parsing(shell, errcode, true);
 	// print_token_lst(shell->token, "\nToken lst after parsing :\n");
-	print_exec_lst(shell->exec, "EXEC LST AFTER PARSING :\n");
+	// print_exec_lst(shell->exec, "EXEC LST AFTER PARSING :\n");
 }
 
 void	start_shell(t_main *shell)

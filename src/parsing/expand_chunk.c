@@ -66,6 +66,7 @@ t_parse_error	split_by_ifs(t_main *shell)
 					prev->next = new_tokens;
 				else
 					shell->token = new_tokens;
+				print_token_lst(new_tokens, "NEW TOKENS IFS AFTER SPLIT : \n");
 				last->next = token->next;
 				prev = last;
 				to_free = token;
@@ -85,6 +86,7 @@ t_parse_error	split_by_ifs(t_main *shell)
 			token = token->next;
 		}
 	}
+	print_token_lst(shell->token, "TOKENS AFTER SPLIT : \n");
 	return (ERR_NONE);
 }
 
@@ -153,9 +155,8 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 			len = handle_var(expand_lst, &chunk->value[i], chunk);
 		else
 			len = handle_word(expand_lst, &chunk->value[i]);
-		if (len == 1 && i == 0 && chunk->type != T_DOUBLE_QUOTED && chunk->next
-			&& (chunk->next->type == T_SINGLE_QUOTED
-				|| chunk->next->type == T_DOUBLE_QUOTED))
+		if (len == 1 && i == 0 && chunk->type != T_DOUBLE_QUOTED && next
+			&& (next->type == T_SINGLE_QUOTED || next->type == T_DOUBLE_QUOTED))
 		{
 			chunk_lst_delone(&token->chunks, chunk);
 			return (next);
@@ -171,19 +172,23 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 		chunk->is_expanded = true;
 		replace_chunk_value(shell, expand_lst, token, chunk);
 	}
-	return (chunk->next);
+	if (!chunk)
+		return (next->next);
+	return (next);
 }
 
 t_parse_error	expansion(t_main *shell)
 {
 	t_parse_error	errcode;
 	t_token			*token;
+	t_token			*next;
 	t_token_chunk	*chunk;
 	t_expand		*expand_lst;
 
 	token = shell->token;
 	while (token)
 	{
+		next = token->next;
 		chunk = token->chunks;
 		while (chunk)
 		{
@@ -199,10 +204,17 @@ t_parse_error	expansion(t_main *shell)
 			else
 				chunk = chunk->next;
 		}
-		token = token->next;
+		if (token)
+			token = next;
+		else
+			token = next->next;
 	}
-	errcode = split_by_ifs(shell);
-	if (errcode != ERR_NONE)
-		return (errcode);
+	if (shell->token)
+	{
+		// print_token_lst(shell->token, "TOKEN LIST BEFORE IFS SPLIT : \n");
+		errcode = split_by_ifs(shell);
+		if (errcode != ERR_NONE)
+			return (errcode);
+	}
 	return (ERR_NONE);
 }
