@@ -19,7 +19,8 @@ typedef enum e_token_chunk_type
 {
 	T_ERROR_WORD = -1,
 	T_STRING,
-	T_ENV_STRING,
+	T_SINGLE_QUOTED,
+	T_DOUBLE_QUOTED
 }							t_token_chunk_type;
 
 typedef struct s_token_chunk
@@ -46,6 +47,7 @@ typedef struct s_token
 	char					*value;
 	t_token_chunk			*chunks;
 	t_token_type			type;
+	bool					is_delimiter;
 	struct s_token			*next;
 }							t_token;
 
@@ -81,7 +83,6 @@ typedef struct s_exec
 	char					**cmd;
 	t_file					infile;
 	t_file					outfile;
-	char					*heredoc_path;
 	struct s_exec			*next;
 }							t_exec;
 
@@ -101,7 +102,6 @@ typedef struct s_main
 	t_token					*token;
 	t_error					error;
 	int						errcode;
-	int						exec_errcode;
 	int						std_in;
 	int						std_out;
 	char					**envtab;

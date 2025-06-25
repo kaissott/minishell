@@ -16,8 +16,12 @@ void	free_exec(t_exec *exec)
 		}
 		free(exec->cmd);
 	}
-	if (exec->heredoc_path)
-		free(exec->heredoc_path);
+	if (exec->infile.filepath)
+		free(exec->infile.filepath);
+	else if (exec->outfile.filepath)
+		free(exec->outfile.filepath);
+	secure_close(&exec->infile.fd);
+	secure_close(&exec->outfile.fd);
 	free(exec);
 	exec = NULL;
 }
@@ -36,5 +40,6 @@ void	free_exec_lst(t_exec **exec_lst)
 		free_exec(current);
 		current = next;
 	}
+	// free(exec_lst);
 	*exec_lst = NULL;
 }

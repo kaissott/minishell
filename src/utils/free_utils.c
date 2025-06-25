@@ -24,7 +24,6 @@ void	free_shell(t_main *shell, t_parse_error errcode)
 		free_exec_lst(&shell->exec);
 	shell->error.error_type = ERR_NONE;
 	shell->error.unexpected_token = '\0';
-	// printf("shell->errcode after free shell : %d\n", shell->errcode);
 }
 
 void	clear_and_exit(t_main *shell, t_parse_error errcode)
@@ -36,12 +35,18 @@ void	clear_and_exit(t_main *shell, t_parse_error errcode)
 	free(shell);
 }
 
-bool	check_parsing(t_main *shell, t_parse_error errcode)
+bool	check_parsing(t_main *shell, t_parse_error errcode, bool at_end)
 {
-	get_errcode(shell, errcode);
 	if (errcode == ERR_NONE)
+	{
+		if (at_end)
+			get_errcode(shell, errcode);
 		return (true);
+	}
+	get_errcode(shell, errcode);
 	print_token_error_msg(errcode, shell->error.unexpected_token);
 	free_shell(shell, errcode);
+	// if (has_next)
+	// 	return (true);
 	return (false);
 }

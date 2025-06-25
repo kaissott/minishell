@@ -3,15 +3,30 @@
 static void	parse(t_main *shell, char *cmd)
 {
 	t_parse_error	errcode;
+	t_token			*tmp;
 
+	// printf("\nERRCODE BEFORE ALL PARSE : %d\n", shell->errcode);
 	errcode = tokenisation(shell, cmd);
 	// printf("\nReturn tokenisation : %d\n", errcode);
-	if (!check_parsing(shell, errcode))
+	if (!check_parsing(shell, errcode, false))
 		return ;
 	// print_token_lst(shell->token, "\nToken lst before parsing :\n");
-	errcode = parsing(&shell->exec, &shell->token);
+	tmp = shell->token;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->value, "<<") == 0 && tmp->next)
+			tmp->next->is_delimiter = true;
+		tmp = tmp->next;
+	}
+	// print_token_lst(shell->token, "\nToken lst after hd :\n");
+	errcode = expansion(shell);
+	// printf("\nReturn expansion : %d\n", errcode);
+	if (!check_parsing(shell, errcode, false))
+		return ;
+	// print_token_lst(shell->token, "\nToken lst after expansion :\n");
+	errcode = parsing(shell);
 	// printf("\nReturn create exec : %d\n", errcode);
-	check_parsing(shell, errcode);
+	check_parsing(shell, errcode, true);
 	// print_token_lst(shell->token, "\nToken lst after parsing :\n");
 }
 
@@ -25,9 +40,7 @@ void	start_shell(t_main *shell)
 		dup2(shell->std_in, STDIN_FILENO);
 		dup2(shell->std_out, STDOUT_FILENO);
 		if (isatty(fileno(stdin)))
-		{
 			rl = readline("> ");
-		}
 		else
 		{
 			rl = get_next_line(fileno(stdin));
@@ -41,9 +54,8 @@ void	start_shell(t_main *shell)
 		// rl = readline("$> ");
 		if (!rl)
 		{
-			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);;
+			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);
 			free_struct(shell);
-			// prinetf("exit\n");
 			return ;
 		}
 		add_history(rl);
@@ -57,9 +69,9 @@ void	start_shell(t_main *shell)
 
 int	main(int ac, char **av, char **env)
 {
-	(void)av;
 	t_main	*shell;
 
+	(void)av;
 	if (ac == 1)
 	{
 		shell = init_minishell(env);

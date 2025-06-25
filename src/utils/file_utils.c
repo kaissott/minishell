@@ -24,15 +24,14 @@ t_parse_error	secure_close(int *fd)
 
 t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 {
-	if (std == 0)
+	if (std == STDIN_FILENO)
 	{
-		if (new_cmd->infile.type == T_HEREDOC && new_cmd->heredoc_path)
-		{
-			unlink(new_cmd->heredoc_path);
-			free(new_cmd->heredoc_path);
-		}
 		if (new_cmd->infile.filepath)
+		{
+			if (new_cmd->infile.type == T_HEREDOC)
+				unlink(new_cmd->infile.filepath);
 			free(new_cmd->infile.filepath);
+		}
 		if (secure_close(&new_cmd->infile.fd) != ERR_NONE)
 			return (ERR_CLOSE);
 	}

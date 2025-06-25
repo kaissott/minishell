@@ -1,12 +1,15 @@
 #include "../../includes/minishell.h"
 
-// void	handle_error(t_main *shell, t_parse_error err)
-// {
-// 	set_error(shell, err, shell->error.unexpected_token);
-// 	print_error(shell);
-// 	shell->errcode = convert_errno(err);
-// 	clear_shell(shell);
-// }
+t_parse_error	parsing_error(t_main *shell, t_parse_error errcode,
+		char *filepath)
+{
+	// printf("errcode parsing error : %d\n", errcode);
+	get_errcode(shell, errcode);
+	free_shell(shell, errcode);
+	if (filepath)
+		perror(filepath);
+	return (errcode);
+}
 
 t_parse_error	set_error(t_error *error, t_parse_error error_type,
 		char unexpected_token)
@@ -52,4 +55,9 @@ char	*join_or_dup(char *prev, char *next)
 		new_val = ft_strdup("");
 	free(prev);
 	return (new_val);
+}
+
+void	check_open(int std)
+{
+	return ;
 }
