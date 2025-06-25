@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/25 02:43:38 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/06/25 03:39:08 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 	}
 	if (pid == 0)
 	{
+		if (node->cmd[0] == NULL)
+			exit(1);
 		close(pipefd[0]);
 		dup_process_child(main, node, prev_fd, pipefd[1]);
 		close_fork(prev_fd, pipefd[1], node, main);
