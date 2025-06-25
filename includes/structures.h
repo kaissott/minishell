@@ -3,7 +3,6 @@
 
 typedef enum e_expand_type
 {
-	ERR_SEG = -1,
 	T_EXPAND_WORD,
 	T_EXPAND_VAR,
 }							t_expand_type;
@@ -17,7 +16,6 @@ typedef struct s_expand
 
 typedef enum e_token_chunk_type
 {
-	T_ERROR_WORD = -1,
 	T_STRING,
 	T_SINGLE_QUOTED,
 	T_DOUBLE_QUOTED

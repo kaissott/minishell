@@ -69,7 +69,7 @@ void	start_shell(t_main *shell)
 int	main(int ac, char **av, char **env)
 {
 	t_main	*shell;
-	int errcode;
+	int		errcode;
 
 	(void)av;
 	if (ac == 1)
