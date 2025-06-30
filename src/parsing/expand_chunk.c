@@ -24,7 +24,7 @@ void	replace_split_token(t_token **tokens, t_token *new_tokens,
 		*tokens = new_tokens;
 	else
 		prev->next = new_tokens;
-	free_token(tmp);
+	// free_token(tmp);
 }
 
 t_parse_error	split_chunk(t_token *new_token, t_token_chunk *chunk,

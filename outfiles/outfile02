@@ -13,6 +13,7 @@ tmp_err_bash
 tmp_err_minishell
 tmp_out_bash
 tmp_out_minishell
+tmp_valgrind-out.txt
 caca
 Dockerfile
 echo
@@ -28,6 +29,7 @@ tmp_err_bash
 tmp_err_minishell
 tmp_out_bash
 tmp_out_minishell
+tmp_valgrind-out.txt
 caca
 Dockerfile
 echo
@@ -43,6 +45,7 @@ tmp_err_bash
 tmp_err_minishell
 tmp_out_bash
 tmp_out_minishell
+tmp_valgrind-out.txt
 caca
 Dockerfile
 echo
@@ -58,5 +61,6 @@ tmp_err_bash
 tmp_err_minishell
 tmp_out_bash
 tmp_out_minishell
+tmp_valgrind-out.txt
 hi
 hi
