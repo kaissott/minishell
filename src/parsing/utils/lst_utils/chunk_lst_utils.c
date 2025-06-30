@@ -1,5 +1,18 @@
 #include "../../../../includes/minishell.h"
 
+t_token_chunk	*chunk_lst_last(t_token_chunk *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst)
+	{
+		if (lst->next == NULL)
+			return (lst);
+		lst = lst->next;
+	}
+	return (NULL);
+}
+
 void	chunk_lst_delone(t_token_chunk **chunk_lst,
 		t_token_chunk *node_to_delete)
 {
@@ -27,7 +40,7 @@ void	chunk_lst_delone(t_token_chunk **chunk_lst,
 	}
 }
 
-static void	chunk_lst_add_back(t_token_chunk **chunk_lst, t_token_chunk *new)
+void	chunk_lst_add_back(t_token_chunk **chunk_lst, t_token_chunk *new)
 {
 	t_token_chunk	*tmp;
 
@@ -64,6 +77,22 @@ t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, char *cmd,
 		free(new_chunk);
 		return (ERR_MALLOC);
 	}
+	chunk_lst_add_back(chunk_lst, new_chunk);
+	return (ERR_NONE);
+}
+
+t_parse_error	create_and_add_chunk_words_splitting(t_token_chunk **chunk_lst,
+		char *value)
+{
+	t_token_chunk	*new_chunk;
+
+	new_chunk = ft_calloc(1, sizeof(t_token_chunk));
+	if (!new_chunk)
+		return (ERR_MALLOC);
+	new_chunk->type = T_STRING;
+	new_chunk->value = ft_strdup(value);
+	if (!new_chunk->value)
+		return (ERR_MALLOC);
 	chunk_lst_add_back(chunk_lst, new_chunk);
 	return (ERR_NONE);
 }

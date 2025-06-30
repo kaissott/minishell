@@ -58,6 +58,7 @@ SRC = ft_atoi.c \
 	ft_isspace.c \
 	get_next_line/get_next_line.c \
 	get_next_line/get_next_line_utils.c \
+	split_charset.c
 
 OBJ = $(SRC:.c=.o)
 

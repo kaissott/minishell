@@ -1,5 +1,14 @@
 #include "../../includes/minishell.h"
 
+void	remove_char_at(char *str, size_t i)
+{
+	while (str[i])
+	{
+		str[i] = str[i + 1];
+		i++;
+	}
+}
+
 bool	contains_ifs_chars(char *str)
 {
 	int	i;
@@ -22,6 +31,8 @@ static char	*get_var_value(t_main *shell, char *var_name, bool *var_found)
 	*var_found = true;
 	if (ft_strcmp(var_name, "$") == 0)
 		return (ft_strdup("$"));
+	if (ft_strcmp(var_name, "$/") == 0)
+		return (ft_strdup("$/"));
 	if (ft_strcmp(var_name, "$$") == 0)
 		return (ft_strdup("$$"));
 	if (ft_strcmp(var_name, "$?") == 0)
@@ -52,7 +63,7 @@ t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
 	tmp = *expand_lst;
 	var_found = false;
 	next = NULL;
-	while (tmp != NULL)
+	while (tmp)
 	{
 		next = tmp->next;
 		if (tmp->type == T_EXPAND_VAR)
@@ -66,22 +77,14 @@ t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
 			var_found = true;
 			var_value = tmp->value;
 		}
-		// printf("var found : %s\n", var_found ? "true" : "false");
 		if (!var_found)
 		{
-			// printf("tmp->value before delone tmp : %s\n", tmp->value);
 			expand_lst_delone(expand_lst, tmp);
-			// print_expand_lst(*expand_lst,
-			// 	"EXPAND LIST AFTER DELONE BLANK : \n");
-			if (!chunk->value)
+			if (!chunk->value && !*expand_lst)
 				chunk_lst_delone(&token->chunks, chunk);
 			if (!token->chunks)
 			{
-				// print_token_lst(shell->token,
-				// 	"TOKEN LIST BEFORE CHUNK DELONE : \n");
 				token_lst_delone(&shell->token, token);
-				// print_token_lst(shell->token,
-				// 	"TOKEN LIST AFTER CHUNK DELONE : \n");
 				return (ERR_NONE);
 			}
 		}
