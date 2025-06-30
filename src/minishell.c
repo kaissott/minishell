@@ -24,11 +24,14 @@ static void	parse(t_main *shell, char *cmd)
 	if (!check_parsing(shell, errcode, false))
 		return ;
 	// print_token_lst(shell->token, "\nToken lst after expansion :\n");
+	errcode = word_splitting(shell);
+	if (!check_parsing(shell, errcode, false))
+		return ;
 	errcode = parsing(shell);
 	// printf("\nReturn create exec : %d\n", errcode);
 	check_parsing(shell, errcode, true);
-	// print_token_lst(shell->token, "\nToken lst after parsing :\n");
-	// print_exec_lst(shell->exec, "EXEC LST AFTER PARSING :\n");
+	print_token_lst(shell->token, "\nToken lst after parsing :\n");
+	print_exec_lst(shell->exec, "EXEC LST AFTER PARSING :\n");
 }
 
 void	start_shell(t_main *shell)

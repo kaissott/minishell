@@ -9,7 +9,7 @@ void			chunk_lst_add_back(t_token_chunk **chunk_lst,
 					t_token_chunk *new);
 t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, char *cmd,
 					ssize_t len, char quote);
-t_parse_error	create_and_add_chunk_words_splitting(t_token_chunk **chunk_lst,
+t_parse_error	create_and_add_splitted_chunk(t_token_chunk **chunk_lst,
 					char *value);
 void			chunk_lst_delone(t_token_chunk **chunk_lst,
 					t_token_chunk *node_to_delete);
