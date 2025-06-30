@@ -4,8 +4,13 @@
 # include "../../minishell.h"
 # include "../../structures.h"
 
+t_token_chunk	*chunk_lst_last(t_token_chunk *lst);
+void			chunk_lst_add_back(t_token_chunk **chunk_lst,
+					t_token_chunk *new);
 t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, char *cmd,
 					ssize_t len, char quote);
+t_parse_error	create_and_add_chunk_words_splitting(t_token_chunk **chunk_lst,
+					char *value);
 void			chunk_lst_delone(t_token_chunk **chunk_lst,
 					t_token_chunk *node_to_delete);
 t_parse_error	cat_chunks(t_token *token);
@@ -22,6 +27,8 @@ void			print_exec_lst(t_exec *lst, char *msg);
 void			print_expand_lst(t_expand *lst, char *msg);
 t_expand		*create_expand(t_expand_type type, char *value);
 void			expand_lst_add_back(t_expand **lst, t_expand *new);
+void			expand_lst_delone(t_expand **expand_lst,
+					t_expand *node_to_delete);
 
 void			print_chunk_lst(t_token_chunk *lst, char *msg);
 void			print_token_lst(t_token *lst, char *msg);

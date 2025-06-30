@@ -36,6 +36,32 @@ void	expand_lst_add_back(t_expand **lst, t_expand *new)
 	return ;
 }
 
+void	expand_lst_delone(t_expand **expand_lst, t_expand *node_to_delete)
+{
+	t_expand	*tmp;
+
+	if (!expand_lst || !*expand_lst || !node_to_delete)
+		return ;
+	if (*expand_lst == node_to_delete)
+	{
+		*expand_lst = node_to_delete->next;
+		if (node_to_delete->value)
+			free(node_to_delete->value);
+		free(node_to_delete);
+		return ;
+	}
+	tmp = *expand_lst;
+	while (tmp && tmp->next != node_to_delete)
+		tmp = tmp->next;
+	if (tmp && tmp->next == node_to_delete)
+	{
+		tmp->next = node_to_delete->next;
+		if (node_to_delete->value)
+			free(node_to_delete->value);
+		free(node_to_delete);
+	}
+}
+
 void	print_expand_lst(t_expand *lst, char *msg)
 {
 	size_t	i;

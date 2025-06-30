@@ -10,7 +10,7 @@ static void	parse(t_main *shell, char *cmd)
 	// printf("\nReturn tokenisation : %d\n", errcode);
 	if (!check_parsing(shell, errcode, false))
 		return ;
-	// print_token_lst(shell->token, "\nToken lst before parsing :\n");
+	// print_token_lst(shell->token, "\nToken lst after tokenisation :\n");
 	tmp = shell->token;
 	while (tmp)
 	{
@@ -28,6 +28,7 @@ static void	parse(t_main *shell, char *cmd)
 	// printf("\nReturn create exec : %d\n", errcode);
 	check_parsing(shell, errcode, true);
 	// print_token_lst(shell->token, "\nToken lst after parsing :\n");
+	// print_exec_lst(shell->exec, "EXEC LST AFTER PARSING :\n");
 }
 
 void	start_shell(t_main *shell)
@@ -72,14 +73,14 @@ int	main(int ac, char **av, char **env)
 	int		errcode;
 
 	(void)av;
-	if (ac == 1)
-	{
-		shell = init_minishell(env);
-		start_shell(shell);
-		errcode = shell->errcode;
-		free_struct(shell);
-		free(shell);
-		return (errcode);
-	}
+	// if (ac == 1)
+	// {
+	shell = init_minishell(env);
+	start_shell(shell);
+	errcode = shell->errcode;
+	free_struct(shell);
+	free(shell);
+	return (errcode);
+	// }
 	return (EXIT_FAILURE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:38:10 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/20 21:05:10 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/26 09:40:45 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 #include "get_next_line/get_next_line.h"
 
 typedef struct s_list
@@ -75,5 +76,7 @@ long long			ft_atoll(const char *str, int *error);
 int					ft_isspace(int c);
 int					handle_error(char *msg, int code);
 void				handle_error_exit(char *msg, int code);
+char				**split_charset(char *s, char *charset);
+void				free_strs(char **strs);
 
 #endif
