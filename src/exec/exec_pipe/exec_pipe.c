@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/25 21:24:22 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:33:47 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void	execve_err(t_main *main, char **env, char *path, char *cmd)
 {
 	ft_putstr_fd("bash: ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	// ft_putstr_fd(cmd, 2);
+	// ft_putstr_fd("caca", 2);
+	perror(cmd);
 	if (env)
 		free(env);
 	if (path != NULL)

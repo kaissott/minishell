@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/25 21:24:29 by karamire         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:39:33 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ void	exec_simple_cmd(t_main *main)
 	main->envtab = env_to_tab(main);
 	if (strrchr_slash(main->exec->cmd[0], '/') == 1)
 	{
+		if (opendir(main->exec->cmd[0]))
+		{
+			closedir(opendir(main->exec->cmd[0]));
+			free_and_exit_error(main, NULL, "Is a directory", 126);
+		}
 		if (access(main->exec->cmd[0], F_OK) != 0)
 			free_and_exit_error(main, NULL, "No such file or directory", 127);
 		if (access(main->exec->cmd[0], X_OK) != 0)
@@ -121,6 +126,10 @@ void	init_simple_cmd(t_main *main)
 		exit_error_two_close(main, main->std_in, main->std_out);
 		exit_error_two_close(main, main->exec->infile.fd,
 			main->exec->outfile.fd);
+		if (main->exec->cmd[0][0] == '\0')
+		{
+			exit(0);
+		}
 		exec_simple_cmd(main);
 	}
 	while (waitpid(pid, &tmp, 0) > 0)
