@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/25 23:39:33 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/01 23:22:29 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ char	*get_path(t_main *main, char *env_path, char **env)
 	char	**paths;
 	char	*result;
 
+	// if (env_path == NULL)
+	// {
+	// 	free(env);
+	// 	free_and_exit_error(main, env_path, "command not found", 127);
+	// }
 	paths = ft_split_slash(env_path, ':');
 	if (!paths)
 	{
@@ -126,10 +131,10 @@ void	init_simple_cmd(t_main *main)
 		exit_error_two_close(main, main->std_in, main->std_out);
 		exit_error_two_close(main, main->exec->infile.fd,
 			main->exec->outfile.fd);
-		if (main->exec->cmd[0][0] == '\0')
-		{
-			exit(0);
-		}
+		// if (main->exec->cmd[0][0] == '\0')
+		// {
+		// 	exit(0);
+		// }
 		exec_simple_cmd(main);
 	}
 	while (waitpid(pid, &tmp, 0) > 0)
@@ -142,4 +147,6 @@ void	init_simple_cmd(t_main *main)
 		main->errcode = 0;
 	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 126)
 		main->errcode = 126;
+	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 2)
+		main->errcode = 2;
 }

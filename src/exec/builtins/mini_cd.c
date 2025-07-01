@@ -24,7 +24,7 @@ void	env_pwd_update(t_main *main)
 	if (getcwd(path, 1024) == NULL)
 		free_and_exit_error(main, NULL, ERR_GETCWD, errno);
 	temp = main->env;
-	while (temp != NULL && ft_strnstr(temp->env, "PWD=", 4) == -1)
+	while (temp != NULL && ft_strnstr(temp->env, "PWD=", 4) == NULL)
 		temp = temp->next;
 	if (temp != NULL)
 	{
@@ -96,19 +96,46 @@ char	*cd_to_home(t_main *main, char *path)
 	return (dst);
 }
 
+char	*cd_to_last_pwd(t_main *main, char *path)
+{
+	t_env	*env;
+	char	*str;
+	char	*dst;
+
+	env = main->env;
+	while (env)
+	{
+		if (ft_strncmp(env->env, "OLDPWD=", 7) == 0)
+		{
+			str = ft_strdup(env->env + 7);
+			if (!str)
+				free_and_exit_error(main, NULL, ERR_MEM, 12);
+			printf("%s\n", str);
+			return (str);
+		}
+		env = env->next;
+	}
+	ft_putendl_fd("bash: cd: OLDPWD not set", 2);
+	main->errcode = 1;
+	return (str);
+}
+
 bool	mini_cd(char *line, t_main *main)
 {
 	char	**tab;
 	char	*str;
 
 	tab = main->exec->cmd;
-	if (tab[2])
+	if (tab[1] != NULL && tab[2])
 	{
-		ft_putstr_fd("bash: cd: too many arguments", 2);
+		ft_putstr_fd("bash: cd: too many arguments\n", 2);
+		main->errcode = 1;
 		return(true);
 	}
 	if (tab[1] == NULL || tab[1][0] == '~')
 		str = cd_to_home(main, tab[1]);
+	else if (tab[1][0] == '-' && tab[1][1] == '\0')
+		str = cd_to_last_pwd(main, tab[1]);
 	else
 		str = ft_strdup(tab[1]);
 	if (access(str, F_OK) == 0)
