@@ -16,8 +16,6 @@ void	get_errcode(t_main *shell, t_parse_error errcode)
 
 void	free_shell(t_main *shell, t_parse_error errcode)
 {
-	// if (shell->env)
-	// 	free_env_lst(&shell->env);
 	if (shell->token)
 		free_token_lst(&shell->token);
 	if (shell->exec)
@@ -46,7 +44,5 @@ bool	check_parsing(t_main *shell, t_parse_error errcode, bool at_end)
 	get_errcode(shell, errcode);
 	print_token_error_msg(errcode, shell->error.unexpected_token);
 	free_shell(shell, errcode);
-	// if (has_next)
-	// 	return (true);
 	return (false);
 }

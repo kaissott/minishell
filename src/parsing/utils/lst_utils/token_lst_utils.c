@@ -53,8 +53,8 @@ void	token_lst_add_back(t_token **token_lst, t_token *new)
 	return ;
 }
 
-t_parse_error	token_lst_add_node(t_token **token_lst, char *cmd, ssize_t len,
-		t_token_type token_type)
+t_parse_error	token_lst_add_operator_node(t_token **token_lst, char *cmd,
+		ssize_t len, t_token_type token_type)
 {
 	t_token	*new_token;
 
@@ -74,22 +74,11 @@ t_parse_error	token_lst_add_node(t_token **token_lst, char *cmd, ssize_t len,
 
 t_parse_error	token_lst_add_chunks(t_main *shell, t_token *new_token)
 {
-	t_token_chunk	*tmp;
-	char			*prev;
+	t_parse_error	errcode;
 
-	tmp = new_token->chunks;
-	new_token->type = T_WORD;
-	while (tmp)
-	{
-		prev = new_token->value;
-		new_token->value = join_or_dup(prev, tmp->value);
-		if (!new_token->value)
-		{
-			free_token(new_token);
-			return (ERR_MALLOC);
-		}
-		tmp = tmp->next;
-	}
+	errcode = cat_chunks(new_token);
+	if (errcode != ERR_NONE)
+		return (errcode);
 	token_lst_add_back(&shell->token, new_token);
 	return (ERR_NONE);
 }
