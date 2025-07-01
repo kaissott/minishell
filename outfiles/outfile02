@@ -1,6 +1,5 @@
 caca
 Dockerfile
-echo
 includes
 leak.supp
 libft
@@ -15,7 +14,6 @@ tmp_out_bash
 tmp_out_minishell
 caca
 Dockerfile
-echo
 includes
 leak.supp
 libft
@@ -30,7 +28,6 @@ tmp_out_bash
 tmp_out_minishell
 caca
 Dockerfile
-echo
 includes
 leak.supp
 libft
@@ -45,7 +42,6 @@ tmp_out_bash
 tmp_out_minishell
 caca
 Dockerfile
-echo
 includes
 leak.supp
 libft

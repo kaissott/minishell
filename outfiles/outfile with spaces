@@ -1,6 +1,5 @@
 caca
 Dockerfile
-echo
 includes
 leak.supp
 libft

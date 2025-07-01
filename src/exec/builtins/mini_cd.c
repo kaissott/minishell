@@ -126,9 +126,9 @@ bool	mini_cd(char *line, t_main *main)
 	char	*str;
 
 	tab = main->exec->cmd;
-	if (tab[2])
+	if (tab[1] != NULL && tab[2])
 	{
-		ft_putstr_fd("bash: cd: too many arguments", 2);
+		ft_putstr_fd("bash: cd: too many arguments\n", 2);
 		main->errcode = 1;
 		return(true);
 	}
