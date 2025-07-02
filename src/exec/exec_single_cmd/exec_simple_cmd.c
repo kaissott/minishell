@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/02 04:41:43 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/02 17:51:35 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,22 @@ char	*env_path_finding(t_main *main, char **env)
 	return (NULL);
 }
 
-void	execve_error(t_main *main, char **env, char *path)
+void	ultimate_path_check(t_main *main, char **cmd)
 {
-	free(env);
-	free_and_exit_error(main, path, "Command not found", 127);
+	if (strrchr_slash(cmd[0], '/') == 1)
+	{
+		if (opendir(cmd[0]))
+		{
+			closedir(opendir(cmd[0]));
+			free_and_exit_error(main, NULL, "Is a directory", 126);
+		}
+		if (access(cmd[0], F_OK) != 0)
+			free_and_exit_error(main, NULL, "No such file or directory", 127);
+		if (access(cmd[0], X_OK) != 0)
+			free_and_exit_error(main, NULL, "Permission denied", 126);
+		execve(cmd[0], cmd, main->envtab);
+		execve_err(main, main->envtab, NULL, cmd[0]);
+	}
 }
 void	exec_simple_cmd(t_main *main)
 {
@@ -117,20 +129,7 @@ void	exec_simple_cmd(t_main *main)
 	char	*path;
 
 	main->envtab = env_to_tab(main);
-	if (strrchr_slash(main->exec->cmd[0], '/') == 1)
-	{
-		if (opendir(main->exec->cmd[0]))
-		{
-			closedir(opendir(main->exec->cmd[0]));
-			free_and_exit_error(main, NULL, "Is a directory", 126);
-		}
-		if (access(main->exec->cmd[0], F_OK) != 0)
-			free_and_exit_error(main, NULL, "No such file or directory", 127);
-		if (access(main->exec->cmd[0], X_OK) != 0)
-			free_and_exit_error(main, NULL, "Permission denied", 126);
-		execve(main->exec->cmd[0], main->exec->cmd, main->envtab);
-		execve_err(main, main->envtab, NULL, main->exec->cmd[0]);
-	}
+	ultimate_path_check(main, main->exec->cmd);
 	env_path = env_path_finding(main, main->envtab);
 	path = get_path(main, env_path, main->envtab);
 	if (!path)
@@ -149,7 +148,7 @@ void	exec_simple_cmd(t_main *main)
 void	init_simple_cmd(t_main *main)
 {
 	pid_t	pid;
-	int		tmp;
+	int		status;
 
 	pid = fork();
 	if (pid == -1)
@@ -161,16 +160,11 @@ void	init_simple_cmd(t_main *main)
 			main->exec->outfile.fd);
 		exec_simple_cmd(main);
 	}
-	while (waitpid(pid, &tmp, 0) > 0)
-		;
-	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 127)
-		main->errcode = 127;
-	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 1)
-		main->errcode = 1;
-	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 0)
-		main->errcode = 0;
-	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 126)
-		main->errcode = 126;
-	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 126)
-		main->errcode = 126;
+	while (waitpid(pid, &status, 0) > 0)
+    ;
+	if (WIFEXITED(status))
+    	main->errcode = WEXITSTATUS(status);
+	else
+    	main->errcode = 1;
+	return ;
 }

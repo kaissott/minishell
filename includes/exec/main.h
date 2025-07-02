@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/02 02:31:46 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/02 17:50:48 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	error_exec_b(char **cmdtab, char *cmd);
 int		check_args(int ac, char **av);
 void	close_fd(int prev, int outfile, int if_hd);
 int		do_cmd(t_main *main, char **cmd, char **env);
-void	access_out_check(char *out, int prev_fd, int outfile, int if_hd);
+void	access_out_check(char *out, int prev_fd, int outfile);
 void	close_fork_failed(int fd1, int fd2, int fd3, t_main *main);
 void	error_exit(char *str, int exitnbr, int fd);
 int		pipe_exec(t_main *main);
@@ -59,6 +59,7 @@ pid_t	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd);
 void	close_main_fds(t_main *main);
 void	close_node(t_main *main);
 void	close_fork(int fd1, int fd2, t_exec *node, t_main *main);
+void	ultimate_path_check(t_main *main, char **cmd);
 
 
 #endif
