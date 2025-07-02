@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/02 17:51:44 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:07:22 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 	if (cmd == NULL)
 		error_exit("Command not found.", 127, -1);
 	ultimate_path_check(main, cmd);
-	env_path = env_path_finding(main, main->envtab);
+	env_path = env_path_finding(main, main->env_tab);
 	path = cmd_path(cmd, path_finding(env));
 	if (path == NULL)
 	{
@@ -79,7 +79,7 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 			return (-1);
 		free(path);
 		free(env_path);
-		execve_err(main, main->envtab, path, main->exec->cmd[0]);
+		execve_err(main, main->env_tab, path, main->exec->cmd[0]);
 		return (-1);
 	}
 	execve(path, cmd, env);

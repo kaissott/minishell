@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/02 16:39:52 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:07:22 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	close_main_fds(t_main *main)
 void	dup_failed_err(t_main *main, int prev_fd, int pipefd, t_exec *node)
 {
 	close_fork(prev_fd, pipefd, node, main);
-	if (main->envtab)
-		free(main->envtab);
+	if (main->env_tab)
+		free(main->env_tab);
 	free_struct(main);
 	free(main);
 	ft_putstr_fd("Dup failed\n", 2);

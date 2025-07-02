@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/02 17:50:48 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:59:19 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	close_main_fds(t_main *main);
 void	close_node(t_main *main);
 void	close_fork(int fd1, int fd2, t_exec *node, t_main *main);
 void	ultimate_path_check(t_main *main, char **cmd);
+void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main);
 
 
 #endif

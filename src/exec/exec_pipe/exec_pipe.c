@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/02 16:48:23 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:07:52 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main)
 {
 	while (wait(NULL) > 0)
 		;
+	ft_putendl_fd("Fork failed", 2);
 	if (pipefd == NULL)
 	{
 		close_fork(prevfd, -1, node, main);
-		free(main->env);
+		if (main->env_tab)
+			free(main->env_tab);
 		free_struct(main);
 		free(main);
 	}
@@ -78,7 +80,8 @@ void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main)
 	{
 		if (pipefd[0] > 1 && close(pipefd[0]) == -1)
 			perror("close");
-		free(main->env);
+		if (main->env_tab)
+			free(main->env_tab);;
 		close_fork(prevfd, pipefd[1], node, main);
 		free_struct(main);
 		free(main);
@@ -166,18 +169,18 @@ int	pipe_exec(t_main *main)
 
 	node = main->exec;
 	prev_fd = node->infile.fd;
-	main->envtab = env_to_tab(main);
+	main->env_tab = env_to_tab(main);
 	while (node->next != NULL)
 	{
-		prev_fd = child_process(node, prev_fd, main, main->envtab);
+		prev_fd = child_process(node, prev_fd, main, main->env_tab);
 		if (prev_fd == -1)
 			return (0);
 		node = node->next;
 	}
-	last_pid = last_child(node, prev_fd, main, main->envtab);
+	last_pid = last_child(node, prev_fd, main, main->env_tab);
 	close(prev_fd);
 	close_node(main);
 	wait_child(last_pid, main);
-	free(main->envtab);
+	free(main->env_tab);
 	return (0);
 }

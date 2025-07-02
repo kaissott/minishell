@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/02 17:51:35 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:15:51 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_current_dir_exec(t_main *main)
 		free(filepath);
 		free_and_exit_error(main, NULL, "Permission denied", 126);
 	}
-	execve(filepath, main->exec->cmd, main->envtab);
+	execve(filepath, main->exec->cmd, main->env_tab);
 	free(filepath);
 	return (1);
 }
@@ -53,7 +53,6 @@ static char	*try_paths(t_main *main, char **paths, char *env_path, char **env)
 		if (!full_path)
 		{
 			free_tab_2(paths);
-			free(env);
 			free_and_exit_error(main, env_path, ERR_MEM, 12);
 		}
 		if (access(full_path, X_OK) == 0)
@@ -78,10 +77,7 @@ char	*get_path(t_main *main, char *env_path, char **env)
 		return (NULL);
 	paths = ft_split_slash(env_path, ':');
 	if (!paths)
-	{
-		free(env);
 		free_and_exit_error(main, env_path, ERR_MEM, 12);
-	}
 	result = try_paths(main, paths, env_path, env);
 	return (result);
 }
@@ -98,7 +94,7 @@ char	*env_path_finding(t_main *main, char **env)
 		{
 			env_path = ft_strdup(ft_strnstr(env[i], "PATH=", 5));
 			if (!env_path)
-				free_and_exit_error(main, env, ERR_MEM, 12);
+				free_and_exit_error(main, NULL, ERR_MEM, 12);
 			return (env_path);
 		}
 		i++;
@@ -119,8 +115,8 @@ void	ultimate_path_check(t_main *main, char **cmd)
 			free_and_exit_error(main, NULL, "No such file or directory", 127);
 		if (access(cmd[0], X_OK) != 0)
 			free_and_exit_error(main, NULL, "Permission denied", 126);
-		execve(cmd[0], cmd, main->envtab);
-		execve_err(main, main->envtab, NULL, cmd[0]);
+		execve(cmd[0], cmd, main->env_tab);
+		execve_err(main, main->env_tab, NULL, cmd[0]);
 	}
 }
 void	exec_simple_cmd(t_main *main)
@@ -128,21 +124,21 @@ void	exec_simple_cmd(t_main *main)
 	char	*env_path;
 	char	*path;
 
-	main->envtab = env_to_tab(main);
+	main->env_tab = env_to_tab(main);
 	ultimate_path_check(main, main->exec->cmd);
-	env_path = env_path_finding(main, main->envtab);
-	path = get_path(main, env_path, main->envtab);
+	env_path = env_path_finding(main, main->env_tab);
+	path = get_path(main, env_path, main->env_tab);
 	if (!path)
 	{
 		if (!env_path && check_current_dir_exec(main))
 			return ;
 		free(path);
 		free(env_path);
-		execve_err(main, main->envtab, path, main->exec->cmd[0]);
+		execve_err(main, main->env_tab, path, main->exec->cmd[0]);
 		return ;
 	}
-	execve(path, main->exec->cmd, main->envtab);
-	execve_err(main, main->envtab, path, main->exec->cmd[0]);
+	execve(path, main->exec->cmd, main->env_tab);
+	execve_err(main, main->env_tab, path, main->exec->cmd[0]);
 }
 
 void	init_simple_cmd(t_main *main)
@@ -152,7 +148,7 @@ void	init_simple_cmd(t_main *main)
 
 	pid = fork();
 	if (pid == -1)
-		fork_error(main, ERR_FORK);
+		error_fork(NULL, -1, main->exec, main);
 	if (pid == 0)
 	{
 		exit_error_two_close(main, main->std_in, main->std_out);
