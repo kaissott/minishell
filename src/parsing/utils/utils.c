@@ -3,7 +3,6 @@
 t_parse_error	parsing_error(t_main *shell, t_parse_error errcode,
 		char *filepath)
 {
-	// printf("errcode parsing error : %d\n", errcode);
 	get_errcode(shell, errcode);
 	free_shell(shell, errcode);
 	if (filepath)

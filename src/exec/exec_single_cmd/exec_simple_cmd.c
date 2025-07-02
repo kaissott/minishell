@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
 /*   Updated: 2025/07/02 02:27:26 by kaissramire      ###   ########.fr       */
@@ -131,10 +131,6 @@ void	init_simple_cmd(t_main *main)
 		exit_error_two_close(main, main->std_in, main->std_out);
 		exit_error_two_close(main, main->exec->infile.fd,
 			main->exec->outfile.fd);
-		// if (main->exec->cmd[0][0] == '\0')
-		// {
-		// 	exit(0);
-		// }
 		exec_simple_cmd(main);
 	}
 	while (waitpid(pid, &tmp, 0) > 0)

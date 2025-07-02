@@ -9,7 +9,7 @@ void			chunk_lst_add_back(t_token_chunk **chunk_lst,
 					t_token_chunk *new);
 t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, char *cmd,
 					ssize_t len, char quote);
-t_parse_error	create_and_add_chunk_words_splitting(t_token_chunk **chunk_lst,
+t_parse_error	create_and_add_splitted_chunk(t_token_chunk **chunk_lst,
 					char *value);
 void			chunk_lst_delone(t_token_chunk **chunk_lst,
 					t_token_chunk *node_to_delete);
@@ -35,7 +35,7 @@ void			print_token_lst(t_token *lst, char *msg);
 t_token			*token_lst_last(t_token *lst);
 void			token_lst_delone(t_token **token_lst, t_token *node_to_delete);
 void			token_lst_add_back(t_token **token_lst, t_token *new);
-t_parse_error	token_lst_add_node(t_token **token_lst, char *cmd, ssize_t len,
+t_parse_error	token_lst_add_operator_node(t_token **token_lst, char *cmd, ssize_t len,
 					t_token_type token_type);
 t_parse_error	token_lst_add_chunks(t_main *shell, t_token *new_token);
 

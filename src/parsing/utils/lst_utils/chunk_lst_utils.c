@@ -81,7 +81,7 @@ t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, char *cmd,
 	return (ERR_NONE);
 }
 
-t_parse_error	create_and_add_chunk_words_splitting(t_token_chunk **chunk_lst,
+t_parse_error	create_and_add_splitted_chunk(t_token_chunk **chunk_lst,
 		char *value)
 {
 	t_token_chunk	*new_chunk;
@@ -92,7 +92,10 @@ t_parse_error	create_and_add_chunk_words_splitting(t_token_chunk **chunk_lst,
 	new_chunk->type = T_STRING;
 	new_chunk->value = ft_strdup(value);
 	if (!new_chunk->value)
+	{
+		free(new_chunk);
 		return (ERR_MALLOC);
+	}
 	chunk_lst_add_back(chunk_lst, new_chunk);
 	return (ERR_NONE);
 }

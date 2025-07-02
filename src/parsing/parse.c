@@ -10,7 +10,8 @@ static t_exec	*handle_pipe(t_main *shell, t_token *token, t_exec *new_cmd)
 static t_parse_error	handle_redirection(t_main *shell, t_token *token,
 		t_exec *new_cmd)
 {
-	int	std;
+	int				std;
+	t_parse_error	errcode;
 
 	std = STDOUT_FILENO;
 	if (token->type == T_REDIR_IN)
@@ -20,26 +21,30 @@ static t_parse_error	handle_redirection(t_main *shell, t_token *token,
 	}
 	else
 		new_cmd->outfile.type = token->type;
-	if (check_std_cmd(std, new_cmd) != ERR_NONE)
-		return (ERR_CLOSE);
-	if (std == STDIN_FILENO)
+	errcode = check_std_cmd(std, new_cmd);
+	if (errcode == ERR_NONE)
 	{
-		new_cmd->infile.filepath = ft_strdup(token->next->value);
-		if (!new_cmd->infile.filepath)
-			return (ERR_MALLOC);
-		new_cmd->infile.fd = open_file(token->next->value, token->type);
-		if (new_cmd->infile.fd == -1)
-			perror(new_cmd->infile.filepath);
+		if (std == STDIN_FILENO)
+		{
+			new_cmd->infile.filepath = ft_strdup(token->next->value);
+			if (!new_cmd->infile.filepath)
+				return (ERR_MALLOC);
+			new_cmd->infile.fd = open_file(token->next->value, token->type);
+			if (new_cmd->infile.fd == -1)
+				perror(new_cmd->infile.filepath);
+		}
+		else
+		{
+			new_cmd->outfile.filepath = ft_strdup(token->next->value);
+			if (!new_cmd->outfile.filepath)
+				return (ERR_MALLOC);
+			new_cmd->outfile.fd = open_file(token->next->value, token->type);
+			if (new_cmd->outfile.fd == -1)
+				perror(new_cmd->outfile.filepath);
+		}
 	}
-	else
-	{
-		new_cmd->outfile.filepath = ft_strdup(token->next->value);
-		if (!new_cmd->outfile.filepath)
-			return (ERR_MALLOC);
-		new_cmd->outfile.fd = open_file(token->next->value, token->type);
-		if (new_cmd->outfile.fd == -1)
-			perror(new_cmd->outfile.filepath);
-	}
+	else if (errcode != ERR_PREV_OPEN)
+		return (errcode);
 	token_lst_delone(&shell->token, token->next);
 	token_lst_delone(&shell->token, token);
 	return (ERR_NONE);

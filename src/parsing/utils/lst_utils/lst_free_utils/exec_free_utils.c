@@ -40,6 +40,5 @@ void	free_exec_lst(t_exec **exec_lst)
 		free_exec(current);
 		current = next;
 	}
-	// free(exec_lst);
 	*exec_lst = NULL;
 }

@@ -57,3 +57,16 @@ t_token_type	get_token_type(t_error *error, char *cmd)
 		return (handle_redir(cmd, error));
 	return (T_ERROR);
 }
+
+void	set_heredocs_delimiters(t_main *shell)
+{
+	t_token	*tmp;
+
+	tmp = shell->token;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->value, "<<") == 0 && tmp->next)
+			tmp->next->is_delimiter = true;
+		tmp = tmp->next;
+	}
+}

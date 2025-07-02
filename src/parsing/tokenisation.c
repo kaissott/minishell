@@ -73,7 +73,8 @@ static ssize_t	extract_operator_token(t_main *shell, char *cmd)
 		return (ERR_SYNTAX);
 	if (token_type == T_HEREDOC || token_type == T_REDIR_APPEND)
 		len = 2;
-	if (token_lst_add_node(&shell->token, cmd, len, token_type) != ERR_NONE)
+	if (token_lst_add_operator_node(&shell->token, cmd, len,
+			token_type) != ERR_NONE)
 		return (ERR_MALLOC);
 	return (len);
 }
@@ -98,5 +99,6 @@ t_parse_error	tokenisation(t_main *shell, char *cmd)
 			return (token_len);
 		i += token_len;
 	}
+	set_heredocs_delimiters(shell);
 	return (ERR_NONE);
 }

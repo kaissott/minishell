@@ -13,6 +13,8 @@ int	open_file(const char *filepath, t_token_type file_type)
 
 t_parse_error	secure_close(int *fd)
 {
+	if (*fd == -1)
+		return (ERR_CLOSE);
 	if (*fd > 1)
 	{
 		if (close(*fd) == -1)
@@ -26,6 +28,8 @@ t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 {
 	if (std == STDIN_FILENO)
 	{
+		if (new_cmd->infile.fd == -1)
+			return (ERR_PREV_OPEN);
 		if (new_cmd->infile.filepath)
 		{
 			if (new_cmd->infile.type == T_HEREDOC)
@@ -35,7 +39,12 @@ t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 		if (secure_close(&new_cmd->infile.fd) != ERR_NONE)
 			return (ERR_CLOSE);
 	}
-	else if (secure_close(&new_cmd->outfile.fd) != ERR_NONE)
-		return (ERR_CLOSE);
+	else if (std == STDOUT_FILENO)
+	{
+		if (new_cmd->outfile.fd == -1)
+			return (ERR_PREV_OPEN);
+		if (secure_close(&new_cmd->outfile.fd) != ERR_NONE)
+			return (ERR_CLOSE);
+	}
 	return (ERR_NONE);
 }

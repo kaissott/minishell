@@ -58,7 +58,7 @@ int	check_input(t_main *main)
 	int		fd_in;
 
 	node = main->exec;
-	if (node == NULL || node->cmd == NULL)
+	if (node == NULL || node->cmd == NULL || node->cmd[0] == NULL)
 	{
 		main->errcode = 2;
 		return (-1);
