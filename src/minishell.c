@@ -24,7 +24,7 @@ static void	parse(t_main *shell, char *cmd)
 	// printf("\nReturn parsing : %d\n", errcode);
 	check_parsing(shell, errcode, true);
 	// print_token_lst(shell->token, "\nToken lst after parsing :\n");
-	print_exec_lst(shell->exec, "EXEC LST AFTER PARSING :\n");
+	// print_exec_lst(shell->exec, "EXEC LST AFTER PARSING :\n");
 }
 
 void	start_shell(t_main *shell)
