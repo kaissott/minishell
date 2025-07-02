@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/01 23:57:00 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/02 02:30:46 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	check_input(t_main *main)
 	{
 		fd_in = main->exec->infile.fd;
 		fd_out = main->exec->outfile.fd;
-		file_dup(main, fd_in, fd_out);
-		exec_cmd(main, node->cmd, true);
+		if (file_dup(main, fd_in, fd_out) == 0)
+			exec_cmd(main, node->cmd, true);
 		close_node(main);
 	}
 	else

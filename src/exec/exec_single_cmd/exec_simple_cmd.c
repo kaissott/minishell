@@ -6,7 +6,7 @@
 /*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/01 23:54:59 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/02 02:27:26 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,6 @@ void	init_simple_cmd(t_main *main)
 		main->errcode = 0;
 	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 126)
 		main->errcode = 126;
-	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 2)
-		main->errcode = 2;
+	if (WIFEXITED(tmp) && WEXITSTATUS(tmp) == 126)
+		main->errcode = 126;
 }

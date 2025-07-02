@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/25 04:13:32 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/02 02:53:52 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,18 @@ static void	safe_dup_close(t_main *main, int oldfd, int newfd)
 	}
 }
 
-void	file_dup(t_main *main, int fd_in, int fd_out)
+int	file_dup(t_main *main, int fd_in, int fd_out)
 {
+	if(fd_in == -1 || fd_out == -1)
+	{
+		main->errcode = 1;
+		return(-1);
+	}
 	if (fd_in != STDIN_FILENO)
 		safe_dup_close(main, fd_in, STDIN_FILENO);
 	if (fd_out != STDOUT_FILENO)
 		safe_dup_close(main, fd_out, STDOUT_FILENO);
+	return(0);
 }
 
 void	close_main_fds(t_main *main)
