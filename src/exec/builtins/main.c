@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/02 02:30:46 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/02 04:25:04 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	check_input(t_main *main)
 	int		fd_in;
 
 	node = main->exec;
-	if (node == NULL || node->cmd == NULL || node->cmd[0] == NULL)
+	if (node == NULL || (node->cmd == NULL && node->next == NULL))
 	{
 		main->errcode = 2;
 		return (-1);

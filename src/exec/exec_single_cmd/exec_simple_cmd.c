@@ -3,14 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/02 02:27:26 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/02 04:41:43 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+#include "minishell.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+
+int	check_current_dir_exec(t_main *main)
+{
+	char	*filepath;
+
+	if (!main || !main->exec || !main->exec->cmd || !main->exec->cmd[0])
+		return (0);
+	filepath = ft_strjoin("./", main->exec->cmd[0]);
+	if (!filepath)
+		return (0);
+	if (access(filepath, F_OK) != 0)
+	{
+		free(filepath);
+		free_and_exit_error(main, NULL, "No such file or directory", 127);
+	}
+	if (access(filepath, X_OK) != 0)
+	{
+		free(filepath);
+		free_and_exit_error(main, NULL, "Permission denied", 126);
+	}
+	execve(filepath, main->exec->cmd, main->envtab);
+	free(filepath);
+	return (1);
+}
 
 static char	*try_paths(t_main *main, char **paths, char *env_path, char **env)
 {
@@ -45,11 +74,8 @@ char	*get_path(t_main *main, char *env_path, char **env)
 	char	**paths;
 	char	*result;
 
-	// if (env_path == NULL)
-	// {
-	// 	free(env);
-	// 	free_and_exit_error(main, env_path, "command not found", 127);
-	// }
+	if (!env_path)
+		return (NULL);
 	paths = ft_split_slash(env_path, ':');
 	if (!paths)
 	{
@@ -107,8 +133,10 @@ void	exec_simple_cmd(t_main *main)
 	}
 	env_path = env_path_finding(main, main->envtab);
 	path = get_path(main, env_path, main->envtab);
-	if (path == NULL)
+	if (!path)
 	{
+		if (!env_path && check_current_dir_exec(main))
+			return ;
 		free(path);
 		free(env_path);
 		execve_err(main, main->envtab, path, main->exec->cmd[0]);
