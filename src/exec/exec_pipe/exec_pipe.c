@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/02 18:07:52 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:00:32 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,62 +89,6 @@ void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main)
 	exit(errno);
 }
 
-pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
-{
-	int		pipefd[2];
-	int		i;
-	pid_t	pid;
-
-	if (pipe(pipefd) == -1)
-		error_exit("Error : Pipe failed", EXIT_FAILURE, prev_fd);
-	if (node->infile.fd == -1 || node->outfile.fd == -1)
-	{
-		close(pipefd[1]);
-		return(pipefd[0]);
-	}
-	pid = fork();
-	if (pid == -1)
-		error_fork(pipefd, prev_fd, node, main);
-	if (pid == 0)
-	{
-		close(pipefd[0]);
-		dup_process_child(main, node, prev_fd, pipefd[1]);
-		close_fork(prev_fd, pipefd[1], node, main);
-		if (node->cmd[0] != NULL)
-			do_cmd(main, node->cmd, env);
-	}
-	safe_close(prev_fd, main);
-	close(pipefd[1]);
-	return (pipefd[0]);
-}
-
-pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
-{
-	pid_t	pid;
-	int i;
-
-	i = 0;
-	if (node->infile.fd == -1 || node->outfile.fd == -1 )
-	{
-		main->errcode = 1;
-		return(1);
-	}
-	pid = fork();
-	if (pid == -1)
-	{
-		free(env);
-		error_fork(NULL, prev_fd, node, main);
-	}
-	if (pid == 0)
-	{
-		if (dup_process_child(main, node, prev_fd, main->std_out) == -1)
-			i = 1;
-		close_fork(prev_fd, -1, node, main);
-		if (i == 0)
-			do_cmd(main, node->cmd, env);
-	}
-	return (pid);
-}
 
 void	wait_child(pid_t last, t_main *main)
 {
@@ -161,26 +105,3 @@ void	wait_child(pid_t last, t_main *main)
 		;
 }
 
-int	pipe_exec(t_main *main)
-{
-	t_exec	*node;
-	int		prev_fd;
-	pid_t	last_pid;
-
-	node = main->exec;
-	prev_fd = node->infile.fd;
-	main->env_tab = env_to_tab(main);
-	while (node->next != NULL)
-	{
-		prev_fd = child_process(node, prev_fd, main, main->env_tab);
-		if (prev_fd == -1)
-			return (0);
-		node = node->next;
-	}
-	last_pid = last_child(node, prev_fd, main, main->env_tab);
-	close(prev_fd);
-	close_node(main);
-	wait_child(last_pid, main);
-	free(main->env_tab);
-	return (0);
-}

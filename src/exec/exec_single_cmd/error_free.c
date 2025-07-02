@@ -3,41 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   error_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:49:29 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/25 04:13:18 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/02 18:58:33 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-// void	free_files(t_main *main)
-// {
-// 	int	i;
-
-// 	if (main->node->outfile.fd != NULL)
-// 	{
-// 		free(main->node->infile.fd);
-// 	}
-// 	if (main->node->infile.fd != NULL)
-// 	{
-// 		if (ft_strncmp(main->node->infile.fd, "./tmp/here_doc", 14) == 0)
-// 		{
-// 			printf("oui %s\n", main->node->infile.fd);
-// 			if (access(main->node->infile.fd, F_OK) == -1)
-// 				perror("access failed before unlink");
-// 			if (unlink(main->node->infile.fd) == -1)
-// 				perror("unlink failed");
-// 			free(main->node->infile.fd);
-// 		}
-// 		else
-// 		{
-// 			printf("non");
-// 			free(main->node->infile.fd);
-// 		}
-// 	}
-// }
 void	free_tabs(char **tab1, char **tab2)
 {
 	int	i;
