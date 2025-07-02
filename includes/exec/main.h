@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/20 19:58:46 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/02 02:31:46 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		check_env_available(char **env, t_main *main);
 void	env_build(char **env, t_main *main);
 bool	exec_cmd(t_main *main, char **cmd, bool simple);
 char	**env_to_tab(t_main *main);
-void	file_dup(t_main *main, int fd_in, int fd_out);
+int	file_dup(t_main *main, int fd_in, int fd_out);
 char	*free_tab_pipe(char **tab, char **path);
 // char	**ft_split_slash(char const *s, char c);
 char	*path_finding(char **env);

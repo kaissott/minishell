@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/01 19:24:34 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/02 02:54:07 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	close_fork(int fd1, int fd2, t_exec *node, t_main *main)
 	if (fd1 != node->infile.fd && fd1 > 1 && close(fd1) == -1)
 	{
 		i = 1;
-		dprintf(2, "ici");
+		dprintf(2, "ici %s\n", node->cmd[0]);
 	}
 	if (fd2 > 1 && close(fd2) == -1)
 	{
@@ -89,10 +89,17 @@ void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main)
 pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 {
 	int		pipefd[2];
+	int i;
 	pid_t	pid;
 
+	i = 0;
 	if (pipe(pipefd) == -1)
 		error_exit("Error : Pipe failed", EXIT_FAILURE, prev_fd);
+	if (node->infile.fd == -1 || node->outfile.fd == -1 )
+	{
+		close(pipefd[1]);
+		return(pipefd[0]);
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -104,9 +111,11 @@ pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 		if (node->cmd[0] == NULL)
 			exit(1);
 		close(pipefd[0]);
-		dup_process_child(main, node, prev_fd, pipefd[1]);
+		if (dup_process_child(main, node, prev_fd, pipefd[1]) == -1)
+			i = 1;
 		close_fork(prev_fd, pipefd[1], node, main);
-		do_cmd(main, node->cmd, env);
+		if (i == 0)
+			do_cmd(main, node->cmd, env);
 	}
 	safe_close(prev_fd, main);
 	close(pipefd[1]);
@@ -116,7 +125,14 @@ pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 {
 	pid_t	pid;
+	int i;
 
+	i = 0;
+	if (node->infile.fd == -1 || node->outfile.fd == -1 )
+	{
+		main->errcode = 1;
+		return(1);
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -125,9 +141,11 @@ pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 	}
 	if (pid == 0)
 	{
-		dup_process_child(main, node, prev_fd, main->std_out);
+		if (dup_process_child(main, node, prev_fd, main->std_out) == -1)
+			i = 1;
 		close_fork(prev_fd, -1, node, main);
-		do_cmd(main, node->cmd, env);
+		if (i == 0)
+			do_cmd(main, node->cmd, env);
 	}
 	return (pid);
 }
