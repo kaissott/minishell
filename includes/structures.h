@@ -60,6 +60,7 @@ typedef enum e_parse_error
 	ERR_TOKEN = -6,
 	ERR_OPEN = -7,
 	ERR_CLOSE = -8,
+	ERR_PREV_OPEN = -9,
 }							t_parse_error;
 
 typedef struct s_error
