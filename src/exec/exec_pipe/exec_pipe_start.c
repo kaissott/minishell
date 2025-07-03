@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/02 19:00:27 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/03 21:51:24 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 	pid_t	pid;
 
 	if (pipe(pipefd) == -1)
-		error_exit("Error : Pipe failed", EXIT_FAILURE, prev_fd);
+		error_pipe(prev_fd, node, main);
 	if (node->infile.fd == -1 || node->outfile.fd == -1)
 	{
 		close(pipefd[1]);

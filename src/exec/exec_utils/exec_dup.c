@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/02 18:07:22 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/03 23:02:50 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ static void	safe_dup_close(t_main *main, int oldfd, int newfd)
 
 int	file_dup(t_main *main, int fd_in, int fd_out)
 {
-	if(fd_in == -1 || fd_out == -1)
+	if (fd_in == -1 || fd_out == -1)
 	{
 		main->errcode = 1;
-		return(-1);
+		return (-1);
 	}
 	if (fd_in != STDIN_FILENO)
 		safe_dup_close(main, fd_in, STDIN_FILENO);
 	if (fd_out != STDOUT_FILENO)
 		safe_dup_close(main, fd_out, STDOUT_FILENO);
-	return(0);
+	return (0);
 }
 
 void	close_main_fds(t_main *main)
@@ -49,7 +49,7 @@ void	dup_failed_err(t_main *main, int prev_fd, int pipefd, t_exec *node)
 	free_struct(main);
 	free(main);
 	ft_putstr_fd("Dup failed\n", 2);
-	main->errcode = 1;
+	// main->errcode = 1;
 	exit(1);
 }
 int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
