@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/02 02:31:46 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/03 21:46:16 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		check_env_available(char **env, t_main *main);
 void	env_build(char **env, t_main *main);
 bool	exec_cmd(t_main *main, char **cmd, bool simple);
 char	**env_to_tab(t_main *main);
-int	file_dup(t_main *main, int fd_in, int fd_out);
+int		file_dup(t_main *main, int fd_in, int fd_out);
 char	*free_tab_pipe(char **tab, char **path);
 // char	**ft_split_slash(char const *s, char c);
 char	*path_finding(char **env);
@@ -43,14 +43,14 @@ void	error_exec_b(char **cmdtab, char *cmd);
 int		check_args(int ac, char **av);
 void	close_fd(int prev, int outfile, int if_hd);
 int		do_cmd(t_main *main, char **cmd, char **env);
-void	access_out_check(char *out, int prev_fd, int outfile, int if_hd);
+void	access_out_check(char *out, int prev_fd, int outfile);
 void	close_fork_failed(int fd1, int fd2, int fd3, t_main *main);
 void	error_exit(char *str, int exitnbr, int fd);
 int		pipe_exec(t_main *main);
 int		free_struct(t_main *main);
 void	free_node(t_main *main);
 void	reset_struct(char *rl, t_main *main);
-int	check_input(t_main *main);
+int		check_input(t_main *main);
 void	free_tab_2(char **tab);
 void	exit_error_two_close(t_main *main_struct, int fd1, int fd2);
 void	exit_error_minishell(t_main *main, int errcode, char *err);
@@ -59,6 +59,8 @@ pid_t	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd);
 void	close_main_fds(t_main *main);
 void	close_node(t_main *main);
 void	close_fork(int fd1, int fd2, t_exec *node, t_main *main);
-
+void	ultimate_path_check(t_main *main, char **cmd);
+void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main);
+void	error_pipe(int prevfd, t_exec *node, t_main *main);
 
 #endif

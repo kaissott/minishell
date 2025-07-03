@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 22:48:29 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/03/12 15:49:27 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/02 04:05:15 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

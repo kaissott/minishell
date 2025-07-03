@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/02 02:27:22 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/02 18:07:22 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	*cmd_path(char **cmd, char *linktopath)
 int	do_cmd(t_main *main, char **cmd, char **env)
 {
 	char	*path;
+	char *env_path;
 
 	path == NULL;
 	if (exec_cmd(main, cmd, false) == true)
@@ -68,22 +69,20 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 		exit(0);
 	}
 	if (cmd == NULL)
-	{
 		error_exit("Command not found.", 127, -1);
-	}
-	if (strrchr_slash(cmd[0], '/'))
-		execve(cmd[0], cmd, env);
-	else
+	ultimate_path_check(main, cmd);
+	env_path = env_path_finding(main, main->env_tab);
+	path = cmd_path(cmd, path_finding(env));
+	if (path == NULL)
 	{
-		path = cmd_path(cmd, path_finding(env));
-		if (path == NULL)
-		{
-			execve_err(main, env, path, cmd[0]);
-			// error_exec_b(cmd, cmd[0]);
+		if (!env_path && check_current_dir_exec(main))
 			return (-1);
-		}
-		execve(path, cmd, env);
+		free(path);
+		free(env_path);
+		execve_err(main, main->env_tab, path, main->exec->cmd[0]);
+		return (-1);
 	}
+	execve(path, cmd, env);
 	execve_err(main, env, path, cmd[0]);
 	return (-1);
 }
@@ -101,13 +100,13 @@ void	close_fd(int prev_fd, int outfile, int if_hd)
 		close(outfile);
 }
 
-void	access_out_check(char *out, int prev_fd, int outfile, int if_hd)
+void	access_out_check(char *out, int prev_fd, int outfile)
 {
 	if (access(out, W_OK) == -1)
 	{
 		while (wait(NULL) > 0)
 			;
-		close_fd(prev_fd, outfile, if_hd);
+		close_fd(prev_fd, outfile, -1);
 		ft_putendl_fd("Permission Denied", 2);
 		exit(1);
 	}

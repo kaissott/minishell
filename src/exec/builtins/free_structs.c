@@ -98,6 +98,8 @@ void	free_and_exit_error(t_main *main, char *tmp, char *error,
 {
 	if (tmp != NULL)
 		free(tmp);
+	if (main->env_tab)
+		free(main->env_tab);
 	exit_error_minishell(main, err_number, error);
 }
 int	set_return_err_code(t_main *main, char *error, int err_number)

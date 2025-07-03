@@ -67,7 +67,7 @@ void	env_oldpwd_update(t_main *main)
 	}
 }
 
-char	*cd_to_home(t_main *main, char *path)
+char	*cd_to_home(t_main *main, char *path, int i)
 {
 	t_env	*env;
 	char	*str;
@@ -86,7 +86,7 @@ char	*cd_to_home(t_main *main, char *path)
 	}
 	if (path)
 	{
-		dst = ft_strjoin(str, path + 1);
+		dst = ft_strjoin(str, path + i);
 		if (!dst)
 			free_and_exit_error(main, NULL, ERR_MEM, 12);
 		free(str);
@@ -133,12 +133,14 @@ bool	mini_cd(char *line, t_main *main)
 		return(true);
 	}
 	if (tab[1] == NULL || tab[1][0] == '~')
-		str = cd_to_home(main, tab[1]);
+		str = cd_to_home(main, tab[1], 1);
+	else if ((ft_strcmp(tab[1], "--") == 0))
+		str = cd_to_home(main, tab[1], 2);
 	else if (tab[1][0] == '-' && tab[1][1] == '\0')
 		str = cd_to_last_pwd(main, tab[1]);
 	else
 		str = ft_strdup(tab[1]);
-	if (access(str, F_OK) == 0)
+	if (access(str, F_OK) == 0 && access(str, X_OK) == 0)
 	{
 		env_oldpwd_update(main);
 		if (chdir(str) != -1)
@@ -151,8 +153,8 @@ bool	mini_cd(char *line, t_main *main)
 	{
 		free(str);
 		ft_putstr_fd("bash: cd: ", 2);
-		return (set_return_err_code(main, main->exec->cmd[1], 1));
 		main->errcode = 1;
+		return (set_return_err_code(main, main->exec->cmd[1], 1));
 	}
 	return (true);
 }
