@@ -6,14 +6,14 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/03 21:46:16 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/04 00:52:56 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
 
-# include "../libft/libft.h"
+# include "../../libft/libft.h"
 # include "builtins.h"
 # include "error.h"
 # include "structures.h"

@@ -40,6 +40,13 @@ typedef enum e_token_type
 	T_HEREDOC,
 }							t_token_type;
 
+typedef enum e_sig_mode
+{
+	HERE_DOC,
+	CHILD,
+	INTERACTIVE
+}							t_sig_mode;
+
 typedef struct s_token
 {
 	char					*value;

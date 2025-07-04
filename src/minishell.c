@@ -1,4 +1,7 @@
+#include <signal.h>
 #include "../includes/minishell.h"
+
+volatile sig_atomic_t	sig_mode = INTERACTIVE;
 
 static void	parse(t_main *shell, char *cmd)
 {
@@ -24,7 +27,7 @@ static void	parse(t_main *shell, char *cmd)
 	// printf("\nReturn parsing : %d\n", errcode);
 	check_parsing(shell, errcode, true);
 	// print_token_lst(shell->token, "\nToken lst after parsing :\n");
-	//print_exec_lst(shell->exec, "EXEC LST AFTER PARSING :\n");
+	print_exec_lst(shell->exec, "EXEC LST AFTER PARSING :\n");
 }
 
 void	start_shell(t_main *shell)
@@ -34,6 +37,7 @@ void	start_shell(t_main *shell)
 
 	while (1)
 	{
+		init_sigaction(0);
 		dup2(shell->std_in, STDIN_FILENO);
 		dup2(shell->std_out, STDOUT_FILENO);
 		if (isatty(fileno(stdin)))
@@ -69,8 +73,6 @@ int	main(int ac, char **av, char **env)
 	int		errcode;
 
 	(void)av;
-	// if (ac == 1)
-	// {
 	shell = init_minishell(env);
 	start_shell(shell);
 	errcode = shell->errcode;
