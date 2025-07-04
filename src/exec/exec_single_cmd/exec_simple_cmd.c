@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/04 02:46:40 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/04 02:51:43 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,13 @@ void	init_simple_cmd(t_main *main)
 		sig = WTERMSIG(status);
 		if (sig == SIGQUIT)
 			write(2, "Quit (core dumped)\n", 20);
-		// else if (sig == SIGINT)
-		// 	write(1, "\n", 1);
+		else if (sig == SIGINT)
+		{
+			write(1, "\n", 1);
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
 		main->errcode = 128 + sig;
 	}
 	return ;
