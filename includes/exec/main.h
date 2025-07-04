@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/04 03:34:58 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/04 03:39:37 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ int		pipe_exec(t_main *main);
 char	*env_path_finding(t_main *main, char **env);
 char	*cmd_path(char **cmd, char *linktopath);
 int		check_current_dir_exec(t_main *main);
+char	*get_path(t_main *main, char *env_path, char **env);
 
 #endif
