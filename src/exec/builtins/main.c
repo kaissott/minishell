@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/04 03:10:33 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/04 20:08:45 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int	check_input(t_main *main)
 	node = main->exec;
 	if (node == NULL || (node->cmd == NULL && node->next == NULL))
 	{
-		main->errcode = 2;
+		if (main->errcode != 0)
+			main->errcode = 2;
 		return (-1);
 	}
 	if (node->next == NULL)
