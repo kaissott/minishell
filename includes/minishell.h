@@ -22,5 +22,6 @@
 # include "exec/main.h"
 # include "exec/error.h"
 
-
+extern volatile sig_atomic_t	sig_mode;
+void init_sigaction(int mode);
 #endif

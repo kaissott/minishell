@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/03 21:51:24 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/04 00:22:46 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 {
 	pid_t	pid;
-	int		i;
 
-	i = 0;
 	if (node->infile.fd == -1 || node->outfile.fd == -1)
 	{
 		main->errcode = 1;
@@ -31,10 +29,9 @@ pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 	}
 	if (pid == 0)
 	{
-		if (dup_process_child(main, node, prev_fd, main->std_out) == -1)
-			i = 1;
+		dup_process_child(main, node, prev_fd, main->std_out);
 		close_fork(prev_fd, -1, node, main);
-		if (i == 0)
+		if (node->cmd[0] != NULL)
 			do_cmd(main, node->cmd, env);
 	}
 	return (pid);
