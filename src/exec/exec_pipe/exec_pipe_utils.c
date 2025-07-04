@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/04 00:25:35 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/04 03:43:19 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 	char	*path;
 	char *env_path;
 
-	path == NULL;
+	path = NULL;
 	if (exec_cmd(main, cmd, false) == true)
 	{
 		free(env);
