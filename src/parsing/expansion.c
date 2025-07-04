@@ -24,13 +24,25 @@ static t_expand	*extract_expand_var(char *var, ssize_t *i)
 	return (create_expand(T_EXPAND_VAR, ft_substr(var, 1, *i - 1)));
 }
 
+static bool	is_dollar_alone(t_token_chunk *chunk, size_t i, size_t len,
+		t_token_chunk *next)
+{
+	if (len == 1 && chunk->value[i] == '$' && chunk->type != T_DOUBLE_QUOTED
+		&& next && (next->type == T_SINGLE_QUOTED
+			|| next->type == T_DOUBLE_QUOTED))
+	{
+		remove_char_at(chunk->value, i);
+		return (true);
+	}
+	return (false);
+}
+
 static ssize_t	handle_var(t_expand **expand_lst, char *var,
 		t_token_chunk *chunk)
 {
 	ssize_t		i;
 	t_expand	*new_expand;
 
-	(void)chunk;
 	i = 1;
 	if (!var[i] || var[i] == ' ' || var[i] == '\t' || var[i] == '\n')
 	{
@@ -66,22 +78,14 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 			len = handle_var(expand_lst, &chunk->value[i], chunk);
 		else
 			len = handle_word(expand_lst, &chunk->value[i]);
-		if (len == 1 && chunk->value[i] == '$' && chunk->type != T_DOUBLE_QUOTED
-			&& next && (next->type == T_SINGLE_QUOTED
-				|| next->type == T_DOUBLE_QUOTED))
-		{
-			remove_char_at(chunk->value, i);
+		if (is_dollar_alone(chunk, i, len, chunk->next))
 			continue ;
-		}
 		if (len <= 0)
 			return (NULL);
 		i += len;
 	}
-	if (*expand_lst != NULL)
-	{
-		chunk->is_expanded = true;
-		replace_chunk_value(shell, expand_lst, token, chunk);
-	}
+	if (replace_chunk_value(shell, expand_lst, token, chunk) != ERR_NONE)
+		return (NULL);
 	if (!chunk)
 		return (next->next);
 	return (next);
@@ -92,6 +96,7 @@ t_parse_error	expansion(t_main *shell)
 	t_token			*token;
 	t_token_chunk	*chunk;
 	t_expand		*expand_lst;
+	t_parse_error	errcode;
 
 	token = shell->token;
 	while (token)

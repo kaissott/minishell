@@ -58,48 +58,52 @@ t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
 	t_expand	*next;
 	bool		var_found;
 
-	free(chunk->value);
-	chunk->value = NULL;
-	tmp = *expand_lst;
-	var_found = false;
-	next = NULL;
-	while (tmp)
+	if (*expand_lst != NULL)
 	{
-		next = tmp->next;
-		if (tmp->type == T_EXPAND_VAR)
+		chunk->is_expanded = true;
+		free(chunk->value);
+		chunk->value = NULL;
+		tmp = *expand_lst;
+		var_found = false;
+		next = NULL;
+		while (tmp)
 		{
-			var_value = get_var_value(shell, tmp->value, &var_found);
-			if (!var_value)
-				return (ERR_MALLOC);
-		}
-		else
-		{
-			var_found = true;
-			var_value = tmp->value;
-		}
-		if (!var_found)
-		{
-			expand_lst_delone(expand_lst, tmp);
-			if (!chunk->value && !*expand_lst)
-				chunk_lst_delone(&token->chunks, chunk);
-			if (!token->chunks)
+			next = tmp->next;
+			if (tmp->type == T_EXPAND_VAR)
 			{
-				token_lst_delone(&shell->token, token);
-				return (ERR_NONE);
+				var_value = get_var_value(shell, tmp->value, &var_found);
+				if (!var_value)
+					return (ERR_MALLOC);
 			}
+			else
+			{
+				var_found = true;
+				var_value = tmp->value;
+			}
+			if (!var_found)
+			{
+				expand_lst_delone(expand_lst, tmp);
+				if (!chunk->value && !*expand_lst)
+					chunk_lst_delone(&token->chunks, chunk);
+				if (!token->chunks)
+				{
+					token_lst_delone(&shell->token, token);
+					return (ERR_NONE);
+				}
+			}
+			else
+			{
+				chunk->value = join_or_dup(chunk->value, var_value);
+				if (tmp->type == T_EXPAND_VAR && var_value)
+					free(var_value);
+				if (!chunk->value)
+					return (ERR_MALLOC);
+			}
+			if (tmp)
+				tmp = next;
+			else
+				tmp = next->next;
 		}
-		else
-		{
-			chunk->value = join_or_dup(chunk->value, var_value);
-			if (tmp->type == T_EXPAND_VAR && var_value)
-				free(var_value);
-			if (!chunk->value)
-				return (ERR_MALLOC);
-		}
-		if (tmp)
-			tmp = next;
-		else
-			tmp = next->next;
 	}
 	return (ERR_NONE);
 }
