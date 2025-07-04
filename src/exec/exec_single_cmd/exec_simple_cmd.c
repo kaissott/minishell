@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/04 02:51:43 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/04 04:21:34 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	init_simple_cmd(t_main *main)
 	int		status;
 	int		sig;
 
+	sig_mode = CHILD;
 	pid = fork();
 	if (pid == -1)
 		error_fork(NULL, -1, main->exec, main);
@@ -63,14 +64,10 @@ void	init_simple_cmd(t_main *main)
 		sig = WTERMSIG(status);
 		if (sig == SIGQUIT)
 			write(2, "Quit (core dumped)\n", 20);
-		else if (sig == SIGINT)
-		{
-			write(1, "\n", 1);
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
+		if (sig == SIGINT)
+			write(2, "\n", 1);
 		main->errcode = 128 + sig;
 	}
+	// init_sigaction(0);
 	return ;
 }

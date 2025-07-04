@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/04 02:40:31 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/04 04:20:23 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	mon_handler(int sig)
 		else if (sig_mode == HERE_DOC)
 			printf("HD CTRL C");
 		else if (sig_mode == CHILD)
-			printf("child CTRL C");
+			;
 	}
 }
 

@@ -1,5 +1,5 @@
-#include <signal.h>
 #include "../includes/minishell.h"
+#include <signal.h>
 
 volatile sig_atomic_t	sig_mode = INTERACTIVE;
 
@@ -41,7 +41,9 @@ void	start_shell(t_main *shell)
 		dup2(shell->std_in, STDIN_FILENO);
 		dup2(shell->std_out, STDOUT_FILENO);
 		if (isatty(fileno(stdin)))
+		{
 			rl = readline("> ");
+		}
 		else
 		{
 			rl = get_next_line(fileno(stdin));
@@ -58,14 +60,21 @@ void	start_shell(t_main *shell)
 			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);
 			return ;
 		}
+		if (rl[0] == '\0')
+		{
+			free(rl);
+			continue ;
+		}
 		add_history(rl);
 		parse(shell, rl);
 		check_input(shell);
 		reset_struct(rl, shell);
-		rl_on_new_line();
+		// rl_on_new_line();
 	}
 	clear_history();
 }
+
+
 
 int	main(int ac, char **av, char **env)
 {
