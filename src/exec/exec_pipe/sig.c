@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/04 04:20:23 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/05 06:05:49 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	mon_handler(int sig)
+void	my_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -40,7 +40,7 @@ void	init_sigaction(int mode)
 	if (mode == 0)
 	{
 		sig_mode = INTERACTIVE;
-		sa.sa_handler = mon_handler;
+		sa.sa_handler = my_handler;
 		sigaction(SIGINT, &sa, NULL);
 		sa.sa_handler = SIG_IGN;
 		sigaction(SIGQUIT, &sa, NULL);

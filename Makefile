@@ -131,7 +131,7 @@ $(D_OBJ)%.o: $(D_SRC)%.c $(INC) Makefile | $(D_OBJ)
 $(D_OBJ):
 	@mkdir -p $(dir $(OBJ))
 
-# Step 1.5 : Compilation of libft and mlx
+# Step 1.5 : Compilation of libft
 deps:
 	@echo "\n🏗️  Building dependencies...\n\n📚 Building libft..."
 	$(MAKE_CMD) -C $(D_LIBFT) > /dev/null 2>&1

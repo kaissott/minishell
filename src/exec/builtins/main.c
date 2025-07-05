@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/04 20:26:41 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/05 06:06:03 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,18 @@ int	check_input(t_main *main)
 	int		fd_in;
 
 	node = main->exec;
-	if (node == NULL || (node->cmd == NULL && node->next == NULL))
+	if (node == NULL)
 	{
 		if (main->errcode != 0)
 			main->errcode = 2;
+		return (-1);
+	}
+	else if (node->cmd == NULL)
+	{
+		if (node->infile.fd == -1 || node->outfile.fd == -1)
+			main->errcode = 1;
+		else
+			main->errcode = 0;
 		return (-1);
 	}
 	if (node->next == NULL)

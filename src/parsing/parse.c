@@ -1,10 +1,17 @@
 #include "../../includes/minishell.h"
 
-static t_exec	*handle_pipe(t_main *shell, t_token *token, t_exec *new_cmd)
+static t_exec	*handle_pipe(t_main *shell, t_token *token, t_exec *new_cmd,
+		bool is_last)
 {
-	exec_lst_add_back(&shell->exec, new_cmd);
-	token_lst_delone(&shell->token, token);
-	return (create_exec_cmd());
+	if (new_cmd)
+		exec_lst_add_back(&shell->exec, new_cmd);
+	if (!is_last)
+	{
+		token_lst_delone(&shell->token, token);
+		return (create_exec_cmd());
+	}
+	else
+		return (NULL);
 }
 
 static t_parse_error	handle_redirection(t_main *shell, t_token *token,
@@ -54,7 +61,7 @@ static t_parse_error	handle_heredoc(t_main *shell, t_token *token,
 		t_exec *new_cmd)
 {
 	new_cmd->infile.type = T_HEREDOC;
-	if (check_std_cmd(0, new_cmd) != ERR_NONE)
+	if (check_std_cmd(STDIN_FILENO, new_cmd) != ERR_NONE)
 		return (ERR_CLOSE);
 	if (create_heredoc_filepath(&shell->exec, new_cmd) != ERR_NONE)
 		return (ERR_MALLOC);
@@ -104,7 +111,7 @@ t_parse_error	parsing(t_main *shell)
 	{
 		if (shell->token->type == T_PIPE)
 		{
-			new_cmd = handle_pipe(shell, shell->token, new_cmd);
+			new_cmd = handle_pipe(shell, shell->token, new_cmd, false);
 			if (!new_cmd)
 				return (ERR_MALLOC);
 			continue ;
@@ -116,8 +123,7 @@ t_parse_error	parsing(t_main *shell)
 			return (errcode);
 		}
 	}
-	if (new_cmd)
-		exec_lst_add_back(&shell->exec, new_cmd);
+	handle_pipe(shell, shell->token, new_cmd, true);
 	// print_exec_lst(shell->exec, "EXEC LST BEFORE EXEC :\n");
 	return (ERR_NONE);
 }
