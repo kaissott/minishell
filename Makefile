@@ -103,7 +103,8 @@ LIBFT := $(D_LIBFT)libft.a
 
 CC := cc
 CFLAGS := -Wall -Wextra -g3
-IFLAGS := -I$(D_INC) -I$(D_INC)$(D_INC_PARSING) -I$(D_INC)$(D_INC_UTILS)
+IFLAGS := -I$(D_INC) -I$(D_INC)$(D_INC_PARSING) -I$(D_INC)$(D_INC_UTILS) -I/opt/homebrew/opt/readline/include
+LDFLAGS := -L/opt/homebrew/opt/readline/lib -lreadline -lpthread
 
 RM := rm -rf
 MAKE_CMD := @$(MAKE) --no-print-directory
@@ -120,7 +121,7 @@ all:
 # Step 4 : Links edition (Linking)
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "✅ Compilation done.\n\n🔗 Linking $(NAME)..."
-	@$(CC) $(OBJ)  -lreadline -lpthread $(LIBFT) -o $@
+	@$(CC) $(OBJ) $(LDFLAGS) $(LIBFT) -o $@
 	@echo "✅ Linking done.\n\n🎉 ./$(NAME) ready to run!\n"
 
 # Step 2 & 3 : Compilation + Assembly (Generate all .o)
