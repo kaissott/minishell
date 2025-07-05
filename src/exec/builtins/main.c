@@ -6,7 +6,7 @@
 /*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/04 03:10:33 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/05 05:52:49 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,17 @@ int	check_input(t_main *main)
 	int		fd_in;
 
 	node = main->exec;
-	if (node == NULL || (node->cmd == NULL && node->next == NULL))
+	if (node == NULL)
 	{
 		main->errcode = 2;
+		return (-1);
+	}
+	else if (node->cmd == NULL)
+	{
+		if (node->infile.fd == -1 || node->outfile.fd == -1)
+			main->errcode = 1;
+		else
+			main->errcode = 0;
 		return (-1);
 	}
 	if (node->next == NULL)
@@ -75,3 +83,36 @@ int	check_input(t_main *main)
 		pipe_exec(main);
 	return (0);
 }
+
+// int	check_input(t_main *main)
+// {
+// 	t_exec	*node;
+// 	int		fd_out;
+// 	int		fd_in;
+
+// 	node = main->exec;
+// 	if (node == NULL)
+// 	{
+// 		main->errcode = 2;
+// 		return (-1);
+// 	}
+// 	else if (node->cmd == NULL)
+// 	{
+// 		if (node->is_valid == false)
+// 		{
+// 			main->errcode = 1;
+// 			return (-1);
+// 		}
+// 	}
+// 	else if (node->next == NULL)
+// 	{
+// 		fd_in = main->exec->infile.fd;
+// 		fd_out = main->exec->outfile.fd;
+// 		if (file_dup(main, fd_in, fd_out) == 0)
+// 			exec_cmd(main, node->cmd, true);
+// 		close_node(main);
+// 	}
+// 	else if (node->cmd != NULL)
+// 		pipe_exec(main);
+// 	return (0);
+// }

@@ -78,10 +78,10 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 			len = handle_var(expand_lst, &chunk->value[i], chunk);
 		else
 			len = handle_word(expand_lst, &chunk->value[i]);
-		if (is_dollar_alone(chunk, i, len, chunk->next))
-			continue ;
 		if (len <= 0)
 			return (NULL);
+		if (is_dollar_alone(chunk, i, len, chunk->next))
+			continue ;
 		i += len;
 	}
 	if (replace_chunk_value(shell, expand_lst, token, chunk) != ERR_NONE)

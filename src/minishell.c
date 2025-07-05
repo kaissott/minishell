@@ -1,5 +1,5 @@
-#include <signal.h>
 #include "../includes/minishell.h"
+#include <signal.h>
 
 volatile sig_atomic_t	sig_mode = INTERACTIVE;
 

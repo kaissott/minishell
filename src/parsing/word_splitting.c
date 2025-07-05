@@ -24,7 +24,8 @@ static void	replace_split_token(t_token **tokens, t_token *new_tokens,
 		*tokens = new_tokens;
 	else
 		prev->next = new_tokens;
-	// free_token(tmp);
+	free_token(tmp);
+	tmp = NULL;
 }
 
 static t_parse_error	split_chunk_by_ifs(t_token *new_token,
@@ -173,9 +174,15 @@ t_parse_error	word_splitting(t_main *shell)
 				return (errcode);
 			replace_split_token(&shell->token, new_tokens, token);
 		}
-		errcode = cat_chunks(token);
-		if (errcode != ERR_NONE)
-			return (errcode);
+		else
+		{
+			if (token)
+			{
+				errcode = cat_chunks(token);
+				if (errcode != ERR_NONE)
+					return (errcode);
+			}
+		}
 		token = next_token;
 	}
 	return (ERR_NONE);

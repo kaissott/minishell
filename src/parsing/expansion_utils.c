@@ -47,7 +47,7 @@ static char	*get_var_value(t_main *shell, char *var_name, bool *var_found)
 		tmp = tmp->next;
 	}
 	*var_found = false;
-	return (ft_strdup(""));
+	return ("");
 }
 
 t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
