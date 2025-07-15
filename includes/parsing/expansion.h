@@ -5,7 +5,8 @@
 # include "../structures.h"
 
 t_parse_error	expansion(t_main *shell);
-void			remove_char_at(char *str, size_t i);
+bool			is_dollar_alone(t_token_chunk *chunk, size_t i, size_t len,
+					t_token_chunk *next);
 bool			contains_ifs_chars(char *str);
 t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
 					t_token *token,t_token_chunk *chunk);

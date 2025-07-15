@@ -24,19 +24,6 @@ static t_expand	*extract_expand_var(char *var, ssize_t *i)
 	return (create_expand(T_EXPAND_VAR, ft_substr(var, 1, *i - 1)));
 }
 
-static bool	is_dollar_alone(t_token_chunk *chunk, size_t i, size_t len,
-		t_token_chunk *next)
-{
-	if (len == 1 && chunk->value[i] == '$' && chunk->type != T_DOUBLE_QUOTED
-		&& next && (next->type == T_SINGLE_QUOTED
-			|| next->type == T_DOUBLE_QUOTED))
-	{
-		remove_char_at(chunk->value, i);
-		return (true);
-	}
-	return (false);
-}
-
 static ssize_t	handle_var(t_expand **expand_lst, char *var,
 		t_token_chunk *chunk)
 {
@@ -84,8 +71,9 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 			continue ;
 		i += len;
 	}
-	if (replace_chunk_value(shell, expand_lst, token, chunk) != ERR_NONE)
-		return (NULL);
+	if (*expand_lst)
+		if (replace_chunk_value(shell, expand_lst, token, chunk) != ERR_NONE)
+			return (NULL);
 	if (!chunk)
 		return (next->next);
 	return (next);
