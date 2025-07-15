@@ -74,8 +74,6 @@ void	start_shell(t_main *shell)
 	clear_history();
 }
 
-
-
 int	main(int ac, char **av, char **env)
 {
 	t_main	*shell;

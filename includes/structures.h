@@ -68,7 +68,8 @@ typedef enum e_parse_error
 	ERR_OPEN = -7,
 	ERR_CLOSE = -8,
 	ERR_PREV_OPEN = -9,
-	EMPTY_TOKEN_LIST = -10,
+	ERR_SIG = -10,
+	EMPTY_TOKEN_LIST = -11,
 }							t_parse_error;
 
 typedef struct s_error
@@ -82,6 +83,7 @@ typedef struct s_file
 {
 	int						fd;
 	char					*filepath;
+	bool					is_heredoc;
 	t_token_type			type;
 }							t_file;
 

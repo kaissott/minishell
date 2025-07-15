@@ -58,23 +58,6 @@ int	mini_exit(char **line, t_main *main)
 	i = 0;
 	exit_code = 0;
 	size = tab_size(line);
-
-	// if (line[2])
-	// {
-	// 	while(line[2][i])
-	// 	{
-	// 		if (line[2][i] == '\0')
-	// 		{
-	// 			ft_putendl_fd("bash: exit: too many arguments", 2);
-	// 			main->errcode = 1;
-	// 			return(0);
-	// 		}
-	// 		if (!ft_isdigit(line[2][i]))
-	// 			break;
-	// 		i++;
-	// 	}
-
-	// }
 	if (line[1])
 	{
 		exit_code = check_and_conv_exit_code(line, size);

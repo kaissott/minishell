@@ -50,6 +50,10 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 
 	while (1)
 	{
+		/*if (tatata)
+		{
+			return(ERR_CLOSE);
+		}*/
 		if (isatty(fileno(stdin)))
 			rl = readline("HD >");
 		else

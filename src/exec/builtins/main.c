@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/05 06:06:03 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/15 22:40:49 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	check_input(t_main *main)
 	{
 		if (main->errcode != 0)
 			main->errcode = 2;
+		close_node(main);
 		return (-1);
 	}
 	else if (node->cmd == NULL)
@@ -70,6 +71,7 @@ int	check_input(t_main *main)
 			main->errcode = 1;
 		else
 			main->errcode = 0;
+		close_node(main);
 		return (-1);
 	}
 	if (node->next == NULL)

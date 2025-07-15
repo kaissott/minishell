@@ -55,7 +55,14 @@ void	free_node(t_main *main)
 	}
 	main->exec = NULL;
 }
-
+void	here_doc_unlink(t_file infile)
+{
+	if (infile.is_heredoc == true)
+	{
+		unlink(infile.filepath);
+		return ;
+	}
+}
 void	close_node(t_main *main)
 {
 	t_exec	*temp;
@@ -65,7 +72,10 @@ void	close_node(t_main *main)
 	{
 		exit_error_two_close(main, temp->infile.fd, temp->outfile.fd);
 		if (temp->infile.filepath)
+		{
+			here_doc_unlink(temp->infile);
 			free(temp->infile.filepath);
+		}
 		if (temp->outfile.filepath)
 			free(temp->outfile.filepath);
 		temp = temp->next;
