@@ -48,12 +48,14 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 	char	*rl;
 	char	*line;
 
+	init_sigaction(2);
 	while (1)
 	{
-		/*if (tatata)
+		if (sig_mode != HERE_DOC)
 		{
-			return(ERR_CLOSE);
-		}*/
+			init_sigaction(0);
+			return (ERR_SIG);
+		}
 		if (isatty(fileno(stdin)))
 			rl = readline("HD >");
 		else
@@ -67,7 +69,10 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 			}
 		}
 		if (!rl)
+		{
+			init_sigaction(0);
 			return (ERR_NONE);
+		}
 		if (ft_strcmp(rl, next_token_value) == 0)
 		{
 			free(rl);
@@ -76,6 +81,7 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 		ft_putendl_fd(rl, *fd_heredoc);
 		free(rl);
 	}
+	init_sigaction(0);
 	if (secure_close(fd_heredoc) != ERR_NONE)
 		return (ERR_CLOSE);
 	return (ERR_NONE);
