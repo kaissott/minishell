@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 #include <signal.h>
 
-volatile sig_atomic_t	sig_mode = INTERACTIVE;
+volatile sig_atomic_t	g_sig_mode = INTERACTIVE;
 
 static void	parse(t_main *shell, char *cmd)
 {
@@ -73,8 +73,6 @@ void	start_shell(t_main *shell)
 	}
 	clear_history();
 }
-
-
 
 int	main(int ac, char **av, char **env)
 {

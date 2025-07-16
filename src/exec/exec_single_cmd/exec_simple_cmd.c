@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/04 04:21:34 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/16 23:21:20 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	init_simple_cmd(t_main *main)
 	int		status;
 	int		sig;
 
-	sig_mode = CHILD;
+	g_sig_mode = CHILD;
 	pid = fork();
 	if (pid == -1)
 		error_fork(NULL, -1, main->exec, main);
