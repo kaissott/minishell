@@ -31,13 +31,11 @@ void	delete_env_node(t_env **env, char *var)
 	}
 }
 
-bool	mini_unset(t_main *main)
+bool	mini_unset(t_main *main, char **cmd)
 {
-	char	**cmd;
 	int		i;
 
 	i = 1;
-	cmd = main->exec->cmd;
 	if (cmd[1] == NULL)
 		return (0);
 	if (cmd[1][0] == '-')

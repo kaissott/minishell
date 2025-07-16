@@ -94,31 +94,29 @@ void	print_export_env(t_main *main)
 	}
 }
 
-bool	mini_export(t_main *main)
+bool	mini_export(t_main *main, char **cmd)
 {
 	int		i;
-	char	**tab;
 
-	tab = main->exec->cmd;
 	i = 1;
-	if (tab[1] == NULL)
+	if (cmd[1] == NULL)
 		print_export_env(main);
-	while (tab[i])
+	while (cmd[i])
 	{
-		if (!is_valid_identifier(tab[i]))
+		if (!is_valid_identifier(cmd[i]))
 		{
 			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(tab[i], 2);
+			ft_putstr_fd(cmd[i], 2);
 			ft_putendl_fd("': not a valid identifier", 2);
-			if (tab[i][0] == '-')
+			if (cmd[i][0] == '-')
 				main->errcode = 2;
 			else
 				main->errcode = 1;
 		}
-		else if (ft_strchr(tab[i], '=') != NULL)
+		else if (ft_strchr(cmd[i], '=') != NULL)
 		{
-			if (check_var_exist(main, tab[i]) == -1)
-				export_new_var(main, tab[i]);
+			if (check_var_exist(main, cmd[i]) == -1)
+				export_new_var(main, cmd[i]);
 		}
 		i++;
 	}

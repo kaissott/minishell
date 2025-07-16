@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/16 20:53:54 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/16 21:05:23 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "builtins.h"
 # include "error.h"
 # include "structures.h"
-# include <fcntl.h> // pour open()
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>

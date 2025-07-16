@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/25 19:56:25 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/16 21:03:17 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		numeric_argument_error(char *error, char **args);
 bool	mini_cd(char *line, t_main *main);
 void	free_tab_exit(char **args);
 // void	free_tab(char **tab1, char **tab2);
-bool	mini_export(t_main *main);
-bool	mini_unset(t_main *main);
+bool	mini_export(t_main *main, char **cmd);
+bool	mini_unset(t_main *main, char **cmd);
 
 #endif

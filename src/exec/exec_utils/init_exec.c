@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/16 20:49:22 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/16 21:03:21 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ bool	exec_cmd(t_main *main, char **cmd, bool simple)
 	else if (ft_strncmp(cmd[0], "exit", 4) == 0 && ft_strlen(cmd[0]) == 4)
 		return (mini_exit(cmd, main));
 	else if (ft_strncmp(cmd[0], "export", 6) == 0 && ft_strlen(cmd[0]) == 6)
-		return (mini_export(main));
+		return (mini_export(main, cmd));
 	else if (ft_strncmp(cmd[0], "unset", 5) == 0 && ft_strlen(cmd[0]) == 5)
-		return (mini_unset(main));
+		return (mini_unset(main, cmd));
 	else if (simple == true)
 		init_simple_cmd(main);
 	return (false);
