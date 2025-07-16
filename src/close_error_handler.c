@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_error_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:10:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/05 05:44:36 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/16 23:42:52 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	exit_error_minishell(t_main *main, int errcode, char *err)
 {
-	t_exec	*tmp;
 
 	if (main)
 	{

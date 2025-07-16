@@ -51,7 +51,7 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 	init_sigaction(2);
 	while (1)
 	{
-		if (sig_mode != HERE_DOC)
+		if (g_sig_mode != HERE_DOC)
 		{
 			init_sigaction(0);
 			return (ERR_SIG);

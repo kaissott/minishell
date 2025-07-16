@@ -88,6 +88,7 @@ int	free_struct(t_main *main)
 		free_env(main);
 	if (main->exec != NULL)
 		free_node(main);
+	return (1);
 }
 void	free_tab_2(char **tab)
 {

@@ -80,12 +80,12 @@ int	main(int ac, char **av, char **env)
 	int		errcode;
 
 	(void)av;
+	if (ac > 1)
+		return (EXIT_SUCCESS);
 	shell = init_minishell(env);
 	start_shell(shell);
 	errcode = shell->errcode;
 	free_struct(shell);
 	free(shell);
 	return (errcode);
-	// }
-	return (EXIT_FAILURE);
 }

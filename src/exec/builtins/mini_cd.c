@@ -100,7 +100,6 @@ char	*cd_to_last_pwd(t_main *main, char *path)
 {
 	t_env	*env;
 	char	*str;
-	char	*dst;
 
 	env = main->env;
 	while (env)
