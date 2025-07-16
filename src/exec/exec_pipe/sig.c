@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/16 01:56:55 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/16 23:24:07 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ void	my_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		if (sig_mode == INTERACTIVE)
+		if (g_sig_mode == INTERACTIVE)
 		{
 			write(1, "\n", 1);
 			rl_on_new_line();
 			rl_replace_line("", 0);
 			rl_redisplay();
 		}
-		else if (sig_mode == HERE_DOC)
+		else if (g_sig_mode == HERE_DOC)
 		{
 			write(1, "\n", 1);
-			sig_mode = INTERACTIVE;
+			g_sig_mode = INTERACTIVE;
 		}
-		else if (sig_mode == CHILD)
+		else if (g_sig_mode == CHILD)
 			;
 	}
 }
@@ -42,7 +42,7 @@ void	init_sigaction(int mode)
 	sa.sa_flags = SA_RESTART;
 	if (mode == 0)
 	{
-		sig_mode = INTERACTIVE;
+		g_sig_mode = INTERACTIVE;
 		sa.sa_handler = my_handler;
 		sigaction(SIGINT, &sa, NULL);
 		sa.sa_handler = SIG_IGN;
@@ -50,7 +50,7 @@ void	init_sigaction(int mode)
 	}
 	else if (mode == 1)
 	{
-		sig_mode = CHILD;
+		g_sig_mode = CHILD;
 		sa.sa_handler = SIG_DFL;
 		sigaction(SIGINT, &sa, NULL);
 		sigaction(SIGQUIT, &sa, NULL);

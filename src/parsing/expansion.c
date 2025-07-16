@@ -71,9 +71,8 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 			continue ;
 		i += len;
 	}
-	if (*expand_lst)
-		if (replace_chunk_value(shell, expand_lst, token, chunk) != ERR_NONE)
-			return (NULL);
+	if (replace_chunk_value(shell, expand_lst, token, chunk) != ERR_NONE)
+		return (NULL);
 	if (!chunk)
 		return (next->next);
 	return (next);
@@ -82,6 +81,7 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 t_parse_error	expansion(t_main *shell)
 {
 	t_token			*token;
+	t_token			*next;
 	t_token_chunk	*chunk;
 	t_expand		*expand_lst;
 	t_parse_error	errcode;
@@ -89,6 +89,7 @@ t_parse_error	expansion(t_main *shell)
 	token = shell->token;
 	while (token)
 	{
+		next = token->next;
 		chunk = token->chunks;
 		while (chunk)
 		{
@@ -104,7 +105,10 @@ t_parse_error	expansion(t_main *shell)
 			else
 				chunk = chunk->next;
 		}
-		token = token->next;
+		if (token)
+			token = next;
+		else
+			token = next->next;
 	}
 	return (ERR_NONE);
 }

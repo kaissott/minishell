@@ -47,6 +47,7 @@ void	free_token(t_token *token)
 	if (token->value)
 		free(token->value);
 	free(token);
+	token = NULL;
 }
 
 void	free_token_lst(t_token **token_lst)
