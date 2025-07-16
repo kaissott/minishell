@@ -6,12 +6,11 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/03 21:43:22 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/16 21:31:03 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
 
 void	safe_close(int fd, t_main *main)
 {
@@ -27,21 +26,24 @@ void	safe_close(int fd, t_main *main)
 	return ;
 }
 
-
-
-
 void	wait_child(pid_t last, t_main *main)
 {
 	int	status;
+	int	sig;
 
 	while (waitpid(last, &status, 0) > 0)
+		;
+	if (WIFEXITED(status))
+		main->errcode = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
 	{
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 127)
-			main->errcode = 127;
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
-			main->errcode = 1;
+		sig = WTERMSIG(status);
+		if (sig == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 20);
+		if (sig == SIGINT)
+			write(2, "\n", 1);
+		main->errcode = 128 + sig;
 	}
 	while (wait(NULL) > 0)
 		;
 }
-

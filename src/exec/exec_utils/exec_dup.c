@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/03 23:02:50 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/16 21:26:07 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	dup_failed_err(t_main *main, int prev_fd, int pipefd, t_exec *node)
 	free_struct(main);
 	free(main);
 	ft_putstr_fd("Dup failed\n", 2);
-	// main->errcode = 1;
 	exit(1);
 }
 int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
