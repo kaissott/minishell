@@ -13,11 +13,19 @@ void	free_tab_exit(char **args)
 	free(args);
 }
 
-int	numeric_argument_error(char *error, char **args)
+void	exit_minishell(t_main *main, int exitcode)
+{
+	close_node(main);
+	free_struct(main);
+	close(main->std_in);
+	close(main->std_out);
+	free(main);
+	exit(exitcode);
+}
+int	numeric_argument_error(char **args, t_main *main)
 {
 	ft_putstr_fd("exit\nbash: exit: ", 2);
 	ft_putstr_fd(args[1], 2);
 	ft_putstr_fd(ERR_NUM_ARG, 2);
-	free_tab_exit(args);
-	exit(2);
+	exit_minishell(main, 2);
 }

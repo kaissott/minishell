@@ -42,7 +42,8 @@ bool	check_parsing(t_main *shell, t_parse_error errcode, bool at_end)
 		return (true);
 	}
 	get_errcode(shell, errcode);
-	print_token_error_msg(errcode, shell->error.unexpected_token);
+	if (errcode != ERR_SIG)
+		print_token_error_msg(errcode, shell->error.unexpected_token);
 	free_shell(shell, errcode);
 	return (false);
 }

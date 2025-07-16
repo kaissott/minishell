@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/05 06:06:03 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/16 21:03:21 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ bool	exec_cmd(t_main *main, char **cmd, bool simple)
 	else if (ft_strncmp(cmd[0], "exit", 4) == 0 && ft_strlen(cmd[0]) == 4)
 		return (mini_exit(cmd, main));
 	else if (ft_strncmp(cmd[0], "export", 6) == 0 && ft_strlen(cmd[0]) == 6)
-		return (mini_export(main));
+		return (mini_export(main, cmd));
 	else if (ft_strncmp(cmd[0], "unset", 5) == 0 && ft_strlen(cmd[0]) == 5)
-		return (mini_unset(main));
+		return (mini_unset(main, cmd));
 	else if (simple == true)
 		init_simple_cmd(main);
 	return (false);
@@ -51,18 +51,17 @@ void	reset_struct(char *rl, t_main *main)
 	}
 }
 
-int	check_input(t_main *main)
+bool	node_check(t_main *main)
 {
 	t_exec	*node;
-	int		fd_out;
-	int		fd_in;
 
 	node = main->exec;
 	if (node == NULL)
 	{
 		if (main->errcode != 0)
 			main->errcode = 2;
-		return (-1);
+		close_node(main);
+		return (false);
 	}
 	else if (node->cmd == NULL)
 	{
@@ -70,8 +69,20 @@ int	check_input(t_main *main)
 			main->errcode = 1;
 		else
 			main->errcode = 0;
-		return (-1);
+		close_node(main);
+		return (false);
 	}
+	return (true);
+}
+int	check_input(t_main *main)
+{
+	t_exec	*node;
+	int		fd_out;
+	int		fd_in;
+
+	node = main->exec;
+	if (node_check(main) == false)
+		return (-1);
 	if (node->next == NULL)
 	{
 		fd_in = main->exec->infile.fd;

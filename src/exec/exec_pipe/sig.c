@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/05 06:05:49 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/16 01:56:55 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	my_handler(int sig)
 			rl_redisplay();
 		}
 		else if (sig_mode == HERE_DOC)
-			printf("HD CTRL C");
+		{
+			write(1, "\n", 1);
+			sig_mode = INTERACTIVE;
+		}
 		else if (sig_mode == CHILD)
 			;
 	}
@@ -50,6 +53,14 @@ void	init_sigaction(int mode)
 		sig_mode = CHILD;
 		sa.sa_handler = SIG_DFL;
 		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
+	}
+	else if (mode == 2)
+	{
+		sig_mode = HERE_DOC;
+		sa.sa_handler = my_handler;
+		sigaction(SIGINT, &sa, NULL);
+		sa.sa_handler = SIG_IGN;
 		sigaction(SIGQUIT, &sa, NULL);
 	}
 }

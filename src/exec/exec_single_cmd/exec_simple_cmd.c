@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/04 04:21:34 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/16 21:24:14 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,25 @@ void	exec_simple_cmd(t_main *main)
 	execve_err(main, main->env_tab, path, main->exec->cmd[0]);
 }
 
+void	wait_simple_cmd(t_main *main, pid_t pid)
+{
+	int	status;
+	int	sig;
+
+	while (waitpid(pid, &status, 0) > 0)
+		;
+	if (WIFEXITED(status))
+		main->errcode = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 20);
+		if (sig == SIGINT)
+			write(2, "\n", 1);
+		main->errcode = 128 + sig;
+	}
+}
 void	init_simple_cmd(t_main *main)
 {
 	pid_t	pid;
@@ -55,19 +74,6 @@ void	init_simple_cmd(t_main *main)
 			main->exec->outfile.fd);
 		exec_simple_cmd(main);
 	}
-	while (waitpid(pid, &status, 0) > 0)
-		;
-	if (WIFEXITED(status))
-		main->errcode = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-	{
-		sig = WTERMSIG(status);
-		if (sig == SIGQUIT)
-			write(2, "Quit (core dumped)\n", 20);
-		if (sig == SIGINT)
-			write(2, "\n", 1);
-		main->errcode = 128 + sig;
-	}
-	// init_sigaction(0);
+	wait_simple_cmd(main, pid);
 	return ;
 }
