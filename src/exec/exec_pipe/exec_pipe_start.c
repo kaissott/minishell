@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_start.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/04 00:22:46 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/17 02:28:25 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 {
 	int		pipefd[2];
-	int		i;
 	pid_t	pid;
 
 	if (pipe(pipefd) == -1)

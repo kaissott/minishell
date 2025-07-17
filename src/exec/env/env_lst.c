@@ -66,7 +66,6 @@ void	env_build(char **env, t_main *main)
 int	check_env_available(char **env, t_main *main)
 {
 	char	*str;
-	t_env	*temp;
 
 	str = getenv("PATH");
 	if (str == NULL)

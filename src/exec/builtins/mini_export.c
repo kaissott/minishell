@@ -43,8 +43,6 @@ void	replace_var(t_main *main, char *var, t_env *env)
 int	check_var_exist(t_main *main, char *var)
 {
 	int		i;
-	char	*new;
-	char	*temp;
 	t_env	*env;
 
 	i = 0;

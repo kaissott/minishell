@@ -17,10 +17,8 @@ void	env_pwd_update(t_main *main)
 {
 	t_env	*temp;
 	char	*tmp;
-	int		i;
 	char	path[1024];
 
-	i = 0;
 	if (getcwd(path, 1024) == NULL)
 		free_and_exit_error(main, NULL, ERR_GETCWD, errno);
 	temp = main->env;
@@ -41,11 +39,9 @@ void	env_pwd_update(t_main *main)
 void	env_oldpwd_update(t_main *main)
 {
 	t_env	*temp;
-	int		i;
 	char	*path;
 	char	pwd[1024];
 
-	i = 0;
 	temp = main->env;
 	if (getcwd(pwd, 1024) == NULL)
 		free_and_exit_error(main, NULL, ERR_GETCWD, errno);
@@ -96,12 +92,13 @@ char	*cd_to_home(t_main *main, char *path, int i)
 	return (dst);
 }
 
-char	*cd_to_last_pwd(t_main *main, char *path)
+char	*cd_to_last_pwd(t_main *main)
 {
 	t_env	*env;
 	char	*str;
 
 	env = main->env;
+	str = NULL;
 	while (env)
 	{
 		if (ft_strncmp(env->env, "OLDPWD=", 7) == 0)
@@ -122,14 +119,16 @@ char	*get_directory(t_main *main, char **tab)
 {
 	char	*str;
 
+	str = NULL;
 	if (tab[1] == NULL || tab[1][0] == '~')
 		str = cd_to_home(main, tab[1], 1);
 	else if ((ft_strcmp(tab[1], "--") == 0))
 		str = cd_to_home(main, tab[1], 2);
 	else if (tab[1][0] == '-' && tab[1][1] == '\0')
-		str = cd_to_last_pwd(main, tab[1]);
+		str = cd_to_last_pwd(main);
 	else
 		str = ft_strdup(tab[1]);
+	return (str);
 }
 bool	mini_cd(char **cmd, t_main *main)
 {

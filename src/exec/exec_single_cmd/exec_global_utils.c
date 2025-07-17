@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_global_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:27:16 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/04 00:27:30 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/17 02:29:37 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_current_dir_exec(t_main *main)
 	return (1);
 }
 
-static char	*try_paths(t_main *main, char **paths, char *env_path, char **env)
+static char	*try_paths(t_main *main, char **paths, char *env_path)
 {
 	char	*full_path;
 	int		i;
@@ -73,7 +73,7 @@ char	*get_path(t_main *main, char *env_path, char **env)
 	paths = ft_split_slash(env_path, ':');
 	if (!paths)
 		free_and_exit_error(main, env_path, ERR_MEM, 12);
-	result = try_paths(main, paths, env_path, env);
+	result = try_paths(main, paths, env_path);
 	return (result);
 }
 

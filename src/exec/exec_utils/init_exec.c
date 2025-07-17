@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/16 21:03:21 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/17 02:29:19 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ bool	exec_cmd(t_main *main, char **cmd, bool simple)
 
 void	reset_struct(char *rl, t_main *main)
 {
-	int	i;
 
 	if (rl)
 		free(rl);
