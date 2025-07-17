@@ -22,6 +22,7 @@ void	exit_minishell(t_main *main, int exitcode)
 	free(main);
 	exit(exitcode);
 }
+
 void	numeric_argument_error(char **args, t_main *main)
 {
 	ft_putstr_fd("exit\nbash: exit: ", 2);

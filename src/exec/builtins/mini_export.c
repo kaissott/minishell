@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 00:24:55 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/16 00:16:31 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/17 23:11:00 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +29,7 @@ void	export_new_var(t_main *main, char *var)
 		free_and_exit_error(main, NULL, ERR_MEM, 12);
 	lstadd_back(&main->env, export);
 }
+
 void	replace_var(t_main *main, char *var, t_env *env)
 {
 	char	*new;
@@ -40,6 +40,7 @@ void	replace_var(t_main *main, char *var, t_env *env)
 	free(env->env);
 	env->env = new;
 }
+
 int	check_var_exist(t_main *main, char *var)
 {
 	int		i;

@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/16 00:15:42 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/17 23:07:49 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +114,7 @@ char	*cd_to_last_pwd(t_main *main)
 	main->errcode = 1;
 	return (str);
 }
+
 char	*get_directory(t_main *main, char **tab)
 {
 	char	*str;
@@ -130,6 +130,7 @@ char	*get_directory(t_main *main, char **tab)
 		str = ft_strdup(tab[1]);
 	return (str);
 }
+
 bool	mini_cd(char **cmd, t_main *main)
 {
 	char	*str;

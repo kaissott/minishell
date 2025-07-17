@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/16 00:16:00 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/17 23:04:52 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +52,6 @@ void	print_echo_with_flag(t_main *main, char **tab)
 			if (tab[i])
 			{
 				ft_putchar_fd(' ', STDOUT_FILENO);
-					// free_and_exit_error(main, NULL, ERR_WRITE, errno
 			}
 		}
 	}
