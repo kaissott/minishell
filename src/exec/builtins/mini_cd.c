@@ -118,19 +118,10 @@ char	*cd_to_last_pwd(t_main *main, char *path)
 	main->errcode = 1;
 	return (str);
 }
-
-bool	mini_cd(char *line, t_main *main)
+char	*get_directory(t_main *main, char **tab)
 {
-	char	**tab;
 	char	*str;
 
-	tab = main->exec->cmd;
-	if (tab[1] != NULL && tab[2])
-	{
-		ft_putstr_fd("bash: cd: too many arguments\n", 2);
-		main->errcode = 1;
-		return(true);
-	}
 	if (tab[1] == NULL || tab[1][0] == '~')
 		str = cd_to_home(main, tab[1], 1);
 	else if ((ft_strcmp(tab[1], "--") == 0))
@@ -139,6 +130,18 @@ bool	mini_cd(char *line, t_main *main)
 		str = cd_to_last_pwd(main, tab[1]);
 	else
 		str = ft_strdup(tab[1]);
+}
+bool	mini_cd(char **cmd, t_main *main)
+{
+	char	*str;
+
+	if (cmd[1] != NULL && cmd[2])
+	{
+		ft_putstr_fd("bash: cd: too many arguments\n", 2);
+		main->errcode = 1;
+		return (true);
+	}
+	str = get_directory(main, cmd);
 	if (access(str, F_OK) == 0 && access(str, X_OK) == 0)
 	{
 		env_oldpwd_update(main);
@@ -152,7 +155,6 @@ bool	mini_cd(char *line, t_main *main)
 	{
 		free(str);
 		ft_putstr_fd("bash: cd: ", 2);
-		main->errcode = 1;
 		return (set_return_err_code(main, main->exec->cmd[1], 1));
 	}
 	return (true);
