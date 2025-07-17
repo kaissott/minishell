@@ -1,33 +1,5 @@
 #include "../../includes/minishell.h"
 
-static void	replace_split_token(t_token **tokens, t_token *new_tokens,
-		t_token *token)
-{
-	t_token	*tmp;
-	t_token	*prev;
-	t_token	*last;
-
-	tmp = *tokens;
-	prev = NULL;
-	while (tmp && tmp != token)
-	{
-		prev = tmp;
-		tmp = tmp->next;
-	}
-	if (!tmp)
-		return ;
-	last = new_tokens;
-	while (last->next)
-		last = last->next;
-	last->next = tmp->next;
-	if (!prev)
-		*tokens = new_tokens;
-	else
-		prev->next = new_tokens;
-	free_token(tmp);
-	tmp = NULL;
-}
-
 static t_parse_error	split_chunk_by_ifs(t_token *new_token,
 		t_token_chunk *chunk, t_token **new_tokens)
 {

@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/16 23:24:07 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/16 23:31:20 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	init_sigaction(int mode)
 	}
 	else if (mode == 2)
 	{
-		sig_mode = HERE_DOC;
+		g_sig_mode = HERE_DOC;
 		sa.sa_handler = my_handler;
 		sigaction(SIGINT, &sa, NULL);
 		sa.sa_handler = SIG_IGN;

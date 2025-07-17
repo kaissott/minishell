@@ -69,8 +69,10 @@ static ssize_t	extract_operator_token(t_main *shell, char *cmd)
 
 	len = 1;
 	token_type = get_token_type(&shell->error, cmd);
-	if (token_type == T_ERROR)
+	if (token_type == T_ERROR_SYNTAX)
 		return (ERR_SYNTAX);
+	else if (token_type == T_ERROR_PIPE)
+		return (ERR_DOUBLE_PIPE);
 	if (token_type == T_HEREDOC || token_type == T_REDIR_APPEND)
 		len = 2;
 	if (token_lst_add_operator_node(&shell->token, cmd, len,

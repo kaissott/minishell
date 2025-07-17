@@ -31,7 +31,8 @@ typedef struct s_token_chunk
 
 typedef enum e_token_type
 {
-	T_ERROR = -1,
+	T_ERROR_SYNTAX = -2,
+	T_ERROR_PIPE,
 	T_WORD,
 	T_PIPE,
 	T_REDIR_IN,

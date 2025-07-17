@@ -25,14 +25,14 @@ LST_EXEC_SINGLE_CMD :=	error_free.c exec_simple_cmd.c  single_cmd_error.c exec_g
 LST_EXEC_UTILS := exec_dup.c strrchr_slash.c ft_split_slash.c init_exec.c
 
 LST_PARSING :=	expansion_utils.c expansion.c parse_utils.c parse.c \
-				tokenisation_utils.c tokenisation.c word_splitting.c
+				tokenisation_utils.c tokenisation.c word_splitting_utils.c word_splitting.c
 
 LST_UTILS :=	file_utils.c free_utils.c utils.c
 
-LST_LST_UTILS :=	chunk_lst_utils.c env_lst_utils.c exec_lst_utils.c \
+LST_LST_UTILS :=	chunk_lst_utils.c exec_lst_utils.c \
 					expand_lst_utils.c token_lst_utils.c
 
-LST_LST_FREE_UTILS :=	exec_free_utils.c token_free_utils.c
+LST_LST_FREE_UTILS :=	exec_free_utils.c expand_free_utils.c token_free_utils.c
 
 LST_INC :=	minishell.h structures.h
 

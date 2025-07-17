@@ -17,18 +17,13 @@ bool	is_dollar_alone(t_token_chunk *chunk, size_t i, size_t len,
 	return (false);
 }
 
-bool	contains_ifs_chars(char *str)
+t_expand	*extract_expand_var(char *var, ssize_t *i)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
-			return (true);
-		i++;
-	}
-	return (false);
+	if (var[*i] == '$' || var[*i] == '?' || var[*i] == '/')
+		return (create_expand(T_EXPAND_VAR, ft_substr(var, 0, 2)));
+	while (var[*i] && (ft_isalnum(var[*i]) || var[*i] == '_'))
+		(*i)++;
+	return (create_expand(T_EXPAND_VAR, ft_substr(var, 1, *i - 1)));
 }
 
 static char	*get_var_value(t_main *shell, char *var_name, bool *var_found)
@@ -56,6 +51,10 @@ static char	*get_var_value(t_main *shell, char *var_name, bool *var_found)
 	}
 	*var_found = false;
 	return ("");
+}
+
+t_parse_error	checker(void)
+{
 }
 
 t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
@@ -110,23 +109,4 @@ t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
 		}
 	}
 	return (ERR_NONE);
-}
-
-void	free_expand_lst(t_expand **expand_lst)
-{
-	t_expand	*current;
-	t_expand	*next;
-
-	if (!expand_lst || !*expand_lst)
-		return ;
-	current = *expand_lst;
-	while (current)
-	{
-		next = current->next;
-		if (current->value)
-			free(current->value);
-		free(current);
-		current = next;
-	}
-	*expand_lst = NULL;
 }

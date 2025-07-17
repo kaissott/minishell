@@ -31,24 +31,9 @@ static t_parse_error	handle_redirection(t_main *shell, t_token *token,
 	errcode = check_std_cmd(std, new_cmd);
 	if (errcode == ERR_NONE)
 	{
-		if (std == STDIN_FILENO)
-		{
-			new_cmd->infile.filepath = ft_strdup(token->next->value);
-			if (!new_cmd->infile.filepath)
-				return (ERR_MALLOC);
-			new_cmd->infile.fd = open_file(token->next->value, token->type);
-			if (new_cmd->infile.fd == -1)
-				perror(new_cmd->infile.filepath);
-		}
-		else
-		{
-			new_cmd->outfile.filepath = ft_strdup(token->next->value);
-			if (!new_cmd->outfile.filepath)
-				return (ERR_MALLOC);
-			new_cmd->outfile.fd = open_file(token->next->value, token->type);
-			if (new_cmd->outfile.fd == -1)
-				perror(new_cmd->outfile.filepath);
-		}
+		errcode = process_exec_std(token, new_cmd, std);
+		if (errcode != ERR_NONE)
+			return (errcode);
 	}
 	else if (errcode != ERR_PREV_OPEN)
 		return (errcode);
@@ -124,6 +109,5 @@ t_parse_error	parsing(t_main *shell)
 		}
 	}
 	handle_pipe(shell, shell->token, new_cmd, true);
-	// print_exec_lst(shell->exec, "EXEC LST BEFORE EXEC :\n");
 	return (ERR_NONE);
 }

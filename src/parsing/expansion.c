@@ -15,15 +15,6 @@ static ssize_t	handle_word(t_expand **expand_lst, char *word)
 	return (i);
 }
 
-static t_expand	*extract_expand_var(char *var, ssize_t *i)
-{
-	if (var[*i] == '$' || var[*i] == '?' || var[*i] == '/')
-		return (create_expand(T_EXPAND_VAR, ft_substr(var, 0, 2)));
-	while (var[*i] && (ft_isalnum(var[*i]) || var[*i] == '_'))
-		(*i)++;
-	return (create_expand(T_EXPAND_VAR, ft_substr(var, 1, *i - 1)));
-}
-
 static ssize_t	handle_var(t_expand **expand_lst, char *var,
 		t_token_chunk *chunk)
 {
@@ -78,12 +69,33 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 	return (next);
 }
 
+static t_parse_error	process_chunk(t_main *shell, t_token *token,
+		t_token_chunk *chunk)
+{
+	t_expand	*expand_lst;
+
+	while (chunk)
+	{
+		expand_lst = NULL;
+		if ((chunk->type == T_STRING || chunk->type == T_DOUBLE_QUOTED)
+			&& ft_strchr(chunk->value, '$') && !token->is_delimiter)
+		{
+			chunk = handle_chunk_value(shell, &expand_lst, token, chunk);
+			free_expand_lst(&expand_lst);
+			if (!chunk && expand_lst)
+				return (ERR_MALLOC);
+		}
+		else
+			chunk = chunk->next;
+	}
+	return (ERR_NONE);
+}
+
 t_parse_error	expansion(t_main *shell)
 {
 	t_token			*token;
 	t_token			*next;
 	t_token_chunk	*chunk;
-	t_expand		*expand_lst;
 	t_parse_error	errcode;
 
 	token = shell->token;
@@ -91,20 +103,9 @@ t_parse_error	expansion(t_main *shell)
 	{
 		next = token->next;
 		chunk = token->chunks;
-		while (chunk)
-		{
-			expand_lst = NULL;
-			if ((chunk->type == T_STRING || chunk->type == T_DOUBLE_QUOTED)
-				&& ft_strchr(chunk->value, '$') && !token->is_delimiter)
-			{
-				chunk = handle_chunk_value(shell, &expand_lst, token, chunk);
-				free_expand_lst(&expand_lst);
-				if (!chunk && expand_lst)
-					return (ERR_MALLOC);
-			}
-			else
-				chunk = chunk->next;
-		}
+		errcode = process_chunk(shell, token, chunk);
+		if (errcode != ERR_NONE)
+			return (errcode);
 		if (token)
 			token = next;
 		else

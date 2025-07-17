@@ -4,7 +4,6 @@
 # include "../../minishell.h"
 # include "../../structures.h"
 
-t_token_chunk	*chunk_lst_last(t_token_chunk *lst);
 void			chunk_lst_add_back(t_token_chunk **chunk_lst,
 					t_token_chunk *new);
 t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, char *cmd,
@@ -14,10 +13,6 @@ t_parse_error	create_and_add_splitted_chunk(t_token_chunk **chunk_lst,
 void			chunk_lst_delone(t_token_chunk **chunk_lst,
 					t_token_chunk *node_to_delete);
 t_parse_error	cat_chunks(t_token *token);
-
-bool			create_env_lst(t_env **env_lst, char **env);
-void			free_env_lst(t_env **env_lst);
-void			print_env_lst(t_env *lst, char *msg);
 
 t_exec			*create_exec_cmd(void);
 void			exec_lst_add_back(t_exec **exec_lst, t_exec *new);
@@ -35,12 +30,13 @@ void			print_token_lst(t_token *lst, char *msg);
 t_token			*token_lst_last(t_token *lst);
 void			token_lst_delone(t_token **token_lst, t_token *node_to_delete);
 void			token_lst_add_back(t_token **token_lst, t_token *new);
-t_parse_error	token_lst_add_operator_node(t_token **token_lst, char *cmd, ssize_t len,
-					t_token_type token_type);
+t_parse_error	token_lst_add_operator_node(t_token **token_lst, char *cmd,
+					ssize_t len, t_token_type token_type);
 t_parse_error	token_lst_add_chunks(t_main *shell, t_token *new_token);
 
 void			free_exec(t_exec *exec);
 void			free_exec_lst(t_exec **exec_lst);
+void			free_expand_lst(t_expand **expand_lst);
 void			free_token(t_token *token);
 void			free_token_lst(t_token **token_lst);
 

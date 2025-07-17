@@ -1,15 +1,5 @@
 #include "../../../includes/minishell.h"
 
-t_parse_error	parsing_error(t_main *shell, t_parse_error errcode,
-		char *filepath)
-{
-	get_errcode(shell, errcode);
-	free_shell(shell, errcode);
-	if (filepath)
-		perror(filepath);
-	return (errcode);
-}
-
 t_parse_error	set_error(t_error *error, t_parse_error error_type,
 		char unexpected_token)
 {
@@ -19,25 +9,29 @@ t_parse_error	set_error(t_error *error, t_parse_error error_type,
 	return (error_type);
 }
 
-void	print_token_error_msg(t_parse_error err_code, char unexpected_token)
+void	print_syntax_error_msg(t_parse_error errcode, char unexpected_token)
 {
-	if (err_code == ERR_MISSING_SINGLE_QUOTE)
-		fprintf(stderr, "Missing single quote (').\n");
-	else if (err_code == ERR_MISSING_DOUBLE_QUOTE)
-		fprintf(stderr, "Missing double quote (\").\n");
-	else if (err_code == ERR_SYNTAX)
+	if (errcode == ERR_MISSING_SINGLE_QUOTE)
+		ft_putstr_fd("Missing single quote (').\n", STDERR_FILENO);
+	else if (errcode == ERR_MISSING_DOUBLE_QUOTE)
+		ft_putstr_fd("Missing double quote (\").\n", STDERR_FILENO);
+	else if (errcode == ERR_SYNTAX)
 	{
+		ft_putstr_fd("syntax error near unexpected token ", STDERR_FILENO);
 		if (!unexpected_token)
-			fprintf(stderr, "%s `newline'\n",
-				"syntax error near unexpected token ");
+			ft_putstr_fd("`newline'", STDERR_FILENO);
 		else
-			fprintf(stderr, "%s `%c'\n", "syntax error near unexpected token ",
-				unexpected_token);
+		{
+			ft_putchar_fd('`', STDERR_FILENO);
+			ft_putchar_fd(unexpected_token, STDERR_FILENO);
+			ft_putchar_fd('\'', STDERR_FILENO);
+		}
+		ft_putchar_fd('\n', STDERR_FILENO);
 	}
-	else if (err_code == ERR_DOUBLE_PIPE)
-		fprintf(stderr, "Double pipe.\n");
-	else if (err_code == ERR_MALLOC)
-		fprintf(stderr, "Token creation failed (malloc error).\n");
+	else if (errcode == ERR_DOUBLE_PIPE)
+		ft_putstr_fd("Double pipe.\n", STDERR_FILENO);
+	else if (errcode == ERR_MALLOC)
+		ft_putstr_fd("Token creation failed (malloc error).\n", STDERR_FILENO);
 }
 
 char	*join_or_dup(char *prev, char *next)
@@ -54,9 +48,4 @@ char	*join_or_dup(char *prev, char *next)
 		new_val = ft_strdup("");
 	free(prev);
 	return (new_val);
-}
-
-void	check_open(int std)
-{
-	return ;
 }

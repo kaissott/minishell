@@ -20,6 +20,29 @@ char	**resize_cmd_args(char **cmd, char *new_arg)
 	return (new_cmd);
 }
 
+t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
+{
+	if (std == STDIN_FILENO)
+	{
+		new_cmd->infile.filepath = ft_strdup(token->next->value);
+		if (!new_cmd->infile.filepath)
+			return (ERR_MALLOC);
+		new_cmd->infile.fd = open_file(token->next->value, token->type);
+		if (new_cmd->infile.fd == -1)
+			perror(new_cmd->infile.filepath);
+	}
+	else
+	{
+		new_cmd->outfile.filepath = ft_strdup(token->next->value);
+		if (!new_cmd->outfile.filepath)
+			return (ERR_MALLOC);
+		new_cmd->outfile.fd = open_file(token->next->value, token->type);
+		if (new_cmd->outfile.fd == -1)
+			perror(new_cmd->outfile.filepath);
+	}
+	return (ERR_NONE);
+}
+
 t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)
 {
 	int		i;
@@ -51,7 +74,7 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 	init_sigaction(2);
 	while (1)
 	{
-		if (sig_mode != HERE_DOC)
+		if (g_sig_mode != HERE_DOC)
 		{
 			init_sigaction(0);
 			return (ERR_SIG);

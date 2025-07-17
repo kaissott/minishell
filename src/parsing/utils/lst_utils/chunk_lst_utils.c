@@ -1,18 +1,5 @@
 #include "../../../../includes/minishell.h"
 
-t_token_chunk	*chunk_lst_last(t_token_chunk *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst)
-	{
-		if (lst->next == NULL)
-			return (lst);
-		lst = lst->next;
-	}
-	return (NULL);
-}
-
 void	chunk_lst_delone(t_token_chunk **chunk_lst,
 		t_token_chunk *node_to_delete)
 {
