@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/04 03:43:19 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/18 03:00:40 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ char	*cmd_path(char **cmd, char *linktopath)
 	char	**path_poss;
 
 	i = 0;
+	if (linktopath == NULL)
+		return (NULL);
 	path_poss = ft_split_slash(linktopath, ':');
-	free(linktopath);
+	if (path_poss == NULL)
+		return (NULL);
 	while (path_poss[i] != NULL)
 	{
 		path = ft_strjoin(path_poss[i], cmd[0]);
@@ -47,7 +50,8 @@ char	*cmd_path(char **cmd, char *linktopath)
 			free_tab_2(path_poss);
 			return (path);
 		}
-		free(path);
+		if (path)
+			free(path);
 		path = NULL;
 		i++;
 	}
@@ -58,7 +62,7 @@ char	*cmd_path(char **cmd, char *linktopath)
 int	do_cmd(t_main *main, char **cmd, char **env)
 {
 	char	*path;
-	char *env_path;
+	char	*env_path;
 
 	path = NULL;
 	if (exec_cmd(main, cmd, false) == true)
@@ -72,7 +76,7 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 		error_exit("Command not found.", 127, -1);
 	ultimate_path_check(main, cmd);
 	env_path = env_path_finding(main, main->env_tab);
-	path = cmd_path(cmd, path_finding(env));
+	path = cmd_path(cmd, env_path);
 	if (path == NULL)
 	{
 		if (!env_path && check_current_dir_exec(main))

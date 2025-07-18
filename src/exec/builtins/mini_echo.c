@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/17 23:04:52 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/17 23:33:06 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	print_echo_with_flag(t_main *main, char **tab)
 		else
 		{
 			j = 1;
-			if (ft_putstr_fd(tab[i], STDOUT_FILENO) == -1)
-				free_and_exit_error(main, NULL, ERR_WRITE, errno);
+			ft_putstr_fd(tab[i], STDOUT_FILENO);
 			i++;
 			if (tab[i])
 			{

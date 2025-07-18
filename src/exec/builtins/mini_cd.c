@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/17 23:07:49 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/17 23:43:14 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,11 @@ char	*get_directory(t_main *main, char **tab)
 	else if (tab[1][0] == '-' && tab[1][1] == '\0')
 		str = cd_to_last_pwd(main);
 	else
+	{
 		str = ft_strdup(tab[1]);
+		if (str == NULL)
+			free_and_exit_error(main, str, ERR_MEM, 12);
+	}
 	return (str);
 }
 

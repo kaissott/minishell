@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 21:43:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/05 05:31:23 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/18 00:45:17 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,14 @@ void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main)
 	}
 	else
 	{
-		if (pipefd[0] > 1 && close(pipefd[0]) == -1)
+		if (pipefd && pipefd[0] > 1 && close(pipefd[0]) == -1)
+			perror("close");
+		if (pipefd && pipefd[1] > 1 && close(pipefd[1]) == -1)
 			perror("close");
 		if (main->env_tab)
 			free(main->env_tab);
-		;
-		close_fork(prevfd, pipefd[1], node, main);
+		close(main->std_in);
+		close(main->std_out);
 		free_struct(main);
 		free(main);
 	}
