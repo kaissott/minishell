@@ -32,7 +32,7 @@ LST_UTILS :=	file_utils.c free_utils.c utils.c
 LST_DEBUG_UTILS :=	print_lst_utils.c
 
 LST_LST_UTILS :=	chunk_lst_utils.c exec_lst_utils.c \
-					expand_lst_utils.c token_lst_utils.c
+					expand_lst_utils.c token_lst_utils.c word_splitting_token_lst_utils.c
 
 LST_LST_FREE_UTILS :=	exec_free_utils.c expand_free_utils.c token_free_utils.c
 

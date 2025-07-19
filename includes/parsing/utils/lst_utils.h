@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_utils.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 21:11:45 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 21:11:45 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LST_UTILS_H
 # define LST_UTILS_H
 
@@ -30,6 +42,9 @@ void			token_lst_add_back(t_token **token_lst, t_token *new);
 t_parse_error	token_lst_add_operator_node(t_token **token_lst, char *cmd,
 					ssize_t len, t_token_type token_type);
 t_parse_error	token_lst_add_chunks(t_main *shell, t_token *new_token);
+
+t_parse_error	create_first_token(t_token **new_tokens, t_token_chunk *chunk);
+t_parse_error	create_new_token_with_word(t_token **new_tokens, char *word);
 
 void			free_exec(t_exec *exec);
 void			free_exec_lst(t_exec **exec_lst);

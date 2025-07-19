@@ -6,13 +6,13 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:11 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 02:57:09 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/19 21:08:16 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool	contains_ifs_chars(char *str)
+bool	chunk_contains_ifs_chars(char *str)
 {
 	int	i;
 
@@ -24,6 +24,44 @@ bool	contains_ifs_chars(char *str)
 		i++;
 	}
 	return (false);
+}
+
+bool	token_contains_ifs_chunks(t_token *token)
+{
+	t_token_chunk	*chunk;
+
+	chunk = token->chunks;
+	while (chunk)
+	{
+		if (chunk_contains_ifs_chars(chunk->value) && chunk->is_expanded)
+			return (true);
+		chunk = chunk->next;
+	}
+	return (false);
+}
+
+t_parse_error	keep_chunk(t_token *token, t_token_chunk *chunk)
+{
+	t_parse_error	errcode;
+
+	if (!chunk)
+		return (ERR_NONE);
+	errcode = create_and_add_splitted_chunk(&token->chunks, chunk->value);
+	if (errcode != ERR_NONE)
+		return (errcode);
+	errcode = cat_chunks(token);
+	return (errcode);
+}
+
+t_parse_error	handle_first_word(t_token **new_tokens, t_token_chunk *chunk,
+		char *word)
+{
+	t_parse_error	errcode;
+
+	errcode = create_and_add_splitted_chunk(&(*new_tokens)->chunks, word);
+	if (errcode != ERR_NONE)
+		return (errcode);
+	return (cat_chunks(*new_tokens));
 }
 
 void	replace_split_token(t_token **tokens, t_token *new_tokens,
