@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_lst_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 02:31:07 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 02:34:27 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../../includes/minishell.h"
 
 t_exec	*create_exec_cmd(void)
@@ -48,39 +60,5 @@ void	exec_lst_delone(t_exec *lst, t_exec *node_to_delete)
 			}
 			lst = lst->next;
 		}
-	}
-}
-
-void	print_exec_lst(t_exec *lst, char *msg)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 1;
-	dprintf(2, "\n%s\n", msg);
-	if (!lst)
-	{
-		dprintf(2, "The list is empty\n");
-		return ;
-	}
-	while (lst)
-	{
-		dprintf(2, "Node [%zu]\n", i++);
-		if (lst->cmd)
-		{
-			j = 0;
-			while (lst->cmd[j])
-			{
-				dprintf(2, "\tcmd[%zu]: [%s]\n", j, lst->cmd[j]);
-				j++;
-			}
-		}
-		if (lst->infile.filepath)
-			printf("\tinfile filepath : %s\n", lst->infile.filepath);
-		printf("\tfd : [%d] type : [%d]\n", lst->infile.fd, lst->infile.type);
-		if (lst->outfile.filepath)
-			printf("\toutfile filepath : %s\n", lst->outfile.filepath);
-		printf("\tfd : [%d] type : [%d]\n", lst->outfile.fd, lst->outfile.type);
-		lst = lst->next;
 	}
 }

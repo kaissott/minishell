@@ -8,9 +8,10 @@
 # include "parsing/expansion.h"
 # include "parsing/parse.h"
 # include "parsing/tokenisation.h"
+# include "parsing/word_splitting.h"
+# include "parsing/utils/debug_utils.h"
 # include "parsing/utils/lst_utils.h"
 # include "parsing/utils/utils.h"
-# include "parsing/word_splitting.h"
 # include "structures.h"
 # include <dirent.h>
 # include <errno.h>

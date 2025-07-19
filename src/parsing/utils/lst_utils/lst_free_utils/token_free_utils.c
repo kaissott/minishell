@@ -1,27 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_free_utils.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 02:30:38 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 02:52:49 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../../../includes/minishell.h"
-
-void	print_chunk_lst(t_token_chunk *lst, char *msg)
-{
-	size_t	i;
-
-	i = 1;
-	printf("\n%s\n", msg);
-	if (!lst)
-	{
-		printf("The chunk list is empty\n");
-		return ;
-	}
-	while (lst)
-	{
-		printf("Node [%zu] :\n", i++);
-		if (lst->value)
-			printf("\tvalue : %s\n", lst->value);
-		else
-			printf("\tNo chunk value\n");
-		printf("\ttype : %d\n", lst->type);
-		lst = lst->next;
-	}
-}
 
 static void	free_chunk_lst(t_token_chunk **chunk)
 {

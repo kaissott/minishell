@@ -29,6 +29,8 @@ LST_PARSING :=	expansion_utils.c expansion.c parse_utils.c parse.c \
 
 LST_UTILS :=	file_utils.c free_utils.c utils.c
 
+LST_DEBUG_UTILS :=	print_lst_utils.c
+
 LST_LST_UTILS :=	chunk_lst_utils.c exec_lst_utils.c \
 					expand_lst_utils.c token_lst_utils.c
 
@@ -40,11 +42,13 @@ LST_INC_PARSING :=	expansion.h parse.h tokenisation.h word_splitting.h
 
 LST_INC_EXEC :=	builtins.h error.h main.h
 
-LST_INC_UTILS :=	lst_utils.h utils.h
+LST_INC_UTILS :=	debug_utils.h lst_utils.h utils.h
 
 #Directories
 D_SRC :=	src/
 D_INC :=	includes/
+
+D_EXEC :=	exec/
 
 D_BUILTINS :=	builtins/
 
@@ -54,21 +58,21 @@ D_EXEC_PIPE :=	exec_pipe/
 
 D_EXEC_SINGLE_CMD :=	exec_single_cmd/
 
-D_EXEC :=	exec/
-
 D_EXEC_UTILS :=	exec_utils/
 
 D_PARSING :=	parsing/
 
 D_UTILS :=	utils/
 
+D_DEBUG_UTILS :=	debug_utils/
+
 D_LST_UTILS :=	lst_utils/
 
 D_LST_FREE_UTILS :=	lst_free_utils/
 
-D_INC_PARSING :=	parsing/
-
 D_INC_EXEC :=	exec/
+
+D_INC_PARSING :=	parsing/
 
 D_INC_UTILS :=	utils/
 
@@ -83,12 +87,13 @@ SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
 		$(addprefix $(D_SRC)$(D_EXEC)$(D_EXEC_UTILS), $(LST_EXEC_UTILS)) \
 		$(addprefix $(D_SRC)$(D_PARSING), $(LST_PARSING)) \
 		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS), $(LST_UTILS)) \
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS)$(D_DEBUG_UTILS), $(LST_DEBUG_UTILS)) \
 		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS)$(D_LST_UTILS), $(LST_LST_UTILS)) \
 		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS)$(D_LST_UTILS)$(D_LST_FREE_UTILS), $(LST_LST_FREE_UTILS))
 
 INC :=	$(addprefix $(D_INC), $(LST_INC)) \
-		$(addprefix $(D_INC)$(D_INC_PARSING), $(LST_INC_PARSING)) \
 		$(addprefix $(D_INC)$(D_INC_EXEC), $(LST_INC_EXEC)) \
+		$(addprefix $(D_INC)$(D_INC_PARSING), $(LST_INC_PARSING)) \
 		$(addprefix $(D_INC)$(D_INC_PARSING)$(D_INC_UTILS), $(LST_INC_UTILS))
 
 OBJ :=	$(subst $(D_SRC), $(D_OBJ), $(SRC:.c=.o))

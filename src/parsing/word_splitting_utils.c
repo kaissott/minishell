@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   word_splitting_utils.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 02:30:11 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 02:57:09 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 bool	contains_ifs_chars(char *str)
@@ -39,5 +51,4 @@ void	replace_split_token(t_token **tokens, t_token *new_tokens,
 	else
 		prev->next = new_tokens;
 	free_token(tmp);
-	tmp = NULL;
 }

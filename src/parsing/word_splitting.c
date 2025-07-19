@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   word_splitting.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 02:30:14 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 03:02:05 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static t_parse_error	split_chunk_by_ifs(t_token *new_token,
@@ -13,7 +25,8 @@ static t_parse_error	split_chunk_by_ifs(t_token *new_token,
 		return (ERR_MALLOC);
 	while (words[i])
 	{
-		if (*new_tokens && i == 0 && chunk->value[0] != ' ')
+		if (*new_tokens && i == 0 && (chunk->value[0] != ' '
+				|| chunk->value[0] != '\n' || chunk->value[0] != '\t'))
 		{
 			errcode = create_and_add_splitted_chunk(&(*new_tokens)->chunks,
 					words[i]);
@@ -86,7 +99,7 @@ static t_parse_error	apply_word_splitting(t_token *token, t_token *new_token,
 {
 	t_parse_error	errcode;
 
-	if (!chunk && new_tokens)
+	if (!chunk)
 		return (ERR_NONE);
 	if (contains_ifs_chars(chunk->value) && chunk->is_expanded
 		&& chunk->type == T_STRING)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/16 23:17:15 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/19 01:46:34 by luca             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ void	free_tab_exit(char **args);
 // void	free_tab(char **tab1, char **tab2);
 bool	mini_export(t_main *main, char **cmd);
 bool	mini_unset(t_main *main, char **cmd);
+void	exit_minishell(t_main *main, int exitcode);
 
 #endif

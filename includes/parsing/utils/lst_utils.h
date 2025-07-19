@@ -17,7 +17,6 @@ t_parse_error	cat_chunks(t_token *token);
 t_exec			*create_exec_cmd(void);
 void			exec_lst_add_back(t_exec **exec_lst, t_exec *new);
 void			exec_lst_delone(t_exec *lst, t_exec *node_to_delete);
-void			print_exec_lst(t_exec *lst, char *msg);
 
 void			print_expand_lst(t_expand *lst, char *msg);
 t_expand		*create_expand(t_expand_type type, char *value);
@@ -25,8 +24,6 @@ void			expand_lst_add_back(t_expand **lst, t_expand *new);
 void			expand_lst_delone(t_expand **expand_lst,
 					t_expand *node_to_delete);
 
-void			print_chunk_lst(t_token_chunk *lst, char *msg);
-void			print_token_lst(t_token *lst, char *msg);
 t_token			*token_lst_last(t_token *lst);
 void			token_lst_delone(t_token **token_lst, t_token *node_to_delete);
 void			token_lst_add_back(t_token **token_lst, t_token *new);

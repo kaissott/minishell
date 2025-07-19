@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expansion_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 02:29:02 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 02:29:03 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 bool	is_dollar_alone(t_token_chunk *chunk, size_t i, size_t len,
@@ -53,60 +65,60 @@ static char	*get_var_value(t_main *shell, char *var_name, bool *var_found)
 	return ("");
 }
 
-t_parse_error	checker(void)
+static t_parse_error	handle_var_expansion(t_main *shell,
+		t_expand **expand_lst, t_expand *tmp, t_token_chunk *chunk)
 {
+	char	*var_value;
+	bool	var_found;
+
+	var_found = false;
+	if (tmp->type == T_EXPAND_VAR)
+		var_value = get_var_value(shell, tmp->value, &var_found);
+	else
+	{
+		var_found = true;
+		var_value = tmp->value;
+	}
+	if (tmp->type == T_EXPAND_VAR)
+		if (!var_value)
+			return (ERR_MALLOC);
+	if (!var_found)
+		expand_lst_delone(expand_lst, tmp);
+	else
+	{
+		chunk->value = join_or_dup(chunk->value, var_value);
+		if (tmp->type == T_EXPAND_VAR && var_value)
+			free(var_value);
+		if (!chunk->value)
+			return (ERR_MALLOC);
+	}
+	return (ERR_NONE);
 }
 
 t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
 		t_token *token, t_token_chunk *chunk)
 {
-	t_expand	*tmp;
-	t_expand	*next;
-	char		*var_value;
-	bool		var_found;
+	t_expand		*tmp;
+	t_expand		*next;
+	t_parse_error	errcode;
 
-	if (*expand_lst)
+	if (!*expand_lst)
+		return (ERR_NONE);
+	chunk->is_expanded = true;
+	free(chunk->value);
+	chunk->value = NULL;
+	tmp = *expand_lst;
+	while (tmp)
 	{
-		tmp = *expand_lst;
-		chunk->is_expanded = true;
-		free(chunk->value);
-		chunk->value = NULL;
-		while (tmp)
-		{
-			var_found = false;
-			next = tmp->next;
-			if (tmp->type == T_EXPAND_VAR)
-			{
-				var_value = get_var_value(shell, tmp->value, &var_found);
-				if (!var_value)
-					return (ERR_MALLOC);
-			}
-			else
-			{
-				var_found = true;
-				var_value = tmp->value;
-			}
-			if (!var_found)
-			{
-				expand_lst_delone(expand_lst, tmp);
-				if (!chunk->value && !*expand_lst)
-					chunk_lst_delone(&token->chunks, chunk);
-				if (!token->chunks)
-				{
-					token_lst_delone(&shell->token, token);
-					return (ERR_NONE);
-				}
-			}
-			else
-			{
-				chunk->value = join_or_dup(chunk->value, var_value);
-				if (tmp->type == T_EXPAND_VAR && var_value)
-					free(var_value);
-				if (!chunk->value)
-					return (ERR_MALLOC);
-			}
-			tmp = next;
-		}
+		next = tmp->next;
+		errcode = handle_var_expansion(shell, expand_lst, tmp, chunk);
+		if (errcode != ERR_NONE)
+			return (errcode);
+		if (!chunk->value && !*expand_lst)
+			chunk_lst_delone(&token->chunks, chunk);
+		if (!token->chunks)
+			token_lst_delone(&shell->token, token);
+		tmp = next;
 	}
 	return (ERR_NONE);
 }
