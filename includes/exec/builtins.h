@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/19 01:46:34 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/17 02:27:24 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ bool	env_print(t_main *main, char **cmd);
 void	lstadd_back(t_env **lst, t_env *new);
 t_env	*lstnew(char *content);
 int		mini_exit(char **line, t_main *main);
-int		numeric_argument_error(char **args, t_main *main);
-bool	mini_cd(char *line, t_main *main);
+void		numeric_argument_error(char **args, t_main *main);
+bool	mini_cd(char **cmd, t_main *main);
 void	free_tab_exit(char **args);
 // void	free_tab(char **tab1, char **tab2);
 bool	mini_export(t_main *main, char **cmd);

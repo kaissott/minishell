@@ -53,9 +53,7 @@ int	mini_exit(char **line, t_main *main)
 {
 	int	exit_code;
 	int	size;
-	int	i;
 
-	i = 0;
 	exit_code = 0;
 	size = tab_size(line);
 	if (line[1])
@@ -70,4 +68,5 @@ int	mini_exit(char **line, t_main *main)
 		exit_minishell(main, exit_code);
 	}
 	exit_minishell(main, 0);
+	return (0);
 }

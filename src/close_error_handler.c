@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_error_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:10:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/05 05:44:36 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/17 23:37:55 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,19 @@
 
 void	exit_error_minishell(t_main *main, int errcode, char *err)
 {
-	t_exec	*tmp;
-
 	if (main)
 	{
+		close(main->std_in);
+		close(main->std_out);
+		close_node(main);
 		free_struct(main);
 		free(main);
 	}
 	ft_putendl_fd(err, 2);
 	exit(errcode);
 }
+// ok
 
-void	exit_error_one_close(t_main *main_struct, int *fd1)
-{
-	if (*fd1 > 1)
-	{
-		if (close(*fd1) == -1)
-		{
-			exit_error_minishell(main_struct, errno, "Close failed");
-		}
-	}
-}
 void	exit_error_two_close(t_main *main_struct, int fd1, int fd2)
 {
 	if (fd1 > 1)

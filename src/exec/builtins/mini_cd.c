@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/06/16 00:15:42 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/17 23:43:14 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +16,8 @@ void	env_pwd_update(t_main *main)
 {
 	t_env	*temp;
 	char	*tmp;
-	int		i;
 	char	path[1024];
 
-	i = 0;
 	if (getcwd(path, 1024) == NULL)
 		free_and_exit_error(main, NULL, ERR_GETCWD, errno);
 	temp = main->env;
@@ -41,11 +38,9 @@ void	env_pwd_update(t_main *main)
 void	env_oldpwd_update(t_main *main)
 {
 	t_env	*temp;
-	int		i;
 	char	*path;
 	char	pwd[1024];
 
-	i = 0;
 	temp = main->env;
 	if (getcwd(pwd, 1024) == NULL)
 		free_and_exit_error(main, NULL, ERR_GETCWD, errno);
@@ -96,13 +91,13 @@ char	*cd_to_home(t_main *main, char *path, int i)
 	return (dst);
 }
 
-char	*cd_to_last_pwd(t_main *main, char *path)
+char	*cd_to_last_pwd(t_main *main)
 {
 	t_env	*env;
 	char	*str;
-	char	*dst;
 
 	env = main->env;
+	str = NULL;
 	while (env)
 	{
 		if (ft_strncmp(env->env, "OLDPWD=", 7) == 0)
@@ -120,26 +115,37 @@ char	*cd_to_last_pwd(t_main *main, char *path)
 	return (str);
 }
 
-bool	mini_cd(char *line, t_main *main)
+char	*get_directory(t_main *main, char **tab)
 {
-	char	**tab;
 	char	*str;
 
-	tab = main->exec->cmd;
-	if (tab[1] != NULL && tab[2])
-	{
-		ft_putstr_fd("bash: cd: too many arguments\n", 2);
-		main->errcode = 1;
-		return(true);
-	}
+	str = NULL;
 	if (tab[1] == NULL || tab[1][0] == '~')
 		str = cd_to_home(main, tab[1], 1);
 	else if ((ft_strcmp(tab[1], "--") == 0))
 		str = cd_to_home(main, tab[1], 2);
 	else if (tab[1][0] == '-' && tab[1][1] == '\0')
-		str = cd_to_last_pwd(main, tab[1]);
+		str = cd_to_last_pwd(main);
 	else
+	{
 		str = ft_strdup(tab[1]);
+		if (str == NULL)
+			free_and_exit_error(main, str, ERR_MEM, 12);
+	}
+	return (str);
+}
+
+bool	mini_cd(char **cmd, t_main *main)
+{
+	char	*str;
+
+	if (cmd[1] != NULL && cmd[2])
+	{
+		ft_putstr_fd("bash: cd: too many arguments\n", 2);
+		main->errcode = 1;
+		return (true);
+	}
+	str = get_directory(main, cmd);
 	if (access(str, F_OK) == 0 && access(str, X_OK) == 0)
 	{
 		env_oldpwd_update(main);
@@ -153,7 +159,6 @@ bool	mini_cd(char *line, t_main *main)
 	{
 		free(str);
 		ft_putstr_fd("bash: cd: ", 2);
-		main->errcode = 1;
 		return (set_return_err_code(main, main->exec->cmd[1], 1));
 	}
 	return (true);
