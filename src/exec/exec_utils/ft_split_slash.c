@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split_slash.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/21 17:41:24 by karamire          #+#    #+#             */
+/*   Updated: 2025/07/21 17:41:25 by karamire         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
 static char	*substr_slash(char const *s, unsigned int start, size_t len)

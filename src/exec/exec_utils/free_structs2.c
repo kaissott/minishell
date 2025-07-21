@@ -1,41 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_to_tab.c                                       :+:      :+:    :+:   */
+/*   free_structs2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 19:40:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/21 17:31:52 by karamire         ###   ########.fr       */
+/*   Created: 2025/07/21 17:41:45 by karamire          #+#    #+#             */
+/*   Updated: 2025/07/21 17:42:14 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-char	**env_to_tab(t_main *main)
+void	free_tab_2(char **tab)
 {
-	int		i;
-	int		j;
-	char	**tab;
-	t_env	*tmp;
+	int	i;
 
 	i = 0;
-	tmp = main->env;
-	while (tmp != NULL)
+	while (tab[i])
 	{
-		tmp = tmp->next;
+		free(tab[i]);
 		i++;
 	}
-	tab = malloc(sizeof(char *) * (i + 1));
-	if (tab == NULL)
-		free_and_exit_error(main, NULL, ERR_MEM, 12);
-	tmp = main->env;
-	j = 0;
-	while (i-- > 0)
-	{
-		tab[j++] = tmp->env;
-		tmp = tmp->next;
-	}
-	tab[j] = NULL;
-	return (tab);
+	free(tab);
+	return ;
+}
+
+void	free_and_exit_error(t_main *main, char *tmp, char *error,
+		int err_number)
+{
+	if (tmp != NULL)
+		free(tmp);
+	if (main->env_tab)
+		free(main->env_tab);
+	exit_error_minishell(main, err_number, error);
+}
+
+int	set_return_err_code(t_main *main, char *error, int err_number)
+{
+	perror(error);
+	main->errcode = err_number;
+	return (err_number);
 }

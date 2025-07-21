@@ -1,41 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_to_tab.c                                       :+:      :+:    :+:   */
+/*   mini_export_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 19:40:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/21 17:31:52 by karamire         ###   ########.fr       */
+/*   Created: 2025/07/21 17:38:41 by karamire          #+#    #+#             */
+/*   Updated: 2025/07/21 17:40:57 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-char	**env_to_tab(t_main *main)
+void	export_new_var(t_main *main, char *var)
 {
 	int		i;
-	int		j;
-	char	**tab;
-	t_env	*tmp;
+	char	*new;
+	t_env	*export;
 
 	i = 0;
-	tmp = main->env;
-	while (tmp != NULL)
-	{
-		tmp = tmp->next;
+	while (var[i] != '=')
 		i++;
-	}
-	tab = malloc(sizeof(char *) * (i + 1));
-	if (tab == NULL)
+	new = ft_strdup(var);
+	if (!new)
 		free_and_exit_error(main, NULL, ERR_MEM, 12);
-	tmp = main->env;
-	j = 0;
-	while (i-- > 0)
-	{
-		tab[j++] = tmp->env;
-		tmp = tmp->next;
-	}
-	tab[j] = NULL;
-	return (tab);
+	export = lstnew(new, main);
+	if (!export)
+		free_and_exit_error(main, NULL, ERR_MEM, 12);
+	lstadd_back(&main->env, export);
+}
+
+void	replace_var(t_main *main, char *var, t_env *env)
+{
+	char	*new;
+
+	new = ft_strdup(var);
+	if (!new)
+		free_and_exit_error(main, NULL, ERR_MEM, 12);
+	free(env->env);
+	env->env = new;
 }

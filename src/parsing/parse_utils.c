@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 02:29:31 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:39:34 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,36 +78,31 @@ t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)
 	return (ERR_NONE);
 }
 
+int	test(void)
+{
+	return (0);
+}
+
 t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 {
-	char	*rl;
-	char	*line;
+	char			*rl;
+	char			*line;
+	t_parse_error	result;
 
+	rl_event_hook = test;
+	result = ERR_NONE;
 	init_sigaction(2);
 	while (1)
 	{
-		if (g_sig_mode != HERE_DOC)
-		{
-			init_sigaction(0);
-			return (ERR_SIG);
-		}
 		if (isatty(fileno(stdin)))
 			rl = readline("HD >");
-		else
+		if (g_sig_mode == INTERACTIVE)
 		{
-			rl = get_next_line(fileno(stdin));
-			if (rl)
-			{
-				line = ft_strtrim(rl, "\n");
-				free(rl);
-				rl = line;
-			}
+			result = ERR_SIG;
+			break ;
 		}
 		if (!rl)
-		{
-			init_sigaction(0);
-			return (ERR_NONE);
-		}
+			break ;
 		if (ft_strcmp(rl, next_token_value) == 0)
 		{
 			free(rl);
@@ -116,8 +111,9 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 		ft_putendl_fd(rl, *fd_heredoc);
 		free(rl);
 	}
+	rl_event_hook = NULL;
 	init_sigaction(0);
 	if (secure_close(fd_heredoc) != ERR_NONE)
 		return (ERR_CLOSE);
-	return (ERR_NONE);
+	return (result);
 }

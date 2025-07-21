@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:17:54 by ludebion          #+#    #+#             */
-/*   Updated: 2024/12/03 21:24:42 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:12:24 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (malloc(0));
 	if ((SIZE_MAX / nmemb) < size)
 		return (NULL);
-	s = malloc(nmemb * size);
+	s = NULL;
 	if (!s)
 		return (NULL);
 	ft_memset(s, '\0', nmemb * size);

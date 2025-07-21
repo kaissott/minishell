@@ -3,64 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/17 23:43:14 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/21 17:38:19 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-void	env_pwd_update(t_main *main)
-{
-	t_env	*temp;
-	char	*tmp;
-	char	path[1024];
-
-	if (getcwd(path, 1024) == NULL)
-		free_and_exit_error(main, NULL, ERR_GETCWD, errno);
-	temp = main->env;
-	while (temp != NULL && ft_strnstr(temp->env, "PWD=", 4) == NULL)
-		temp = temp->next;
-	if (temp != NULL)
-	{
-		free(temp->env);
-		tmp = ft_strjoin("PWD=", path);
-		if (!tmp)
-			free_and_exit_error(main, NULL, ERR_MEM, 12);
-		temp->env = tmp;
-	}
-	else
-		pwd(main);
-}
-
-void	env_oldpwd_update(t_main *main)
-{
-	t_env	*temp;
-	char	*path;
-	char	pwd[1024];
-
-	temp = main->env;
-	if (getcwd(pwd, 1024) == NULL)
-		free_and_exit_error(main, NULL, ERR_GETCWD, errno);
-	while (temp != NULL && ft_strstr(temp->env, "OLDPWD=") != 1)
-		temp = temp->next;
-	if (temp != NULL)
-	{
-		free(temp->env);
-		temp->env = ft_strjoin("OLDPWD=", pwd);
-		if (!temp->env)
-			free_and_exit_error(main, NULL, ERR_MEM, 12);
-	}
-	else
-	{
-		path = ft_strjoin("OLDPWD=", pwd);
-		if (!path)
-			free_and_exit_error(main, NULL, ERR_MEM, 12);
-		lstadd_back((&main->env), lstnew(path));
-	}
-}
 
 char	*cd_to_home(t_main *main, char *path, int i)
 {

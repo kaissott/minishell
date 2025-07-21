@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:50:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/02 19:01:11 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/21 02:53:20 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-
 
 char	*free_tab_pipe(char **tab, char **path)
 {
