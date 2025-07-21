@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/18 00:39:56 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/21 02:51:36 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	wait_simple_cmd(t_main *main, pid_t pid)
 		main->errcode = 128 + sig;
 	}
 }
+
 void	init_simple_cmd(t_main *main)
 {
 	pid_t	pid;

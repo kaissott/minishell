@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   free_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/06/17 18:30:38 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/21 02:52:59 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +54,7 @@ void	free_node(t_main *main)
 	}
 	main->exec = NULL;
 }
+
 void	here_doc_unlink(t_file infile)
 {
 	if (infile.is_heredoc == true)
@@ -63,6 +63,7 @@ void	here_doc_unlink(t_file infile)
 		return ;
 	}
 }
+
 void	close_node(t_main *main)
 {
 	t_exec	*temp;
@@ -90,6 +91,7 @@ int	free_struct(t_main *main)
 		free_node(main);
 	return (1);
 }
+
 void	free_tab_2(char **tab)
 {
 	int	i;
@@ -103,6 +105,7 @@ void	free_tab_2(char **tab)
 	free(tab);
 	return ;
 }
+
 void	free_and_exit_error(t_main *main, char *tmp, char *error,
 		int err_number)
 {
@@ -112,6 +115,7 @@ void	free_and_exit_error(t_main *main, char *tmp, char *error,
 		free(main->env_tab);
 	exit_error_minishell(main, err_number, error);
 }
+
 int	set_return_err_code(t_main *main, char *error, int err_number)
 {
 	perror(error);

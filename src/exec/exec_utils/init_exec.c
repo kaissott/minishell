@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/17 02:29:19 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/21 02:51:56 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ bool	exec_cmd(t_main *main, char **cmd, bool simple)
 
 void	reset_struct(char *rl, t_main *main)
 {
-
 	if (rl)
 		free(rl);
 	if (main->exec)
@@ -73,6 +72,7 @@ bool	node_check(t_main *main)
 	}
 	return (true);
 }
+
 int	check_input(t_main *main)
 {
 	t_exec	*node;

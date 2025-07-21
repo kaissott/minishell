@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/18 00:46:38 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/21 02:52:05 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	dup_failed_err(t_main *main, int prev_fd, int pipefd, t_exec *node)
 	ft_putstr_fd("Dup failed\n", 2);
 	exit(1);
 }
+
 int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
 {
 	if (node->infile.fd > 1)
