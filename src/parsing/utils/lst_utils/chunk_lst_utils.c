@@ -1,17 +1,16 @@
-#include "../../../../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   chunk_lst_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 02:30:49 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 02:30:50 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_token_chunk	*chunk_lst_last(t_token_chunk *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst)
-	{
-		if (lst->next == NULL)
-			return (lst);
-		lst = lst->next;
-	}
-	return (NULL);
-}
+#include "../../../../includes/minishell.h"
 
 void	chunk_lst_delone(t_token_chunk **chunk_lst,
 		t_token_chunk *node_to_delete)

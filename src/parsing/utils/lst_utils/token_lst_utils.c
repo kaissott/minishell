@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_lst_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 02:31:13 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 02:41:27 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../../includes/minishell.h"
 
 t_token	*token_lst_last(t_token *lst)
@@ -81,39 +93,4 @@ t_parse_error	token_lst_add_chunks(t_main *shell, t_token *new_token)
 		return (errcode);
 	token_lst_add_back(&shell->token, new_token);
 	return (ERR_NONE);
-}
-
-void	print_token_lst(t_token *lst, char *msg)
-{
-	size_t			i;
-	t_token_chunk	*tmp;
-
-	i = 1;
-	printf("\n%s\n", msg);
-	if (!lst)
-	{
-		printf("The token list is empty\n");
-		return ;
-	}
-	while (lst)
-	{
-		printf("Token node [%zu]\n", i++);
-		if (lst->value)
-			printf("\tvalue: [%s] ", lst->value);
-		else
-			printf("\tvalue: [NULL] ");
-		printf("type: [%d] is_delimiter : [%d]\n", lst->type,
-			lst->is_delimiter);
-		if (lst->chunks)
-		{
-			tmp = lst->chunks;
-			while (tmp)
-			{
-				printf("\tchunk value: [%s] type : [%d] is_expanded : [%d]\n",
-					tmp->value, tmp->type, tmp->is_expanded);
-				tmp = tmp->next;
-			}
-		}
-		lst = lst->next;
-	}
 }

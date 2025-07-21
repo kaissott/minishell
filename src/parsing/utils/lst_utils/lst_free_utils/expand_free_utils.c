@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_free_utils.c                                 :+:      :+:    :+:   */
+/*   expand_free_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/19 02:30:38 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 21:02:50 by ludebion         ###   ########.fr       */
+/*   Created: 2025/07/19 02:30:30 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 02:30:31 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../../includes/minishell.h"
 
-static void	free_chunk_lst(t_token_chunk **chunk)
+void	free_expand_lst(t_expand **expand_lst)
 {
-	t_token_chunk	*current;
-	t_token_chunk	*next;
+	t_expand	*current;
+	t_expand	*next;
 
-	current = *chunk;
+	if (!expand_lst || !*expand_lst)
+		return ;
+	current = *expand_lst;
 	while (current)
 	{
 		next = current->next;
@@ -26,32 +28,5 @@ static void	free_chunk_lst(t_token_chunk **chunk)
 		free(current);
 		current = next;
 	}
-}
-
-void	free_token(t_token *token)
-{
-	if (!token)
-		return ;
-	free_chunk_lst(&token->chunks);
-	if (token->value)
-		free(token->value);
-	free(token);
-	token = NULL;
-}
-
-void	free_token_lst(t_token **token_lst)
-{
-	t_token	*current;
-	t_token	*next;
-
-	if (!token_lst || !*token_lst)
-		return ;
-	current = *token_lst;
-	while (current)
-	{
-		next = current->next;
-		free_token(current);
-		current = next;
-	}
-	*token_lst = NULL;
+	*expand_lst = NULL;
 }

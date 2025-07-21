@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenisation_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 02:30:06 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 02:30:06 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	is_operator(const char *str)
@@ -18,7 +30,7 @@ static t_token_type	handle_redir(char *cmd, t_error *error)
 	if (is_operator(&cmd[i]) || !cmd[i])
 	{
 		set_error(error, ERR_SYNTAX, cmd[i]);
-		return (T_ERROR);
+		return (T_ERROR_SYNTAX);
 	}
 	if (cmd[0] == '>')
 	{
@@ -42,20 +54,20 @@ t_token_type	get_token_type(t_error *error, char *cmd)
 		if (cmd[1] == '|')
 		{
 			set_error(error, ERR_DOUBLE_PIPE, '\0');
-			return (T_ERROR);
+			return (T_ERROR_PIPE);
 		}
 		while (cmd[i] && cmd[i] == ' ')
 			i++;
 		if (!cmd[i] || !cmd[-1])
 		{
 			set_error(error, ERR_SYNTAX, '|');
-			return (T_ERROR);
+			return (T_ERROR_SYNTAX);
 		}
 		return (T_PIPE);
 	}
 	else if (cmd[0] == '<' || cmd[0] == '>')
 		return (handle_redir(cmd, error));
-	return (T_ERROR);
+	return (T_ERROR_SYNTAX);
 }
 
 void	set_heredocs_delimiters(t_main *shell)

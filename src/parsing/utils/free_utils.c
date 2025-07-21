@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 02:31:19 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 02:31:19 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
 void	get_errcode(t_main *shell, t_parse_error errcode)
@@ -27,7 +39,7 @@ void	free_shell(t_main *shell, t_parse_error errcode)
 void	clear_and_exit(t_main *shell, t_parse_error errcode)
 {
 	get_errcode(shell, errcode);
-	print_token_error_msg(shell->error.error_type,
+	print_syntax_error_msg(shell->error.error_type,
 		shell->error.unexpected_token);
 	free_shell(shell, errcode);
 	free(shell);
@@ -43,7 +55,7 @@ bool	check_parsing(t_main *shell, t_parse_error errcode, bool at_end)
 	}
 	get_errcode(shell, errcode);
 	if (errcode != ERR_SIG)
-		print_token_error_msg(errcode, shell->error.unexpected_token);
+		print_syntax_error_msg(errcode, shell->error.unexpected_token);
 	free_shell(shell, errcode);
 	return (false);
 }

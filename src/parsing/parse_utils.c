@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 02:29:31 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 char	**resize_cmd_args(char **cmd, char *new_arg)
@@ -18,6 +30,29 @@ char	**resize_cmd_args(char **cmd, char *new_arg)
 		return (NULL);
 	free(cmd);
 	return (new_cmd);
+}
+
+t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
+{
+	if (std == STDIN_FILENO)
+	{
+		new_cmd->infile.filepath = ft_strdup(token->next->value);
+		if (!new_cmd->infile.filepath)
+			return (ERR_MALLOC);
+		new_cmd->infile.fd = open_file(token->next->value, token->type);
+		if (new_cmd->infile.fd == -1)
+			perror(new_cmd->infile.filepath);
+	}
+	else
+	{
+		new_cmd->outfile.filepath = ft_strdup(token->next->value);
+		if (!new_cmd->outfile.filepath)
+			return (ERR_MALLOC);
+		new_cmd->outfile.fd = open_file(token->next->value, token->type);
+		if (new_cmd->outfile.fd == -1)
+			perror(new_cmd->outfile.filepath);
+	}
+	return (ERR_NONE);
 }
 
 t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)

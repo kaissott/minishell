@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenisation.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 02:30:08 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/19 02:30:09 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static ssize_t	extract_quoted_chunk(t_token_chunk **chunks, char *cmd,
@@ -69,8 +81,10 @@ static ssize_t	extract_operator_token(t_main *shell, char *cmd)
 
 	len = 1;
 	token_type = get_token_type(&shell->error, cmd);
-	if (token_type == T_ERROR)
+	if (token_type == T_ERROR_SYNTAX)
 		return (ERR_SYNTAX);
+	else if (token_type == T_ERROR_PIPE)
+		return (ERR_DOUBLE_PIPE);
 	if (token_type == T_HEREDOC || token_type == T_REDIR_APPEND)
 		len = 2;
 	if (token_lst_add_operator_node(&shell->token, cmd, len,
