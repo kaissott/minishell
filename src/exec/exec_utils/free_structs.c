@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/21 02:52:59 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/21 17:20:16 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

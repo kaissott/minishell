@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 00:24:55 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/17 23:11:00 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:19:00 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	export_new_var(t_main *main, char *var)
 	new = ft_strdup(var);
 	if (!new)
 		free_and_exit_error(main, NULL, ERR_MEM, 12);
-	export = lstnew(new);
+	export = lstnew(new, main);
 	if (!export)
 		free_and_exit_error(main, NULL, ERR_MEM, 12);
 	lstadd_back(&main->env, export);
@@ -95,7 +95,7 @@ void	print_export_env(t_main *main)
 
 bool	mini_export(t_main *main, char **cmd)
 {
-	int		i;
+	int	i;
 
 	i = 1;
 	if (cmd[1] == NULL)

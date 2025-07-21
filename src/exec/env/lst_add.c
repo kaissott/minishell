@@ -19,13 +19,13 @@ void	lstadd_back(t_env **lst, t_env *new)
 	return ;
 }
 
-t_env	*lstnew(char *content)
+t_env	*lstnew(char *content, t_main *main)
 {
 	t_env	*newcontent;
 
 	newcontent = malloc(sizeof(t_env));
 	if (newcontent == NULL)
-		return (NULL);
+		free_and_exit_error(main, content, ERR_MEM, 12);
 	newcontent->env = content;
 	newcontent->next = NULL;
 	return (newcontent);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:20:20 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/21 02:53:13 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/21 17:19:24 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	no_env_build(t_main *main)
 	pwd = ft_strjoin("PWD=", buff);
 	if (!pwd)
 		free_and_exit_error(main, NULL, ERR_MEM, 12);
-	mainenv = lstnew(pwd);
+	mainenv = lstnew(pwd, main);
 	if (!mainenv)
 		free_and_exit_error(main, pwd, ERR_MEM, 12);
 	main->env = mainenv;
@@ -32,7 +32,7 @@ void	no_env_build(t_main *main)
 	shlvl = ft_strdup("SHLVL=1");
 	if (!shlvl)
 		free_and_exit_error(main, NULL, ERR_MEM, 12);
-	tmp = lstnew(shlvl);
+	tmp = lstnew(shlvl, main);
 	if (!tmp)
 		free_and_exit_error(main, shlvl, ERR_MEM, 12);
 	lstadd_back(&mainenv, tmp);
@@ -47,7 +47,7 @@ void	env_build(char **env, t_main *main)
 	str = ft_strdup(env[0]);
 	if (!str)
 		free_and_exit_error(main, NULL, ERR_MEM, 12);
-	mainenv = lstnew(str);
+	mainenv = lstnew(str, main);
 	if (!mainenv)
 		free_and_exit_error(main, str, ERR_MEM, 12);
 	main->env = mainenv;
@@ -57,7 +57,7 @@ void	env_build(char **env, t_main *main)
 		str = ft_strdup(env[i]);
 		if (!str)
 			free_and_exit_error(main, NULL, ERR_MEM, 12);
-		lstadd_back(&mainenv, lstnew(str));
+		lstadd_back(&mainenv, lstnew(str, main));
 		i++;
 	}
 }
