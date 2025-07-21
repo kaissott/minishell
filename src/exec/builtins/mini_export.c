@@ -6,40 +6,11 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 00:24:55 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/21 17:19:00 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:39:06 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-void	export_new_var(t_main *main, char *var)
-{
-	int		i;
-	char	*new;
-	t_env	*export;
-
-	i = 0;
-	while (var[i] != '=')
-		i++;
-	new = ft_strdup(var);
-	if (!new)
-		free_and_exit_error(main, NULL, ERR_MEM, 12);
-	export = lstnew(new, main);
-	if (!export)
-		free_and_exit_error(main, NULL, ERR_MEM, 12);
-	lstadd_back(&main->env, export);
-}
-
-void	replace_var(t_main *main, char *var, t_env *env)
-{
-	char	*new;
-
-	new = ft_strdup(var);
-	if (!new)
-		free_and_exit_error(main, NULL, ERR_MEM, 12);
-	free(env->env);
-	env->env = new;
-}
 
 int	check_var_exist(t_main *main, char *var)
 {

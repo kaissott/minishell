@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/16 23:30:33 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:38:34 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ void	my_handler(int sig)
 		}
 		else if (g_sig_mode == HERE_DOC)
 		{
-			write(1, "\n", 1);
+			rl_done = 1;
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
 			g_sig_mode = INTERACTIVE;
 		}
 		else if (g_sig_mode == CHILD)
@@ -55,7 +58,7 @@ void	init_sigaction(int mode)
 		sigaction(SIGINT, &sa, NULL);
 		sigaction(SIGQUIT, &sa, NULL);
 	}
-	else if (mode == 2)
+	if (mode == 2)
 	{
 		g_sig_mode = HERE_DOC;
 		sa.sa_handler = my_handler;

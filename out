@@ -1,0 +1,11 @@
+Dockerfile.dockerenv
+funcheck
+includes
+leak.supp
+libft
+Makefile
+minishell
+out
+out2
+README.md
+src

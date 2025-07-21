@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:20:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/16 23:33:34 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/21 13:35:50 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ t_main	*init_minishell(char **env)
 
 	// print_ascii_logo();
 	main_struct = ft_calloc(1, sizeof(t_main));
-	main_struct->env = NULL;
 	if (!main_struct)
 		exit_error_minishell(main_struct, errno, ERR_MEM);
+	main_struct->env = NULL;
 	check_env_available(env, main_struct);
 	main_struct->std_out = dup(STDOUT_FILENO);
 	main_struct->std_in = dup(STDIN_FILENO);

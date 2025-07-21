@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/18 03:00:40 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/21 17:45:23 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 	path = NULL;
 	if (exec_cmd(main, cmd, false) == true)
 	{
-		free(env);
-		free_struct(main);
-		free(main);
-		exit(0);
+		free_and_exit_error(main, NULL, NULL, 0);
 	}
 	if (cmd == NULL)
 		error_exit("Command not found.", 127, -1);

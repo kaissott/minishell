@@ -35,6 +35,7 @@ void	start_shell(t_main *shell)
 	char	*rl;
 	char	*line;
 
+
 	while (1)
 	{
 		init_sigaction(0);

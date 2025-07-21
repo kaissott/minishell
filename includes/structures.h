@@ -45,7 +45,8 @@ typedef enum e_sig_mode
 {
 	HERE_DOC,
 	CHILD,
-	INTERACTIVE
+	INTERACTIVE,
+	HERE_DOC_INT
 }							t_sig_mode;
 
 typedef struct s_token

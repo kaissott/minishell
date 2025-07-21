@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_unset.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/21 17:40:41 by karamire          #+#    #+#             */
+/*   Updated: 2025/07/21 17:44:37 by karamire         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
 void	delete_env_node(t_env **env, char *var)
@@ -5,8 +17,6 @@ void	delete_env_node(t_env **env, char *var)
 	t_env	*current;
 	t_env	*temp;
 
-	if (!env || !var)
-		return ;
 	current = *env;
 	if (ft_strncmp(current->env, var, ft_strlen(var)) == 0
 		&& (current->env[ft_strlen(var)]) == '=')
@@ -33,7 +43,7 @@ void	delete_env_node(t_env **env, char *var)
 
 bool	mini_unset(t_main *main, char **cmd)
 {
-	int		i;
+	int	i;
 
 	i = 1;
 	if (cmd[1] == NULL)
@@ -48,7 +58,8 @@ bool	mini_unset(t_main *main, char **cmd)
 	}
 	while (cmd[i])
 	{
-		delete_env_node(&main->env, cmd[i]);
+		if (main->env && cmd[1])
+			delete_env_node(&main->env, cmd[i]);
 		i++;
 	}
 	return (true);
