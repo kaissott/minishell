@@ -6,13 +6,13 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:41:01 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/21 17:41:01 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:47:45 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	lstadd_back(t_env **lst, t_env *new)
+void	lstadd_back_env(t_env **lst, t_env *new)
 {
 	t_env	*last;
 
@@ -31,7 +31,7 @@ void	lstadd_back(t_env **lst, t_env *new)
 	return ;
 }
 
-t_env	*lstnew(char *content, t_main *main)
+t_env	*lstnew_env(char *content, t_main *main)
 {
 	t_env	*newcontent;
 

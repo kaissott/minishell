@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/22 10:36:56 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:39:58 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,3 @@ void	init_sigaction(int mode)
 	init_sigaction_hd(mode, &sa);
 }
 
-// int	main(void)
-// {
-// 	signal(SIGINT, mon_handler);
-// 	signal(SIGQUIT, mon_handler);
-// 	while (1)
-// 		;
-// }

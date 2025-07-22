@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:35:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/21 17:36:20 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:50:11 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void	env_oldpwd_update(t_main *main)
 		path = ft_strjoin("OLDPWD=", pwd);
 		if (!path)
 			free_and_exit_error(main, NULL, ERR_MEM, 12);
-		lstadd_back((&main->env), lstnew(path, main));
+		lstadd_back_env((&main->env), lstnew_env(path, main));
 	}
 }

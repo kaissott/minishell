@@ -6,13 +6,13 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:38:23 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/21 17:38:24 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:44:55 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	tab_size(char **tab)
+static int	tab_size(char **tab)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int	tab_size(char **tab)
 	return (i);
 }
 
-int	parse_sign(char *exit)
+static int	parse_sign(char *exit)
 {
 	int	i;
 
