@@ -6,19 +6,19 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:27:16 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/18 01:46:35 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/22 20:59:11 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	check_current_dir_exec(t_main *main)
+int	check_current_dir_exec(t_main *main, char **cmd)
 {
 	char	*filepath;
 
 	if (!main || !main->exec || !main->exec->cmd || !main->exec->cmd[0])
 		return (0);
-	filepath = NULL;
+	filepath = ft_strjoin("./", cmd[0]);
 	if (!filepath)
 		return (0);
 	if (access(filepath, F_OK) != 0)

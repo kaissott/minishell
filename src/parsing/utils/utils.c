@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:24 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/21 16:38:54 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:20:46 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*join_or_dup(char *prev, char *next)
 		new_val = ft_strdup(next);
 	else
 		new_val = ft_strdup("");
-	free(prev);
+	if (prev)
+		free(prev);
 	return (new_val);
 }

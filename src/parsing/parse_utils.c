@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/21 18:39:34 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:49:57 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

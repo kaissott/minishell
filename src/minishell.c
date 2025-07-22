@@ -35,16 +35,14 @@ void	start_shell(t_main *shell)
 	char	*rl;
 	char	*line;
 
-
 	while (1)
 	{
 		init_sigaction(0);
-		dup2(shell->std_in, STDIN_FILENO);
-		dup2(shell->std_out, STDOUT_FILENO);
+		if (dup2(shell->std_in, STDIN_FILENO) == -1 || dup2(shell->std_out,
+				STDOUT_FILENO) == -1)
+			free_and_exit_error(shell, NULL, "Dup 2 failed", errno);
 		if (isatty(fileno(stdin)))
-		{
 			rl = readline("> ");
-		}
 		else
 		{
 			rl = get_next_line(fileno(stdin));

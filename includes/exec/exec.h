@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 20:49:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/22 10:40:53 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:59:32 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**env_to_tab(t_main *main);
 
 int		do_cmd(t_main *main, char **cmd, char **env);
 int		pipe_exec(t_main *main);
-int		check_current_dir_exec(t_main *main);
+int		check_current_dir_exec(t_main *main, char **cmd);
 int		strrchr_slash(const char *s, int c);
 int		file_dup(t_main *main, int fd_in, int fd_out);
 
