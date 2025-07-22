@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 20:49:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/22 20:59:32 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/22 22:06:58 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ char	*get_path(t_main *main, char *env_path, char **env);
 char	*path_finding(char **env);
 
 pid_t	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd);
+void	exit_exec_cmd(t_main *main);
 
 #endif

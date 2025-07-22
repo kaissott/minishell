@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/22 20:58:44 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/22 22:07:13 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ int	do_cmd(t_main *main, char **cmd, char **env)
 
 	path = NULL;
 	if (exec_cmd(main, cmd, false) == true)
-	{
-		free_and_exit_error(main, NULL, NULL, 0);
-	}
+		exit_exec_cmd(main);
 	if (cmd == NULL)
 		error_exit("Command not found.", 127, -1);
 	ultimate_path_check(main, cmd);
