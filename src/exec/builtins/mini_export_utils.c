@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:38:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/22 10:48:17 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:10:33 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	export_new_var(t_main *main, char *var)
 	if (!new)
 		free_and_exit_error(main, NULL, ERR_MEM, 12);
 	export = lstnew_env(new, main);
-	if (!export)
-		free_and_exit_error(main, NULL, ERR_MEM, 12);
 	lstadd_back_env(&main->env, export);
 }
 

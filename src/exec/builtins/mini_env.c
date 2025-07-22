@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 18:52:10 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/17 23:06:26 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:49:37 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ bool	env_print(t_main *main, char **cmd)
 	}
 	while (temp)
 	{
-		if (ft_putstr_fd(temp->env, STDOUT_FILENO) == -1)
-			free_and_exit_error(main, NULL, ERR_WRITE, errno);
-		if (write(STDOUT_FILENO, "\n", 1) == -1)
-			free_and_exit_error(main, NULL, ERR_WRITE, errno);
+		ft_putendl_fd(temp->env, STDOUT_FILENO);
 		temp = temp->next;
 	}
 	return (true);
