@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/21 02:51:36 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/22 20:59:46 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exec_simple_cmd(t_main *main)
 	path = get_path(main, env_path, main->env_tab);
 	if (!path)
 	{
-		if (!env_path && check_current_dir_exec(main))
+		if (!env_path && check_current_dir_exec(main, main->exec->cmd))
 			return ;
 		free(path);
 		free(env_path);

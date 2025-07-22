@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/21 17:38:19 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:08:02 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*cd_to_home(t_main *main, char *path, int i)
 	{
 		dst = ft_strjoin(str, path + i);
 		if (!dst)
-			free_and_exit_error(main, NULL, ERR_MEM, 12);
+			free_and_exit_error(main, str, ERR_MEM, 12);
 		free(str);
 	}
 	else
@@ -55,7 +55,6 @@ char	*cd_to_last_pwd(t_main *main)
 			str = ft_strdup(env->env + 7);
 			if (!str)
 				free_and_exit_error(main, NULL, ERR_MEM, 12);
-			printf("%s\n", str);
 			return (str);
 		}
 		env = env->next;

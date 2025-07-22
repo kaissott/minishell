@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/21 18:38:34 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:39:58 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,18 @@ void	my_handler(int sig)
 	}
 }
 
+void	init_sigaction_hd(int mode, struct sigaction *sa)
+{
+	if (mode == 2)
+	{
+		g_sig_mode = HERE_DOC;
+		sa->sa_handler = my_handler;
+		sigaction(SIGINT, sa, NULL);
+		sa->sa_handler = SIG_IGN;
+		sigaction(SIGQUIT, sa, NULL);
+	}
+}
+
 void	init_sigaction(int mode)
 {
 	struct sigaction	sa;
@@ -58,20 +70,6 @@ void	init_sigaction(int mode)
 		sigaction(SIGINT, &sa, NULL);
 		sigaction(SIGQUIT, &sa, NULL);
 	}
-	if (mode == 2)
-	{
-		g_sig_mode = HERE_DOC;
-		sa.sa_handler = my_handler;
-		sigaction(SIGINT, &sa, NULL);
-		sa.sa_handler = SIG_IGN;
-		sigaction(SIGQUIT, &sa, NULL);
-	}
+	init_sigaction_hd(mode, &sa);
 }
 
-// int	main(void)
-// {
-// 	signal(SIGINT, mon_handler);
-// 	signal(SIGQUIT, mon_handler);
-// 	while (1)
-// 		;
-// }

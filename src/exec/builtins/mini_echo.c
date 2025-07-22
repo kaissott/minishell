@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/17 23:33:06 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/22 16:47:12 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,12 @@ void	print_echo_without_flag(t_main *main, char **tab)
 	i = 1;
 	while (tab[i])
 	{
-		if (ft_putstr_fd(tab[i], STDOUT_FILENO) == -1)
-			free_and_exit_error(main, NULL, ERR_WRITE, errno);
+		ft_putstr_fd(tab[i], STDOUT_FILENO);
 		i++;
 		if (tab[i])
-		{
-			if (write(STDOUT_FILENO, " ", 1) == -1)
-				free_and_exit_error(main, NULL, ERR_WRITE, errno);
-		}
+			write(STDOUT_FILENO, " ", 1);
 	}
-	if (write(STDOUT_FILENO, "\n", 1) == -1)
-		free_and_exit_error(main, NULL, ERR_WRITE, errno);
+	write(STDOUT_FILENO, "\n", 1);
 }
 
 bool	mini_echo(t_main *main, char **cmd)
