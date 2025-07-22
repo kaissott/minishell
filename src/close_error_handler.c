@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:10:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/21 17:28:26 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:25:52 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	exit_error_minishell(t_main *main, int errcode, char *err)
 {
 	if (main)
 	{
-		// close(main->std_in);
-		// close(main->std_out);
+		close(main->std_in);
+		close(main->std_out);
 		close_node(main);
 		free_struct(main);
 		if (main)
