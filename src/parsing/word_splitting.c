@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_splitting.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:14 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 21:04:28 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/22 21:39:33 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_parse_error	process_split_words(t_token_chunk *chunk,
 		if (*new_tokens && i == 0 && chunk->value[0] != ' '
 			&& chunk->value[0] != '\n' && chunk->value[0] != '\t')
 		{
-			errcode = handle_first_word(new_tokens, chunk, words[i]);
+			errcode = handle_first_word(new_tokens, words[i]);
 			if (errcode != ERR_NONE)
 				return (errcode);
 		}
@@ -92,14 +92,20 @@ static t_parse_error	process_token(t_main *shell, t_token *token)
 	{
 		errcode = apply_word_splitting(token->chunks, &new_tokens);
 		if (errcode != ERR_NONE)
+		{
+			free_token_lst(&new_tokens);
 			return (errcode);
+		}
 		replace_split_token(&shell->token, new_tokens, token);
 	}
 	else
 	{
 		errcode = cat_chunks(token);
 		if (errcode != ERR_NONE)
+		{
+			free_token_lst(&new_tokens);
 			return (errcode);
+		}
 	}
 	return (ERR_NONE);
 }
@@ -116,7 +122,10 @@ t_parse_error	word_splitting(t_main *shell)
 		next = token->next;
 		errcode = process_token(shell, token);
 		if (errcode != ERR_NONE)
+		{
+			shell->errcode = 12;
 			return (errcode);
+		}
 		token = next;
 	}
 	return (ERR_NONE);

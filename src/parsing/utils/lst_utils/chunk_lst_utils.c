@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chunk_lst_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:49 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/22 20:29:36 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/22 22:35:21 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

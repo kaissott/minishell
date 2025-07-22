@@ -59,11 +59,6 @@ void	start_shell(t_main *shell)
 			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);
 			return ;
 		}
-		if (rl[0] == '\0')
-		{
-			free(rl);
-			continue ;
-		}
 		add_history(rl);
 		parse(shell, rl);
 		check_input(shell);

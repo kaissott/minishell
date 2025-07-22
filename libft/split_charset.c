@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_charset.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 22:33:36 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/22 22:33:39 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 void	free_strs(char **strs)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (!strs)
@@ -13,6 +25,7 @@ void	free_strs(char **strs)
 		i++;
 	}
 	free(strs);
+	strs = NULL;
 }
 
 static char	**resize_strs(char **strs, char *new_arg)
@@ -86,10 +99,7 @@ char	**split_charset(char *s, char *charset)
 			i++;
 		ret = extract_word(&strs, &s[i], charset);
 		if (ret == -1)
-		{
-			free_strs(strs);
 			return (NULL);
-		}
 		i += ret;
 	}
 	return (strs);

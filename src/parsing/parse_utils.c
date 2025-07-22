@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/22 20:49:57 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/22 22:35:42 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 {
 	if (std == STDIN_FILENO)
 	{
+		if (new_cmd->infile.filepath)
+			free(new_cmd->infile.filepath);
 		new_cmd->infile.filepath = ft_strdup(token->next->value);
 		if (!new_cmd->infile.filepath)
 			return (ERR_MALLOC);
@@ -45,6 +47,8 @@ t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 	}
 	else
 	{
+		if (new_cmd->outfile.filepath)
+			free(new_cmd->outfile.filepath);
 		new_cmd->outfile.filepath = ft_strdup(token->next->value);
 		if (!new_cmd->outfile.filepath)
 			return (ERR_MALLOC);
@@ -86,8 +90,8 @@ int	test(void)
 t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 {
 	char			*rl;
-	char			*line;
 	t_parse_error	result;
+	char			*line;
 
 	rl_event_hook = test;
 	result = ERR_NONE;
@@ -96,6 +100,16 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 	{
 		if (isatty(fileno(stdin)))
 			rl = readline("HD >");
+		else
+		{
+			rl = get_next_line(fileno(stdin));
+			if (rl)
+			{
+				line = ft_strtrim(rl, "\n");
+				free(rl);
+				rl = line;
+			}
+		}
 		if (g_sig_mode == INTERACTIVE)
 		{
 			result = ERR_SIG;
@@ -108,7 +122,8 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 			free(rl);
 			break ;
 		}
-		ft_putendl_fd(rl, *fd_heredoc);
+		if (ft_putendl_fd(rl, *fd_heredoc) == -1)
+			return (ERR_SIG);
 		free(rl);
 	}
 	rl_event_hook = NULL;
