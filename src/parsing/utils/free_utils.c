@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:19 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 02:31:19 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/22 21:34:53 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	get_errcode(t_main *shell, t_parse_error errcode)
 		shell->errcode = 0;
 }
 
-void	free_shell(t_main *shell, t_parse_error errcode)
+void	free_shell(t_main *shell)
 {
 	if (shell->token)
 		free_token_lst(&shell->token);
@@ -41,7 +41,7 @@ void	clear_and_exit(t_main *shell, t_parse_error errcode)
 	get_errcode(shell, errcode);
 	print_syntax_error_msg(shell->error.error_type,
 		shell->error.unexpected_token);
-	free_shell(shell, errcode);
+	free_shell(shell);
 	free(shell);
 }
 
@@ -54,8 +54,10 @@ bool	check_parsing(t_main *shell, t_parse_error errcode, bool at_end)
 		return (true);
 	}
 	get_errcode(shell, errcode);
+	if (shell->errcode == 12)
+		exit(EXIT_FAILURE);
 	if (errcode != ERR_SIG)
 		print_syntax_error_msg(errcode, shell->error.unexpected_token);
-	free_shell(shell, errcode);
+	free_shell(shell);
 	return (false);
 }

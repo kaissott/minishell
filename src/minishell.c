@@ -35,16 +35,13 @@ void	start_shell(t_main *shell)
 	char	*rl;
 	char	*line;
 
-
 	while (1)
 	{
 		init_sigaction(0);
 		dup2(shell->std_in, STDIN_FILENO);
 		dup2(shell->std_out, STDOUT_FILENO);
 		if (isatty(fileno(stdin)))
-		{
 			rl = readline("> ");
-		}
 		else
 		{
 			rl = get_next_line(fileno(stdin));
@@ -60,11 +57,6 @@ void	start_shell(t_main *shell)
 		{
 			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);
 			return ;
-		}
-		if (rl[0] == '\0')
-		{
-			free(rl);
-			continue ;
 		}
 		add_history(rl);
 		parse(shell, rl);

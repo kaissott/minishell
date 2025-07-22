@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luca <luca@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 16:21:25 by kkarakus          #+#    #+#             */
-/*   Updated: 2025/06/23 20:10:31 by luca             ###   ########.fr       */
+/*   Updated: 2025/07/21 21:55:33 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (ft_tabcomp(tab, s, c));
 }
+
 // int	main(void)
 // {
 // 	char const	*phrase;

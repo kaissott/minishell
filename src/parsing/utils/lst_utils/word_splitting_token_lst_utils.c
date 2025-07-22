@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   word_splitting_token_lst_utils.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:02:34 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 21:07:59 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:45:45 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 t_parse_error	create_first_token(t_token **new_tokens, t_token_chunk *chunk)
 {
@@ -41,8 +41,8 @@ t_parse_error	create_new_token_with_word(t_token **new_tokens, char *word)
 		free_token(new_token);
 		return (errcode);
 	}
-	errcode = cat_chunks(new_token);
-	if (errcode != ERR_NONE)
+	new_token->value = ft_strdup(new_token->chunks->value);
+	if (!new_token->value)
 	{
 		free_token(new_token);
 		return (errcode);

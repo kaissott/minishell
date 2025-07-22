@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_splitting_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:11 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 21:08:16 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:41:21 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,10 @@ t_parse_error	keep_chunk(t_token *token, t_token_chunk *chunk)
 	errcode = create_and_add_splitted_chunk(&token->chunks, chunk->value);
 	if (errcode != ERR_NONE)
 		return (errcode);
-	errcode = cat_chunks(token);
-	return (errcode);
+	return (cat_chunks(token));
 }
 
-t_parse_error	handle_first_word(t_token **new_tokens, t_token_chunk *chunk,
-		char *word)
+t_parse_error	handle_first_word(t_token **new_tokens, char *word)
 {
 	t_parse_error	errcode;
 

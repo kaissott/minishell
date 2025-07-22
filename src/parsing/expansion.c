@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:20 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 02:29:21 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/22 22:17:49 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 		i += len;
 	}
 	if (replace_chunk_value(shell, expand_lst, token, chunk) != ERR_NONE)
+	{
+		shell->errcode = 12;
 		return (NULL);
+	}
 	if (!chunk)
 		return (next->next);
 	return (next);
@@ -94,7 +97,7 @@ static t_parse_error	process_chunk(t_main *shell, t_token *token,
 		{
 			chunk = handle_chunk_value(shell, &expand_lst, token, chunk);
 			free_expand_lst(&expand_lst);
-			if (!chunk && expand_lst)
+			if (!chunk && shell->errcode == 12)
 				return (ERR_MALLOC);
 		}
 		else
