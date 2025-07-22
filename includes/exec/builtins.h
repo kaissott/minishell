@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/22 10:50:46 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:51:33 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "structures.h"
 
 /* ===========================================================================
- * MINI_ECHO.C
+ * MINI_ECHO
  * ===========================================================================
  */
 bool	check_echo_flag(char *tab);
@@ -27,13 +27,13 @@ void	print_echo_without_flag(t_main *main, char **tab);
 void	print_echo_with_flag(t_main *main, char **tab);
 
 /* ===========================================================================
- * MINI_PWD.C
+ * MINI_PWD
  * ===========================================================================
  */
 bool	pwd(t_main *main);
 
 /* ===========================================================================
- * MINI_ENV.C
+ * MINI_ENV
  * ===========================================================================
  */
 bool	env_print(t_main *main, char **cmd);
@@ -41,7 +41,7 @@ t_env	*lstnew_env(char *content, t_main *main);
 void	lstadd_back_env(t_env **lst, t_env *new);
 
 /* ===========================================================================
- * MINI_CD.C
+ * MINI_CD
  * ===========================================================================
  */
 bool	mini_cd(char **cmd, t_main *main);
@@ -52,7 +52,7 @@ void	env_pwd_update(t_main *main);
 void	env_oldpwd_update(t_main *main);
 
 /* ===========================================================================
- * MINI_EXIT.C
+ * MINI_EXIT
  * ===========================================================================
  */
 int		mini_exit(char **line, t_main *main);
@@ -61,7 +61,7 @@ void	exit_minishell(t_main *main, int exitcode);
 void	numeric_argument_error(char **args, t_main *main);
 
 /* ===========================================================================
- * MINI_EXPORT.C
+ * MINI_EXPORT
  * ===========================================================================
  */
 bool	mini_export(t_main *main, char **cmd);
@@ -72,7 +72,7 @@ void	export_new_var(t_main *main, char *var);
 void	replace_var(t_main *main, char *var, t_env *env);
 
 /* ===========================================================================
- * MINI_UNSET.C
+ * MINI_UNSET
  * ===========================================================================
  */
 bool	mini_unset(t_main *main, char **cmd);
