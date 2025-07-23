@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:40:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	delete_env_node(t_env **env, char *var)
 	}
 }
 
-bool	mini_unset(t_main *main, char **cmd)
+bool	mini_unset(t_shell *main, char **cmd)
 {
 	int	i;
 

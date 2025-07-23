@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:13 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 01:31:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_parse_error	token_lst_add_operator_node(t_token **token_lst, char *cmd,
 	return (ERR_NONE);
 }
 
-t_parse_error	token_lst_add_chunks(t_main *shell, t_token *new_token)
+t_parse_error	token_lst_add_chunks(t_shell *shell, t_token *new_token)
 {
 	t_token_chunk	*tmp;
 	char			*prev;

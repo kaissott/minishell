@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:20:20 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	no_env_build(t_main *main)
+void	no_env_build(t_shell *main)
 {
 	char	buff[1024];
 	char	*pwd;
@@ -38,7 +38,7 @@ void	no_env_build(t_main *main)
 	lstadd_back_env(&mainenv, tmp);
 }
 
-void	env_build(char **env, t_main *main)
+void	env_build(char **env, t_shell *main)
 {
 	int		i;
 	char	*str;
@@ -62,7 +62,7 @@ void	env_build(char **env, t_main *main)
 	}
 }
 
-int	check_env_available(char **env, t_main *main)
+int	check_env_available(char **env, t_shell *main)
 {
 	char	*str;
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_env(t_main *main)
+void	free_env(t_shell *main)
 {
 	t_env	*head;
 	t_env	*temp;
@@ -29,7 +29,7 @@ void	free_env(t_main *main)
 	free(head);
 }
 
-void	free_node(t_main *main)
+void	free_node(t_shell *main)
 {
 	t_exec	*temp;
 	t_exec	*next;
@@ -64,7 +64,7 @@ void	here_doc_unlink(t_file infile)
 	}
 }
 
-void	close_node(t_main *main)
+void	close_node(t_shell *main)
 {
 	t_exec	*temp;
 
@@ -83,7 +83,7 @@ void	close_node(t_main *main)
 	}
 }
 
-int	free_struct(t_main *main)
+int	free_struct(t_shell *main)
 {
 	if (main->env != NULL)
 		free_env(main);

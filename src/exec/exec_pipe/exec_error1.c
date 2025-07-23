@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 21:43:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execve_err(t_main *main, char **env, char *path, char *cmd)
+void	execve_err(t_shell *main, char **env, char *path, char *cmd)
 {
 	ft_putstr_fd("bash: ", 2);
 	perror(cmd);
@@ -23,7 +23,7 @@ void	execve_err(t_main *main, char **env, char *path, char *cmd)
 	exit_error_minishell(main, 127, NULL);
 }
 
-void	close_fork(int fd1, int fd2, t_exec *node, t_main *main)
+void	close_fork(int fd1, int fd2, t_exec *node, t_shell *main)
 {
 	int	i;
 
@@ -50,7 +50,7 @@ void	close_fork(int fd1, int fd2, t_exec *node, t_main *main)
 	}
 }
 
-void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main)
+void	error_fork(int *pipefd, int prevfd, t_exec *node, t_shell *main)
 {
 	while (wait(NULL) > 0)
 		;
@@ -79,7 +79,7 @@ void	error_fork(int *pipefd, int prevfd, t_exec *node, t_main *main)
 	exit(errno);
 }
 
-void	error_pipe(int prevfd, t_exec *node, t_main *main)
+void	error_pipe(int prevfd, t_exec *node, t_shell *main)
 {
 	while (wait(NULL) > 0)
 		;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-bool	exec_cmd(t_main *main, char **cmd, bool simple)
+bool	exec_cmd(t_shell *main, char **cmd, bool simple)
 {
 	if (ft_strncmp(cmd[0], "echo", 4) == 0 && ft_strlen(cmd[0]) == 4)
 		return (mini_echo(main, cmd));
@@ -39,7 +39,7 @@ bool	exec_cmd(t_main *main, char **cmd, bool simple)
 	return (false);
 }
 
-void	reset_struct(char *rl, t_main *main)
+void	reset_struct(char *rl, t_shell *main)
 {
 	if (rl)
 		free(rl);
@@ -49,7 +49,7 @@ void	reset_struct(char *rl, t_main *main)
 	}
 }
 
-bool	node_check(t_main *main)
+bool	node_check(t_shell *main)
 {
 	t_exec	*node;
 
@@ -73,7 +73,7 @@ bool	node_check(t_main *main)
 	return (true);
 }
 
-int	check_input(t_main *main)
+int	check_input(t_shell *main)
 {
 	t_exec	*node;
 	int		fd_out;

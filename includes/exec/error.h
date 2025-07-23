@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:41:28 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 02:04:00 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 # include "structures.h"
 
-void	free_and_exit_error(t_main *main, char *tmp, char *error,
+void	free_and_exit_error(t_shell *main, char *tmp, char *error,
 			int err_number);
-int		set_return_err_code(t_main *main, char *error, int err_number);
+int		set_return_err_code(t_shell *main, char *error, int err_number);
 
 # define ERR_MEM "Malloc failed"
 # define ERR_MANY_ARGS ": too many arguments\n"

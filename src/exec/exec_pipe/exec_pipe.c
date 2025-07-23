@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:12:46 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	safe_close(int fd, t_main *main)
+void	safe_close(int fd, t_shell *main)
 {
 	t_exec	*tmp;
 
@@ -26,7 +26,7 @@ void	safe_close(int fd, t_main *main)
 	return ;
 }
 
-void	wait_child(pid_t last, t_main *main)
+void	wait_child(pid_t last, t_shell *main)
 {
 	int	status;
 	int	sig;

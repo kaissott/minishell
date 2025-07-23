@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:13:04 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	safe_dup_close(t_main *main, int oldfd, int newfd)
+static void	safe_dup_close(t_shell *main, int oldfd, int newfd)
 {
 	if (dup2(oldfd, newfd) == -1)
 	{
@@ -22,7 +22,7 @@ static void	safe_dup_close(t_main *main, int oldfd, int newfd)
 	}
 }
 
-int	file_dup(t_main *main, int fd_in, int fd_out)
+int	file_dup(t_shell *main, int fd_in, int fd_out)
 {
 	if (fd_in == -1 || fd_out == -1)
 	{
@@ -36,12 +36,12 @@ int	file_dup(t_main *main, int fd_in, int fd_out)
 	return (0);
 }
 
-void	close_main_fds(t_main *main)
+void	close_main_fds(t_shell *main)
 {
 	free_struct(main);
 }
 
-void	dup_failed_err(t_main *main, int prev_fd, int pipefd, t_exec *node)
+void	dup_failed_err(t_shell *main, int prev_fd, int pipefd, t_exec *node)
 {
 	close_fork(prev_fd, pipefd, node, main);
 	if (main->env_tab)
@@ -52,7 +52,7 @@ void	dup_failed_err(t_main *main, int prev_fd, int pipefd, t_exec *node)
 	exit(1);
 }
 
-int	dup_process_child(t_main *main, t_exec *node, int prev_fd, int pipefd)
+int	dup_process_child(t_shell *main, t_exec *node, int prev_fd, int pipefd)
 {
 	if (node->infile.fd > 1)
 	{

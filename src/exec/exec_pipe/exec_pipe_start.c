@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_start.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
+pid_t	last_child(t_exec *node, int prev_fd, t_shell *main, char **env)
 {
 	pid_t	pid;
 
@@ -37,7 +37,7 @@ pid_t	last_child(t_exec *node, int prev_fd, t_main *main, char **env)
 	return (pid);
 }
 
-pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
+pid_t	child_process(t_exec *node, int prev_fd, t_shell *main, char **env)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -65,7 +65,7 @@ pid_t	child_process(t_exec *node, int prev_fd, t_main *main, char **env)
 	return (pipefd[0]);
 }
 
-int	pipe_exec(t_main *main)
+int	pipe_exec(t_shell *main)
 {
 	t_exec	*node;
 	int		prev_fd;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_add.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:41:01 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	lstadd_back_env(t_env **lst, t_env *new)
 	return ;
 }
 
-t_env	*lstnew_env(char *content, t_main *main)
+t_env	*lstnew_env(char *content, t_shell *main)
 {
 	t_env	*newcontent;
 

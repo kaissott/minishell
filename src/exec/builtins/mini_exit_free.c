@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_exit_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:38:27 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_tab_exit(char **args)
 	free(args);
 }
 
-void	exit_minishell(t_main *main, int exitcode)
+void	exit_minishell(t_shell *main, int exitcode)
 {
 	close_node(main);
 	free_struct(main);
@@ -35,7 +35,7 @@ void	exit_minishell(t_main *main, int exitcode)
 	exit(exitcode);
 }
 
-void	numeric_argument_error(char **args, t_main *main)
+void	numeric_argument_error(char **args, t_shell *main)
 {
 	ft_putstr_fd("exit\nbash: exit: ", 2);
 	ft_putstr_fd(args[1], 2);

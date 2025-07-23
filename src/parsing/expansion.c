@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:20 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 00:36:20 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:06:50 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,13 @@ static ssize_t	handle_var(t_expand **expand_lst, char *var,
 	return (i);
 }
 
-static t_parse_error	handle_chunk_value(t_main *shell, t_expand **expand_lst,
-		t_token *token, t_token_chunk *chunk)
+static t_parse_error	handle_chunk_value(t_shell *shell,
+		t_expand **expand_lst, t_token *token, t_token_chunk *chunk)
 {
-	size_t			i;
-	ssize_t			len;
-	t_token_chunk	*next;
+	size_t	i;
+	ssize_t	len;
 
 	i = 0;
-	next = chunk->next;
 	while (chunk->value[i])
 	{
 		if (chunk->value[i] == '$')
@@ -77,7 +75,7 @@ static t_parse_error	handle_chunk_value(t_main *shell, t_expand **expand_lst,
 	return (replace_chunk_value(shell, expand_lst, token, chunk));
 }
 
-static t_parse_error	process_chunk(t_main *shell, t_token *token,
+static t_parse_error	process_chunk(t_shell *shell, t_token *token,
 		t_token_chunk *chunk)
 {
 	t_expand		*expand_lst;
@@ -101,7 +99,7 @@ static t_parse_error	process_chunk(t_main *shell, t_token *token,
 	return (ERR_NONE);
 }
 
-t_parse_error	expansion(t_main *shell)
+t_parse_error	expansion(t_shell *shell)
 {
 	t_token			*token;
 	t_token			*next;

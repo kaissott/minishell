@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_global_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:27:16 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_current_dir_exec(t_main *main, char **cmd)
+int	check_current_dir_exec(t_shell *main, char **cmd)
 {
 	char	*filepath;
 
@@ -36,7 +36,7 @@ int	check_current_dir_exec(t_main *main, char **cmd)
 	return (1);
 }
 
-static char	*try_paths(t_main *main, char **paths, char *env_path)
+static char	*try_paths(t_shell *main, char **paths, char *env_path)
 {
 	char	*full_path;
 	int		i;
@@ -63,7 +63,7 @@ static char	*try_paths(t_main *main, char **paths, char *env_path)
 	return (NULL);
 }
 
-char	*get_path(t_main *main, char *env_path, char **env)
+char	*get_path(t_shell *main, char *env_path, char **env)
 {
 	char	**paths;
 	char	*result;
@@ -77,7 +77,7 @@ char	*get_path(t_main *main, char *env_path, char **env)
 	return (result);
 }
 
-char	*env_path_finding(t_main *main, char **env)
+char	*env_path_finding(t_shell *main, char **env)
 {
 	char	*env_path;
 	int		i;
@@ -97,7 +97,7 @@ char	*env_path_finding(t_main *main, char **env)
 	return (NULL);
 }
 
-void	ultimate_path_check(t_main *main, char **cmd)
+void	ultimate_path_check(t_shell *main, char **cmd)
 {
 	if (strrchr_slash(cmd[0], '/') == 1)
 	{

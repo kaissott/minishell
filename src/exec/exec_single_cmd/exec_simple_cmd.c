@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <string.h>
 #include <unistd.h>
 
-void	exec_simple_cmd(t_main *main)
+void	exec_simple_cmd(t_shell *main)
 {
 	char	*env_path;
 	char	*path;
@@ -37,7 +37,7 @@ void	exec_simple_cmd(t_main *main)
 	execve_err(main, main->env_tab, path, main->exec->cmd[0]);
 }
 
-void	wait_simple_cmd(t_main *main, pid_t pid)
+void	wait_simple_cmd(t_shell *main, pid_t pid)
 {
 	int	status;
 	int	sig;
@@ -57,7 +57,7 @@ void	wait_simple_cmd(t_main *main, pid_t pid)
 	}
 }
 
-void	init_simple_cmd(t_main *main)
+void	init_simple_cmd(t_shell *main)
 {
 	pid_t	pid;
 

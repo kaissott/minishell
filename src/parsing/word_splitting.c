@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_splitting.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:14 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 01:23:51 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ static t_parse_error	apply_word_splitting(t_token_chunk *chunk,
 	return (apply_word_splitting(chunk->next, new_tokens));
 }
 
-static t_parse_error	process_token(t_main *shell, t_token *token)
+static t_parse_error	process_token(t_shell *shell, t_token *token)
 {
 	t_token			*new_tokens;
 	t_parse_error	errcode;
 
 	new_tokens = NULL;
-	if (token_contains_ifs_chunks(token))
+	if (token_contains_ifs_chunks(token) && !token->is_redir)
 	{
 		errcode = apply_word_splitting(token->chunks, &new_tokens);
 		if (errcode != ERR_NONE)
@@ -104,7 +104,7 @@ static t_parse_error	process_token(t_main *shell, t_token *token)
 	return (ERR_NONE);
 }
 
-t_parse_error	word_splitting(t_main *shell)
+t_parse_error	word_splitting(t_shell *shell)
 {
 	t_token			*token;
 	t_token			*next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 02:02:51 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 volatile sig_atomic_t	g_sig_mode = INTERACTIVE;
 
-static void	parse(t_main *shell, char *cmd)
+static void	parse(t_shell *shell, char *cmd)
 {
 	t_parse_error	errcode;
 
@@ -31,7 +31,7 @@ static void	parse(t_main *shell, char *cmd)
 	check_parsing(shell, errcode, true);
 }
 
-void	start_shell(t_main *shell)
+void	start_shell(t_shell *shell)
 {
 	char	*rl;
 	char	*line;
@@ -70,7 +70,7 @@ void	start_shell(t_main *shell)
 
 int	main(int ac, char **av, char **env)
 {
-	t_main	*shell;
+	t_shell	*shell;
 	int		errcode;
 
 	(void)av;

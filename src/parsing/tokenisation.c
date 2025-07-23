@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenisation.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:08 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 00:26:04 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static ssize_t	extract_unquoted_chunk(t_token_chunk **chunks, char *cmd)
 	return (len);
 }
 
-static ssize_t	extract_word_token(t_main *shell, char *cmd)
+static ssize_t	extract_word_token(t_shell *shell, char *cmd)
 {
 	ssize_t	i;
 	ssize_t	chunk_len;
@@ -74,7 +74,7 @@ static ssize_t	extract_word_token(t_main *shell, char *cmd)
 	return (i);
 }
 
-static ssize_t	extract_operator_token(t_main *shell, char *cmd)
+static ssize_t	extract_operator_token(t_shell *shell, char *cmd)
 {
 	ssize_t			len;
 	t_token_type	token_type;
@@ -93,7 +93,7 @@ static ssize_t	extract_operator_token(t_main *shell, char *cmd)
 	return (len);
 }
 
-t_parse_error	tokenisation(t_main *shell, char *cmd)
+t_parse_error	tokenisation(t_shell *shell, char *cmd)
 {
 	ssize_t	i;
 	ssize_t	token_len;

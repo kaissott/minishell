@@ -6,15 +6,15 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:11:45 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 21:11:45 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LST_UTILS_H
 # define LST_UTILS_H
 
-# include "../../minishell.h"
-# include "../../structures.h"
+# include "minishell.h"
+# include "structures.h"
 
 void			chunk_lst_add_back(t_token_chunk **chunk_lst,
 					t_token_chunk *new);
@@ -41,7 +41,7 @@ void			token_lst_delone(t_token **token_lst, t_token *node_to_delete);
 void			token_lst_add_back(t_token **token_lst, t_token *new);
 t_parse_error	token_lst_add_operator_node(t_token **token_lst, char *cmd,
 					ssize_t len, t_token_type token_type);
-t_parse_error	token_lst_add_chunks(t_main *shell, t_token *new_token);
+t_parse_error	token_lst_add_chunks(t_shell *shell, t_token *new_token);
 
 t_parse_error	create_first_token(t_token **new_tokens, t_token_chunk *chunk);
 t_parse_error	create_new_token_with_word(t_token **new_tokens, char *word);

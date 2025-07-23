@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*cmd_path(char **cmd, char *linktopath)
 	return (NULL);
 }
 
-int	do_cmd(t_main *main, char **cmd, char **env)
+int	do_cmd(t_shell *main, char **cmd, char **env)
 {
 	char	*path;
 	char	*env_path;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenisation_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:06 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 00:26:04 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_token_type	handle_redir(char *cmd, t_error *error)
 		i++;
 	if (is_operator(&cmd[i]) || !cmd[i])
 	{
-		set_error(error, ERR_SYNTAX, cmd[i]);
+		set_error(error, ERR_SYNTAX, cmd[i], NULL);
 		return (T_ERROR_SYNTAX);
 	}
 	if (cmd[0] == '>')
@@ -53,14 +53,14 @@ t_token_type	get_token_type(t_error *error, char *cmd)
 	{
 		if (cmd[1] == '|')
 		{
-			set_error(error, ERR_DOUBLE_PIPE, '\0');
+			set_error(error, ERR_DOUBLE_PIPE, '\0', NULL);
 			return (T_ERROR_PIPE);
 		}
 		while (cmd[i] && cmd[i] == ' ')
 			i++;
 		if (!cmd[i] || !cmd[-1])
 		{
-			set_error(error, ERR_SYNTAX, '|');
+			set_error(error, ERR_SYNTAX, '|', NULL);
 			return (T_ERROR_SYNTAX);
 		}
 		return (T_PIPE);
@@ -70,15 +70,18 @@ t_token_type	get_token_type(t_error *error, char *cmd)
 	return (T_ERROR_SYNTAX);
 }
 
-void	set_heredocs_delimiters(t_main *shell)
+void	set_heredocs_delimiters(t_shell *shell)
 {
 	t_token	*tmp;
 
 	tmp = shell->token;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->value, "<<") == 0 && tmp->next)
+		if (tmp->type == T_HEREDOC && tmp->next)
 			tmp->next->is_delimiter = true;
+		else if (tmp->type == T_REDIR_IN || tmp->type == T_REDIR_TRUNC
+			|| tmp->type == T_REDIR_APPEND)
+			tmp->next->is_redir = true;
 		tmp = tmp->next;
 	}
 }

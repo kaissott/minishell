@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mini_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 00:24:55 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_var_exist(t_main *main, char *var)
+int	check_var_exist(t_shell *main, char *var)
 {
 	int		i;
 	t_env	*env;
@@ -49,7 +49,7 @@ bool	is_valid_identifier(const char *str)
 	return (true);
 }
 
-void	print_export_env(t_main *main)
+void	print_export_env(t_shell *main)
 {
 	t_env	*env;
 
@@ -64,7 +64,7 @@ void	print_export_env(t_main *main)
 	}
 }
 
-bool	mini_export(t_main *main, char **cmd)
+bool	mini_export(t_shell *main, char **cmd)
 {
 	int	i;
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*cd_to_home(t_main *main, char *path, int i)
+char	*cd_to_home(t_shell *main, char *path, int i)
 {
 	t_env	*env;
 	char	*str;
@@ -41,7 +41,7 @@ char	*cd_to_home(t_main *main, char *path, int i)
 	return (dst);
 }
 
-char	*cd_to_last_pwd(t_main *main)
+char	*cd_to_last_pwd(t_shell *main)
 {
 	t_env	*env;
 	char	*str;
@@ -65,7 +65,7 @@ char	*cd_to_last_pwd(t_main *main)
 	return (str);
 }
 
-char	*get_directory(t_main *main, char **tab)
+char	*get_directory(t_shell *main, char **tab)
 {
 	char	*str;
 
@@ -85,7 +85,7 @@ char	*get_directory(t_main *main, char **tab)
 	return (str);
 }
 
-bool	mini_cd(char **cmd, t_main *main)
+bool	mini_cd(char **cmd, t_shell *main)
 {
 	char	*str;
 

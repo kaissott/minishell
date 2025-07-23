@@ -6,19 +6,19 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:11:56 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 21:11:56 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENISATION_H
 # define TOKENISATION_H
 
-# include "../minishell.h"
-# include "../structures.h"
+# include "minishell.h"
+# include "structures.h"
 
-t_parse_error	tokenisation(t_main *shell, char *cmd);
+t_parse_error	tokenisation(t_shell *shell, char *cmd);
 int				is_operator(const char *str);
 t_token_type	get_token_type(t_error *error, char *cmd);
-void			set_heredocs_delimiters(t_main *shell);
+void			set_heredocs_delimiters(t_shell *shell);
 
 #endif

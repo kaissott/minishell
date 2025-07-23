@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:02 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 00:26:04 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:10:31 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	is_dollar_alone(t_token_chunk *chunk, size_t i, size_t len,
-		t_token_chunk *next)
-{
-	if (len == 1 && chunk->value[i] == '$' && chunk->type != T_DOUBLE_QUOTED
-		&& next && (next->type == T_SINGLE_QUOTED
-			|| next->type == T_DOUBLE_QUOTED))
-	{
-		while (chunk->value[i])
-		{
-			chunk->value[i] = chunk->value[i + 1];
-			i++;
-		}
-		return (true);
-	}
-	return (false);
-}
 
 t_expand	*extract_expand_var(char *var, ssize_t *i)
 {
@@ -38,7 +21,7 @@ t_expand	*extract_expand_var(char *var, ssize_t *i)
 	return (create_expand(T_EXPAND_VAR, ft_substr(var, 1, *i - 1)));
 }
 
-static char	*get_var_value(t_main *shell, char *var_name, bool *var_found)
+static char	*get_var_value(t_shell *shell, char *var_name, bool *var_found)
 {
 	t_env	*tmp;
 	size_t	var_name_len;
@@ -65,7 +48,7 @@ static char	*get_var_value(t_main *shell, char *var_name, bool *var_found)
 	return ("");
 }
 
-static t_parse_error	handle_var_expansion(t_main *shell,
+static t_parse_error	handle_var_expansion(t_shell *shell,
 		t_expand **expand_lst, t_expand *tmp, t_token_chunk *chunk)
 {
 	char	*var_value;
@@ -95,7 +78,24 @@ static t_parse_error	handle_var_expansion(t_main *shell,
 	return (ERR_NONE);
 }
 
-t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
+static t_parse_error	check_expansion(t_shell *shell, t_expand **expand_lst,
+		t_token *token, t_token_chunk *chunk)
+{
+	if (!chunk->value && !*expand_lst)
+		chunk_lst_delone(&token->chunks, chunk);
+	if (!token->chunks)
+	{
+		if (token->is_redir)
+		{
+			set_error(&shell->error, ERR_AMBIGUOUS_REDIR, '\0', token->value);
+			return (ERR_AMBIGUOUS_REDIR);
+		}
+		token_lst_delone(&shell->token, token);
+	}
+	return (ERR_NONE);
+}
+
+t_parse_error	replace_chunk_value(t_shell *shell, t_expand **expand_lst,
 		t_token *token, t_token_chunk *chunk)
 {
 	t_expand		*tmp;
@@ -114,10 +114,9 @@ t_parse_error	replace_chunk_value(t_main *shell, t_expand **expand_lst,
 		errcode = handle_var_expansion(shell, expand_lst, tmp, chunk);
 		if (errcode != ERR_NONE)
 			return (errcode);
-		if (!chunk->value && !*expand_lst)
-			chunk_lst_delone(&token->chunks, chunk);
-		if (!token->chunks)
-			token_lst_delone(&shell->token, token);
+		errcode = check_expansion(shell, expand_lst, token, chunk);
+		if (errcode != ERR_NONE)
+			return (errcode);
 		tmp = next;
 	}
 	return (ERR_NONE);

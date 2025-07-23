@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mini_export_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:38:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	export_new_var(t_main *main, char *var)
+void	export_new_var(t_shell *main, char *var)
 {
 	int		i;
 	char	*new;
@@ -28,7 +28,7 @@ void	export_new_var(t_main *main, char *var)
 	lstadd_back_env(&main->env, export);
 }
 
-void	replace_var(t_main *main, char *var, t_env *env)
+void	replace_var(t_shell *main, char *var, t_env *env)
 {
 	char	*new;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:04:16 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 02:04:17 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_token
 	t_token_chunk			*chunks;
 	t_token_type			type;
 	bool					is_delimiter;
+	bool					is_redir;
 	struct s_token			*next;
 }							t_token;
 
@@ -84,13 +85,15 @@ typedef enum e_parse_error
 	ERR_PREV_OPEN = -9,
 	ERR_SIG = -10,
 	EMPTY_TOKEN_LIST = -11,
+	ERR_AMBIGUOUS_REDIR = -12
 }							t_parse_error;
 
 typedef struct s_error
 {
 	int						errcode;
-	t_parse_error			error_type;
 	char					unexpected_token;
+	char					*ambiguous_redir;
+	t_parse_error			error_type;
 }							t_error;
 
 typedef struct s_file
@@ -117,7 +120,7 @@ typedef struct s_env
 	struct s_env			*next;
 }							t_env;
 
-typedef struct s_main
+typedef struct s_shell
 {
 	t_env					*env;
 	char					**env_tab;
@@ -127,8 +130,8 @@ typedef struct s_main
 	int						errcode;
 	int						std_in;
 	int						std_out;
-}							t_main;
+}							t_shell;
 
-t_main						*init_minishell(char **env);
+t_shell						*init_minishell(char **env);
 
 #endif

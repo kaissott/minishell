@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:35:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_pwd_update(t_main *main)
+void	env_pwd_update(t_shell *main)
 {
 	t_env	*temp;
 	char	*tmp;
@@ -35,7 +35,7 @@ void	env_pwd_update(t_main *main)
 		pwd(main);
 }
 
-void	env_oldpwd_update(t_main *main)
+void	env_oldpwd_update(t_shell *main)
 {
 	t_env	*temp;
 	char	*path;

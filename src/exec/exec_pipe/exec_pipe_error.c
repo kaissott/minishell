@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:50:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*free_tab_pipe(char **tab, char **path)
 	return (NULL);
 }
 
-void	close_fork_failed(int fd1, int fd2, int fd3, t_main *main)
+void	close_fork_failed(int fd1, int fd2, int fd3, t_shell *main)
 {
 	while (wait(NULL) > 0)
 		;

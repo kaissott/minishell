@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:38:23 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	parse_sign(char *exit)
 	return (i);
 }
 
-int	check_and_conv_exit_code(char **exit, int size, t_main *main)
+int	check_and_conv_exit_code(char **exit, int size, t_shell *main)
 {
 	long long	exit_code;
 	int			error;
@@ -61,7 +61,7 @@ int	check_and_conv_exit_code(char **exit, int size, t_main *main)
 	return (exit_code);
 }
 
-int	mini_exit(char **line, t_main *main)
+int	mini_exit(char **line, t_shell *main)
 {
 	int	exit_code;
 	int	size;

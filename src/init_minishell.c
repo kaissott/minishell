@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:20:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 02:03:25 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:13:48 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_main	*init_minishell(char **env)
+t_shell	*init_minishell(char **env)
 {
-	t_main	*main_struct;
+	t_shell	*main_struct;
 
-	main_struct = ft_calloc(1, sizeof(t_main));
+	main_struct = ft_calloc(1, sizeof(t_shell));
 	if (!main_struct)
 		exit_error_minishell(main_struct, errno, ERR_MEM);
 	main_struct->env = NULL;

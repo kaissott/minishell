@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 01:47:42 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 09:48:20 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	**resize_cmd_args(char **cmd, char *new_arg)
 
 t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 {
+	if (!token->next)
+		return (ERR_AMBIGUOUS_REDIR);
 	if (std == STDIN_FILENO)
 	{
 		new_cmd->infile.filepath = ft_strdup(token->next->value);
@@ -95,7 +97,7 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 	while (1)
 	{
 		if (isatty(fileno(stdin)))
-			rl = readline("HD >");
+			rl = readline("heredoc > ");
 		else
 		{
 			rl = get_next_line(fileno(stdin));

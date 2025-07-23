@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:33 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 02:01:25 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_exec	*handle_pipe(t_main *shell, t_token *token, t_exec *new_cmd,
+static t_exec	*handle_pipe(t_shell *shell, t_token *token, t_exec *new_cmd,
 		bool is_last)
 {
 	if (new_cmd)
@@ -26,7 +26,7 @@ static t_exec	*handle_pipe(t_main *shell, t_token *token, t_exec *new_cmd,
 		return (NULL);
 }
 
-static t_parse_error	handle_redirection(t_main *shell, t_token *token,
+static t_parse_error	handle_redirection(t_shell *shell, t_token *token,
 		t_exec *new_cmd)
 {
 	int				std;
@@ -54,7 +54,7 @@ static t_parse_error	handle_redirection(t_main *shell, t_token *token,
 	return (ERR_NONE);
 }
 
-static t_parse_error	handle_heredoc(t_main *shell, t_token *token,
+static t_parse_error	handle_heredoc(t_shell *shell, t_token *token,
 		t_exec *new_cmd)
 {
 	new_cmd->infile.type = T_HEREDOC;
@@ -75,7 +75,7 @@ static t_parse_error	handle_heredoc(t_main *shell, t_token *token,
 	return (ERR_NONE);
 }
 
-static t_parse_error	handle_token(t_main *shell, t_token *token,
+static t_parse_error	handle_token(t_shell *shell, t_token *token,
 		t_exec *new_cmd)
 {
 	if (token->type == T_WORD)
@@ -96,7 +96,7 @@ static t_parse_error	handle_token(t_main *shell, t_token *token,
 	return (ERR_TOKEN);
 }
 
-t_parse_error	parsing(t_main *shell)
+t_parse_error	parsing(t_shell *shell)
 {
 	t_exec			*new_cmd;
 	t_parse_error	errcode;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   close_error_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:10:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 02:06:33 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_error_minishell(t_main *main, int errcode, char *err)
+void	exit_error_minishell(t_shell *main, int errcode, char *err)
 {
 	if (main)
 	{
@@ -27,7 +27,7 @@ void	exit_error_minishell(t_main *main, int errcode, char *err)
 	exit(errcode);
 }
 
-void	exit_error_two_close(t_main *main_struct, int fd1, int fd2)
+void	exit_error_two_close(t_shell *main_struct, int fd1, int fd2)
 {
 	if (fd1 > 1)
 	{

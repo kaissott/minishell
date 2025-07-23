@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_lst_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:34:01 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 00:25:47 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:12:09 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void	print_info_token(t_token *lst)
 			printf("\tvalue: [%s] ", lst->value);
 		else
 			printf("\tvalue: [NULL] ");
-		printf("type: [%d] is_delimiter : [%d]\n", lst->type,
-			lst->is_delimiter);
+		printf("type: [%d] is_delimiter : [%d] is_redir : [%d]\n", lst->type,
+			lst->is_delimiter, lst->is_redir);
 		if (lst->chunks)
 		{
 			tmp = lst->chunks;
