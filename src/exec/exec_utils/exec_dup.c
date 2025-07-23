@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 18:07:08 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:26:36 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	file_dup(t_shell *main, int fd_in, int fd_out)
 		safe_dup_close(main, fd_out, STDOUT_FILENO);
 	return (0);
 }
-
 
 void	dup_failed_err(t_shell *main, int prev_fd, int pipefd, t_exec *node)
 {

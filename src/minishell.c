@@ -6,14 +6,13 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 16:49:24 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/23 23:02:56 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-volatile sig_atomic_t	g_sig_mode = INTERACTIVE;
-int						i = 0;
+volatile sig_atomic_t	g_sig_mode = 0;
 
 static void	parse(t_shell *shell, char *cmd)
 {
@@ -39,12 +38,16 @@ void	start_shell(t_shell *shell)
 
 	while (1)
 	{
-		init_sigaction(0);
+		init_sigaction();
 		if (dup2(shell->std_in, STDIN_FILENO) == -1 || dup2(shell->std_out,
 				STDOUT_FILENO) == -1)
 			free_and_exit_error(shell, NULL, "Dup 2 failed", errno);
 		if (isatty(fileno(stdin)))
+		{
 			rl = readline("> ");
+			if (shell->errcode < 3 && g_sig_mode > 0)
+				shell->errcode = g_sig_mode;
+		}
 		else
 		{
 			rl = get_next_line(fileno(stdin));
@@ -60,11 +63,11 @@ void	start_shell(t_shell *shell)
 			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);
 			return ;
 		}
+		g_sig_mode = 0;
 		add_history(rl);
 		parse(shell, rl);
 		check_input(shell);
 		reset_struct(rl, shell);
-		i++;
 		// rl_on_new_line();
 	}
 	clear_history();

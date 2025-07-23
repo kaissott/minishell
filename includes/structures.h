@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:04:16 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 20:34:15 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
+
+# include "minishell.h"
 
 typedef enum e_expand_type
 {
@@ -53,13 +55,10 @@ typedef enum e_token_type
 	T_HEREDOC,
 }							t_token_type;
 
-typedef enum e_sig_mode
-{
-	HERE_DOC,
-	CHILD,
-	INTERACTIVE,
-	HERE_DOC_INT
-}							t_sig_mode;
+#define INTERACTIVE 0
+#define CHILD 1
+#define HERE_DOC 2
+#define SIG 130
 
 typedef struct s_token
 {

@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 18:24:21 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/23 19:10:02 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXEC_UTILS_H
 
 # include "../minishell.h"
+# include "structures.h"
 
 # define ERR_MEM "Malloc failed"
 # define ERR_MANY_ARGS ": too many arguments\n"
