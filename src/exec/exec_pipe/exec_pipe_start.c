@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 23:05:26 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/23 23:28:28 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ pid_t	child_process(t_exec *node, int prev_fd, t_shell *main, char **env)
 		if (node->cmd[0] != NULL)
 			do_cmd(main, node->cmd, env);
 	}
-	safe_close(prev_fd, main);
+	close(prev_fd);
 	close(pipefd[1]);
 	return (pipefd[0]);
 }

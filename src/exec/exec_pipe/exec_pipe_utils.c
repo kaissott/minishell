@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 18:06:38 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/23 23:34:08 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	do_cmd(t_shell *main, char **cmd, char **env)
 	char	*env_path;
 
 	path = NULL;
+	exit_error_two_close(main, main->std_in, main->std_out);
 	if (exec_cmd(main, cmd, false) == true)
 		exit_exec_cmd(main);
 	if (cmd == NULL)
@@ -84,17 +85,4 @@ int	do_cmd(t_shell *main, char **cmd, char **env)
 	execve(path, cmd, env);
 	execve_err(main, env, path, cmd[0]);
 	return (-1);
-}
-
-void	close_fd(int prev_fd, int outfile, int if_hd)
-{
-	if (if_hd == 2)
-	{
-		if (unlink("here_doc") == -1)
-			perror("Unlink here_doc error : ");
-	}
-	if (prev_fd != -1)
-		close(prev_fd);
-	if (outfile != -1)
-		close(outfile);
 }

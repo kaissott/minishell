@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 20:49:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 22:57:42 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/23 23:17:46 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	execve_err(t_shell *main, char **env, char *path, char *cmd);
 void	init_simple_cmd(t_shell *main);
 void	wait_child(pid_t last, t_shell *main);
 void	ultimate_path_check(t_shell *main, char **cmd);
-void	close_fd(int prev, int outfile, int if_hd);
 void	exit_exec_cmd(t_shell *main);
 
 char	**ft_split_slash(char const *s, char c);

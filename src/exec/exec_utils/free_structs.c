@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 00:25:15 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,6 @@ void	free_node(t_shell *main)
 	main->exec = NULL;
 }
 
-void	here_doc_unlink(t_file infile)
-{
-	if (infile.is_heredoc == true)
-	{
-		unlink(infile.filepath);
-		return ;
-	}
-}
-
 void	close_node(t_shell *main)
 {
 	t_exec	*temp;
@@ -73,10 +64,7 @@ void	close_node(t_shell *main)
 	{
 		exit_error_two_close(main, temp->infile.fd, temp->outfile.fd);
 		if (temp->infile.filepath)
-		{
-			here_doc_unlink(temp->infile);
 			free(temp->infile.filepath);
-		}
 		if (temp->outfile.filepath)
 			free(temp->outfile.filepath);
 		temp = temp->next;
