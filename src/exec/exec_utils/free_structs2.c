@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_structs2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:41:45 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 10:13:21 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:06:38 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_tab_2(char **tab)
+void	free_tab(char **tab)
 {
 	int	i;
 
@@ -31,8 +31,11 @@ void	free_and_exit_error(t_shell *main, char *tmp, char *error,
 {
 	if (tmp != NULL)
 		free(tmp);
-	if (main->env_tab)
+	if (main->env_tab != NULL)
+	{
+		dprintf(2, "%s", "va");
 		free(main->env_tab);
+	}
 	exit_error_minishell(main, err_number, error);
 }
 

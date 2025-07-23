@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:23:54 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "../libft/libft.h"
-# include "error.h"
-# include "structures.h"
+# include "../minishell.h"
 
 /* ===========================================================================
  * MINI_ECHO
@@ -37,7 +35,9 @@ bool	pwd(t_shell *main);
  * ===========================================================================
  */
 bool	env_print(t_shell *main, char **cmd);
+int		check_env_available(char **env, t_shell *main);
 t_env	*lstnew_env(char *content, t_shell *main);
+void	env_build(char **env, t_shell *main);
 void	lstadd_back_env(t_env **lst, t_env *new);
 
 /* ===========================================================================

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:06:38 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*cmd_path(char **cmd, char *linktopath)
 		path = ft_strjoin(path_poss[i], cmd[0]);
 		if (path != NULL && (access(path, X_OK) == 0))
 		{
-			free_tab_2(path_poss);
+			free_tab(path_poss);
 			return (path);
 		}
 		if (path)
@@ -55,7 +55,7 @@ char	*cmd_path(char **cmd, char *linktopath)
 		path = NULL;
 		i++;
 	}
-	free_tab_2(path_poss);
+	free_tab(path_poss);
 	return (NULL);
 }
 
@@ -97,16 +97,4 @@ void	close_fd(int prev_fd, int outfile, int if_hd)
 		close(prev_fd);
 	if (outfile != -1)
 		close(outfile);
-}
-
-void	access_out_check(char *out, int prev_fd, int outfile)
-{
-	if (access(out, W_OK) == -1)
-	{
-		while (wait(NULL) > 0)
-			;
-		close_fd(prev_fd, outfile, -1);
-		ft_putendl_fd("Permission Denied", 2);
-		exit(1);
-	}
 }

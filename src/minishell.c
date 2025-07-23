@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:49:24 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 volatile sig_atomic_t	g_sig_mode = INTERACTIVE;
+int						i = 0;
 
 static void	parse(t_shell *shell, char *cmd)
 {
@@ -63,6 +64,7 @@ void	start_shell(t_shell *shell)
 		parse(shell, rl);
 		check_input(shell);
 		reset_struct(rl, shell);
+		i++;
 		// rl_on_new_line();
 	}
 	clear_history();

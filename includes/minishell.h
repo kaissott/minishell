@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:04:26 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 08:35:28 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:24:48 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include "exec/error.h"
 # include "exec/exec.h"
-# include "exec/main.h"
+# include "exec/exec_utils.h"
 # include "parsing/expansion.h"
 # include "parsing/parse.h"
 # include "parsing/tokenisation.h"
@@ -34,7 +33,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
+# include <sys/wait.h>
 
 extern volatile sig_atomic_t	g_sig_mode;
 

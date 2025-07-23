@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_start.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:48:57 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ pid_t	last_child(t_exec *node, int prev_fd, t_shell *main, char **env)
 	}
 	pid = fork();
 	if (pid == -1)
-	{
-		free(env);
 		error_fork(NULL, prev_fd, node, main);
-	}
 	if (pid == 0)
 	{
 		dup_process_child(main, node, prev_fd, main->std_out);
@@ -86,5 +83,6 @@ int	pipe_exec(t_shell *main)
 	close_node(main);
 	wait_child(last_pid, main);
 	free(main->env_tab);
+	main->env_tab = NULL;
 	return (0);
 }
