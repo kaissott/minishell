@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:13 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 02:41:27 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 01:31:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 t_token	*token_lst_last(t_token *lst)
 {
@@ -86,11 +86,22 @@ t_parse_error	token_lst_add_operator_node(t_token **token_lst, char *cmd,
 
 t_parse_error	token_lst_add_chunks(t_main *shell, t_token *new_token)
 {
-	t_parse_error	errcode;
+	t_token_chunk	*tmp;
+	char			*prev;
 
-	errcode = cat_chunks(new_token);
-	if (errcode != ERR_NONE)
-		return (errcode);
+	tmp = new_token->chunks;
+	prev = NULL;
+	while (tmp)
+	{
+		new_token->value = join_or_dup(prev, tmp->value);
+		if (!new_token->value)
+		{
+			free_token(new_token);
+			return (ERR_MALLOC);
+		}
+		prev = new_token->value;
+		tmp = tmp->next;
+	}
 	token_lst_add_back(&shell->token, new_token);
 	return (ERR_NONE);
 }

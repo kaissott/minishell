@@ -6,11 +6,11 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/22 22:35:42 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 01:47:42 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 char	**resize_cmd_args(char **cmd, char *new_arg)
 {
@@ -36,8 +36,6 @@ t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 {
 	if (std == STDIN_FILENO)
 	{
-		if (new_cmd->infile.filepath)
-			free(new_cmd->infile.filepath);
 		new_cmd->infile.filepath = ft_strdup(token->next->value);
 		if (!new_cmd->infile.filepath)
 			return (ERR_MALLOC);
@@ -47,8 +45,6 @@ t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 	}
 	else
 	{
-		if (new_cmd->outfile.filepath)
-			free(new_cmd->outfile.filepath);
 		new_cmd->outfile.filepath = ft_strdup(token->next->value);
 		if (!new_cmd->outfile.filepath)
 			return (ERR_MALLOC);

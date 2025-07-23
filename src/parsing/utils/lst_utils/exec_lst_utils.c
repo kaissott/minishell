@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lst_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:07 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 02:34:27 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 00:25:47 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 t_exec	*create_exec_cmd(void)
 {

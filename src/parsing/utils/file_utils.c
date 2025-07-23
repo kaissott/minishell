@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   file_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:16 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 02:31:16 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 01:47:18 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 int	open_file(const char *filepath, t_token_type file_type)
 {
@@ -55,6 +55,8 @@ t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 	{
 		if (new_cmd->outfile.fd == -1)
 			return (ERR_PREV_OPEN);
+		if (new_cmd->outfile.filepath)
+			free(new_cmd->outfile.filepath);
 		if (secure_close(&new_cmd->outfile.fd) != ERR_NONE)
 			return (ERR_CLOSE);
 	}

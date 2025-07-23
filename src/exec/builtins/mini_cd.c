@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/22 17:08:02 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 char	*cd_to_home(t_main *main, char *path, int i)
 {
@@ -53,6 +53,7 @@ char	*cd_to_last_pwd(t_main *main)
 		if (ft_strncmp(env->env, "OLDPWD=", 7) == 0)
 		{
 			str = ft_strdup(env->env + 7);
+			printf("%s\n", str);
 			if (!str)
 				free_and_exit_error(main, NULL, ERR_MEM, 12);
 			return (str);

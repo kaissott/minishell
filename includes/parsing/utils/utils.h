@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:11:47 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/21 20:03:38 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 02:15:32 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,8 @@ int				open_file(const char *filepath, t_token_type file_type);
 t_parse_error	secure_close(int *fd);
 t_parse_error	check_std_cmd(int std, t_exec *new_cmd);
 
-void			free_shell(t_main *shell);
-void			clear_and_exit(t_main *shell, t_parse_error errcode);
-
 bool			check_parsing(t_main *shell, t_parse_error errcode,
 					bool at_end);
-void			get_errcode(t_main *shell, t_parse_error errcode);
 
 t_parse_error	set_error(t_error *error, t_parse_error error_type,
 					char unexpected_token);

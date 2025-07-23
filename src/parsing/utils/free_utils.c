@@ -6,27 +6,13 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:19 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/22 21:34:53 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 02:17:03 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	get_errcode(t_main *shell, t_parse_error errcode)
-{
-	if (errcode == ERR_MALLOC)
-		shell->errcode = 12;
-	else if (errcode >= ERR_SYNTAX && errcode <= ERR_MISSING_SINGLE_QUOTE)
-		shell->errcode = 2;
-	else if (errcode == ERR_TOKEN)
-		shell->errcode = 1;
-	else if (errcode >= ERR_CLOSE && errcode <= ERR_OPEN)
-		shell->errcode = 1;
-	else
-		shell->errcode = 0;
-}
-
-void	free_shell(t_main *shell)
+static void	free_shell(t_main *shell)
 {
 	if (shell->token)
 		free_token_lst(&shell->token);
@@ -36,13 +22,18 @@ void	free_shell(t_main *shell)
 	shell->error.unexpected_token = '\0';
 }
 
-void	clear_and_exit(t_main *shell, t_parse_error errcode)
+static void	get_errcode(t_main *shell, t_parse_error errcode)
 {
-	get_errcode(shell, errcode);
-	print_syntax_error_msg(shell->error.error_type,
-		shell->error.unexpected_token);
-	free_shell(shell);
-	free(shell);
+	if (errcode == ERR_MALLOC)
+		shell->errcode = 12;
+	else if (errcode >= ERR_DOUBLE_PIPE && errcode <= ERR_MISSING_SINGLE_QUOTE)
+		shell->errcode = 2;
+	else if (errcode == ERR_TOKEN)
+		shell->errcode = 1;
+	else if (errcode >= ERR_CLOSE && errcode <= ERR_OPEN)
+		shell->errcode = 1;
+	else
+		shell->errcode = 0;
 }
 
 bool	check_parsing(t_main *shell, t_parse_error errcode, bool at_end)
@@ -54,10 +45,14 @@ bool	check_parsing(t_main *shell, t_parse_error errcode, bool at_end)
 		return (true);
 	}
 	get_errcode(shell, errcode);
-	if (shell->errcode == 12)
-		exit(EXIT_FAILURE);
 	if (errcode != ERR_SIG)
 		print_syntax_error_msg(errcode, shell->error.unexpected_token);
 	free_shell(shell);
-	return (false);
+	if (errcode == ERR_MALLOC)
+	{
+		free(shell);
+		exit(EXIT_FAILURE);
+	}
+	else
+		return (false);
 }

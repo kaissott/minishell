@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_free_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:22 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 02:30:22 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 00:25:41 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../../includes/minishell.h"
+#include "minishell.h"
 
 void	free_exec(t_exec *exec)
 {

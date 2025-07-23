@@ -6,11 +6,11 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:20 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/22 22:17:49 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 00:36:20 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static ssize_t	handle_word(t_expand **expand_lst, char *word)
 {
@@ -53,8 +53,8 @@ static ssize_t	handle_var(t_expand **expand_lst, char *var,
 	return (i);
 }
 
-static t_token_chunk	*handle_chunk_value(t_main *shell,
-		t_expand **expand_lst, t_token *token, t_token_chunk *chunk)
+static t_parse_error	handle_chunk_value(t_main *shell, t_expand **expand_lst,
+		t_token *token, t_token_chunk *chunk)
 {
 	size_t			i;
 	ssize_t			len;
@@ -69,39 +69,34 @@ static t_token_chunk	*handle_chunk_value(t_main *shell,
 		else
 			len = handle_word(expand_lst, &chunk->value[i]);
 		if (len <= 0)
-			return (NULL);
+			return (ERR_MALLOC);
 		if (is_dollar_alone(chunk, i, len, chunk->next))
 			continue ;
 		i += len;
 	}
-	if (replace_chunk_value(shell, expand_lst, token, chunk) != ERR_NONE)
-	{
-		shell->errcode = 12;
-		return (NULL);
-	}
-	if (!chunk)
-		return (next->next);
-	return (next);
+	return (replace_chunk_value(shell, expand_lst, token, chunk));
 }
 
 static t_parse_error	process_chunk(t_main *shell, t_token *token,
 		t_token_chunk *chunk)
 {
-	t_expand	*expand_lst;
+	t_expand		*expand_lst;
+	t_token_chunk	*next;
+	t_parse_error	errcode;
 
 	while (chunk)
 	{
 		expand_lst = NULL;
+		next = chunk->next;
 		if ((chunk->type == T_STRING || chunk->type == T_DOUBLE_QUOTED)
 			&& ft_strchr(chunk->value, '$') && !token->is_delimiter)
 		{
-			chunk = handle_chunk_value(shell, &expand_lst, token, chunk);
+			errcode = handle_chunk_value(shell, &expand_lst, token, chunk);
 			free_expand_lst(&expand_lst);
-			if (!chunk && shell->errcode == 12)
-				return (ERR_MALLOC);
+			if (errcode != ERR_NONE)
+				return (errcode);
 		}
-		else
-			chunk = chunk->next;
+		chunk = next;
 	}
 	return (ERR_NONE);
 }

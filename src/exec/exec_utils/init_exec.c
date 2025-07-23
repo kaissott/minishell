@@ -6,11 +6,11 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/22 22:19:14 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 00:25:03 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 #include <errno.h>
 #include <limits.h>
 #include <readline/history.h>
@@ -61,7 +61,7 @@ bool	node_check(t_main *main)
 		close_node(main);
 		return (false);
 	}
-	else if (node->cmd == NULL)
+	else if (node->cmd == NULL && node->next == NULL)
 	{
 		if (node->infile.fd == -1 || node->outfile.fd == -1)
 			main->errcode = 1;

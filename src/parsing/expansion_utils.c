@@ -6,11 +6,11 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:02 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/22 21:20:50 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 00:26:04 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 bool	is_dollar_alone(t_token_chunk *chunk, size_t i, size_t len,
 		t_token_chunk *next)

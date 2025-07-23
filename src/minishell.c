@@ -1,5 +1,16 @@
-#include "../includes/minishell.h"
-#include <signal.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/23 02:02:51 by ludebion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
 
 volatile sig_atomic_t	g_sig_mode = INTERACTIVE;
 
@@ -7,27 +18,17 @@ static void	parse(t_main *shell, char *cmd)
 {
 	t_parse_error	errcode;
 
-	// printf("\nERRCODE BEFORE ALL PARSE : %d\n", shell->errcode);
 	errcode = tokenisation(shell, cmd);
-	// printf("\nReturn tokenisation : %d\n", errcode);
 	if (!check_parsing(shell, errcode, false))
 		return ;
-	// print_token_lst(shell->token, "\nToken lst after tokenisation :\n");
 	errcode = expansion(shell);
-	// printf("\nReturn expansion : %d\n", errcode);
 	if (!check_parsing(shell, errcode, false))
 		return ;
-	// print_token_lst(shell->token, "\nToken lst after expansion :\n");
 	errcode = word_splitting(shell);
-	// printf("\nReturn word splitting : %d\n", errcode);
 	if (!check_parsing(shell, errcode, false))
 		return ;
-	// print_token_lst(shell->token, "\nToken lst after word splitting :\n");
 	errcode = parsing(shell);
-	// printf("\nReturn parsing : %d\n", errcode);
 	check_parsing(shell, errcode, true);
-	// print_token_lst(shell->token, "\nToken lst after parsing :\n");
-	// print_exec_lst(shell->exec, "EXEC LST AFTER PARSING :\n");
 }
 
 void	start_shell(t_main *shell)
@@ -53,7 +54,6 @@ void	start_shell(t_main *shell)
 				rl = line;
 			}
 		}
-		// rl = readline("$> ");
 		if (!rl)
 		{
 			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);

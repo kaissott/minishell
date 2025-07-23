@@ -6,13 +6,11 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:24 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/22 22:35:26 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 02:00:17 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-
-int				g_malloc_fail_count = 0;
+#include "minishell.h"
 
 t_parse_error	set_error(t_error *error, t_parse_error error_type,
 		char unexpected_token)

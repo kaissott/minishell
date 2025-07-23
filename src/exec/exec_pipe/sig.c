@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/22 10:39:58 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/23 01:59:52 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 void	my_handler(int sig)
 {
@@ -72,4 +72,3 @@ void	init_sigaction(int mode)
 	}
 	init_sigaction_hd(mode, &sa);
 }
-

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_lst_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:11 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/19 02:31:11 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 00:25:47 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 t_expand	*create_expand(t_expand_type type, char *value)
 {

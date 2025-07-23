@@ -6,11 +6,11 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:49 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/22 22:35:21 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 01:32:13 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 void	chunk_lst_delone(t_token_chunk **chunk_lst,
 		t_token_chunk *node_to_delete)
@@ -112,10 +112,7 @@ t_parse_error	cat_chunks(t_token *token)
 	{
 		token->value = join_or_dup(prev, chunk->value);
 		if (!token->value)
-		{
-			free_token(token);
 			return (ERR_MALLOC);
-		}
 		prev = token->value;
 		chunk = chunk->next;
 	}
