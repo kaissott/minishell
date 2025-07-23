@@ -22,7 +22,7 @@ LST_EXEC_PIPE :=	exec_pipe_error.c exec_pipe_utils.c exec_pipe.c exec_pipe_start
 
 LST_EXEC_SINGLE_CMD :=	error_free.c exec_simple_cmd.c  single_cmd_error.c exec_global_utils.c
 
-LST_EXEC_UTILS := exec_dup.c strrchr_slash.c ft_split_slash.c init_exec.c free_structs.c\
+LST_EXEC_UTILS := exec_dup.c strrchr_slash.c ft_split_slash.c init_exec.c free_structs.c \
 				free_structs2.c
 
 LST_PARSING :=	expansion_utils.c expansion.c parse_utils.c parse.c \
@@ -41,7 +41,7 @@ LST_INC :=	minishell.h structures.h
 
 LST_INC_PARSING :=	expansion.h parse.h tokenisation.h word_splitting.h
 
-LST_INC_EXEC :=	builtins.h error.h main.h
+LST_INC_EXEC :=	builtins.h exec_utils.h exec.h
 
 LST_INC_UTILS :=	debug_utils.h lst_utils.h utils.h
 

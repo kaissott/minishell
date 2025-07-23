@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 22:56:35 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,10 @@ void	init_simple_cmd(t_shell *main)
 	pid = fork();
 	if (pid == -1)
 		error_fork(NULL, -1, main->exec, main);
+	ignore_child_signal();
 	if (pid == 0)
 	{
-		init_sigaction(1);
+		init_sigaction_child();
 		exit_error_two_close(main, main->std_in, main->std_out);
 		exit_error_two_close(main, main->exec->infile.fd,
 			main->exec->outfile.fd);

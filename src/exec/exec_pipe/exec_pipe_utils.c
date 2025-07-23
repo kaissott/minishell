@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 23:34:08 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*cmd_path(char **cmd, char *linktopath)
 		path = ft_strjoin(path_poss[i], cmd[0]);
 		if (path != NULL && (access(path, X_OK) == 0))
 		{
-			free_tab_2(path_poss);
+			free_tab(path_poss);
 			return (path);
 		}
 		if (path)
@@ -55,7 +55,7 @@ char	*cmd_path(char **cmd, char *linktopath)
 		path = NULL;
 		i++;
 	}
-	free_tab_2(path_poss);
+	free_tab(path_poss);
 	return (NULL);
 }
 
@@ -65,6 +65,7 @@ int	do_cmd(t_shell *main, char **cmd, char **env)
 	char	*env_path;
 
 	path = NULL;
+	exit_error_two_close(main, main->std_in, main->std_out);
 	if (exec_cmd(main, cmd, false) == true)
 		exit_exec_cmd(main);
 	if (cmd == NULL)
@@ -84,29 +85,4 @@ int	do_cmd(t_shell *main, char **cmd, char **env)
 	execve(path, cmd, env);
 	execve_err(main, env, path, cmd[0]);
 	return (-1);
-}
-
-void	close_fd(int prev_fd, int outfile, int if_hd)
-{
-	if (if_hd == 2)
-	{
-		if (unlink("here_doc") == -1)
-			perror("Unlink here_doc error : ");
-	}
-	if (prev_fd != -1)
-		close(prev_fd);
-	if (outfile != -1)
-		close(outfile);
-}
-
-void	access_out_check(char *out, int prev_fd, int outfile)
-{
-	if (access(out, W_OK) == -1)
-	{
-		while (wait(NULL) > 0)
-			;
-		close_fd(prev_fd, outfile, -1);
-		ft_putendl_fd("Permission Denied", 2);
-		exit(1);
-	}
 }

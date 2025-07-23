@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 10:13:04 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:26:36 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ int	file_dup(t_shell *main, int fd_in, int fd_out)
 	if (fd_out != STDOUT_FILENO)
 		safe_dup_close(main, fd_out, STDOUT_FILENO);
 	return (0);
-}
-
-void	close_main_fds(t_shell *main)
-{
-	free_struct(main);
 }
 
 void	dup_failed_err(t_shell *main, int prev_fd, int pipefd, t_exec *node)

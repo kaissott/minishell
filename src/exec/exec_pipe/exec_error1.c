@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 21:43:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 23:29:47 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,10 @@ void	execve_err(t_shell *main, char **env, char *path, char *cmd)
 
 void	close_fork(int fd1, int fd2, t_exec *node, t_shell *main)
 {
-	int	i;
-
-	i = 0;
-	if (fd1 != node->infile.fd && fd1 > 1 && close(fd1) == -1)
-	{
-		i = 1;
-		dprintf(2, "ici %s\n", node->cmd[0]);
-	}
-	if (fd2 > 1 && close(fd2) == -1)
-	{
-		i = 1;
-		dprintf(2, "la");
-	}
-	if (i == 0)
-	{
-		close(main->std_in);
-		close(main->std_out);
-		close_node(main);
-	}
-	else
-	{
-		exit_error_minishell(main, errno, "close failed");
-	}
+	if (fd1 != node->infile.fd && fd1 > 1)
+		close(fd1);
+	if (fd2 > 1)
+		close(fd2);
 }
 
 void	error_fork(int *pipefd, int prevfd, t_exec *node, t_shell *main)
@@ -65,10 +46,10 @@ void	error_fork(int *pipefd, int prevfd, t_exec *node, t_shell *main)
 	}
 	else
 	{
-		if (pipefd && pipefd[0] > 1 && close(pipefd[0]) == -1)
-			perror("close");
-		if (pipefd && pipefd[1] > 1 && close(pipefd[1]) == -1)
-			perror("close");
+		if (pipefd && pipefd[0] > 0)
+			close(pipefd[0]);
+		if (pipefd && pipefd[1] > 1)
+			close(pipefd[1]);
 		if (main->env_tab)
 			free(main->env_tab);
 		close(main->std_in);

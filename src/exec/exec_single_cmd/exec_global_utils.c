@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_global_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:27:16 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:06:38 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,19 @@ static char	*try_paths(t_shell *main, char **paths, char *env_path)
 		full_path = ft_strjoin(paths[i], main->exec->cmd[0]);
 		if (!full_path)
 		{
-			free_tab_2(paths);
+			free_tab(paths);
 			free_and_exit_error(main, env_path, ERR_MEM, 12);
 		}
 		if (access(full_path, X_OK) == 0)
 		{
-			free_tab_2(paths);
+			free_tab(paths);
 			free(env_path);
 			return (full_path);
 		}
 		free(full_path);
 		i++;
 	}
-	free_tab_2(paths);
+	free_tab(paths);
 	return (NULL);
 }
 

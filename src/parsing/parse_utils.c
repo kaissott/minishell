@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 09:48:20 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/23 22:52:19 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 
 	rl_event_hook = test;
 	result = ERR_NONE;
-	init_sigaction(2);
+	init_sigaction_hd();
 	while (1)
 	{
 		if (isatty(fileno(stdin)))
@@ -108,7 +108,7 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 				rl = line;
 			}
 		}
-		if (g_sig_mode == INTERACTIVE)
+		if (g_sig_mode > 0)
 		{
 			result = ERR_SIG;
 			break ;
@@ -125,7 +125,7 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 		free(rl);
 	}
 	rl_event_hook = NULL;
-	init_sigaction(0);
+	init_sigaction();
 	if (secure_close(fd_heredoc) != ERR_NONE)
 		return (ERR_CLOSE);
 	return (result);
