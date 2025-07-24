@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 19:10:02 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:12:22 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	safe_close(int fd, t_shell *main);
 void	free_and_exit_error(t_shell *main, char *tmp, char *error,
 			int err_number);
 int		set_return_err_code(t_shell *main, char *error, int err_number);
+void	ft_close(t_shell *main, int fd, int fd2, int fd3);
 
 #endif

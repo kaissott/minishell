@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 21:43:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 23:29:47 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:10:31 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	execve_err(t_shell *main, char **env, char *path, char *cmd)
 void	close_fork(int fd1, int fd2, t_exec *node, t_shell *main)
 {
 	if (fd1 != node->infile.fd && fd1 > 1)
-		close(fd1);
+		ft_close(main, fd1, fd2, -1);
 	if (fd2 > 1)
-		close(fd2);
+		ft_close(fd2, -1, -1, main);
 }
 
 void	error_fork(int *pipefd, int prevfd, t_exec *node, t_shell *main)
@@ -47,13 +47,13 @@ void	error_fork(int *pipefd, int prevfd, t_exec *node, t_shell *main)
 	else
 	{
 		if (pipefd && pipefd[0] > 0)
-			close(pipefd[0]);
+			ft_close(main, pipefd[0], pipefd[1], main->std_in);
 		if (pipefd && pipefd[1] > 1)
-			close(pipefd[1]);
+			ft_close(main, pipefd[1], main->std_in, main->std_out);
 		if (main->env_tab)
 			free(main->env_tab);
-		close(main->std_in);
-		close(main->std_out);
+		ft_close(main, main->std_in, main->std_out, -1);
+		ft_close(main, main->std_out, -1, -1);
 		free_struct(main);
 		free(main);
 	}
