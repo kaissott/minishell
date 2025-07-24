@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 21:43:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 21:17:00 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 23:36:09 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	close_fork(int fd1, int fd2, t_exec *node, t_shell *main)
 		ft_close(main, fd1, fd2, -1);
 	if (fd2 > 1)
 		ft_close(main, fd2, -1, -1);
+	close_node(main);
 }
 
 void	error_fork(int *pipefd, int prevfd, t_exec *node, t_shell *main)
