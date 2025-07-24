@@ -20,7 +20,7 @@ int	check_current_dir_exec(t_shell *main, char **cmd)
 		return (0);
 	filepath = ft_strjoin("./", cmd[0]);
 	if (!filepath)
-		return (0);
+		free_and_exit_error(main, NULL, ERR_MEM, errno);
 	if (access(filepath, F_OK) != 0)
 	{
 		free(filepath);
@@ -68,6 +68,7 @@ char	*get_path(t_shell *main, char *env_path, char **env)
 	char	**paths;
 	char	*result;
 
+	(void)env;
 	if (!env_path)
 		return (NULL);
 	paths = ft_split_slash(env_path, ':');

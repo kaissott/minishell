@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:35:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 08:18:33 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:24:34 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	env_pwd_update(t_shell *main)
 		temp->env = tmp;
 	}
 	else
-		pwd(main);
+		pwd();
 }
 
 void	env_oldpwd_update(t_shell *main)

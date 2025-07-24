@@ -36,7 +36,7 @@ void	ft_close(t_shell *main, int fd, int fd2, int fd3)
 				close(fd2);
 			if (fd3 > -1)
 				close(fd3);
-			exit_error_minishell(main, errno, "Close Failed");
+			free_and_exit_error(main, NULL, "Close Failed", 2);
 		}
 	}
 }
