@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 09:48:20 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 02:51:22 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,59 @@ t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 	return (ERR_NONE);
 }
 
+char	*create_filepath(t_exec *new_node, int *hd_nbr)
+{
+	char	*filepath;
+
+	filepath = ft_strjoin("/tmp/.ms_hd_", hd_nbr);
+	free(hd_nbr);
+	if (!new_node->infile.filepath)
+		return (ERR_MALLOC);
+	return (filepath);
+}
+
 t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)
 {
 	int		i;
-	char	*cmd_nbr;
+	char	*hd_nbr;
 	t_exec	*tmp;
+	int		fd;
 
 	i = 0;
-	tmp = *exec_lst;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	cmd_nbr = ft_itoa(i);
-	if (!cmd_nbr)
+	hd_nbr = ft_itoa(i);
+	if (!hd_nbr)
 		return (ERR_MALLOC);
-	new_node->infile.filepath = ft_strjoin("/tmp/.ms_hd_", cmd_nbr);
-	free(cmd_nbr);
+	new_node->infile.filepath = ft_strjoin("/tmp/.ms_hd_", hd_nbr);
+	free(hd_nbr);
 	if (!new_node->infile.filepath)
 		return (ERR_MALLOC);
+	// while (1)
+	// {
+	// tmp = *exec_lst;
+	// while (tmp)
+	// {
+	// 	i++;
+	// 	tmp = tmp->next;
+	// }
+	fd = open(new_node->infile.filepath, O_CREAT | O_EXCL | O_WRONLY, 0644);
+	while (fd == -1 && errno == EEXIST)
+	{
+		free(new_node->infile.filepath);
+		if (secure_close(&new_node->infile.fd) != ERR_NONE)
+			return (ERR_CLOSE);
+		i++;
+		hd_nbr = ft_itoa(i);
+		if (!hd_nbr)
+			return (ERR_MALLOC);
+		new_node->infile.filepath = ft_strjoin("/tmp/.ms_hd_", hd_nbr);
+		free(hd_nbr);
+		if (!new_node->infile.filepath)
+			return (ERR_MALLOC);
+		fd = open(new_node->infile.filepath, O_CREAT | O_EXCL | O_WRONLY, 0644);
+	}
+	if (fd == -1 && errno != EEXIST)
+		perror(new_node->infile.filepath);
+	// }
 	return (ERR_NONE);
 }
 
