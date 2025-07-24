@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 21:16:21 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 23:50:54 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	start_shell(t_shell *shell)
 		{
 			rl = readline("> ");
 			if (shell->errcode < 3 && g_sig_mode > 0)
-				shell->errcode = g_sig_mode;
+				shell->errcode = g_sig_mode + 128;
 		}
 		if (!rl)
 		{

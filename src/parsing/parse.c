@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:33 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:21:30 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 23:13:11 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ static t_parse_error	handle_redirection(t_shell *shell, t_token *token,
 	errcode = check_std_cmd(std, new_cmd);
 	if (errcode == ERR_NONE)
 	{
-		if (!token->next)
-			return (ERR_AMBIGUOUS_REDIR);
 		errcode = process_exec_std(token, new_cmd, std);
 		if (errcode != ERR_NONE)
 			return (errcode);
@@ -64,7 +62,7 @@ static t_parse_error	handle_heredoc(t_shell *shell, t_token *token,
 		return (ERR_CLOSE);
 	if (create_heredoc(new_cmd) != ERR_NONE)
 		return (ERR_MALLOC);
-	if (write_in_heredoc(&new_cmd->infile.fd, token->next->value) != ERR_NONE)
+	if (handle_in_heredoc(&new_cmd->infile.fd, token->next->value) != ERR_NONE)
 		return (ERR_CLOSE);
 	new_cmd->infile.fd = open(new_cmd->infile.filepath, O_RDONLY);
 	if (new_cmd->infile.fd == -1)

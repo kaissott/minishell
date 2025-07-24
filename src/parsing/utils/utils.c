@@ -6,14 +6,16 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:24 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:21:20 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:32:43 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_shell(t_shell *shell)
+static void	free_shell(t_shell *shell, bool need_all_clean)
 {
+	if (need_all_clean && shell->env)
+		free_env(shell);
 	if (shell->token)
 		free_token_lst(&shell->token);
 	if (shell->exec)
@@ -38,6 +40,11 @@ static void	get_errcode(t_shell *shell, t_parse_error errcode)
 
 bool	check_parsing(t_shell *shell, t_parse_error errcode, bool at_end)
 {
+	bool	need_all_clean;
+
+	need_all_clean = false;
+	if (errcode == ERR_MALLOC)
+		need_all_clean = true;
 	if (errcode == ERR_NONE)
 	{
 		if (at_end)
@@ -48,7 +55,7 @@ bool	check_parsing(t_shell *shell, t_parse_error errcode, bool at_end)
 	if (errcode != ERR_SIG)
 		print_syntax_error_msg(errcode, shell->error.unexpected_token,
 			shell->error.ambiguous_redir);
-	free_shell(shell);
+	free_shell(shell, need_all_clean);
 	if (errcode == ERR_MALLOC)
 	{
 		free(shell);
