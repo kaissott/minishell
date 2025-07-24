@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 07:10:08 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:21:54 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:02:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,19 @@ int	rl_hook(void)
 	return (0);
 }
 
-int	is_ascii_printable(const char *s)
+bool	is_ascii_printable(const char *s)
 {
 	size_t	i;
 
 	i = 0;
 	while (s && s[i])
 	{
-		if ((unsigned char)s[i] >= 32 && (unsigned char)s[i] <= 126)
-			return (1);
-		else
-			return (0);
+		if (!(((unsigned char)s[i] >= 32 && (unsigned char)s[i] <= 126)
+				|| s[i] == '\n' || s[i] == '\t'))
+			return (false);
 		i++;
 	}
-	return (1);
+	return (true);
 }
 
 void	print_perror(char *error)

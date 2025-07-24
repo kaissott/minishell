@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 07:11:00 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 07:47:53 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 10:00:58 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "structures.h"
 
 int				rl_hook(void);
-int				is_ascii_printable(const char *s);
+bool			is_ascii_printable(const char *s);
 void			print_perror(char *error);
 t_parse_error	set_error(t_error *error, t_parse_error error_type,
 					char unexpected_token, char *ambiguous_redir);
