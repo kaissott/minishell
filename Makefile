@@ -41,13 +41,9 @@ LST_INC :=	minishell.h structures.h utils.h
 
 LST_INC_PARSING :=	expansion.h parse.h tokenisation.h word_splitting.h
 
-<<<<<<< HEAD
-LST_INC_EXEC :=	builtins.h exec_utils.h exec.h
-=======
 LST_INC_PARSING_UTILS :=	debug_utils.h lst_utils.h parse_utils.h
->>>>>>> ludebion/error_handling
 
-LST_INC_EXEC :=	builtins.h error.h main.h
+LST_INC_EXEC :=	builtins.h exec_utils.h exec.h
 
 #Directories
 D_SRC :=	src/
