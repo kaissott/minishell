@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:24 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 21:32:43 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/25 00:43:15 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ static void	free_shell(t_shell *shell, bool need_all_clean)
 
 static void	get_errcode(t_shell *shell, t_parse_error errcode)
 {
-	if (errcode == ERR_MALLOC)
+	if (errcode == ERR_AMBIGUOUS_REDIR)
+		shell->errcode = 1;
+	else if (errcode == ERR_MALLOC)
 		shell->errcode = 12;
 	else if (errcode >= ERR_DOUBLE_PIPE && errcode <= ERR_MISSING_SINGLE_QUOTE)
 		shell->errcode = 2;
