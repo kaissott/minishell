@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:41:45 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/25 00:34:39 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/25 01:02:58 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ int	set_return_err_code(t_shell *main, char *error, int err_number)
 
 void	exit_exec_cmd(t_shell *main)
 {
+	free(main->env_tab);
 	free_struct(main);
 	close(main->std_in);
 	close(main->std_out);
+	free(main);
 	exit(0);
 }
