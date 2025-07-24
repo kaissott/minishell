@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 21:43:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 21:10:31 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:17:00 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	close_fork(int fd1, int fd2, t_exec *node, t_shell *main)
 	if (fd1 != node->infile.fd && fd1 > 1)
 		ft_close(main, fd1, fd2, -1);
 	if (fd2 > 1)
-		ft_close(fd2, -1, -1, main);
+		ft_close(main, fd2, -1, -1);
 }
 
 void	error_fork(int *pipefd, int prevfd, t_exec *node, t_shell *main)
