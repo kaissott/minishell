@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:41:45 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 18:06:38 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/25 00:34:39 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ void	free_and_exit_error(t_shell *main, char *tmp, char *error,
 	if (tmp != NULL)
 		free(tmp);
 	if (main->env_tab != NULL)
-	{
-		dprintf(2, "%s", "va");
 		free(main->env_tab);
-	}
 	exit_error_minishell(main, err_number, error);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/25 00:27:11 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/25 00:33:32 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,33 @@ static void	parse(t_shell *shell, const char *cmd)
 	check_parsing(shell, errcode, true);
 }
 
-void	start_shell(t_shell *shell)
+char	*rl_check(t_shell *shell)
 {
 	char	*rl;
 	char	*line;
+
+	if (isatty(fileno(stdin)))
+	{
+		rl = readline("> ");
+		if (shell->errcode < 3 && g_sig_mode > 0)
+			shell->errcode = g_sig_mode + 128;
+	}
+	else
+	{
+		rl = get_next_line(fileno(stdin));
+		if (rl)
+		{
+			line = ft_strtrim(rl, "\n");
+			free(rl);
+			rl = line;
+		}
+	}
+	return (rl);
+}
+
+void	start_shell(t_shell *shell)
+{
+	char	*rl;
 
 	rl = NULL;
 	while (1)
@@ -43,27 +66,9 @@ void	start_shell(t_shell *shell)
 		if (dup2(shell->std_in, STDIN_FILENO) == -1 || dup2(shell->std_out,
 				STDOUT_FILENO) == -1)
 			free_and_exit_error(shell, NULL, "Dup 2 failed", errno);
-		if (isatty(fileno(stdin)))
-		{
-			rl = readline("> ");
-			if (shell->errcode < 3 && g_sig_mode > 0)
-				shell->errcode = g_sig_mode + 128;
-		}
-		else
-		{
-			rl = get_next_line(fileno(stdin));
-			if (rl)
-			{
-				line = ft_strtrim(rl, "\n");
-				free(rl);
-				rl = line;
-			}
-		}
 		if (!rl)
-		{
-			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);
-			return ;
-		}
+			return (exit_error_two_close(shell, (shell)->std_out,
+					(shell)->std_in));
 		g_sig_mode = 0;
 		if (!is_ascii_printable(rl))
 		{
@@ -74,7 +79,6 @@ void	start_shell(t_shell *shell)
 		parse(shell, rl);
 		check_input(shell);
 		reset_struct(rl, shell);
-		// rl_on_new_line();
 	}
 	clear_history();
 }
