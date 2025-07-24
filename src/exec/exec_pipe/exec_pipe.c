@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 21:12:10 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 23:35:46 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	safe_close(int fd, t_shell *main)
+int	safe_close(int fd, t_shell *main)
 {
 	t_exec	*tmp;
 
@@ -22,18 +22,13 @@ void	safe_close(int fd, t_shell *main)
 		tmp = tmp->next;
 	}
 	if (tmp == NULL && fd > 1)
-	{
-		if (close(fd) == -1)
-		{
-			exit_error_minishell(main, 2, "Close Error");
-		}
-	}
-	return ;
+		return (1);
+	return (0);
 }
 
 void	ft_close(t_shell *main, int fd, int fd2, int fd3)
 {
-	if (fd > -1)
+	if (fd > -1 && safe_close(fd, main))
 	{
 		if (close(fd) == -1)
 		{

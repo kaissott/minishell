@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:27:16 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 00:37:42 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 23:39:09 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_current_dir_exec(t_shell *main, char **cmd)
 
 	if (!main || !main->exec || !main->exec->cmd || !main->exec->cmd[0])
 		return (0);
-	filepath = NULL;
+	filepath = ft_strjoin("./", cmd[0]);
 	if (!filepath)
 		return (0);
 	if (access(filepath, F_OK) != 0)
