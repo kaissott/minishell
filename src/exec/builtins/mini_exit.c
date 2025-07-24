@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:38:23 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 08:18:43 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	mini_exit(char **line, t_shell *main)
 		exit_code = check_and_conv_exit_code(line, size, main);
 		if (line[2])
 		{
-			ft_putendl_fd("bash: exit: too many arguments", 2);
+			ft_putendl_fd("minishell: exit: too many arguments", 2);
 			main->errcode = 1;
 			return (0);
 		}

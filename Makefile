@@ -10,7 +10,7 @@ NAME :=	minishell
 #################################################################################
 
 #Files
-LST_EXEC :=	minishell.c init_minishell.c close_error_handler.c
+LST_EXEC :=	minishell.c init_minishell.c close_error_handler.c utils.c
 
 LST_BUILTINS :=	mini_cd.c mini_echo.c \
 				mini_env.c mini_exit_free.c mini_exit.c mini_export.c \
@@ -28,7 +28,7 @@ LST_EXEC_UTILS := exec_dup.c strrchr_slash.c ft_split_slash.c init_exec.c free_s
 LST_PARSING :=	expansion_utils.c expansion.c parse_utils.c parse.c \
 				tokenisation_utils.c tokenisation.c word_splitting_utils.c word_splitting.c
 
-LST_UTILS :=	file_utils.c free_utils.c utils.c
+LST_UTILS :=	file_utils.c utils.c
 
 LST_DEBUG_UTILS :=	print_lst_utils.c
 
@@ -37,13 +37,13 @@ LST_LST_UTILS :=	chunk_lst_utils.c exec_lst_utils.c \
 
 LST_LST_FREE_UTILS :=	exec_free_utils.c expand_free_utils.c token_free_utils.c
 
-LST_INC :=	minishell.h structures.h
+LST_INC :=	minishell.h structures.h utils.h
 
 LST_INC_PARSING :=	expansion.h parse.h tokenisation.h word_splitting.h
 
-LST_INC_EXEC :=	builtins.h exec_utils.h exec.h
+LST_INC_PARSING_UTILS :=	debug_utils.h lst_utils.h parse_utils.h
 
-LST_INC_UTILS :=	debug_utils.h lst_utils.h utils.h
+LST_INC_EXEC :=	builtins.h exec_utils.h exec.h
 
 #Directories
 D_SRC :=	src/
@@ -95,7 +95,7 @@ SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
 INC :=	$(addprefix $(D_INC), $(LST_INC)) \
 		$(addprefix $(D_INC)$(D_INC_EXEC), $(LST_INC_EXEC)) \
 		$(addprefix $(D_INC)$(D_INC_PARSING), $(LST_INC_PARSING)) \
-		$(addprefix $(D_INC)$(D_INC_PARSING)$(D_INC_UTILS), $(LST_INC_UTILS))
+		$(addprefix $(D_INC)$(D_INC_PARSING)$(D_INC_UTILS), $(LST_INC_PARSING_UTILS))
 
 OBJ :=	$(subst $(D_SRC), $(D_OBJ), $(SRC:.c=.o))
 

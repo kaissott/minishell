@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/23 02:04:16 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 20:34:15 by karamire         ###   ########.fr       */
+/*   Created: 2025/07/24 08:06:53 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/24 08:17:51 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,6 @@ typedef enum e_token_type
 	T_HEREDOC,
 }							t_token_type;
 
-#define INTERACTIVE 0
-#define CHILD 1
-#define HERE_DOC 2
-#define SIG 130
-
 typedef struct s_token
 {
 	char					*value;
@@ -99,7 +94,6 @@ typedef struct s_file
 {
 	int						fd;
 	char					*filepath;
-	bool					is_heredoc;
 	t_token_type			type;
 }							t_file;
 

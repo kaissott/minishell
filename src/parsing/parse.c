@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:33 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 08:21:30 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static t_parse_error	handle_redirection(t_shell *shell, t_token *token,
 	errcode = check_std_cmd(std, new_cmd);
 	if (errcode == ERR_NONE)
 	{
+		if (!token->next)
+			return (ERR_AMBIGUOUS_REDIR);
 		errcode = process_exec_std(token, new_cmd, std);
 		if (errcode != ERR_NONE)
 			return (errcode);
@@ -60,16 +62,18 @@ static t_parse_error	handle_heredoc(t_shell *shell, t_token *token,
 	new_cmd->infile.type = T_HEREDOC;
 	if (check_std_cmd(STDIN_FILENO, new_cmd) != ERR_NONE)
 		return (ERR_CLOSE);
-	if (create_heredoc_filepath(&shell->exec, new_cmd) != ERR_NONE)
+	if (create_heredoc(new_cmd) != ERR_NONE)
 		return (ERR_MALLOC);
-	new_cmd->infile.fd = open_file(new_cmd->infile.filepath, token->type);
-	if (new_cmd->infile.fd == -1)
-		return (ERR_OPEN);
 	if (write_in_heredoc(&new_cmd->infile.fd, token->next->value) != ERR_NONE)
 		return (ERR_CLOSE);
 	new_cmd->infile.fd = open(new_cmd->infile.filepath, O_RDONLY);
 	if (new_cmd->infile.fd == -1)
-		perror(new_cmd->infile.filepath);
+		print_perror(new_cmd->infile.filepath);
+	else
+	{
+		if (unlink(new_cmd->infile.filepath) == -1)
+			print_perror(new_cmd->infile.filepath);
+	}
 	token_lst_delone(&shell->token, token->next);
 	token_lst_delone(&shell->token, token);
 	return (ERR_NONE);

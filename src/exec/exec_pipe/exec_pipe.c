@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
 /*   Updated: 2025/07/24 21:12:10 by karamire         ###   ########.fr       */
@@ -22,10 +22,12 @@ void	safe_close(int fd, t_shell *main)
 		tmp = tmp->next;
 	}
 	if (tmp == NULL && fd > 1)
+	{
 		if (close(fd) == -1)
 		{
 			exit_error_minishell(main, 2, "Close Error");
 		}
+	}
 	return ;
 }
 

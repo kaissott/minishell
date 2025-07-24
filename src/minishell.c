@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 23:02:56 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:01:53 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 volatile sig_atomic_t	g_sig_mode = 0;
 
-static void	parse(t_shell *shell, char *cmd)
+static void	parse(t_shell *shell, const char *cmd)
 {
 	t_parse_error	errcode;
 
@@ -36,6 +36,7 @@ void	start_shell(t_shell *shell)
 	char	*rl;
 	char	*line;
 
+	rl = NULL;
 	while (1)
 	{
 		init_sigaction();
@@ -64,6 +65,11 @@ void	start_shell(t_shell *shell)
 			return ;
 		}
 		g_sig_mode = 0;
+		if (!is_ascii_printable(rl))
+		{
+			free(rl);
+			continue ;
+		}
 		add_history(rl);
 		parse(shell, rl);
 		check_input(shell);
