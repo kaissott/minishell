@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/25 00:33:32 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/25 00:36:42 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	start_shell(t_shell *shell)
 		if (dup2(shell->std_in, STDIN_FILENO) == -1 || dup2(shell->std_out,
 				STDOUT_FILENO) == -1)
 			free_and_exit_error(shell, NULL, "Dup 2 failed", errno);
+		rl = rl_check(shell);
 		if (!rl)
 			return (exit_error_two_close(shell, (shell)->std_out,
 					(shell)->std_in));
