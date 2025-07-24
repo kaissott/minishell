@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 21:43:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 23:29:47 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 08:19:07 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	execve_err(t_shell *main, char **env, char *path, char *cmd)
 {
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	perror(cmd);
 	if (env)
 		free(env);

@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   parse_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/19 21:11:54 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:17:45 by ludebion         ###   ########.fr       */
+/*   Created: 2025/07/19 21:11:47 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/24 08:17:43 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef PARSE_UTILS_H
+# define PARSE_UTILS_H
 
 # include "minishell.h"
 # include "structures.h"
 
-t_parse_error	parsing(t_shell *shell);
-char			**resize_cmd_args(char **cmd, char *new_arg);
-t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std);
-t_parse_error	create_heredoc(t_exec *new_node);
-int				write_in_heredoc(int *fd_heredoc, const char *next_token_value);
+int				open_file(const char *filepath, t_token_type file_type);
+t_parse_error	secure_close(int *fd);
+t_parse_error	check_std_cmd(int std, t_exec *new_cmd);
+
+bool			check_parsing(t_shell *shell, t_parse_error errcode,
+					bool at_end);
+char			*join_or_dup(char *prev, char *next);
+bool			is_dollar_alone(t_token_chunk *chunk, size_t i, size_t len,
+					t_token_chunk *next);
 
 #endif

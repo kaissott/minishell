@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:04:26 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 22:42:11 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 08:17:49 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define INTERACTIVE 0
+# define CHILD 1
+# define HERE_DOC 2
+# define SIG 130
 
 # include "../libft/libft.h"
 # include "exec/exec.h"
@@ -22,9 +27,10 @@
 # include "parsing/tokenisation.h"
 # include "parsing/utils/debug_utils.h"
 # include "parsing/utils/lst_utils.h"
-# include "parsing/utils/utils.h"
+# include "parsing/utils/parse_utils.h"
 # include "parsing/word_splitting.h"
 # include "structures.h"
+# include "utils.h"
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>

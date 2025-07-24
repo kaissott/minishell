@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenisation.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:11:56 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 19:06:14 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 08:17:47 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include "minishell.h"
 # include "structures.h"
 
-t_parse_error	tokenisation(t_shell *shell, char *cmd);
+t_parse_error	tokenisation(t_shell *shell, const char *cmd);
 int				is_operator(const char *str);
-t_token_type	get_token_type(t_error *error, char *cmd);
+t_token_type	get_token_type(t_error *error, const char *cmd);
 void			set_heredocs_delimiters(t_shell *shell);
 
 #endif
