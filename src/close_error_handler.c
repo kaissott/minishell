@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_error_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:10:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 08:21:44 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:18:39 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	exit_error_minishell(t_shell *main, int errcode, char *err)
 void	exit_error_two_close(t_shell *main, int fd1, int fd2)
 {
 	if (fd1 > 1)
-		close(fd1);
+		ft_close(main, fd1, fd2, -1);
 	if (fd2 > 1)
-		close(fd2);
+		ft_close(main, fd2, -1, -1);
 }

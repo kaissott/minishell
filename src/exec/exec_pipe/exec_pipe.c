@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 21:12:10 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:33:31 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_close(t_shell *main, int fd, int fd2, int fd3)
 				close(fd2);
 			if (fd3 > -1)
 				close(fd3);
-			exit_error_minishell(main, errno, "Close Failed");
+			free_and_exit_error(main, NULL, "Close Failed", 2);
 		}
 	}
 }

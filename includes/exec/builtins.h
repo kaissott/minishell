@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 19:07:55 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:23:20 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
  */
 bool	check_echo_flag(char *tab);
 bool	mini_echo(t_shell *main, char **cmd);
-void	print_echo_without_flag(t_shell *main, char **tab);
-void	print_echo_with_flag(t_shell *main, char **tab);
+void	print_echo_without_flag(char **tab);
+void	print_echo_with_flag(char **tab);
 
 /* ===========================================================================
  * MINI_PWD
  * ===========================================================================
  */
-bool	pwd(t_shell *main);
+bool	pwd(void);
 
 /* ===========================================================================
  * MINI_ENV

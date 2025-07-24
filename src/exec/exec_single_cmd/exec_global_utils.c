@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:27:16 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 00:37:42 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:32:14 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	check_current_dir_exec(t_shell *main, char **cmd)
 
 	if (!main || !main->exec || !main->exec->cmd || !main->exec->cmd[0])
 		return (0);
-	filepath = NULL;
+	filepath = ft_strjoin("./", cmd[0]);
 	if (!filepath)
-		return (0);
+		free_and_exit_error(main, NULL, ERR_MEM, errno);
 	if (access(filepath, F_OK) != 0)
 	{
 		free(filepath);
@@ -68,6 +68,7 @@ char	*get_path(t_shell *main, char *env_path, char **env)
 	char	**paths;
 	char	*result;
 
+	(void)env;
 	if (!env_path)
 		return (NULL);
 	paths = ft_split_slash(env_path, ':');

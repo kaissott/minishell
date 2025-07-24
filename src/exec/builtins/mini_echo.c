@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:08:11 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 08:18:37 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:25:10 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	check_echo_flag(char *tab)
 	return (false);
 }
 
-void	print_echo_with_flag(t_shell *main, char **tab)
+void	print_echo_with_flag(char **tab)
 {
 	int	i;
 	int	j;
@@ -56,7 +56,7 @@ void	print_echo_with_flag(t_shell *main, char **tab)
 	}
 }
 
-void	print_echo_without_flag(t_shell *main, char **tab)
+void	print_echo_without_flag(char **tab)
 {
 	int	i;
 
@@ -73,9 +73,10 @@ void	print_echo_without_flag(t_shell *main, char **tab)
 
 bool	mini_echo(t_shell *main, char **cmd)
 {
+	(void)main;
 	if (check_echo_flag(cmd[1]) == true)
-		print_echo_with_flag(main, cmd);
+		print_echo_with_flag(cmd);
 	else
-		print_echo_without_flag(main, cmd);
+		print_echo_without_flag(cmd);
 	return (true);
 }
