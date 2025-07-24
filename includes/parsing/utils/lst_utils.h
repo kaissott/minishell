@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:11:45 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 08:00:07 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void			chunk_lst_add_back(t_token_chunk **chunk_lst,
 					t_token_chunk *new);
-t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, char *cmd,
+t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, const char *cmd,
 					ssize_t len, char quote);
 t_parse_error	create_and_add_splitted_chunk(t_token_chunk **chunk_lst,
 					char *value);
@@ -39,8 +39,8 @@ void			expand_lst_delone(t_expand **expand_lst,
 t_token			*token_lst_last(t_token *lst);
 void			token_lst_delone(t_token **token_lst, t_token *node_to_delete);
 void			token_lst_add_back(t_token **token_lst, t_token *new);
-t_parse_error	token_lst_add_operator_node(t_token **token_lst, char *cmd,
-					ssize_t len, t_token_type token_type);
+t_parse_error	token_lst_add_operator_node(t_token **token_lst,
+					const char *cmd, ssize_t len, t_token_type token_type);
 t_parse_error	token_lst_add_chunks(t_shell *shell, t_token *new_token);
 
 t_parse_error	create_first_token(t_token **new_tokens, t_token_chunk *chunk);

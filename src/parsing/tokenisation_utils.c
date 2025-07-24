@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:06 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 07:58:21 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_operator(const char *str)
 		|| str[0] == '|' || str[0] == '>' || str[0] == '<');
 }
 
-static t_token_type	handle_redir(char *cmd, t_error *error)
+static t_token_type	handle_redir(const char *cmd, t_error *error)
 {
 	size_t	i;
 
@@ -44,7 +44,7 @@ static t_token_type	handle_redir(char *cmd, t_error *error)
 	return (T_REDIR_IN);
 }
 
-t_token_type	get_token_type(t_error *error, char *cmd)
+t_token_type	get_token_type(t_error *error, const char *cmd)
 {
 	size_t	i;
 

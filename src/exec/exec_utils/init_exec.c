@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 08:01:50 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ void	reset_struct(char *rl, t_shell *main)
 	if (rl)
 		free(rl);
 	if (main->exec)
-	{
 		free_node(main);
-	}
 }
 
 bool	node_check(t_shell *main)

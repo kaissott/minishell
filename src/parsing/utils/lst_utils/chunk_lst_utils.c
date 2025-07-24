@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chunk_lst_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:49 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 01:32:13 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 07:59:10 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	chunk_lst_add_back(t_token_chunk **chunk_lst, t_token_chunk *new)
 	}
 }
 
-t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, char *cmd,
+t_parse_error	create_and_add_chunk(t_token_chunk **chunk_lst, const char *cmd,
 		ssize_t len, char quote)
 {
 	t_token_chunk	*new_chunk;

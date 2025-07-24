@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:13 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 08:00:46 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	token_lst_add_back(t_token **token_lst, t_token *new)
 	return ;
 }
 
-t_parse_error	token_lst_add_operator_node(t_token **token_lst, char *cmd,
-		ssize_t len, t_token_type token_type)
+t_parse_error	token_lst_add_operator_node(t_token **token_lst,
+		const char *cmd, ssize_t len, t_token_type token_type)
 {
 	t_token	*new_token;
 

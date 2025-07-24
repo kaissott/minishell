@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 07:10:08 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 07:18:53 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 08:03:20 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,22 @@
 int	rl_hook(void)
 {
 	return (0);
+}
+
+int	is_ascii_printable(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s && s[i])
+	{
+		if ((unsigned char)s[i] >= 32 && (unsigned char)s[i] <= 126)
+			return (1);
+		else
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 void	print_perror(char *error)

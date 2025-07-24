@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 08:02:11 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 volatile sig_atomic_t	g_sig_mode = INTERACTIVE;
 
-static void	parse(t_shell *shell, char *cmd)
+static void	parse(t_shell *shell, const char *cmd)
 {
 	t_parse_error	errcode;
 
@@ -36,6 +36,7 @@ void	start_shell(t_shell *shell)
 	char	*rl;
 	char	*line;
 
+	rl = NULL;
 	while (1)
 	{
 		init_sigaction(0);
@@ -58,6 +59,11 @@ void	start_shell(t_shell *shell)
 		{
 			exit_error_two_close(shell, (shell)->std_out, (shell)->std_in);
 			return ;
+		}
+		if (!is_ascii_printable(rl))
+		{
+			free(rl);
+			continue ;
 		}
 		add_history(rl);
 		parse(shell, rl);
