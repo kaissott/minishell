@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 23:28:28 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:07:47 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ pid_t	child_process(t_exec *node, int prev_fd, t_shell *main, char **env)
 	if (pid == 0)
 	{
 		init_sigaction_child();
-		close(pipefd[0]);
+		ft_close(main, pipefd[0], pipefd[1], prev_fd);
 		dup_process_child(main, node, prev_fd, pipefd[1]);
 		close_fork(prev_fd, pipefd[1], node, main);
 		if (node->cmd[0] != NULL)
 			do_cmd(main, node->cmd, env);
 	}
-	close(prev_fd);
-	close(pipefd[1]);
+	ft_close(main, prev_fd, pipefd[1], pipefd[0]);
+	ft_close(main, pipefd[1], pipefd[0], -1);
 	return (pipefd[0]);
 }
 

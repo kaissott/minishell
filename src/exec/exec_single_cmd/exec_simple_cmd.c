@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 22:56:35 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 00:39:56 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	exec_simple_cmd(t_shell *main)
 	{
 		if (!env_path && check_current_dir_exec(main, main->exec->cmd))
 			return ;
-		free(path);
 		free(env_path);
 		execve_err(main, main->env_tab, path, main->exec->cmd[0]);
 		return ;
