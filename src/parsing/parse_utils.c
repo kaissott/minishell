@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 02:51:22 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 07:17:37 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ char	**resize_cmd_args(char **cmd, char *new_arg)
 
 t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 {
-	if (!token->next)
-		return (ERR_AMBIGUOUS_REDIR);
 	if (std == STDIN_FILENO)
 	{
 		new_cmd->infile.filepath = ft_strdup(token->next->value);
@@ -43,7 +41,7 @@ t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 			return (ERR_MALLOC);
 		new_cmd->infile.fd = open_file(token->next->value, token->type);
 		if (new_cmd->infile.fd == -1)
-			perror(new_cmd->infile.filepath);
+			print_perror(new_cmd->infile.filepath);
 	}
 	else
 	{
@@ -52,70 +50,46 @@ t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 			return (ERR_MALLOC);
 		new_cmd->outfile.fd = open_file(token->next->value, token->type);
 		if (new_cmd->outfile.fd == -1)
-			perror(new_cmd->outfile.filepath);
+			print_perror(new_cmd->outfile.filepath);
 	}
 	return (ERR_NONE);
 }
 
-char	*create_filepath(t_exec *new_node, int *hd_nbr)
+static t_parse_error	create_heredoc_filepath(t_exec *new_cmd, int i)
 {
-	char	*filepath;
-
-	filepath = ft_strjoin("/tmp/.ms_hd_", hd_nbr);
-	free(hd_nbr);
-	if (!new_node->infile.filepath)
-		return (ERR_MALLOC);
-	return (filepath);
-}
-
-t_parse_error	create_heredoc_filepath(t_exec **exec_lst, t_exec *new_node)
-{
-	int		i;
 	char	*hd_nbr;
-	t_exec	*tmp;
-	int		fd;
 
-	i = 0;
 	hd_nbr = ft_itoa(i);
 	if (!hd_nbr)
 		return (ERR_MALLOC);
-	new_node->infile.filepath = ft_strjoin("/tmp/.ms_hd_", hd_nbr);
+	new_cmd->infile.filepath = ft_strjoin("/tmp/.ms_hd_", hd_nbr);
 	free(hd_nbr);
-	if (!new_node->infile.filepath)
+	if (!new_cmd->infile.filepath)
 		return (ERR_MALLOC);
-	// while (1)
-	// {
-	// tmp = *exec_lst;
-	// while (tmp)
-	// {
-	// 	i++;
-	// 	tmp = tmp->next;
-	// }
-	fd = open(new_node->infile.filepath, O_CREAT | O_EXCL | O_WRONLY, 0644);
-	while (fd == -1 && errno == EEXIST)
-	{
-		free(new_node->infile.filepath);
-		if (secure_close(&new_node->infile.fd) != ERR_NONE)
-			return (ERR_CLOSE);
-		i++;
-		hd_nbr = ft_itoa(i);
-		if (!hd_nbr)
-			return (ERR_MALLOC);
-		new_node->infile.filepath = ft_strjoin("/tmp/.ms_hd_", hd_nbr);
-		free(hd_nbr);
-		if (!new_node->infile.filepath)
-			return (ERR_MALLOC);
-		fd = open(new_node->infile.filepath, O_CREAT | O_EXCL | O_WRONLY, 0644);
-	}
-	if (fd == -1 && errno != EEXIST)
-		perror(new_node->infile.filepath);
-	// }
 	return (ERR_NONE);
 }
 
-int	test(void)
+t_parse_error	create_heredoc(t_exec *new_cmd)
 {
-	return (0);
+	int	i;
+
+	i = 0;
+	if (create_heredoc_filepath(new_cmd, i) != ERR_NONE)
+		return (ERR_MALLOC);
+	new_cmd->infile.fd = open(new_cmd->infile.filepath,
+			O_CREAT | O_EXCL | O_WRONLY, 0644);
+	while (new_cmd->infile.fd == -1 && errno == EEXIST)
+	{
+		free(new_cmd->infile.filepath);
+		i++;
+		if (create_heredoc_filepath(new_cmd, i) != ERR_NONE)
+			return (ERR_MALLOC);
+		new_cmd->infile.fd = open(new_cmd->infile.filepath,
+				O_CREAT | O_EXCL | O_WRONLY, 0644);
+	}
+	if (new_cmd->infile.fd == -1 && errno != EEXIST)
+		print_perror(new_cmd->infile.filepath);
+	return (ERR_NONE);
 }
 
 t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
@@ -124,7 +98,7 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 	t_parse_error	result;
 	char			*line;
 
-	rl_event_hook = test;
+	rl_event_hook = rl_hook;
 	result = ERR_NONE;
 	init_sigaction(2);
 	while (1)

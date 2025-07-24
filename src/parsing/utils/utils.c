@@ -6,50 +6,56 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:24 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 10:11:13 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 07:19:43 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_parse_error	set_error(t_error *error, t_parse_error error_type,
-		char unexpected_token, char *ambiguous_redir)
+static void	free_shell(t_shell *shell)
 {
-	error->error_type = error_type;
-	if (unexpected_token)
-		error->unexpected_token = unexpected_token;
-	if (ambiguous_redir)
-		error->ambiguous_redir = ambiguous_redir;
-	return (error_type);
+	if (shell->token)
+		free_token_lst(&shell->token);
+	if (shell->exec)
+		free_exec_lst(&shell->exec);
+	shell->error.error_type = ERR_NONE;
+	shell->error.unexpected_token = '\0';
 }
 
-void	print_syntax_error_msg(t_parse_error errcode, char unexpected_token,
-		char *ambiguous_redir)
+static void	get_errcode(t_shell *shell, t_parse_error errcode)
 {
-	if (errcode == ERR_MISSING_SINGLE_QUOTE)
-		ft_putstr_fd("Missing single quote (').\n", STDERR_FILENO);
-	else if (errcode == ERR_MISSING_DOUBLE_QUOTE)
-		ft_putstr_fd("Missing double quote (\").\n", STDERR_FILENO);
-	else if (errcode == ERR_SYNTAX)
+	if (errcode == ERR_MALLOC)
+		shell->errcode = 12;
+	else if (errcode >= ERR_DOUBLE_PIPE && errcode <= ERR_MISSING_SINGLE_QUOTE)
+		shell->errcode = 2;
+	else if (errcode == ERR_TOKEN)
+		shell->errcode = 1;
+	else if (errcode >= ERR_CLOSE && errcode <= ERR_OPEN)
+		shell->errcode = 1;
+	else
+		shell->errcode = 0;
+}
+
+bool	check_parsing(t_shell *shell, t_parse_error errcode, bool at_end)
+{
+	if (errcode == ERR_NONE)
 	{
-		ft_putstr_fd("syntax error near unexpected token `", STDERR_FILENO);
-		if (!unexpected_token)
-			ft_putstr_fd("newline'\n", STDERR_FILENO);
-		else
-		{
-			ft_putchar_fd(unexpected_token, STDERR_FILENO);
-			ft_putstr_fd("\'\n", STDERR_FILENO);
-		}
+		if (at_end)
+			get_errcode(shell, errcode);
+		return (true);
 	}
-	else if (errcode == ERR_DOUBLE_PIPE)
-		ft_putstr_fd("Double pipe.\n", STDERR_FILENO);
-	else if (errcode == ERR_AMBIGUOUS_REDIR)
+	get_errcode(shell, errcode);
+	if (errcode != ERR_SIG)
+		print_syntax_error_msg(errcode, shell->error.unexpected_token,
+			shell->error.ambiguous_redir);
+	free_shell(shell);
+	if (errcode == ERR_MALLOC)
 	{
-		ft_putstr_fd(ambiguous_redir, STDERR_FILENO);
-		ft_putstr_fd(" : Ambiguous redirection\n", STDERR_FILENO);
+		free(shell);
+		exit(EXIT_FAILURE);
 	}
-	else if (errcode == ERR_MALLOC)
-		ft_putstr_fd("Token creation failed (malloc error).\n", STDERR_FILENO);
+	else
+		return (false);
 }
 
 char	*join_or_dup(char *prev, char *next)

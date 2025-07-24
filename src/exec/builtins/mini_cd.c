@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 07:05:50 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*cd_to_last_pwd(t_shell *main)
 		}
 		env = env->next;
 	}
-	ft_putendl_fd("bash: cd: OLDPWD not set", 2);
+	ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
 	main->errcode = 1;
 	return (str);
 }
@@ -91,7 +91,7 @@ bool	mini_cd(char **cmd, t_shell *main)
 
 	if (cmd[1] != NULL && cmd[2])
 	{
-		ft_putstr_fd("bash: cd: too many arguments\n", 2);
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		main->errcode = 1;
 		return (true);
 	}
@@ -108,7 +108,7 @@ bool	mini_cd(char **cmd, t_shell *main)
 	else
 	{
 		free(str);
-		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd("minishell: cd: ", 2);
 		return (set_return_err_code(main, main->exec->cmd[1], 1));
 	}
 	return (true);

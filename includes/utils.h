@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_pwd.c                                         :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 02:56:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/24 07:01:46 by ludebion         ###   ########.fr       */
+/*   Created: 2025/07/24 07:11:00 by ludebion          #+#    #+#             */
+/*   Updated: 2025/07/24 07:21:37 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-bool	pwd(t_shell *main)
-{
-	char	path[1024];
+# include "minishell.h"
+# include "structures.h"
 
-	if (getcwd(path, 1024) == NULL)
-		perror("minishell: pdw: ");
-	ft_putendl_fd(path, STDOUT_FILENO);
-	return (true);
-}
+int				rl_hook(void);
+void			print_perror(char *error);
+t_parse_error	set_error(t_error *error, t_parse_error error_type,
+					char unexpected_token, char *ambiguous_redir);
+void			print_syntax_error_msg(t_parse_error errcode,
+					char unexpected_token, char *ambiguous_redir);
+
+#endif

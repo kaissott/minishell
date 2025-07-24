@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   parse_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:11:47 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 07:22:28 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef PARSE_UTILS_H
+# define PARSE_UTILS_H
 
 # include "minishell.h"
 # include "structures.h"
@@ -22,11 +22,8 @@ t_parse_error	check_std_cmd(int std, t_exec *new_cmd);
 
 bool			check_parsing(t_shell *shell, t_parse_error errcode,
 					bool at_end);
-
-t_parse_error	set_error(t_error *error, t_parse_error error_type,
-					char unexpected_token, char *ambiguous_redir);
-void			print_syntax_error_msg(t_parse_error errcode,
-					char unexpected_token, char *ambiguous_redir);
 char			*join_or_dup(char *prev, char *next);
+bool			is_dollar_alone(t_token_chunk *chunk, size_t i, size_t len,
+					t_token_chunk *next);
 
 #endif

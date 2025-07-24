@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:38:27 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 10:04:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 07:05:50 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	exit_minishell(t_shell *main, int exitcode)
 
 void	numeric_argument_error(char **args, t_shell *main)
 {
-	ft_putstr_fd("exit\nbash: exit: ", 2);
+	ft_putstr_fd("exit\nminishell: exit: ", 2);
 	ft_putstr_fd(args[1], 2);
 	ft_putstr_fd(ERR_NUM_ARG, 2);
 	exit_minishell(main, 2);

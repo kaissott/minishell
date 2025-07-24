@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:04:26 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/23 08:35:28 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 07:12:50 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 # include "parsing/tokenisation.h"
 # include "parsing/utils/debug_utils.h"
 # include "parsing/utils/lst_utils.h"
-# include "parsing/utils/utils.h"
+# include "parsing/utils/parse_utils.h"
 # include "parsing/word_splitting.h"
 # include "structures.h"
+# include "utils.h"
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>

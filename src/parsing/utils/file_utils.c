@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:16 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 00:28:54 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 07:37:17 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,12 @@
 
 int	open_file(const char *filepath, t_token_type file_type)
 {
-	int	fd;
-
 	if (file_type == T_REDIR_IN)
 		return (open(filepath, O_RDONLY));
 	else if (file_type == T_REDIR_TRUNC)
 		return (open(filepath, O_CREAT | O_WRONLY | O_TRUNC, 0644));
 	else if (file_type == T_REDIR_APPEND)
 		return (open(filepath, O_CREAT | O_WRONLY | O_APPEND, 0644));
-	else if (file_type == T_HEREDOC)
-	{
-		fd = open(filepath, O_CREAT | O_EXCL | O_WRONLY, 0644);
-		if (fd == -1 && errno == EEXIST)
-		{
-			return (fd);
-		}
-	}
 	return (-1);
 }
 
