@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/23 19:10:02 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:28:08 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		check_input(t_shell *main);
 void	error_exit(char *str, int exitnbr, int fd);
 int		free_struct(t_shell *main);
 void	free_node(t_shell *main);
+void	free_env(t_shell *main);
 void	reset_struct(char *rl, t_shell *main);
 void	free_tab(char **tab);
 void	exit_error_two_close(t_shell *main_struct, int fd1, int fd2);

@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:21:28 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 23:45:44 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	**resize_cmd_args(char **cmd, char *new_arg)
 
 t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 {
+	if (!token->next)
+		return (ERR_AMBIGUOUS_REDIR);
 	if (std == STDIN_FILENO)
 	{
 		new_cmd->infile.filepath = ft_strdup(token->next->value);
@@ -55,20 +57,6 @@ t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 	return (ERR_NONE);
 }
 
-static t_parse_error	create_heredoc_filepath(t_exec *new_cmd, int i)
-{
-	char	*hd_nbr;
-
-	hd_nbr = ft_itoa(i);
-	if (!hd_nbr)
-		return (ERR_MALLOC);
-	new_cmd->infile.filepath = ft_strjoin("/tmp/.ms_hd_", hd_nbr);
-	free(hd_nbr);
-	if (!new_cmd->infile.filepath)
-		return (ERR_MALLOC);
-	return (ERR_NONE);
-}
-
 t_parse_error	create_heredoc(t_exec *new_cmd)
 {
 	int	i;
@@ -81,6 +69,7 @@ t_parse_error	create_heredoc(t_exec *new_cmd)
 	while (new_cmd->infile.fd == -1 && errno == EEXIST)
 	{
 		free(new_cmd->infile.filepath);
+		new_cmd->infile.filepath = NULL;
 		i++;
 		if (create_heredoc_filepath(new_cmd, i) != ERR_NONE)
 			return (ERR_MALLOC);
@@ -92,32 +81,18 @@ t_parse_error	create_heredoc(t_exec *new_cmd)
 	return (ERR_NONE);
 }
 
-t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
+static void	write_in_heredoc(t_parse_error *errcode, int *fd_heredoc,
+		const char *next_token_value)
 {
-	char			*rl;
-	t_parse_error	result;
-	char			*line;
+	char	*rl;
 
-	rl_event_hook = rl_hook;
-	result = ERR_NONE;
-	init_sigaction_hd();
 	while (1)
 	{
-		if (isatty(fileno(stdin)))
-			rl = readline("heredoc > ");
-		else
+		rl = readline("heredoc > ");
+		if (g_sig_mode == SIGINT)
 		{
-			rl = get_next_line(fileno(stdin));
-			if (rl)
-			{
-				line = ft_strtrim(rl, "\n");
-				free(rl);
-				rl = line;
-			}
-		}
-		if (g_sig_mode > 0)
-		{
-			result = ERR_SIG;
+			free(rl);
+			*errcode = ERR_SIG;
 			break ;
 		}
 		if (!rl)
@@ -128,12 +103,25 @@ t_parse_error	write_in_heredoc(int *fd_heredoc, const char *next_token_value)
 			break ;
 		}
 		if (ft_putendl_fd(rl, *fd_heredoc) == -1)
-			return (ERR_SIG);
+		{
+			print_perror("Write");
+			*errcode = ERR_SIG;
+		}
 		free(rl);
 	}
+}
+
+t_parse_error	handle_in_heredoc(int *fd_heredoc, const char *next_token_value)
+{
+	t_parse_error	errcode;
+
+	rl_event_hook = rl_hook;
+	errcode = ERR_NONE;
+	init_sigaction_hd();
+	write_in_heredoc(&errcode, fd_heredoc, next_token_value);
 	rl_event_hook = NULL;
 	init_sigaction();
 	if (secure_close(fd_heredoc) != ERR_NONE)
 		return (ERR_CLOSE);
-	return (result);
+	return (errcode);
 }

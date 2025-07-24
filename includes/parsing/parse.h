@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:11:54 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:17:45 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/24 23:03:05 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_parse_error	parsing(t_shell *shell);
 char			**resize_cmd_args(char **cmd, char *new_arg);
 t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std);
 t_parse_error	create_heredoc(t_exec *new_node);
-int				write_in_heredoc(int *fd_heredoc, const char *next_token_value);
+int				handle_in_heredoc(int *fd_heredoc,
+					const char *next_token_value);
 
 #endif
