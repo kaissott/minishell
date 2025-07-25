@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 21:43:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 23:36:09 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/25 05:49:19 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	execve_err(t_shell *main, char **env, char *path, char *cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
-	perror(cmd);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": command not found\n", 2);
 	if (env)
 		free(env);
 	if (path != NULL)

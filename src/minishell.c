@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/25 00:42:16 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/25 05:38:15 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	parse(t_shell *shell, const char *cmd)
 char	*rl_check(t_shell *shell)
 {
 	char	*rl;
+		char *line;
 
 	rl = NULL;
 	if (isatty(fileno(stdin)))
@@ -41,6 +42,12 @@ char	*rl_check(t_shell *shell)
 		rl = readline("> ");
 		if (shell->errcode < 3 && g_sig_mode > 0)
 			shell->errcode = g_sig_mode + 128;
+	}
+	else
+	{
+		line = get_next_line(fileno(stdin));
+		rl = ft_strtrim(line, "\n");
+		free(line);
 	}
 	return (rl);
 }
