@@ -20,7 +20,7 @@ LST_ENV :=		env_lst.c env_to_tab.c lst_add.c
 
 LST_EXEC_PIPE :=	exec_pipe_error.c exec_pipe_utils.c exec_pipe.c exec_pipe_start.c exec_error1.c sig.c
 
-LST_EXEC_SINGLE_CMD :=	error_free.c exec_simple_cmd.c  exec_global_utils.c
+LST_EXEC_SINGLE_CMD :=	exec_simple_cmd.c  exec_global_utils.c
 
 LST_EXEC_UTILS := exec_dup.c strrchr_slash.c ft_split_slash.c init_exec.c free_structs.c \
 				free_structs2.c
