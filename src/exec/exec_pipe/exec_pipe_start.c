@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/26 19:34:05 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 23:13:54 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static pid_t	last_child(t_exec *node, int prev_fd, t_shell *main, char **env)
 	if (node->infile.fd == -1 || node->outfile.fd == -1)
 	{
 		main->errcode = 1;
-		return (-1);
+		return (1);
 	}
 	pid = fork();
 	if (pid == -1)
@@ -50,12 +50,6 @@ static int	handle_last_child(t_shell *main, t_exec *node, int prev_fd)
 	last_pid = last_child(node, prev_fd, main, main->env_tab);
 	close(prev_fd);
 	close_node(main);
-	if (last_pid == -1)
-	{
-		free(main->env_tab);
-		main->env_tab = NULL;
-		return (0);
-	}
 	wait_child(last_pid, main);
 	free(main->env_tab);
 	main->env_tab = NULL;

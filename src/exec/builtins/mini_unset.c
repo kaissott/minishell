@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:40:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 08:18:55 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:45:48 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	mini_unset(t_shell *main, char **cmd)
 		ft_putstr_fd(cmd[1], 2);
 		ft_putendl_fd("': invalid option", 2);
 		main->errcode = 2;
-		return (0);
+		return (true);
 	}
 	while (cmd[i])
 	{
