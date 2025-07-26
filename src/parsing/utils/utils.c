@@ -6,15 +6,15 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:24 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 05:59:56 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 08:07:06 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_shell(t_shell *shell, bool need_all_clean)
+static void	free_shell(t_shell *shell, t_parse_error errcode)
 {
-	if (need_all_clean && shell->env)
+	if (errcode == ERR_MALLOC && shell->env)
 		free_env(shell);
 	if (shell->token)
 		free_token_lst(&shell->token);
@@ -23,7 +23,6 @@ static void	free_shell(t_shell *shell, bool need_all_clean)
 	shell->error.error_type = ERR_NONE;
 	shell->error.unexpected_token = '\0';
 	shell->error.ambiguous_redir = NULL;
-	shell->error.errcode = 0;
 }
 
 static void	get_errcode(t_shell *shell, t_parse_error errcode)
@@ -46,26 +45,21 @@ static void	get_errcode(t_shell *shell, t_parse_error errcode)
 
 bool	check_parsing(t_shell *shell, t_parse_error errcode, bool at_end)
 {
-	bool	need_all_clean;
-
-	need_all_clean = false;
-	if (errcode == ERR_MALLOC)
-		need_all_clean = true;
-	if (errcode == ERR_NONE || errcode == ERR_AMBIGUOUS_REDIR || shell->error.error_type == ERR_PREV_OPEN)
+	if (errcode == ERR_NONE || errcode == ERR_AMBIGUOUS_REDIR
+		|| shell->error.error_type == ERR_PREV_OPEN)
 	{
-		if (at_end || errcode == ERR_AMBIGUOUS_REDIR || shell->error.error_type == ERR_PREV_OPEN)
+		if (at_end || errcode == ERR_AMBIGUOUS_REDIR
+			|| shell->error.error_type == ERR_PREV_OPEN)
 			get_errcode(shell, errcode);
 		shell->error.error_type = ERR_NONE;
-		shell->error.unexpected_token = '\0';
 		shell->error.ambiguous_redir = NULL;
-		shell->error.errcode = 0;
 		return (true);
 	}
 	get_errcode(shell, errcode);
 	if (errcode != ERR_SIG && shell->error.error_type != ERR_PREV_OPEN)
 		print_syntax_error_msg(errcode, shell->error.unexpected_token,
 			shell->error.ambiguous_redir);
-	free_shell(shell, need_all_clean);
+	free_shell(shell, errcode);
 	if (errcode == ERR_MALLOC)
 	{
 		free(shell);

@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:16 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 06:01:44 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 09:11:34 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,28 @@ t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 	return (ERR_NONE);
 }
 
-t_parse_error	set_std_file(t_shell *shell, t_token *token, int std, t_exec *new_cmd)
+t_parse_error	set_std_file(t_shell *shell, t_token *token, int std,
+		t_exec *new_cmd)
 {
 	if (std == STDIN_FILENO)
 	{
+		if (new_cmd->infile.filepath)
+			free(new_cmd->infile.filepath);
 		new_cmd->infile.filepath = NULL;
 		new_cmd->infile.fd = -1;
 	}
 	else
 	{
+		if (new_cmd->outfile.filepath)
+			free(new_cmd->outfile.filepath);
 		new_cmd->outfile.filepath = NULL;
 		new_cmd->outfile.fd = -1;
 	}
 	if (shell->error.error_type == ERR_NONE)
 	{
 		print_syntax_error_msg(ERR_AMBIGUOUS_REDIR, '\0', token->next->value);
-		set_error_syntax(&shell->error, ERR_AMBIGUOUS_REDIR, '\0', token->next->value);
+		set_error_syntax(&shell->error, ERR_AMBIGUOUS_REDIR, '\0',
+			token->next->value);
 	}
 	return (ERR_NONE);
 }

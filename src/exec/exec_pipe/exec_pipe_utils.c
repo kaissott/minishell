@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 23:34:08 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/26 09:05:42 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	do_cmd(t_shell *main, char **cmd, char **env)
 	{
 		if (!env_path && check_current_dir_exec(main, cmd))
 			return (-1);
-		free(path);
 		free(env_path);
 		execve_err(main, main->env_tab, path, main->exec->cmd[0]);
 		return (-1);

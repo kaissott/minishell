@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 06:42:37 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 09:15:32 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,39 +35,29 @@ char	**resize_cmd_args(char **cmd, char *new_arg)
 t_parse_error	process_exec_std(t_shell *shell, t_token *token,
 		t_exec *new_cmd, int std)
 {
+	if (token->next->is_blank)
+		return (set_std_file(shell, token, std, new_cmd));
 	if (std == STDIN_FILENO)
 	{
-		if (!token->next->is_blank && shell->error.error_type == ERR_NONE)
-		{
-			new_cmd->infile.filepath = ft_strdup(token->next->value);
-			if (!new_cmd->infile.filepath)
-				return (ERR_MALLOC);
-			new_cmd->infile.fd = open_file(token->next->value, token->type);
-			if (new_cmd->infile.fd == -1)
-			{
-				set_error_syntax(&shell->error, ERR_PREV_OPEN, '\0', NULL);
-				print_perror(new_cmd->infile.filepath);
-			}
-		}
-		else if (set_std_file(shell, token, STDIN_FILENO, new_cmd) != ERR_NONE)
+		new_cmd->infile.filepath = ft_strdup(token->next->value);
+		if (!new_cmd->infile.filepath)
 			return (ERR_MALLOC);
+		new_cmd->infile.fd = open_file(token->next->value, token->type);
+		if (new_cmd->infile.fd == -1)
+		{
+			set_error_syntax(&shell->error, ERR_PREV_OPEN, '\0', NULL);
+			print_perror(new_cmd->infile.filepath);
+		}
+		return (ERR_NONE);
 	}
-	else
+	new_cmd->outfile.filepath = ft_strdup(token->next->value);
+	if (!new_cmd->outfile.filepath)
+		return (ERR_MALLOC);
+	new_cmd->outfile.fd = open_file(token->next->value, token->type);
+	if (new_cmd->outfile.fd == -1)
 	{
-		if (!token->next->is_blank && shell->error.error_type == ERR_NONE)
-		{
-			new_cmd->outfile.filepath = ft_strdup(token->next->value);
-			if (!new_cmd->outfile.filepath)
-				return (ERR_MALLOC);
-			new_cmd->outfile.fd = open_file(token->next->value, token->type);
-			if (new_cmd->outfile.fd == -1)
-			{
-				set_error_syntax(&shell->error, ERR_PREV_OPEN, '\0', NULL);
-				print_perror(new_cmd->outfile.filepath);
-			}
-		}
-		else if (set_std_file(shell, token, STDOUT_FILENO, new_cmd) != ERR_NONE)
-			return (ERR_MALLOC);
+		set_error_syntax(&shell->error, ERR_PREV_OPEN, '\0', NULL);
+		print_perror(new_cmd->outfile.filepath);
 	}
 	return (ERR_NONE);
 }
@@ -96,8 +86,8 @@ t_parse_error	create_heredoc(t_exec *new_cmd)
 	return (ERR_NONE);
 }
 
-static void	write_in_heredoc(t_parse_error *errcode,
-		int *fd_heredoc, const char *next_token_value)
+static void	write_in_heredoc(t_parse_error *errcode, int *fd_heredoc,
+		const char *next_token_value)
 {
 	char	*rl;
 

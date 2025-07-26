@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 08:06:53 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 04:45:10 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 07:53:02 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,11 @@ typedef enum e_parse_error
 	ERR_CLOSE = -8,
 	ERR_PREV_OPEN = -9,
 	ERR_SIG = -10,
-	EMPTY_TOKEN_LIST = -11,
-	ERR_AMBIGUOUS_REDIR = -12
+	ERR_AMBIGUOUS_REDIR = -11,
 }							t_parse_error;
 
 typedef struct s_error
 {
-	int						errcode;
 	char					unexpected_token;
 	char					*ambiguous_redir;
 	t_parse_error			error_type;

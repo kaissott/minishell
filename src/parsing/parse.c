@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:33 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 05:56:35 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 07:52:31 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static t_exec	*handle_pipe(t_shell *shell, t_token *token, t_exec *new_cmd,
 	{
 		token_lst_delone(&shell->token, token);
 		shell->errcode = 0;
-		shell->error.errcode = 0;
 		shell->error.error_type = 0;
 		shell->error.ambiguous_redir = NULL;
 		return (create_exec_cmd());
