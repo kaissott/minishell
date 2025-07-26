@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/25 00:42:16 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/26 06:42:47 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	parse(t_shell *shell, const char *cmd)
 	check_parsing(shell, errcode, true);
 }
 
-char	*rl_check(t_shell *shell)
+static char	*rl_check(t_shell *shell)
 {
 	char	*rl;
 
@@ -45,9 +45,10 @@ char	*rl_check(t_shell *shell)
 	return (rl);
 }
 
-void	start_shell(t_shell *shell)
+static void	start_shell(t_shell *shell)
 {
 	char	*rl;
+	char	*line;
 
 	rl = NULL;
 	while (1)
@@ -56,7 +57,18 @@ void	start_shell(t_shell *shell)
 		if (dup2(shell->std_in, STDIN_FILENO) == -1 || dup2(shell->std_out,
 				STDOUT_FILENO) == -1)
 			free_and_exit_error(shell, NULL, "Dup 2 failed", errno);
-		rl = rl_check(shell);
+		if (isatty(STDIN_FILENO))
+			rl = rl_check(shell);
+		else
+		{
+			rl = get_next_line(fileno(stdin));
+			if (rl)
+			{
+				line = ft_strtrim(rl, "\n");
+				free(rl);
+				rl = line;
+			}
+		}
 		if (!rl)
 			return (exit_error_two_close(shell, (shell)->std_out,
 					(shell)->std_in));
@@ -81,7 +93,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	if (ac > 1)
-		return (EXIT_SUCCESS);
+		return (EXIT_FAILURE);
 	shell = init_minishell(env);
 	start_shell(shell);
 	errcode = shell->errcode;

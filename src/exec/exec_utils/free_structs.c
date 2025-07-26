@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 23:27:29 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/26 03:25:58 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,15 @@ void	close_node(t_shell *main)
 	{
 		exit_error_two_close(main, temp->infile.fd, temp->outfile.fd);
 		if (temp->infile.filepath)
+		{
 			free(temp->infile.filepath);
+			temp->infile.filepath = NULL;
+		}
 		if (temp->outfile.filepath)
+		{
 			free(temp->outfile.filepath);
+			temp->infile.filepath = NULL;
+		}
 		temp = temp->next;
 	}
 }

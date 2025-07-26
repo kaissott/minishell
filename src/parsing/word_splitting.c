@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:14 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:21:40 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 05:35:48 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,12 @@ static t_parse_error	process_token(t_shell *shell, t_token *token)
 	}
 	else
 	{
-		errcode = cat_chunks(token);
-		if (errcode != ERR_NONE)
-			return (errcode);
+		if (!token->is_blank)
+		{
+			errcode = cat_chunks(token);
+			if (errcode != ERR_NONE)
+				return (errcode);
+		}
 	}
 	return (ERR_NONE);
 }

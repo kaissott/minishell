@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 08:06:53 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:17:51 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 04:45:10 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_token
 	t_token_type			type;
 	bool					is_delimiter;
 	bool					is_redir;
+	bool					is_blank;
 	struct s_token			*next;
 }							t_token;
 

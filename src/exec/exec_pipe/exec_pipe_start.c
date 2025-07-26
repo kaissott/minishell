@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_start.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 21:07:47 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/26 06:29:07 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ pid_t	last_child(t_exec *node, int prev_fd, t_shell *main, char **env)
 	if (node->infile.fd == -1 || node->outfile.fd == -1)
 	{
 		main->errcode = 1;
-		return (1);
+		return (-1);
 	}
 	pid = fork();
 	if (pid == -1)
@@ -40,10 +40,13 @@ pid_t	child_process(t_exec *node, int prev_fd, t_shell *main, char **env)
 	int		pipefd[2];
 	pid_t	pid;
 
+
 	if (pipe(pipefd) == -1)
 		error_pipe(prev_fd, node, main);
 	if (node->infile.fd == -1 || node->outfile.fd == -1)
 	{
+		if (prev_fd > 2)
+			close(prev_fd);
 		close(pipefd[1]);
 		return (pipefd[0]);
 	}
@@ -84,6 +87,12 @@ int	pipe_exec(t_shell *main)
 	last_pid = last_child(node, prev_fd, main, main->env_tab);
 	close(prev_fd);
 	close_node(main);
+	if (last_pid == -1)
+	{
+		free(main->env_tab);
+		main->env_tab = NULL;
+		return (0);
+	}
 	wait_child(last_pid, main);
 	free(main->env_tab);
 	main->env_tab = NULL;

@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:11:47 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 23:30:20 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 05:44:10 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 int				open_file(const char *filepath, t_token_type file_type);
 t_parse_error	secure_close(int *fd);
 t_parse_error	check_std_cmd(int std, t_exec *new_cmd);
+t_parse_error	set_std_file(t_shell *shell, t_token *token, int std, t_exec *new_cmd);
 t_parse_error	create_heredoc_filepath(t_exec *new_cmd, int i);
 
 bool			check_parsing(t_shell *shell, t_parse_error errcode,

@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:06 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:21:33 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 04:34:49 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_token_type	handle_redir(const char *cmd, t_error *error)
 		i++;
 	if (is_operator(&cmd[i]) || !cmd[i])
 	{
-		set_error(error, ERR_SYNTAX, cmd[i], NULL);
+		set_error_syntax(error, ERR_SYNTAX, cmd[i], NULL);
 		return (T_ERROR_SYNTAX);
 	}
 	if (cmd[0] == '>')
@@ -53,14 +53,14 @@ t_token_type	get_token_type(t_error *error, const char *cmd)
 	{
 		if (cmd[1] == '|')
 		{
-			set_error(error, ERR_DOUBLE_PIPE, '\0', NULL);
+			set_error_syntax(error, ERR_DOUBLE_PIPE, '\0', NULL);
 			return (T_ERROR_PIPE);
 		}
 		while (cmd[i] && cmd[i] == ' ')
 			i++;
 		if (!cmd[i] || !cmd[-1])
 		{
-			set_error(error, ERR_SYNTAX, '|', NULL);
+			set_error_syntax(error, ERR_SYNTAX, '|', NULL);
 			return (T_ERROR_SYNTAX);
 		}
 		return (T_PIPE);

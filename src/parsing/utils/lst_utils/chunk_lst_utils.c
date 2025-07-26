@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:49 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:20:59 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 04:54:16 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,11 @@ t_parse_error	cat_chunks(t_token *token)
 
 	prev = NULL;
 	chunk = token->chunks;
-	if (token->type == T_WORD)
+	if (token->type == T_WORD && !token->is_blank)
+	{
 		free(token->value);
+		token->value = NULL;
+	}
 	while (chunk)
 	{
 		token->value = join_or_dup(prev, chunk->value);

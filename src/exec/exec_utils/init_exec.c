@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/25 00:43:09 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 06:39:32 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,8 @@ bool	node_check(t_shell *main)
 		close_node(main);
 		return (false);
 	}
-	else if (node->cmd == NULL && node->next == NULL)
+	if (node->cmd == NULL && node->next == NULL)
 	{
-		if (node->infile.fd == -1 || node->outfile.fd == -1)
-			main->errcode = 1;
-		else
-			main->errcode = 0;
 		close_node(main);
 		return (false);
 	}
