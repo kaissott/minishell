@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/26 09:09:07 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:34:05 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ static pid_t	last_child(t_exec *node, int prev_fd, t_shell *main, char **env)
 	pid_t	pid;
 
 	if (node->infile.fd == -1 || node->outfile.fd == -1)
+	{
+		main->errcode = 1;
 		return (-1);
+	}
 	pid = fork();
 	if (pid == -1)
 		error_fork(NULL, prev_fd, node, main);
