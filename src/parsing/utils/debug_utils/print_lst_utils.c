@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:34:01 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:20:46 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 05:31:18 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void	print_info_token(t_token *lst)
 			printf("\tvalue: [%s] ", lst->value);
 		else
 			printf("\tvalue: [NULL] ");
-		printf("type: [%d] is_delimiter : [%d] is_redir : [%d]\n", lst->type,
-			lst->is_delimiter, lst->is_redir);
+		printf("type: [%d] is_delim : [%d] is_redir : [%d] is_blank : [%d]\n",
+			lst->type, lst->is_delimiter, lst->is_redir, lst->is_blank);
 		if (lst->chunks)
 		{
 			tmp = lst->chunks;
@@ -41,33 +41,33 @@ static void	print_info_token(t_token *lst)
 	}
 }
 
-void	print_token_lst(t_token *lst, char *msg)
+void	print_token_lst(t_token **lst, char *msg)
 {
 	t_token	*tmp;
 
 	printf("\n%s\n", msg);
-	if (!lst)
+	if (!*lst)
 	{
 		printf("The token list is empty\n");
 		return ;
 	}
-	tmp = lst;
+	tmp = *lst;
 	print_info_token(tmp);
 }
 
-void	print_chunk_lst(t_token_chunk *lst, char *msg)
+void	print_chunk_lst(t_token_chunk **lst, char *msg)
 {
 	size_t			i;
 	t_token_chunk	*tmp;
 
 	i = 1;
 	printf("\n%s\n", msg);
-	if (!lst)
+	if (!*lst)
 	{
 		printf("The chunk list is empty\n");
 		return ;
 	}
-	tmp = lst;
+	tmp = *lst;
 	while (tmp)
 	{
 		printf("Node [%zu] :\n", i++);
@@ -108,16 +108,16 @@ static void	print_info_exec(t_exec *lst)
 	}
 }
 
-void	print_exec_lst(t_exec *lst, char *msg)
+void	print_exec_lst(t_exec **lst, char *msg)
 {
 	t_exec	*tmp;
 
 	printf("\n%s\n", msg);
-	if (!lst)
+	if (!*lst)
 	{
 		ft_putstr_fd("The list is empty\n", STDOUT_FILENO);
 		return ;
 	}
-	tmp = lst;
+	tmp = *lst;
 	print_info_exec(tmp);
 }

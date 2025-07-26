@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 23:45:44 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 23:29:42 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ char	**resize_cmd_args(char **cmd, char *new_arg)
 	return (new_cmd);
 }
 
-t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
+t_parse_error	process_exec_std(t_shell *shell, t_token *token,
+		t_exec *new_cmd, int std)
 {
-	if (!token->next)
-		return (ERR_AMBIGUOUS_REDIR);
+	if (token->next->is_blank)
+		return (set_std_file(shell, token, std, new_cmd));
 	if (std == STDIN_FILENO)
 	{
 		new_cmd->infile.filepath = ft_strdup(token->next->value);
@@ -43,16 +44,20 @@ t_parse_error	process_exec_std(t_token *token, t_exec *new_cmd, int std)
 			return (ERR_MALLOC);
 		new_cmd->infile.fd = open_file(token->next->value, token->type);
 		if (new_cmd->infile.fd == -1)
+		{
+			set_error_syntax(&shell->error, ERR_PREV_OPEN, '\0', NULL);
 			print_perror(new_cmd->infile.filepath);
+		}
+		return (ERR_NONE);
 	}
-	else
+	new_cmd->outfile.filepath = ft_strdup(token->next->value);
+	if (!new_cmd->outfile.filepath)
+		return (ERR_MALLOC);
+	new_cmd->outfile.fd = open_file(token->next->value, token->type);
+	if (new_cmd->outfile.fd == -1)
 	{
-		new_cmd->outfile.filepath = ft_strdup(token->next->value);
-		if (!new_cmd->outfile.filepath)
-			return (ERR_MALLOC);
-		new_cmd->outfile.fd = open_file(token->next->value, token->type);
-		if (new_cmd->outfile.fd == -1)
-			print_perror(new_cmd->outfile.filepath);
+		set_error_syntax(&shell->error, ERR_PREV_OPEN, '\0', NULL);
+		print_perror(new_cmd->outfile.filepath);
 	}
 	return (ERR_NONE);
 }

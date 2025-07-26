@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:33 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 23:13:11 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 07:52:31 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ static t_exec	*handle_pipe(t_shell *shell, t_token *token, t_exec *new_cmd,
 	if (!is_last)
 	{
 		token_lst_delone(&shell->token, token);
+		shell->errcode = 0;
+		shell->error.error_type = 0;
+		shell->error.ambiguous_redir = NULL;
 		return (create_exec_cmd());
 	}
 	else
@@ -43,8 +46,8 @@ static t_parse_error	handle_redirection(t_shell *shell, t_token *token,
 	errcode = check_std_cmd(std, new_cmd);
 	if (errcode == ERR_NONE)
 	{
-		errcode = process_exec_std(token, new_cmd, std);
-		if (errcode != ERR_NONE)
+		errcode = process_exec_std(shell, token, new_cmd, std);
+		if (errcode != ERR_NONE && errcode != ERR_AMBIGUOUS_REDIR)
 			return (errcode);
 	}
 	else if (errcode != ERR_PREV_OPEN)

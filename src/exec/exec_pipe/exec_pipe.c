@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 23:35:46 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:56:43 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,18 @@ void	wait_child(pid_t last, t_shell *main)
 
 	status = 0;
 	while (waitpid(last, &status, 0) > 0)
-		;
-	if (WIFEXITED(status))
-		main->errcode = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
 	{
-		sig = WTERMSIG(status);
-		if (sig == SIGQUIT)
-			write(2, "Quit (core dumped)\n", 20);
-		if (sig == SIGINT)
-			write(2, "\n", 1);
-		main->errcode = 128 + sig;
+		if (WIFEXITED(status))
+			main->errcode = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+		{
+			sig = WTERMSIG(status);
+			if (sig == SIGQUIT)
+				write(2, "Quit (core dumped)\n", 20);
+			if (sig == SIGINT)
+				write(2, "\n", 1);
+			main->errcode = 128 + sig;
+		}
 	}
 	while (wait(NULL) > 0)
 		;

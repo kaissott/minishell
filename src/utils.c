@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 07:10:08 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 11:02:02 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 05:27:11 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_perror(char *error)
 	perror(error);
 }
 
-t_parse_error	set_error(t_error *error, t_parse_error error_type,
+t_parse_error	set_error_syntax(t_error *error, t_parse_error error_type,
 		char unexpected_token, char *ambiguous_redir)
 {
 	error->error_type = error_type;
@@ -52,6 +52,7 @@ t_parse_error	set_error(t_error *error, t_parse_error error_type,
 void	print_syntax_error_msg(t_parse_error errcode, char unexpected_token,
 		char *ambiguous_redir)
 {
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (errcode == ERR_MISSING_SINGLE_QUOTE)
 		ft_putstr_fd("Missing single quote (').\n", STDERR_FILENO);
 	else if (errcode == ERR_MISSING_DOUBLE_QUOTE)

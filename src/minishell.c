@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/25 05:38:15 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/26 23:39:45 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,21 @@ static void	parse(t_shell *shell, const char *cmd)
 	check_parsing(shell, errcode, true);
 }
 
-char	*rl_check(t_shell *shell)
+static char	*rl_check(t_shell *shell)
 {
 	char	*rl;
-		char *line;
 
 	rl = NULL;
-	if (isatty(fileno(stdin)))
+	if (isatty(STDIN_FILENO))
 	{
 		rl = readline("> ");
 		if (shell->errcode < 3 && g_sig_mode > 0)
 			shell->errcode = g_sig_mode + 128;
 	}
-	else
-	{
-		line = get_next_line(fileno(stdin));
-		rl = ft_strtrim(line, "\n");
-		free(line);
-	}
 	return (rl);
 }
 
-void	start_shell(t_shell *shell)
+static void	start_shell(t_shell *shell)
 {
 	char	*rl;
 
@@ -78,7 +71,7 @@ void	start_shell(t_shell *shell)
 		check_input(shell);
 		reset_struct(rl, shell);
 	}
-	clear_history();
+	rl_clear_history();
 }
 
 int	main(int ac, char **av, char **env)
@@ -88,7 +81,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	if (ac > 1)
-		return (EXIT_SUCCESS);
+		return (EXIT_FAILURE);
 	shell = init_minishell(env);
 	start_shell(shell);
 	errcode = shell->errcode;

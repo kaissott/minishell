@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:02 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:21:22 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/26 05:36:49 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static t_parse_error	check_expansion(t_shell *shell, t_expand **expand_lst,
 	{
 		if (token->is_redir)
 		{
-			set_error(&shell->error, ERR_AMBIGUOUS_REDIR, '\0', token->value);
+			token->is_blank = true;
 			return (ERR_AMBIGUOUS_REDIR);
 		}
 		token_lst_delone(&shell->token, token);
@@ -115,7 +115,7 @@ t_parse_error	replace_chunk_value(t_shell *shell, t_expand **expand_lst,
 		if (errcode != ERR_NONE)
 			return (errcode);
 		errcode = check_expansion(shell, expand_lst, token, chunk);
-		if (errcode != ERR_NONE)
+		if (errcode != ERR_NONE && errcode != ERR_AMBIGUOUS_REDIR)
 			return (errcode);
 		tmp = next;
 	}
