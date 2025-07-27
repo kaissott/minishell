@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:35:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 21:24:34 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/27 06:28:32 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	env_pwd_update(t_shell *main)
 	char	path[1024];
 
 	if (getcwd(path, 1024) == NULL)
-		free_and_exit_error(main, NULL, ERR_GETCWD, errno);
+		perror("getcwd");
 	temp = main->env;
 	while (temp != NULL && ft_strnstr(temp->env, "PWD=", 4) == NULL)
 		temp = temp->next;
@@ -43,7 +43,7 @@ void	env_oldpwd_update(t_shell *main)
 
 	temp = main->env;
 	if (getcwd(pwd, 1024) == NULL)
-		free_and_exit_error(main, NULL, ERR_GETCWD, errno);
+		perror("getcwd");
 	while (temp != NULL && ft_strstr(temp->env, "OLDPWD=") != 1)
 		temp = temp->next;
 	if (temp != NULL)
