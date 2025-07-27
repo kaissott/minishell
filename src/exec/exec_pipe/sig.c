@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/26 23:21:49 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/27 03:38:04 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void	init_sigaction_child(void)
 	sa.sa_flags = SA_RESTART;
 	sa.sa_handler = SIG_DFL;
 	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
+	sa.sa_handler = SIG_DFL;
 	sigaction(SIGQUIT, &sa, NULL);
 }

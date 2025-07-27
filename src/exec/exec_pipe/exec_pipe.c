@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/26 22:56:43 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/27 03:50:44 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ void	ft_close(t_shell *main, int fd, int fd2, int fd3)
 
 void	wait_child(pid_t last, t_shell *main)
 {
-	int	status;
-	int	sig;
+	int		status;
+	int		sig;
+	pid_t	w_child;
+	bool	has_sig;
 
 	status = 0;
-	while (waitpid(last, &status, 0) > 0)
+	has_sig = false;
+	while ((w_child = waitpid(-1, &status, 0)) > 0)
 	{
 		if (WIFEXITED(status))
 			main->errcode = WEXITSTATUS(status);
@@ -57,10 +60,13 @@ void	wait_child(pid_t last, t_shell *main)
 			if (sig == SIGQUIT)
 				write(2, "Quit (core dumped)\n", 20);
 			if (sig == SIGINT)
-				write(2, "\n", 1);
-			main->errcode = 128 + sig;
+				has_sig = true;
+			if (w_child == last)
+				main->errcode = 128 + sig;
 		}
 	}
+	if (has_sig == true)
+		write(2, "\n", 1);
 	while (wait(NULL) > 0)
 		;
 }
