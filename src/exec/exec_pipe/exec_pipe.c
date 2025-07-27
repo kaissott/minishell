@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/27 03:53:16 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/27 06:17:17 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,16 @@ void	wait_child(pid_t last, t_shell *main)
 
 	status = 0;
 	has_sig = false;
-	while ((w_child = waitpid(-1, &status, 0)) > 0)
+	while (1)
 	{
+		w_child = waitpid(-1, &status, 0);
+		if (w_child <= 0)
+			break ;
 		if (WIFEXITED(status))
-			main->errcode = WEXITSTATUS(status);
+		{
+			if (w_child == last)
+				main->errcode = WEXITSTATUS(status);
+		}
 		else if (WIFSIGNALED(status))
 		{
 			sig = WTERMSIG(status);

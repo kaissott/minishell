@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/27 03:59:37 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/27 05:57:30 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*rl_check(t_shell *shell)
 	rl = NULL;
 	if (isatty(STDIN_FILENO))
 	{
-		rl = readline("minishell> ");
+		rl = readline("> ");
 		if (shell->errcode < 3 && g_sig_mode > 0)
 			shell->errcode = g_sig_mode + 128;
 	}
@@ -71,7 +71,7 @@ static void	start_shell(t_shell *shell)
 		check_input(shell);
 		reset_struct(rl, shell);
 	}
-	rl_clear_history();
+	// rl_clear_history();
 }
 
 int	main(int ac, char **av, char **env)

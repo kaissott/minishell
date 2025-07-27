@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:22:17 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/26 09:05:27 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/27 06:17:56 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ bool	exec_cmd(t_shell *main, char **cmd, bool simple)
 	else if (ft_strncmp(cmd[0], "unset", 5) == 0 && ft_strlen(cmd[0]) == 5)
 		return (mini_unset(main, cmd));
 	else if (simple == true)
+	{
 		init_simple_cmd(main);
+	}
 	return (false);
 }
 
