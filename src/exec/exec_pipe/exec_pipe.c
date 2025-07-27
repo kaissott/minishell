@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/27 03:50:44 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/27 03:53:16 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	wait_child(pid_t last, t_shell *main)
 	}
 	if (has_sig == true)
 		write(2, "\n", 1);
-	while (wait(NULL) > 0)
-		;
 }
 
 void	ignore_child_signal(void)
