@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 23:39:45 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/27 03:59:37 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*rl_check(t_shell *shell)
 	rl = NULL;
 	if (isatty(STDIN_FILENO))
 	{
-		rl = readline("> ");
+		rl = readline("minishell> ");
 		if (shell->errcode < 3 && g_sig_mode > 0)
 			shell->errcode = g_sig_mode + 128;
 	}

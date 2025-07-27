@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:04:26 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 20:14:23 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/27 02:59:05 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # define SIG 130
 
 # include "../libft/libft.h"
+# include "exec/builtins.h"
 # include "exec/exec.h"
 # include "exec/exec_utils.h"
-# include "exec/builtins.h"
 # include "parsing/expansion.h"
 # include "parsing/parse.h"
 # include "parsing/tokenisation.h"
@@ -40,9 +40,8 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <sys/wait.h>
-# include <termios.h>
+# include <unistd.h>
 
 extern volatile sig_atomic_t	g_sig_mode;
 
