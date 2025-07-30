@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:08 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:21:35 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/30 21:07:36 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static ssize_t	extract_quoted_chunk(t_token_chunk **chunks, const char *cmd,
 		else
 			return (ERR_MISSING_SINGLE_QUOTE);
 	}
-	if (create_and_add_chunk(chunks, &cmd[1], len - 1, quote) != ERR_NONE)
+	if (create_and_add_chunk(chunks, cmd + 1, len - 1, quote) != ERR_NONE)
 		return (ERR_MALLOC);
 	return (len + 1);
 }
@@ -74,13 +74,14 @@ static ssize_t	extract_word_token(t_shell *shell, const char *cmd)
 	return (i);
 }
 
-static ssize_t	extract_operator_token(t_shell *shell, const char *cmd)
+static ssize_t	extract_operator_token(t_shell *shell, const char *cmd,
+		bool *begin_with_token)
 {
 	ssize_t			len;
 	t_token_type	token_type;
 
 	len = 1;
-	token_type = get_token_type(&shell->error, cmd);
+	token_type = get_token_type(&shell->error, cmd, *begin_with_token);
 	if (token_type == T_ERROR_SYNTAX)
 		return (ERR_SYNTAX);
 	else if (token_type == T_ERROR_PIPE)
@@ -97,18 +98,23 @@ t_parse_error	tokenisation(t_shell *shell, const char *cmd)
 {
 	ssize_t	i;
 	ssize_t	token_len;
+	bool	begin_with_tok;
 
 	i = 0;
+	begin_with_tok = true;
 	while (cmd[i])
 	{
 		while (cmd[i] == ' ' || cmd[i] == '\t')
 			i++;
 		if (!cmd[i])
 			break ;
-		if (is_operator(&cmd[i]))
-			token_len = extract_operator_token(shell, &cmd[i]);
+		if (is_operator(cmd + i))
+			token_len = extract_operator_token(shell, cmd + i, &begin_with_tok);
 		else
-			token_len = extract_word_token(shell, &cmd[i]);
+		{
+			begin_with_tok = false;
+			token_len = extract_word_token(shell, cmd + i);
+		}
 		if (token_len <= 0 || shell->error.error_type != ERR_NONE)
 			return (token_len);
 		i += token_len;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:35:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 20:57:16 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 21:16:44 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

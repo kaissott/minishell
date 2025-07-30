@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/27 03:59:26 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/30 21:15:05 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**resize_cmd_args(char **cmd, char *new_arg)
 t_parse_error	process_exec_std(t_shell *shell, t_token *token,
 		t_exec *new_cmd, int std)
 {
-	if (token->next->is_blank)
+	if (token->next->is_blank || token_contains_ifs_chunks(token->next))
 		return (set_std_file(shell, token, std, new_cmd));
 	if (std == STDIN_FILENO)
 	{
@@ -71,7 +71,7 @@ t_parse_error	create_heredoc(t_exec *new_cmd)
 		return (ERR_MALLOC);
 	new_cmd->infile.fd = open(new_cmd->infile.filepath,
 			O_CREAT | O_EXCL | O_WRONLY, 0644);
-	while (new_cmd->infile.fd == -1 && errno == EEXIST)
+	while ((new_cmd->infile.fd == -1 && errno == EEXIST))
 	{
 		free(new_cmd->infile.filepath);
 		new_cmd->infile.filepath = NULL;
@@ -82,7 +82,10 @@ t_parse_error	create_heredoc(t_exec *new_cmd)
 				O_CREAT | O_EXCL | O_WRONLY, 0644);
 	}
 	if (new_cmd->infile.fd == -1 && errno != EEXIST)
+	{
 		print_perror(new_cmd->infile.filepath);
+		return (ERR_OPEN);
+	}
 	return (ERR_NONE);
 }
 
