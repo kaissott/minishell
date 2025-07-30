@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/27 03:40:48 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 09:02:00 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	handle_last_child(t_shell *main, t_exec *node, int prev_fd)
 	pid_t	last_pid;
 
 	last_pid = last_child(node, prev_fd, main, main->env_tab);
-	close(prev_fd);
+	ft_safe_close(&prev_fd, main);
 	close_node(main);
 	wait_child(last_pid, main);
 	free(main->env_tab);
@@ -72,14 +72,14 @@ static pid_t	child_process(t_exec *node, int prev_fd, t_shell *main,
 	if (pid == 0)
 	{
 		init_sigaction_child();
-		ft_close(main, pipefd[0], pipefd[1], prev_fd);
+		ft_safe_close(&pipefd[0], main);
 		dup_process_child(main, node, prev_fd, pipefd[1]);
 		close_fork(prev_fd, pipefd[1], node, main);
 		if (node->cmd[0] != NULL)
 			do_cmd(main, node->cmd, env);
 	}
-	ft_close(main, prev_fd, pipefd[1], pipefd[0]);
-	ft_close(main, pipefd[1], pipefd[0], -1);
+	ft_safe_close(&prev_fd, main);
+	ft_safe_close(&pipefd[1], main);
 	return (pipefd[0]);
 }
 

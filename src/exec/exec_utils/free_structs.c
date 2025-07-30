@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/26 03:25:58 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/30 09:00:59 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	close_node(t_shell *main)
 	temp = main->exec;
 	while (temp != NULL)
 	{
-		exit_error_two_close(main, temp->infile.fd, temp->outfile.fd);
+		ft_safe_close_node(temp);
 		if (temp->infile.filepath)
 		{
 			free(temp->infile.filepath);

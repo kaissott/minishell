@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/24 23:50:32 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/30 09:02:39 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,8 @@ void	free_and_exit_error(t_shell *main, char *tmp, char *error,
 			int err_number);
 int		set_return_err_code(t_shell *main, char *error, int err_number);
 void	ft_close(t_shell *main, int fd, int fd2, int fd3);
+void	ft_safe_close(int *fd, t_shell *main);
+bool	is_a_file(int fd, t_shell *shell);
+void	ft_safe_close_node(t_exec *tmp);
 
 #endif

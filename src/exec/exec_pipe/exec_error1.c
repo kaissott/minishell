@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 21:43:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/25 05:49:19 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 09:02:13 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ void	execve_err(t_shell *main, char **env, char *path, char *cmd)
 
 void	close_fork(int fd1, int fd2, t_exec *node, t_shell *main)
 {
-	if (fd1 != node->infile.fd && fd1 > 1)
-		ft_close(main, fd1, fd2, -1);
-	if (fd2 > 1)
-		ft_close(main, fd2, -1, -1);
+	(void)node;
+	ft_safe_close(&fd1, main);
+	ft_safe_close(&fd2, main);
 	close_node(main);
 }
 
