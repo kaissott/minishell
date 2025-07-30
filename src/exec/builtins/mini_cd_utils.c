@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:35:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 19:59:38 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/30 20:57:16 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ void	env_oldpwd_update(t_shell *main)
 
 	temp = main->env;
 	if (getcwd(pwd, 1024) == NULL)
-	{
-		perror("getcwd");
-		return ;
-	}
+		return (perror("getcwd"));
 	while (temp != NULL && ft_strstr(temp->env, "OLDPWD=") != 1)
 		temp = temp->next;
 	if (temp != NULL)
