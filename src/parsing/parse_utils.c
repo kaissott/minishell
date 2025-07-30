@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/27 03:59:26 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/27 10:00:46 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,22 @@ static void	write_in_heredoc(t_parse_error *errcode, int *fd_heredoc,
 		const char *next_token_value)
 {
 	char	*rl;
+	char	*line;
 
 	while (1)
 	{
-		rl = readline("heredoc > ");
+		if (isatty(STDIN_FILENO))
+			rl = readline("heredoc > ");
+		else
+		{
+			rl = get_next_line(STDIN_FILENO);
+			if (rl)
+			{
+				line = ft_strtrim(rl, "\n");
+				free(rl);
+				rl = line;
+			}
+		}
 		if (g_sig_mode == SIGINT)
 		{
 			free(rl);

@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:11:56 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:17:47 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/30 10:29:56 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 
 t_parse_error	tokenisation(t_shell *shell, const char *cmd);
 int				is_operator(const char *str);
-t_token_type	get_token_type(t_error *error, const char *cmd);
+t_token_type	get_token_type(t_error *error, const char *cmd,
+					bool begin_with_operator);
 void			set_heredocs_delimiters(t_shell *shell);
 
 #endif
