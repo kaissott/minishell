@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:14 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 05:35:48 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/30 20:11:45 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ static t_parse_error	process_token(t_shell *shell, t_token *token)
 	}
 	else
 	{
-		if (!token->is_blank)
+		if (!token->is_blank && (!token_contains_ifs_chunks(token)
+				|| !token->is_redir))
 		{
 			errcode = cat_chunks(token);
 			if (errcode != ERR_NONE)

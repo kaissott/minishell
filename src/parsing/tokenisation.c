@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:08 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/30 10:29:25 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/30 21:07:36 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,65 +15,63 @@
 static ssize_t	extract_quoted_chunk(t_token_chunk **chunks, const char *cmd,
 		char quote)
 {
-	const char	*start;
+	ssize_t	len;
 
-	start = cmd;
-	cmd++;
-	while (*cmd && *cmd != quote)
-		cmd++;
-	if (!*cmd)
+	len = 1;
+	while (cmd[len] && cmd[len] != quote)
+		len++;
+	if (!cmd[len])
 	{
 		if (quote == '"')
 			return (ERR_MISSING_DOUBLE_QUOTE);
 		else
 			return (ERR_MISSING_SINGLE_QUOTE);
 	}
-	if (create_and_add_chunk(chunks, start + 1, cmd - start - 1,
-			quote) != ERR_NONE)
+	if (create_and_add_chunk(chunks, cmd + 1, len - 1, quote) != ERR_NONE)
 		return (ERR_MALLOC);
-	return ((cmd - start) + 1);
+	return (len + 1);
 }
 
 static ssize_t	extract_unquoted_chunk(t_token_chunk **chunks, const char *cmd)
 {
-	const char	*start;
+	ssize_t	len;
 
-	start = cmd;
-	while (*cmd && *cmd != ' ' && *cmd != '\t' && *cmd != '"' && *cmd != '\''
-		&& !is_operator(cmd))
-		cmd++;
-	if (create_and_add_chunk(chunks, start, cmd - start, '\0') != ERR_NONE)
+	len = 0;
+	while (cmd[len] && cmd[len] != ' ' && cmd[len] != '\t' && cmd[len] != '"'
+		&& cmd[len] != '\'' && !is_operator(&cmd[len]))
+		len++;
+	if (create_and_add_chunk(chunks, cmd, len, '\0') != ERR_NONE)
 		return (ERR_MALLOC);
-	return (cmd - start);
+	return (len);
 }
 
 static ssize_t	extract_word_token(t_shell *shell, const char *cmd)
 {
-	const char	*start;
-	ssize_t		chunk_len;
-	t_token		*new_token;
+	ssize_t	i;
+	ssize_t	chunk_len;
+	t_token	*new_token;
 
-	start = cmd;
+	i = 0;
 	new_token = ft_calloc(1, sizeof(t_token));
 	if (!new_token)
 		return (ERR_MALLOC);
-	while (*cmd && *cmd != ' ' && *cmd != '\t' && !is_operator(cmd))
+	while (cmd[i] && cmd[i] != ' ' && cmd[i] != '\t' && !is_operator(&cmd[i]))
 	{
-		if ((*cmd == '"' && *(cmd - 1) != '\\') || (*cmd == '\'' && *(cmd
-				- 1) != '\\'))
-			chunk_len = extract_quoted_chunk(&new_token->chunks, cmd, *cmd);
+		if (cmd[i] == '"' || cmd[i] == '\'')
+			chunk_len = extract_quoted_chunk(&new_token->chunks, &cmd[i],
+					cmd[i]);
 		else
-			chunk_len = extract_unquoted_chunk(&new_token->chunks, cmd);
+			chunk_len = extract_unquoted_chunk(&new_token->chunks, &cmd[i]);
 		if (chunk_len <= 0)
 		{
 			free_token(new_token);
 			return (chunk_len);
 		}
-		cmd += chunk_len;
+		i += chunk_len;
 	}
 	if (token_lst_add_chunks(shell, new_token) != ERR_NONE)
 		return (ERR_MALLOC);
-	return (cmd - start);
+	return (i);
 }
 
 static ssize_t	extract_operator_token(t_shell *shell, const char *cmd,
@@ -98,26 +96,28 @@ static ssize_t	extract_operator_token(t_shell *shell, const char *cmd,
 
 t_parse_error	tokenisation(t_shell *shell, const char *cmd)
 {
+	ssize_t	i;
 	ssize_t	token_len;
-	bool	begin_with_token;
+	bool	begin_with_tok;
 
-	begin_with_token = true;
-	while (*cmd)
+	i = 0;
+	begin_with_tok = true;
+	while (cmd[i])
 	{
-		while (*cmd == ' ' || *cmd == '\t')
-			cmd++;
-		if (!*cmd)
+		while (cmd[i] == ' ' || cmd[i] == '\t')
+			i++;
+		if (!cmd[i])
 			break ;
-		if (is_operator(cmd))
-			token_len = extract_operator_token(shell, cmd, &begin_with_token);
+		if (is_operator(cmd + i))
+			token_len = extract_operator_token(shell, cmd + i, &begin_with_tok);
 		else
 		{
-			begin_with_token = false;
-			token_len = extract_word_token(shell, cmd);
+			begin_with_tok = false;
+			token_len = extract_word_token(shell, cmd + i);
 		}
 		if (token_len <= 0 || shell->error.error_type != ERR_NONE)
 			return (token_len);
-		cmd += token_len;
+		i += token_len;
 	}
 	set_heredocs_delimiters(shell);
 	return (ERR_NONE);

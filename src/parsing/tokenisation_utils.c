@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:06 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/30 10:29:34 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/30 21:13:13 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,32 @@ static t_token_type	handle_redir(const char *cmd, t_error *error)
 	return (T_REDIR_IN);
 }
 
+static t_token_type	handle_pipe(t_error *error, const char *cmd,
+		bool begin_with_operator)
+{
+	size_t	i;
+
+	i = 1;
+	if (cmd[1] == '|')
+	{
+		set_error_syntax(error, ERR_DOUBLE_PIPE, '\0', NULL);
+		return (T_ERROR_PIPE);
+	}
+	if (begin_with_operator)
+	{
+		set_error_syntax(error, ERR_SYNTAX, '|', NULL);
+		return (T_ERROR_SYNTAX);
+	}
+	while (cmd[i] && cmd[i] == ' ' && cmd[i] == '\t')
+		i++;
+	if (!cmd[i] || cmd[i] == '|')
+	{
+		set_error_syntax(error, ERR_SYNTAX, cmd[i], NULL);
+		return (T_ERROR_SYNTAX);
+	}
+	return (T_PIPE);
+}
+
 t_token_type	get_token_type(t_error *error, const char *cmd,
 		bool begin_with_operator)
 {
@@ -51,26 +77,7 @@ t_token_type	get_token_type(t_error *error, const char *cmd,
 
 	i = 1;
 	if (cmd[0] == '|')
-	{
-		if (cmd[1] == '|')
-		{
-			set_error_syntax(error, ERR_DOUBLE_PIPE, '\0', NULL);
-			return (T_ERROR_PIPE);
-		}
-		if (begin_with_operator)
-		{
-			set_error_syntax(error, ERR_SYNTAX, '|', NULL);
-			return (T_ERROR_SYNTAX);
-		}
-		while (cmd[i] && cmd[i] == ' ')
-			i++;
-		if (!cmd[i] || cmd[i] == '|')
-		{
-			set_error_syntax(error, ERR_SYNTAX, '\0', NULL);
-			return (T_ERROR_SYNTAX);
-		}
-		return (T_PIPE);
-	}
+		return (handle_pipe(error, cmd, begin_with_operator));
 	else if (cmd[0] == '<' || cmd[0] == '>')
 		return (handle_redir(cmd, error));
 	return (T_ERROR_SYNTAX);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 08:46:28 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/30 18:52:30 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 20:53:08 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
