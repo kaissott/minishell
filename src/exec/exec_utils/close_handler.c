@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 08:46:28 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/30 09:02:55 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 16:44:31 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ bool	is_a_file(int fd, t_shell *shell)
 	}
 	return (false);
 }
+
 void	ft_safe_close(int *fd, t_shell *main)
 {
 	if (*fd > 1 && is_a_file(*fd, main) == false)
