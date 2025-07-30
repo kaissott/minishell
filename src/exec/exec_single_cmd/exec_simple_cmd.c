@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/30 16:24:57 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 18:35:32 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,8 @@ void	init_simple_cmd(t_shell *main)
 	if (pid == 0)
 	{
 		init_sigaction_child();
-		exit_error_two_close(main, main->std_in, main->std_out);
-		exit_error_two_close(main, main->exec->infile.fd,
-			main->exec->outfile.fd);
+		ft_safe_close(&main->std_in, main);
+		ft_safe_close(&main->std_out, main);
 		exec_simple_cmd(main);
 	}
 	wait_simple_cmd(main, pid);

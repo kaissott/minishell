@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/30 16:25:42 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 18:53:37 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ static void	start_shell(t_shell *shell)
 			free_and_exit_error(shell, NULL, "Dup 2 failed", errno);
 		rl = rl_check(shell);
 		if (!rl)
-			return (exit_error_two_close(shell, (shell)->std_out,
-					(shell)->std_in));
+			return (exit_error_two_close(shell, &(shell)->std_out,
+					&(shell)->std_in));
 		g_sig_mode = 0;
 		if (!is_ascii_printable(rl))
 		{

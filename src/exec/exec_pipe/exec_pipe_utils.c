@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 16:32:33 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 18:34:35 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	do_cmd(t_shell *main, char **cmd, char **env)
 	char	*env_path;
 
 	path = NULL;
-	exit_error_two_close(main, main->std_in, main->std_out);
+	ft_safe_close(&main->std_in, main);
+	ft_safe_close(&main->std_out, main);
 	if (exec_cmd(main, cmd, false) == true)
 		exit_exec_cmd(main);
 	ultimate_path_check(main, cmd);

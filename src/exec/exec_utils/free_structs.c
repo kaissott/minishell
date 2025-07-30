@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 09:00:59 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 18:41:39 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,23 @@ void	free_node(t_shell *main)
 
 void	close_node(t_shell *main)
 {
-	t_exec	*temp;
+	t_exec	*tmp;
 
-	temp = main->exec;
-	while (temp != NULL)
+	tmp = main->exec;
+	while (tmp != NULL)
 	{
-		ft_safe_close_node(temp);
-		if (temp->infile.filepath)
+		ft_safe_close_node(tmp, &tmp->infile.fd, &tmp->outfile.fd);
+		if (tmp->infile.filepath)
 		{
-			free(temp->infile.filepath);
-			temp->infile.filepath = NULL;
+			free(tmp->infile.filepath);
+			tmp->infile.filepath = NULL;
 		}
-		if (temp->outfile.filepath)
+		if (tmp->outfile.filepath)
 		{
-			free(temp->outfile.filepath);
-			temp->infile.filepath = NULL;
+			free(tmp->outfile.filepath);
+			tmp->outfile.filepath = NULL;
 		}
-		temp = temp->next;
+		tmp = tmp->next;
 	}
 }
 

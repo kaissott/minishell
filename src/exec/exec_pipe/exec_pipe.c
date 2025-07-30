@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 17:55:12 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 18:45:38 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ void	wait_child(pid_t last, t_shell *main, int status, int *has_sig)
 			if (sig == SIGQUIT)
 				write(2, "Quit (core dumped)\n", 20);
 			if (sig == SIGINT)
-			{
 				*has_sig = 1;
-			}
 			if (w_child == last)
 				main->errcode = 128 + sig;
 		}

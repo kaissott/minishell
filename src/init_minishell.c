@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:20:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/26 17:52:45 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:54:15 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_shell	*init_minishell(char **env)
 	main_struct->env_tab = NULL;
 	if (main_struct->std_out == -1 || main_struct->std_in == -1)
 	{
-		exit_error_two_close(main_struct, main_struct->std_out,
-			main_struct->std_in);
+		exit_error_two_close(main_struct, &main_struct->std_out,
+			&main_struct->std_in);
 		exit_error_minishell(main_struct, errno, "Dup failed");
 	}
 	return (main_struct);
