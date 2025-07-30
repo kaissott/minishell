@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_structs2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:41:45 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/26 22:46:45 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/30 19:08:21 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	exit_exec_cmd(t_shell *main)
 	free(main->env_tab);
 	free_struct(main);
 	close_node(main);
-	close(main->std_in);
-	close(main->std_out);
+	ft_safe_close(&main->std_in, main);
+	ft_safe_close(&main->std_out, main);
 	free(main);
 	exit(0);
 }

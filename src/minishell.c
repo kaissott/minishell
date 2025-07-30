@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/27 10:00:21 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/30 20:50:08 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	parse(t_shell *shell, const char *cmd)
 static char	*rl_check(t_shell *shell)
 {
 	char	*rl;
-	char	*line;
 
 	rl = NULL;
 	if (isatty(STDIN_FILENO))
@@ -42,16 +41,6 @@ static char	*rl_check(t_shell *shell)
 		rl = readline("> ");
 		if (shell->errcode < 3 && g_sig_mode > 0)
 			shell->errcode = g_sig_mode + 128;
-	}
-	else
-	{
-		rl = get_next_line(STDIN_FILENO);
-		if (rl)
-		{
-			line = ft_strtrim(rl, "\n");
-			free(rl);
-			rl = line;
-		}
 	}
 	return (rl);
 }
@@ -69,8 +58,8 @@ static void	start_shell(t_shell *shell)
 			free_and_exit_error(shell, NULL, "Dup 2 failed", errno);
 		rl = rl_check(shell);
 		if (!rl)
-			return (exit_error_two_close(shell, (shell)->std_out,
-					(shell)->std_in));
+			return (exit_error_two_close(shell, &(shell)->std_out,
+					&(shell)->std_in));
 		g_sig_mode = 0;
 		if (!is_ascii_printable(rl))
 		{

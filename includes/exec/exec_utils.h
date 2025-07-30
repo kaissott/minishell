@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/30 09:02:39 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 19:03:32 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,15 @@
 # define ERR_FORK "Error: fork failed\n"
 
 int		check_input(t_shell *main);
-void	error_exit(char *str, int exitnbr, int fd);
 int		free_struct(t_shell *main);
 void	free_node(t_shell *main);
 void	free_env(t_shell *main);
 void	reset_struct(char *rl, t_shell *main);
 void	free_tab(char **tab);
-void	exit_error_two_close(t_shell *main_struct, int fd1, int fd2);
+void	exit_error_two_close(t_shell *main_struct, int *fd1, int *fd2);
 void	exit_error_minishell(t_shell *main, int errcode, char *err);
 void	close_node(t_shell *main);
-void	close_fork(int fd1, int fd2, t_exec *node, t_shell *main);
+void	close_fork(int *fd1, int *fd2, t_exec *node, t_shell *main);
 void	error_fork(int *pipefd, int prevfd, t_exec *node, t_shell *main);
 void	error_pipe(int prevfd, t_exec *node, t_shell *main);
 void	free_and_exit_error(t_shell *main, char *tmp, char *error,
@@ -48,7 +47,7 @@ void	free_and_exit_error(t_shell *main, char *tmp, char *error,
 int		set_return_err_code(t_shell *main, char *error, int err_number);
 void	ft_close(t_shell *main, int fd, int fd2, int fd3);
 void	ft_safe_close(int *fd, t_shell *main);
-bool	is_a_file(int fd, t_shell *shell);
-void	ft_safe_close_node(t_exec *tmp);
+bool	is_a_file(int *fd, t_shell *shell);
+void	ft_safe_close_node(t_exec *tmp, int *fd1, int *fd2);
 
 #endif

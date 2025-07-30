@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:40:24 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/24 00:39:56 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:35:32 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,33 @@ void	exec_simple_cmd(t_shell *main)
 
 void	wait_simple_cmd(t_shell *main, pid_t pid)
 {
-	int	status;
-	int	sig;
+	int		status;
+	int		sig;
+	bool	has_sig;
 
-	while (waitpid(pid, &status, 0) > 0)
-		;
+	has_sig = false;
+	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
+	{
 		main->errcode = WEXITSTATUS(status);
+	}
 	else if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
 		if (sig == SIGQUIT)
 			write(2, "Quit (core dumped)\n", 20);
 		if (sig == SIGINT)
-			write(2, "\n", 1);
+			has_sig = true;
 		main->errcode = 128 + sig;
 	}
+	if (has_sig == true)
+		write(2, "\n", 1);
 }
 
 void	init_simple_cmd(t_shell *main)
 {
 	pid_t	pid;
 
-	g_sig_mode = CHILD;
 	pid = fork();
 	if (pid == -1)
 		error_fork(NULL, -1, main->exec, main);
@@ -68,9 +72,8 @@ void	init_simple_cmd(t_shell *main)
 	if (pid == 0)
 	{
 		init_sigaction_child();
-		exit_error_two_close(main, main->std_in, main->std_out);
-		exit_error_two_close(main, main->exec->infile.fd,
-			main->exec->outfile.fd);
+		ft_safe_close(&main->std_in, main);
+		ft_safe_close(&main->std_out, main);
 		exec_simple_cmd(main);
 	}
 	wait_simple_cmd(main, pid);

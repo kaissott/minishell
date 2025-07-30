@@ -1,8 +1,0 @@
-Dockerfile.dockerenv
-Makefile
-cat
-includes
-leak.supp
-libft
-minishell
-src

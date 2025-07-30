@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:45:05 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/27 06:17:17 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 18:45:38 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,11 @@ void	ft_close(t_shell *main, int fd, int fd2, int fd3)
 	}
 }
 
-void	wait_child(pid_t last, t_shell *main)
+void	wait_child(pid_t last, t_shell *main, int status, int *has_sig)
 {
-	int		status;
 	int		sig;
 	pid_t	w_child;
-	bool	has_sig;
 
-	status = 0;
-	has_sig = false;
 	while (1)
 	{
 		w_child = waitpid(-1, &status, 0);
@@ -66,13 +62,11 @@ void	wait_child(pid_t last, t_shell *main)
 			if (sig == SIGQUIT)
 				write(2, "Quit (core dumped)\n", 20);
 			if (sig == SIGINT)
-				has_sig = true;
+				*has_sig = 1;
 			if (w_child == last)
 				main->errcode = 128 + sig;
 		}
 	}
-	if (has_sig == true)
-		write(2, "\n", 1);
 }
 
 void	ignore_child_signal(void)
