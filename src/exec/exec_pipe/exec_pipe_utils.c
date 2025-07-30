@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:46:18 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 18:34:35 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 19:45:58 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
