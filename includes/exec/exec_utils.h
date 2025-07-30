@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/30 09:02:39 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 16:32:43 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 # define ERR_FORK "Error: fork failed\n"
 
 int		check_input(t_shell *main);
-void	error_exit(char *str, int exitnbr, int fd);
 int		free_struct(t_shell *main);
 void	free_node(t_shell *main);
 void	free_env(t_shell *main);
