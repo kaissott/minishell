@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/27 05:57:30 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 16:25:42 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static char	*rl_check(t_shell *shell)
 	{
 		rl = readline("> ");
 		if (shell->errcode < 3 && g_sig_mode > 0)
+		{
 			shell->errcode = g_sig_mode + 128;
+			g_sig_mode = 0;
+		}
 	}
 	return (rl);
 }

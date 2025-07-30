@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:10:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 09:07:17 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 16:15:57 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	exit_error_minishell(t_shell *main, int errcode, char *err)
 {
 	if (main)
 	{
-		ft_safe_close(main->std_in, main);
-		ft_safe_close(main->std_out, main);
+		ft_safe_close(&main->std_in, main);
+		ft_safe_close(&main->std_out, main);
 		close_node(main);
 		free_struct(main);
 		if (main)
