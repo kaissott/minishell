@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 20:49:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/23 23:17:46 by karamire         ###   ########.fr       */
+/*   Updated: 2025/07/30 17:48:23 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void	execve_err(t_shell *main, char **env, char *path, char *cmd);
 void	init_simple_cmd(t_shell *main);
-void	wait_child(pid_t last, t_shell *main);
+void	wait_child(pid_t last, t_shell *main, int status, int *has_sig);
 void	ultimate_path_check(t_shell *main, char **cmd);
 void	exit_exec_cmd(t_shell *main);
 

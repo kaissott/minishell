@@ -6,7 +6,7 @@
 /*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 09:02:00 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 17:56:06 by kaissramire      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,17 @@ static pid_t	last_child(t_exec *node, int prev_fd, t_shell *main, char **env)
 static int	handle_last_child(t_shell *main, t_exec *node, int prev_fd)
 {
 	pid_t	last_pid;
+	int	has_sig;
+	int		status;
 
+	status = 0;
+	has_sig = 0;
 	last_pid = last_child(node, prev_fd, main, main->env_tab);
 	ft_safe_close(&prev_fd, main);
 	close_node(main);
-	wait_child(last_pid, main);
+	wait_child(last_pid, main, status, &has_sig);
+	if (has_sig == 1)
+		write(2, "\n", 1);
 	free(main->env_tab);
 	main->env_tab = NULL;
 	return (0);
