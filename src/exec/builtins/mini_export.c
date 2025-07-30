@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 00:24:55 by kaissramire       #+#    #+#             */
-/*   Updated: 2025/07/24 08:18:50 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/07/30 19:21:12 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	print_export_env(t_shell *main)
 	env = main->env;
 	while (env != NULL)
 	{
-		if (write(1, "declare -x ", 11) == -1)
-			free_and_exit_error(main, NULL, ERR_WRITE, errno);
 		if (ft_putendl_fd(env->env, 1) == -1)
 			free_and_exit_error(main, NULL, ERR_WRITE, errno);
 		env = env->next;
