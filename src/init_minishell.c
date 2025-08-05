@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaissramirez <kaissramirez@student.42.f    +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:20:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 18:54:15 by kaissramire      ###   ########.fr       */
+/*   Updated: 2025/07/30 21:38:18 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

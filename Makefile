@@ -110,7 +110,7 @@ LIBFT := $(D_LIBFT)libft.a
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 IFLAGS := -I$(D_INC) -I$(D_INC)$(D_INC_PARSING) -I$(D_INC)$(D_INC_UTILS) -I/opt/homebrew/opt/readline/include
-LDFLAGS := -L/opt/homebrew/opt/readline/lib -lreadline -lpthread
+LDFLAGS := -L/opt/homebrew/opt/readline/lib -lreadline
 
 RM := rm -rf
 MAKE_CMD := @$(MAKE) --no-print-directory
@@ -147,9 +147,6 @@ deps:
 clean:
 	@echo "\n🧹 Cleaning $(NAME) object files..."
 	@$(RM) $(D_OBJ)
-	@$(RM) '\' another cat touch tmpdir file ' file' file1 file2 grep out.txt 'output > file' output.txt test.txt \
-			tmp_out '&&' 'a' 'b' 'c' 'cd' 'ls' out out2 tmp_err_minishell tmp_out_bash \
-			tmp_out_minishell tmp_err_bash 'weird&name;file'
 	@echo "✅ Object files removed.\n"
 
 # Step 6 : Full clean (libft + mlx + executable)
