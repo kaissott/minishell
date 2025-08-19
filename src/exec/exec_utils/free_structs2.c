@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_structs2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:41:45 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 21:37:27 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/19 21:04:27 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ void	exit_exec_cmd(t_shell *main)
 	ft_safe_close(&main->std_in, main);
 	ft_safe_close(&main->std_out, main);
 	free(main);
-	exit(0);
+	exit(main->errcode);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_start.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 20:52:30 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/19 17:34:05 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static pid_t	last_child(t_exec *node, int prev_fd, t_shell *main, char **env)
 {
 	pid_t	pid;
 
-	if (node->infile.fd == -1 || node->outfile.fd == -1)
+	if (node->infile.fd == -1 || node->outfile.fd == -1 || node->cmd == NULL)
 	{
 		main->errcode = 1;
 		return (1);
@@ -71,7 +71,7 @@ static pid_t	child_process(t_exec *node, int prev_fd, t_shell *main,
 
 	if (pipe(pipefd) == -1)
 		error_pipe(prev_fd, node, main);
-	if (node->infile.fd == -1 || node->outfile.fd == -1)
+	if (node->infile.fd == -1 || node->outfile.fd == -1 || node->cmd == NULL)
 		return (check_child_stds(pipefd, prev_fd, main));
 	pid = fork();
 	if (pid == -1)

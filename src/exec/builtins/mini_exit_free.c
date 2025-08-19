@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_exit_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:38:27 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/24 08:18:41 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/19 21:08:48 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ void	free_tab_exit(char **args)
 
 void	exit_minishell(t_shell *main, int exitcode)
 {
+	if (main->env_tab)
+		free(main->env_tab);
 	close_node(main);
 	free_struct(main);
-	close(main->std_in);
-	close(main->std_out);
+	ft_safe_close(&main->std_in, main);
+	ft_safe_close(&main->std_out, main);
 	free(main);
 	exit(exitcode);
 }
