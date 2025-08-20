@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:09:40 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 21:15:53 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/20 17:54:44 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	free_env(t_shell *main)
 	while (head->next != NULL)
 	{
 		temp = head->next;
-		free(head->env);
+		if (head->env)
+			free(head->env);
 		free(head);
 		head = temp;
 	}

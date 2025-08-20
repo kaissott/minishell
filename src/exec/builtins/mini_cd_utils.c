@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:35:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 21:16:44 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/20 17:56:46 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	env_pwd_update(t_shell *main)
 		free(temp->env);
 		tmp = ft_strjoin("PWD=", path);
 		if (!tmp)
+		{
+			temp->env = NULL;
 			free_and_exit_error(main, NULL, ERR_MEM, 12);
+		}
 		temp->env = tmp;
 	}
 	else

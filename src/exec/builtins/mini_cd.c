@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 21:36:01 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/20 17:57:13 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ bool	mini_cd(char **cmd, t_shell *main)
 		env_oldpwd_update(main);
 		if (chdir(str) != -1)
 		{
-			env_pwd_update(main);
 			free(str);
+			env_pwd_update(main);
 		}
 	}
 	else
