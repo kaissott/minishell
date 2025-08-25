@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/19 22:04:34 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/22 23:05:16 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ static void	write_in_heredoc(t_parse_error *errcode, int *fd_heredoc,
 		const char *next_token_value)
 {
 	char	*rl;
-		char *line;
+	char	*line;
 
 	while (1)
 	{
 		rl = NULL;
 		if (isatty(STDIN_FILENO))
 		{
-			rl = readline("> ");
+			rl = readline("heredoc> ");
 		}
 		else
 		{

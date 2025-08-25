@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:24 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 08:07:06 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:05:10 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ bool	check_parsing(t_shell *shell, t_parse_error errcode, bool at_end)
 	if (errcode == ERR_MALLOC)
 	{
 		free(shell);
+		rl_clear_history();
 		exit(EXIT_FAILURE);
 	}
 	else

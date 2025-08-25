@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 21:37:23 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:04:57 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	dup_failed_err(t_shell *main, int prev_fd, int pipefd, t_exec *node)
 	free_struct(main);
 	free(main);
 	ft_putstr_fd("Dup failed\n", 2);
+	rl_clear_history();
 	exit(1);
 }
 

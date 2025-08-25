@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:41:45 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/20 17:29:28 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:05:01 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void	exit_exec_cmd(t_shell *main)
 	ft_safe_close(&main->std_out, main);
 	errcode = main->errcode;
 	free(main);
+	rl_clear_history();
 	exit(errcode);
 }

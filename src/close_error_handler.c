@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_error_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:10:44 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 20:52:27 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:04:34 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	exit_error_minishell(t_shell *main, int errcode, char *err)
 			free(main);
 	}
 	ft_putendl_fd(err, 2);
+	rl_clear_history();
 	exit(errcode);
 }
 

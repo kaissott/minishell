@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 21:43:09 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 19:40:57 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:04:54 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	error_fork(int *pipefd, int prevfd, t_exec *node, t_shell *main)
 	close_node(main);
 	free_struct(main);
 	free(main);
+	rl_clear_history();
 	exit(errno);
 }
 
@@ -63,5 +64,6 @@ void	error_pipe(int prevfd, t_exec *node, t_shell *main)
 	close_node(main);
 	free_struct(main);
 	free(main);
+	rl_clear_history();
 	exit(errno);
 }

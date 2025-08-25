@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:38:27 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/19 21:08:48 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:04:47 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	exit_minishell(t_shell *main, int exitcode)
 	ft_safe_close(&main->std_in, main);
 	ft_safe_close(&main->std_out, main);
 	free(main);
+	rl_clear_history();
 	exit(exitcode);
 }
 
