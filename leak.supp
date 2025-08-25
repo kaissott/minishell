@@ -10,3 +10,9 @@
     ...
     fun:add_history
 }
+{
+    leak cmds
+    Memcheck:Leak
+    ...
+    obj:/usr/bin/*
+}

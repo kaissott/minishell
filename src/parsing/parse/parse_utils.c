@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/19 22:04:34 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/25 21:53:55 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+#define BUFF 4096
+#define PIPE_SIZE 65536
 
 char	**resize_cmd_args(char **cmd, char *new_arg)
 {
@@ -36,7 +39,7 @@ t_parse_error	process_exec_std(t_shell *shell, t_token *token,
 		t_exec *new_cmd, int std)
 {
 	if (token->next->is_blank || token_contains_ifs_chunks(token->next))
-		return (set_std_file(shell, token, std, new_cmd));
+		return (reset_std_file(shell, token, std, new_cmd));
 	if (std == STDIN_FILENO)
 	{
 		new_cmd->infile.filepath = ft_strdup(token->next->value);
@@ -86,21 +89,26 @@ t_parse_error	create_heredoc(t_exec *new_cmd)
 		print_perror(new_cmd->infile.filepath);
 		return (ERR_OPEN);
 	}
+	unlink(new_cmd->infile.filepath);
 	return (ERR_NONE);
 }
 
-static void	write_in_heredoc(t_parse_error *errcode, int *fd_heredoc,
-		const char *next_token_value)
+static void	write_in_heredoc(t_parse_error *errcode, t_exec *new_cmd,
+		int *fd_heredoc, const char *delimiter)
 {
 	char	*rl;
-		char *line;
+	char	*line;
+	size_t	used;
+	size_t	n;
+	size_t	to_write;
 
+	used = 0;
 	while (1)
 	{
 		rl = NULL;
 		if (isatty(STDIN_FILENO))
 		{
-			rl = readline("> ");
+			rl = readline("heredoc> ");
 		}
 		else
 		{
@@ -112,34 +120,51 @@ static void	write_in_heredoc(t_parse_error *errcode, int *fd_heredoc,
 		{
 			free(rl);
 			*errcode = ERR_SIG;
+			// printf("Closing read fd: %d\n", new_cmd->fd_heredoc);
+			if (secure_close(&new_cmd->fd_heredoc) != ERR_NONE)
+				*errcode = ERR_CLOSE;
 			break ;
 		}
 		if (!rl)
+		{
+			printf("minishell: warning : \"here-document\" delimited by end of file (instead of \"%s\")\n",
+				delimiter);
 			break ;
-		if (ft_strcmp(rl, next_token_value) == 0)
+		}
+		if (ft_strcmp(rl, delimiter) == 0)
 		{
 			free(rl);
 			break ;
 		}
-		if (ft_putendl_fd(rl, *fd_heredoc) == -1)
+		n = ft_strlen(rl);
+		to_write = n + 1;
+		if (used + to_write > 65536)
+		{
+			close(*fd_heredoc);
+		}
+		else if (ft_putendl_fd(rl, *fd_heredoc) == -1)
 		{
 			print_perror("Write");
 			*errcode = ERR_SIG;
+			break ;
 		}
+		used += to_write;
 		free(rl);
 	}
 }
 
-t_parse_error	handle_in_heredoc(int *fd_heredoc, const char *next_token_value)
+t_parse_error	handle_in_heredoc(t_exec *new_cmd, int *fd_heredoc,
+		const char *delimiter)
 {
 	t_parse_error	errcode;
 
 	rl_event_hook = rl_hook;
 	errcode = ERR_NONE;
 	init_sigaction_hd();
-	write_in_heredoc(&errcode, fd_heredoc, next_token_value);
+	write_in_heredoc(&errcode, new_cmd, fd_heredoc, delimiter);
 	rl_event_hook = NULL;
 	init_sigaction();
+	// printf("Closing write fd: %d\n", *fd_heredoc);
 	if (secure_close(fd_heredoc) != ERR_NONE)
 		return (ERR_CLOSE);
 	return (errcode);

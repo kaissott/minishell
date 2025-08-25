@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:34:01 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 05:31:18 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/23 20:27:48 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ static void	print_info_exec(t_exec *lst)
 				j++;
 			}
 		}
+		printf("\tfd heredoc : [%d]\n", lst->fd_heredoc);
 		if (lst->infile.filepath)
 			printf("\tinfile filepath : %s\n", lst->infile.filepath);
 		printf("\tfd : [%d] type : [%d]\n", lst->infile.fd, lst->infile.type);

@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:06 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/30 21:13:13 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/22 22:33:13 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,6 @@ static t_token_type	handle_pipe(t_error *error, const char *cmd,
 t_token_type	get_token_type(t_error *error, const char *cmd,
 		bool begin_with_operator)
 {
-	size_t	i;
-
-	i = 1;
 	if (cmd[0] == '|')
 		return (handle_pipe(error, cmd, begin_with_operator));
 	else if (cmd[0] == '<' || cmd[0] == '>')

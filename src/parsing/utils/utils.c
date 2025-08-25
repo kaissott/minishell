@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:24 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 08:07:06 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/25 21:48:58 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	get_errcode(t_shell *shell, t_parse_error errcode)
 		shell->errcode = 1;
 	else if (errcode == ERR_AMBIGUOUS_REDIR)
 		shell->errcode = 1;
-	else if (errcode == ERR_MALLOC)
+	else if (errcode == ERR_MALLOC || errcode == ERR_PIPE)
 		shell->errcode = 12;
 	else if (errcode >= ERR_DOUBLE_PIPE && errcode <= ERR_MISSING_SINGLE_QUOTE)
 		shell->errcode = 2;
@@ -60,7 +60,7 @@ bool	check_parsing(t_shell *shell, t_parse_error errcode, bool at_end)
 		print_syntax_error_msg(errcode, shell->error.unexpected_token,
 			shell->error.ambiguous_redir);
 	free_shell(shell, errcode);
-	if (errcode == ERR_MALLOC)
+	if (errcode == ERR_MALLOC || errcode == ERR_PIPE)
 	{
 		free(shell);
 		exit(EXIT_FAILURE);

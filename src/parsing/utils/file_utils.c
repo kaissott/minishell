@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:16 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 09:11:34 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/25 21:54:40 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_parse_error	secure_close(int *fd)
 	{
 		if (close(*fd) == -1)
 		{
-			print_perror("close");
+			print_perror("my close");
 			return (ERR_CLOSE);
 		}
 		*fd = -1;
@@ -41,22 +41,21 @@ t_parse_error	secure_close(int *fd)
 
 t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 {
+	if (new_cmd->infile.fd == -1 || new_cmd->outfile.fd == -1)
+		return (ERR_PREV_OPEN);
 	if (std == STDIN_FILENO)
 	{
-		if (new_cmd->infile.fd == -1)
-			return (ERR_PREV_OPEN);
 		if (new_cmd->infile.filepath)
 		{
 			free(new_cmd->infile.filepath);
 			new_cmd->infile.filepath = NULL;
 		}
-		if (secure_close(&new_cmd->infile.fd) != ERR_NONE)
+		if (new_cmd->infile.fd != new_cmd->fd_heredoc
+			&& secure_close(&new_cmd->infile.fd) != ERR_NONE)
 			return (ERR_CLOSE);
 	}
 	else if (std == STDOUT_FILENO)
 	{
-		if (new_cmd->outfile.fd == -1)
-			return (ERR_PREV_OPEN);
 		if (new_cmd->outfile.filepath)
 		{
 			free(new_cmd->outfile.filepath);
@@ -68,7 +67,7 @@ t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 	return (ERR_NONE);
 }
 
-t_parse_error	set_std_file(t_shell *shell, t_token *token, int std,
+t_parse_error	reset_std_file(t_shell *shell, t_token *token, int std,
 		t_exec *new_cmd)
 {
 	if (std == STDIN_FILENO)
