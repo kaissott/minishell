@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/20 17:31:15 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/25 21:57:30 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static pid_t	last_child(t_exec *node, int prev_fd, t_shell *main, char **env)
 
 	if (node->infile.fd == -1 || node->outfile.fd == -1 || node->cmd == NULL)
 	{
-		main->errcode = 1;
+		main->errcode = 0;
 		return (1);
 	}
 	pid = fork();

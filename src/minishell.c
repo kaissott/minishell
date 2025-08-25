@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/19 17:50:40 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/25 20:44:18 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static void	start_shell(t_shell *shell)
 		check_input(shell);
 		reset_struct(rl, shell);
 	}
-	rl_clear_history();
 }
 
 int	main(int ac, char **av, char **env)
@@ -94,5 +93,6 @@ int	main(int ac, char **av, char **env)
 	errcode = shell->errcode;
 	free_struct(shell);
 	free(shell);
+	rl_clear_history();
 	return (errcode);
 }
