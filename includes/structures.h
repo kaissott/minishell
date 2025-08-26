@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 08:06:53 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 07:17:32 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/26 10:12:16 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,19 @@ typedef enum e_parse_error
 {
 	ERR_NONE = 0,
 	ERR_MALLOC = -1,
-	ERR_MISSING_SINGLE_QUOTE = -2,
-	ERR_MISSING_DOUBLE_QUOTE = -3,
-	ERR_SYNTAX = -4,
-	ERR_DOUBLE_PIPE = -5,
-	ERR_TOKEN = -6,
-	ERR_OPEN = -7,
-	ERR_CLOSE = -8,
-	ERR_PREV_OPEN = -9,
-	ERR_SIG = -10,
-	ERR_AMBIGUOUS_REDIR = -11,
-	ERR_PIPE = -12,
-	ERR_WRITE_HD = -13,
-	ERR_READ = -14
+	ERR_OPEN = -2,
+	ERR_CLOSE = -3,
+	ERR_WRITE_HD = -4,
+	ERR_READ = -5,
+	ERR_PIPE = -6,
+	ERR_MISSING_SINGLE_QUOTE = -7,
+	ERR_MISSING_DOUBLE_QUOTE = -8,
+	ERR_DOUBLE_PIPE = -9,
+	ERR_AMBIGUOUS_REDIR = -10,
+	ERR_SYNTAX = -11,
+	ERR_TOKEN = -12,
+	ERR_PREV_OPEN = -13,
+	ERR_SIG = -14,
 }							t_parse_error;
 
 typedef struct s_error

@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:24 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 09:58:15 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/26 10:21:03 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	get_errcode(t_shell *shell, t_parse_error errcode)
 		shell->errcode = 2;
 	else if (errcode == ERR_TOKEN)
 		shell->errcode = 1;
-	else if (errcode >= ERR_CLOSE && errcode <= ERR_OPEN)
+	else if (errcode >= ERR_READ && errcode <= ERR_OPEN)
 		shell->errcode = 1;
 	else
 		shell->errcode = 0;
@@ -56,7 +56,8 @@ bool	check_parsing(t_shell *shell, t_parse_error errcode, bool at_end)
 		return (true);
 	}
 	get_errcode(shell, errcode);
-	if (errcode != ERR_SIG && shell->error.error_type != ERR_PREV_OPEN)
+	if (errcode != ERR_SIG && !(errcode >= ERR_READ && errcode <= ERR_OPEN)
+		&& shell->error.error_type != ERR_PREV_OPEN)
 		print_syntax_error_msg(errcode, shell->error.unexpected_token,
 			shell->error.ambiguous_redir);
 	free_shell(shell, errcode);

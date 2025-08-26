@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 09:16:35 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 09:47:46 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/26 10:22:24 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_parse_error	copy_pipe_to_file(int pipe_read_fd, int file_fd)
 		bytes_read = read(pipe_read_fd, buffer, BUFF);
 		if (bytes_read == -1)
 		{
-			print_perror("read from pipe");
+			print_perror("read");
 			return (ERR_READ);
 		}
 		bytes_write = write(file_fd, buffer, bytes_read);
