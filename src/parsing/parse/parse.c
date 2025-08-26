@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:33 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 09:14:55 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:06:13 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,7 @@ t_parse_error	parsing(t_shell *shell)
 		}
 		errcode = handle_token(shell, shell->token, new_cmd);
 		if (errcode != ERR_NONE)
-		{
-			free_exec(new_cmd);
 			return (errcode);
-		}
 	}
 	handle_pipe(shell, shell->token, new_cmd, true);
 	return (ERR_NONE);
