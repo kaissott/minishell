@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 08:06:53 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/23 04:28:38 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/26 07:17:32 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef enum e_parse_error
 	ERR_AMBIGUOUS_REDIR = -11,
 	ERR_PIPE = -12,
 	ERR_WRITE_HD = -13,
+	ERR_READ = -14
 }							t_parse_error;
 
 typedef struct s_error
@@ -94,14 +95,12 @@ typedef struct s_error
 typedef struct s_file
 {
 	int						fd;
-	char					*filepath;
-	t_token_type			type;
+	int						fd_heredoc;
 }							t_file;
 
 typedef struct s_exec
 {
 	char					**cmd;
-	int						fd_heredoc;
 	t_file					infile;
 	t_file					outfile;
 	struct s_exec			*next;

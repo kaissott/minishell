@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/23 20:42:22 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/26 09:20:13 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ static void	parse(t_shell *shell, const char *cmd)
 	errcode = word_splitting(shell);
 	if (!check_parsing(shell, errcode, false))
 		return ;
+	errcode = preprocess(shell);
+	if (!check_parsing(shell, errcode, false))
+		return ;
 	errcode = parsing(shell);
 	check_parsing(shell, errcode, true);
 }
@@ -45,7 +48,7 @@ static char	*rl_check(t_shell *shell)
 	}
 	else
 	{
-		line = get_next_line(fileno(stdin));
+		line = get_next_line(fileno(STDIN_FILENO));
 		rl = ft_strtrim(line, "\n");
 		free(line);
 	}

@@ -6,95 +6,70 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:52:01 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/23 00:12:09 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/26 09:13:01 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "minishell.h"
+#include "minishell.h"
 
-// t_parse_error	create_heredoc(t_exec *new_cmd)
-// {
-// 	int	i;
+static t_exec	*handle_pipe(t_shell *shell, t_exec *new_cmd, bool at_end)
+{
+	exec_lst_add_back(&shell->exec, new_cmd);
+	if (at_end)
+		return (NULL);
+	return (create_exec_cmd());
+}
 
-// 	i = 0;
-// 	if (create_heredoc_filepath(new_cmd, i) != ERR_NONE)
-// 		return (ERR_MALLOC);
-// 	new_cmd->infile.fd = open(new_cmd->infile.filepath,
-// 			O_CREAT | O_EXCL | O_WRONLY, 0644);
-// 	while ((new_cmd->infile.fd == -1 && errno == EEXIST))
-// 	{
-// 		free(new_cmd->infile.filepath);
-// 		new_cmd->infile.filepath = NULL;
-// 		i++;
-// 		if (create_heredoc_filepath(new_cmd, i) != ERR_NONE)
-// 			return (ERR_MALLOC);
-// 		new_cmd->infile.fd = open(new_cmd->infile.filepath,
-// 				O_CREAT | O_EXCL | O_WRONLY, 0644);
-// 	}
-// 	if (new_cmd->infile.fd == -1 && errno != EEXIST)
-// 	{
-// 		print_perror(new_cmd->infile.filepath);
-// 		return (ERR_OPEN);
-// 	}
-// 	return (ERR_NONE);
-// }
+static t_parse_error	handle_heredoc(t_token *token, t_exec *new_cmd)
+{
+	t_parse_error	errcode;
+	int				pipefd[2];
 
-// static void	write_in_heredoc(t_parse_error *errcode, int *fd_heredoc,
-// 		const char *delimiter)
-// {
-// 	char	*rl;
-// 	char	*line;
+	if (secure_close(&new_cmd->infile.fd_heredoc, STDIN_FILENO) != ERR_NONE)
+		return (ERR_CLOSE);
+	if (pipe(pipefd) == -1)
+	{
+		print_perror("pipe");
+		return (ERR_PIPE);
+	}
+	new_cmd->infile.fd_heredoc = pipefd[0];
+	errcode = handle_in_heredoc(new_cmd, &pipefd[1], token->next->value);
+	return (errcode);
+}
 
-// 	while (1)
-// 	{
-// 		rl = NULL;
-// 		if (isatty(STDIN_FILENO))
-// 		{
-// 			rl = readline("heredoc> ");
-// 		}
-// 		else
-// 		{
-// 			line = get_next_line(fileno(stdin));
-// 			rl = ft_strtrim(line, "\n");
-// 			free(line);
-// 		}
-// 		if (g_sig_mode == SIGINT)
-// 		{
-// 			free(rl);
-// 			*errcode = ERR_SIG;
-// 			break ;
-// 		}
-// 		if (!rl)
-// 		{
-// 			printf("minishell: warning : \"here-document\" delimited by end of file (instead of \"%s\")\n",
-// 				delimiter);
-// 			break ;
-// 		}
-// 		if (ft_strcmp(rl, delimiter) == 0)
-// 		{
-// 			free(rl);
-// 			break ;
-// 		}
-// 		if (ft_putendl_fd(rl, *fd_heredoc) == -1)
-// 		{
-// 			print_perror("Write");
-// 			*errcode = ERR_SIG;
-// 		}
-// 		free(rl);
-// 	}
-// }
+static t_parse_error	process_heredocs(t_shell *shell, t_exec *new_cmd)
+{
+	t_parse_error	errcode;
+	t_token			*token;
 
-// t_parse_error	handle_in_heredoc(int *fd_heredoc, const char *delimiter)
-// {
-// 	t_parse_error	errcode;
+	token = shell->token;
+	while (token)
+	{
+		if (token->type == T_PIPE)
+		{
+			new_cmd = handle_pipe(shell, new_cmd, false);
+			if (!new_cmd)
+				return (ERR_MALLOC);
+		}
+		if (token->type == T_HEREDOC)
+		{
+			errcode = handle_heredoc(token, new_cmd);
+			if (errcode != ERR_NONE)
+				return (errcode);
+			token = token->next;
+		}
+		token = token->next;
+	}
+	handle_pipe(shell, new_cmd, true);
+	return (ERR_NONE);
+}
 
-// 	rl_event_hook = rl_hook;
-// 	errcode = ERR_NONE;
-// 	init_sigaction_hd();
-// 	write_in_heredoc(&errcode, fd_heredoc, delimiter);
-// 	rl_event_hook = NULL;
-// 	init_sigaction();
-// 	if (secure_close(fd_heredoc) != ERR_NONE)
-// 		return (ERR_CLOSE);
-// 	return (errcode);
-// }
+t_parse_error	preprocess(t_shell *shell)
+{
+	t_exec	*new_cmd;
+
+	new_cmd = create_exec_cmd();
+	if (!new_cmd)
+		return (ERR_MALLOC);
+	return (process_heredocs(shell, new_cmd));
+}

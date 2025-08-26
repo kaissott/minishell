@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:33 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/25 23:31:10 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/26 09:14:55 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,20 @@ static t_exec	*handle_pipe(t_shell *shell, t_token *token, t_exec *new_cmd,
 static t_parse_error	handle_redirection(t_shell *shell, t_token *token,
 		t_exec *new_cmd)
 {
-	int				std;
 	t_parse_error	errcode;
 
-	std = STDOUT_FILENO;
 	if (token->type == T_REDIR_IN)
-	{
-		std = STDIN_FILENO;
-		new_cmd->infile.type = token->type;
-	}
+		errcode = check_std_cmd(STDIN_FILENO, new_cmd);
 	else
-		new_cmd->outfile.type = token->type;
-	errcode = check_std_cmd(std, new_cmd);
+		errcode = check_std_cmd(STDOUT_FILENO, new_cmd);
 	if (errcode == ERR_NONE)
 	{
-		errcode = process_exec_std(shell, token, new_cmd, std);
-		if (errcode != ERR_NONE && errcode != ERR_AMBIGUOUS_REDIR)
-			return (errcode);
+		if (token->type == T_REDIR_IN)
+			process_exec_std(shell, token, new_cmd, STDIN_FILENO);
+		else
+			process_exec_std(shell, token, new_cmd, STDOUT_FILENO);
 	}
-	else if (errcode != ERR_PREV_OPEN)
+	if (errcode != ERR_NONE && errcode != ERR_PREV_OPEN)
 		return (errcode);
 	token_lst_delone(&shell->token, token->next);
 	token_lst_delone(&shell->token, token);
@@ -58,26 +53,17 @@ static t_parse_error	handle_redirection(t_shell *shell, t_token *token,
 static t_parse_error	handle_heredoc(t_shell *shell, t_token *token,
 		t_exec *new_cmd)
 {
-	t_parse_error	errcode;
-	int				pipefd[2];
-
-	if (secure_close(&new_cmd->fd_heredoc) != ERR_NONE)
-		return (ERR_CLOSE);
-	if (pipe(pipefd) == -1)
-	{
-		perror("pipe");
-		return (ERR_PIPE);
-	}
-	new_cmd->fd_heredoc = pipefd[0];
-	errcode = handle_in_heredoc(new_cmd, &pipefd[1], token->next->value);
-	return (errcode);
+	token_lst_delone(&shell->token, token->next);
+	token_lst_delone(&shell->token, token);
+	if (new_cmd->infile.fd == -1 || new_cmd->outfile.fd == -1)
+		return (secure_close(&new_cmd->infile.fd_heredoc, STDIN_FILENO));
+	new_cmd->infile.fd = new_cmd->infile.fd_heredoc;
+	return (ERR_NONE);
 }
 
 static t_parse_error	handle_token(t_shell *shell, t_token *token,
 		t_exec *new_cmd)
 {
-	t_parse_error	errcode;
-
 	if (token->type == T_WORD)
 	{
 		new_cmd->cmd = resize_cmd_args(new_cmd->cmd, token->value);
@@ -89,64 +75,24 @@ static t_parse_error	handle_token(t_shell *shell, t_token *token,
 	else if (token->type >= T_REDIR_IN && token->type <= T_HEREDOC)
 	{
 		if (token->type == T_HEREDOC)
-		{
-			errcode = check_std_cmd(STDIN_FILENO, new_cmd);
-			if (errcode == ERR_NONE)
-				new_cmd->infile.fd = new_cmd->fd_heredoc;
-			token_lst_delone(&shell->token, token->next);
-			token_lst_delone(&shell->token, token);
-			if (errcode == ERR_PREV_OPEN)
-				return (secure_close(&new_cmd->fd_heredoc));
-			return (errcode);
-		}
+			return (handle_heredoc(shell, token, new_cmd));
 		else
 			return (handle_redirection(shell, token, new_cmd));
 	}
 	return (ERR_TOKEN);
 }
 
-t_parse_error	process_heredocs(t_shell *shell, t_exec *new_cmd)
+t_parse_error	parsing(t_shell *shell)
 {
-	t_token			*tok;
-	t_parse_error	err;
-
-	tok = shell->token;
-	while (tok)
-	{
-		if (tok->type == T_PIPE)
-		{
-			exec_lst_add_back(&shell->exec, new_cmd);
-			new_cmd = create_exec_cmd();
-			if (!new_cmd)
-				return (ERR_MALLOC);
-		}
-		else if (tok->type == T_HEREDOC)
-		{
-			if (new_cmd->fd_heredoc == -1)
-				return (ERR_PREV_OPEN);
-			err = handle_heredoc(shell, tok, new_cmd);
-			if (err != ERR_NONE)
-				return (err);
-			tok = tok->next->next;
-			continue ;
-		}
-		tok = tok->next;
-	}
-	exec_lst_add_back(&shell->exec, new_cmd);
-	return (ERR_NONE);
-}
-
-static t_parse_error	parse_tokens(t_shell *shell, t_exec *new_cmd)
-{
+	t_exec			*new_cmd;
 	t_parse_error	errcode;
 
+	new_cmd = shell->exec;
 	while (shell->token)
 	{
 		if (shell->token->type == T_PIPE)
 		{
 			new_cmd = handle_pipe(shell, shell->token, new_cmd, false);
-			if (!new_cmd)
-				return (ERR_MALLOC);
 			continue ;
 		}
 		errcode = handle_token(shell, shell->token, new_cmd);
@@ -157,24 +103,5 @@ static t_parse_error	parse_tokens(t_shell *shell, t_exec *new_cmd)
 		}
 	}
 	handle_pipe(shell, shell->token, new_cmd, true);
-	// printf("finish parse\n");
-	// print_exec_lst(&shell->exec, "EXEC LST finish :\n");
-	// print_token_lst(&shell->token, "TOKEN LST finish :\n");
 	return (ERR_NONE);
-}
-
-t_parse_error	parsing(t_shell *shell)
-{
-	t_exec			*new_cmd;
-	t_parse_error	errcode;
-
-	new_cmd = create_exec_cmd();
-	if (!new_cmd)
-		return (ERR_MALLOC);
-	errcode = process_heredocs(shell, new_cmd);
-	if (errcode != ERR_NONE)
-		return (errcode);
-	// printf("first process ok\n");
-	// print_exec_lst(&shell->exec, "EXEC LIST AFTER PROCESS HD\n");
-	return (parse_tokens(shell, new_cmd));
 }

@@ -27,7 +27,7 @@ LST_EXEC_UTILS := exec_dup.c strrchr_slash.c ft_split_slash.c init_exec.c free_s
 
 LST_EXPANSION :=	expansion_utils.c expansion.c
 
-LST_PARSE :=	heredoc.c parse_utils.c parse.c
+LST_PARSE :=	heredoc.c heredoc_utils.c parse_utils.c parse.c
 
 LST_TOKENISATION :=	tokenisation_utils.c tokenisation.c
 
