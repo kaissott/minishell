@@ -1,0 +1,17 @@
+another
+includes
+leak.supp
+libft
+Makefile
+minishell
+out
+out.txt
+output.txt
+src
+test.txt
+tmp_err_bash
+tmp_err_minishell
+tmp_out_bash
+tmp_out_minishell
+tmpdir
+val.log
