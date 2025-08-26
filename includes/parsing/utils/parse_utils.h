@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:11:47 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 09:11:45 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/26 08:06:17 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 # include "structures.h"
 
 int				open_file(const char *filepath, t_token_type file_type);
-t_parse_error	secure_close(int *fd);
+t_parse_error	secure_close(int *fd, int std);
 t_parse_error	check_std_cmd(int std, t_exec *new_cmd);
-t_parse_error	set_std_file(t_shell *shell, t_token *token, int std,
+void			reset_std_file(t_shell *shell, t_token *token, int std,
 					t_exec *new_cmd);
-t_parse_error	create_heredoc_filepath(t_exec *new_cmd, int i);
+char			*create_heredoc_filepath(int i);
 
 bool			check_parsing(t_shell *shell, t_parse_error errcode,
 					bool at_end);

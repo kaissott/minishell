@@ -25,10 +25,15 @@ LST_EXEC_SINGLE_CMD :=	exec_simple_cmd.c  exec_global_utils.c
 LST_EXEC_UTILS := exec_dup.c strrchr_slash.c ft_split_slash.c init_exec.c free_structs.c \
 				free_structs2.c close_handler.c
 
-LST_PARSING :=	expansion_utils.c expansion.c parse_utils.c parse.c \
-				tokenisation_utils.c tokenisation.c word_splitting_utils.c word_splitting.c
+LST_EXPANSION :=	expansion_utils.c expansion.c
+
+LST_PARSE :=	heredoc.c heredoc_utils.c parse_utils.c parse.c
+
+LST_TOKENISATION :=	tokenisation_utils.c tokenisation.c
 
 LST_UTILS :=	file_utils.c utils.c
+
+LST_WORD_SPLITTING :=	word_splitting_utils.c word_splitting.c
 
 LST_DEBUG_UTILS :=	print_lst_utils.c
 
@@ -63,7 +68,15 @@ D_EXEC_UTILS :=	exec_utils/
 
 D_PARSING :=	parsing/
 
+D_EXPANSION :=	expansion/
+
+D_PARSE :=	parse/
+
+D_TOKENISATION :=	tokenisation/
+
 D_UTILS :=	utils/
+
+D_WORD_SPLITTING :=	word_splitting/
 
 D_DEBUG_UTILS :=	debug_utils/
 
@@ -86,7 +99,10 @@ SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
 		$(addprefix $(D_SRC)$(D_EXEC)$(D_EXEC_PIPE), $(LST_EXEC_PIPE)) \
 		$(addprefix $(D_SRC)$(D_EXEC)$(D_EXEC_SINGLE_CMD), $(LST_EXEC_SINGLE_CMD)) \
 		$(addprefix $(D_SRC)$(D_EXEC)$(D_EXEC_UTILS), $(LST_EXEC_UTILS)) \
-		$(addprefix $(D_SRC)$(D_PARSING), $(LST_PARSING)) \
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_EXPANSION), $(LST_EXPANSION)) \
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_PARSE), $(LST_PARSE)) \
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_TOKENISATION), $(LST_TOKENISATION)) \
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_WORD_SPLITTING), $(LST_WORD_SPLITTING)) \
 		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS), $(LST_UTILS)) \
 		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS)$(D_DEBUG_UTILS), $(LST_DEBUG_UTILS)) \
 		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS)$(D_LST_UTILS), $(LST_LST_UTILS)) \

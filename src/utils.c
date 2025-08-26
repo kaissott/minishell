@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 07:10:08 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 05:27:11 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/25 21:51:50 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void	print_syntax_error_msg(t_parse_error errcode, char unexpected_token,
 		ft_putstr_fd(ambiguous_redir, STDERR_FILENO);
 		ft_putstr_fd(" : Ambiguous redirection\n", STDERR_FILENO);
 	}
-	else if (errcode == ERR_MALLOC)
-		ft_putstr_fd("Token creation failed (malloc error).\n", STDERR_FILENO);
+	else if (errcode == ERR_MALLOC || errcode == ERR_PIPE)
+		ft_putstr_fd("Memory allocation failed.\n", STDERR_FILENO);
 }

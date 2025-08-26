@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:22 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/25 09:01:12 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/26 05:40:50 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,8 @@ void	free_exec(t_exec *exec)
 		}
 		free(exec->cmd);
 	}
-	if (exec->infile.filepath)
-		free(exec->infile.filepath);
-	else if (exec->outfile.filepath)
-		free(exec->outfile.filepath);
-	secure_close(&exec->infile.fd);
-	secure_close(&exec->outfile.fd);
+	secure_close(&exec->infile.fd, STDIN_FILENO);
+	secure_close(&exec->outfile.fd, STDOUT_FILENO);
 	free(exec);
 	exec = NULL;
 }

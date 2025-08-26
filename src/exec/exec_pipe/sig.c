@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 21:36:53 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/26 09:49:13 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	handler_here_doc(int sig)
 		rl_done = 1;
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		rl_redisplay();
 	}
 	else
 		g_sig_mode = sig;
