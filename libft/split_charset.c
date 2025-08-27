@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:33:36 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 21:35:01 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/28 01:02:35 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static ssize_t	extract_word(char ***strs_ptr, char *s, char *charset)
 	char	**new_strs;
 
 	i = 0;
+	if (!s[i])
+		return (0);
 	while (s[i] && !is_in_charset(charset, s[i]))
 		i++;
 	word = ft_substr(s, 0, i);

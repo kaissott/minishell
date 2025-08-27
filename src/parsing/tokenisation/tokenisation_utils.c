@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:06 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/22 22:33:13 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/28 01:01:01 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static t_token_type	handle_pipe(t_error *error, const char *cmd,
 		set_error_syntax(error, ERR_SYNTAX, '|', NULL);
 		return (T_ERROR_SYNTAX);
 	}
-	while (cmd[i] && cmd[i] == ' ' && cmd[i] == '\t')
+	while (cmd[i] && (cmd[i] == ' ' || cmd[i] == '\t'))
 		i++;
 	if (!cmd[i] || cmd[i] == '|')
 	{

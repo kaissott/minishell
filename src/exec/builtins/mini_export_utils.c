@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_export_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:38:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/27 20:10:17 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/28 01:03:52 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*ft_unescape(char *s, size_t i, size_t j)
 {
 	char	*res;
 
-	res = ft_calloc(strlen(s) + 1, sizeof(char));
+	res = ft_calloc(ft_strlen(s) + 1, sizeof(char));
 	if (!res)
 		return (NULL);
 	while (s[i])

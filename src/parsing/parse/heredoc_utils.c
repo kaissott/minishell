@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 09:16:35 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 17:22:23 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/28 01:00:36 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 #define BUFF 4096
-#define PIPE_BUF_SIZE 15
+#define PIPE_BUF_SIZE 65536
 
 bool	check_line(char *line, char *delimiter)
 {
