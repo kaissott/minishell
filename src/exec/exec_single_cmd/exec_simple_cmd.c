@@ -74,6 +74,8 @@ void	init_simple_cmd(t_shell *main)
 		init_sigaction_child();
 		ft_safe_close(&main->std_in, main);
 		ft_safe_close(&main->std_out, main);
+		ft_safe_close_node(main->exec, &main->exec->infile.fd,
+			&main->exec->outfile.fd);
 		exec_simple_cmd(main);
 	}
 	wait_simple_cmd(main, pid);

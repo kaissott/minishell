@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_start.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:59:00 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/25 21:57:30 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/27 02:01:45 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ static pid_t	last_child(t_exec *node, int prev_fd, t_shell *main, char **env)
 {
 	pid_t	pid;
 
-	if (node->infile.fd == -1 || node->outfile.fd == -1 || node->cmd == NULL)
+	if (node->infile.fd == -1 || node->outfile.fd == -1)
+	{
+		main->errcode = 1;
+		return (1);
+	}
+	if (node->cmd == NULL)
 	{
 		main->errcode = 0;
 		return (1);

@@ -6,25 +6,19 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:33 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 19:06:13 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 01:55:17 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_exec	*handle_pipe(t_shell *shell, t_token *token, t_exec *new_cmd,
-		bool is_last)
+static t_exec	*handle_pipe(t_shell *shell, t_token *token, t_exec *new_cmd)
 {
-	if (!is_last)
-	{
-		token_lst_delone(&shell->token, token);
-		shell->errcode = 0;
-		shell->error.error_type = 0;
-		shell->error.ambiguous_redir = NULL;
-		return (new_cmd->next);
-	}
-	else
-		return (NULL);
+	token_lst_delone(&shell->token, token);
+	shell->errcode = 0;
+	shell->error.error_type = 0;
+	shell->error.ambiguous_redir = NULL;
+	return (new_cmd->next);
 }
 
 static t_parse_error	handle_redirection(t_shell *shell, t_token *token,
@@ -91,14 +85,10 @@ t_parse_error	parsing(t_shell *shell)
 	while (shell->token)
 	{
 		if (shell->token->type == T_PIPE)
-		{
-			new_cmd = handle_pipe(shell, shell->token, new_cmd, false);
-			continue ;
-		}
+			new_cmd = handle_pipe(shell, shell->token, new_cmd);
 		errcode = handle_token(shell, shell->token, new_cmd);
 		if (errcode != ERR_NONE)
 			return (errcode);
 	}
-	handle_pipe(shell, shell->token, new_cmd, true);
 	return (ERR_NONE);
 }

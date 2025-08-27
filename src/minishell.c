@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 09:57:47 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 00:10:42 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*rl_check(t_shell *shell)
 	}
 	else
 	{
-		line = get_next_line(fileno(STDIN_FILENO));
+		line = get_next_line(STDIN_FILENO);
 		rl = ft_strtrim(line, "\n");
 		free(line);
 	}

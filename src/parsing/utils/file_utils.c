@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:16 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 10:09:14 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 02:49:11 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_parse_error	secure_close(int *fd, int std)
 		if (close(*fd) == -1)
 		{
 			*fd = -1;
-			print_perror("my close");
+			print_perror("close");
 			return (ERR_CLOSE);
 		}
 		if (std == STDIN_FILENO)
@@ -57,6 +57,7 @@ t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 	{
 		if (new_cmd->infile.fd != new_cmd->infile.fd_heredoc)
 			return (secure_close(&new_cmd->infile.fd, STDIN_FILENO));
+		return (ERR_NONE);
 	}
 	return (secure_close(&new_cmd->outfile.fd, STDOUT_FILENO));
 }

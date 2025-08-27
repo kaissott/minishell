@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 09:17:22 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 01:26:27 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,18 @@ void	process_exec_std(t_shell *shell, t_token *token, t_exec *new_cmd,
 	{
 		new_cmd->infile.fd = open_file(token->next->value, token->type);
 		if (new_cmd->infile.fd == -1)
+		{
+			set_error_syntax(&shell->error, ERR_PREV_OPEN, '\0', NULL);
 			print_perror(token->next->value);
+		}
 	}
 	else
 	{
 		new_cmd->outfile.fd = open_file(token->next->value, token->type);
 		if (new_cmd->outfile.fd == -1)
+		{
+			set_error_syntax(&shell->error, ERR_PREV_OPEN, '\0', NULL);
 			print_perror(token->next->value);
+		}
 	}
 }

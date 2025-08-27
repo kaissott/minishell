@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:24 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 10:21:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 02:00:00 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	get_errcode(t_shell *shell, t_parse_error errcode)
 		shell->errcode = 1;
 	else if (errcode == ERR_MALLOC || errcode == ERR_PIPE)
 		shell->errcode = 12;
-	else if (errcode >= ERR_DOUBLE_PIPE && errcode <= ERR_MISSING_SINGLE_QUOTE)
+	else if (errcode >= ERR_SYNTAX && errcode <= ERR_MISSING_SINGLE_QUOTE)
 		shell->errcode = 2;
 	else if (errcode == ERR_TOKEN)
 		shell->errcode = 1;

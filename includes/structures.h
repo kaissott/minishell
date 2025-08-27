@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 08:06:53 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 10:12:16 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 00:33:13 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ typedef enum e_parse_error
 	ERR_MISSING_SINGLE_QUOTE = -7,
 	ERR_MISSING_DOUBLE_QUOTE = -8,
 	ERR_DOUBLE_PIPE = -9,
-	ERR_AMBIGUOUS_REDIR = -10,
-	ERR_SYNTAX = -11,
+	ERR_SYNTAX = -10,
+	ERR_AMBIGUOUS_REDIR = -11,
 	ERR_TOKEN = -12,
 	ERR_PREV_OPEN = -13,
 	ERR_SIG = -14,
