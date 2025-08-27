@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   mini_export_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:38:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/27 08:25:51 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 20:10:17 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*ft_unescape(char *s)
+static char	*ft_unescape(char *s, size_t i, size_t j)
 {
 	char	*res;
-	size_t	i;
-	size_t	j;
 
-	i = 0;
-	j = 0;
 	res = ft_calloc(strlen(s) + 1, sizeof(char));
 	if (!res)
 		return (NULL);
@@ -46,14 +42,18 @@ static char	*ft_unescape(char *s)
 void	export_new_var(t_shell *main, char *var)
 {
 	int		i;
+	size_t	j;
+	size_t	k;
 	char	*new;
 	t_env	*export;
 
 	i = 0;
+	j = 0;
+	k = 0;
 	while (var[i] != '=')
 		i++;
 	if (ft_strncmp("IFS", var, i) == 0)
-		new = ft_unescape(var);
+		new = ft_unescape(var, j, k);
 	else
 		new = ft_strdup(var);
 	if (!new)
@@ -65,9 +65,13 @@ void	export_new_var(t_shell *main, char *var)
 void	replace_var(t_shell *main, char *var, t_env *env, bool is_ifs)
 {
 	char	*new;
+	size_t	j;
+	size_t	k;
 
+	j = 0;
+	k = 0;
 	if (is_ifs)
-		new = ft_unescape(var);
+		new = ft_unescape(var, j, k);
 	else
 		new = ft_strdup(var);
 	if (!new)

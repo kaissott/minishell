@@ -6,7 +6,7 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/27 17:40:39 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/27 19:51:59 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	handler_here_doc(int sig)
 		rl_replace_line("", 0);
 		write(STDOUT_FILENO, "^C", 2);
 		rl_done = 1;
-		// rl_on_new_line();
 	}
 	else
 		g_sig_mode = sig;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 01:48:41 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/26 09:55:12 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 20:12:16 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,15 @@ int	file_dup(t_shell *main, int fd_in, int fd_out)
 
 void	dup_failed_err(t_shell *main, int prev_fd, int pipefd, t_exec *node)
 {
-	close_fork(&prev_fd, &pipefd, node, main);
+	int	fd;
+
+	fd = -1;
+	if (pipefd != main->std_out)
+		close_fork(&prev_fd, &pipefd, node, main);
+	else
+		close_fork(&prev_fd, &fd, node, main);
+	ft_safe_close(&main->std_in, main);
+	ft_safe_close(&main->std_out, main);
 	if (main->env_tab)
 		free(main->env_tab);
 	free_struct(main);

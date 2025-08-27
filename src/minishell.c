@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 07:32:25 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 19:52:40 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	parse(t_shell *shell, const char *cmd)
 	errcode = word_splitting(shell);
 	if (!check_parsing(shell, errcode, false))
 		return ;
-	// print_token_lst(&shell->token, "TOKEN LIST :\n");
 	errcode = preprocess(shell);
 	if (!check_parsing(shell, errcode, false))
 		return ;
