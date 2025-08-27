@@ -1,31 +1,30 @@
-==112632== Memcheck, a memory error detector
-==112632== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==112632== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==112632== Command: ./minishell
-==112632== 
-minishell: $l : Ambiguous redirection
-==112632== 
-==112632== FILE DESCRIPTORS: 5 open (3 std) at exit.
-==112632== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==112632==    <inherited from parent>
-==112632== 
-==112632== Open file descriptor 41: /home/ludebion/.config/Code/logs/20250827T000411/ptyhost.log
-==112632==    <inherited from parent>
-==112632== 
-==112632== 
-==112632== HEAP SUMMARY:
-==112632==     in use at exit: 208,163 bytes in 222 blocks
-==112632==   total heap usage: 596 allocs, 374 frees, 235,722 bytes allocated
-==112632== 
-==112632== LEAK SUMMARY:
-==112632==    definitely lost: 0 bytes in 0 blocks
-==112632==    indirectly lost: 0 bytes in 0 blocks
-==112632==      possibly lost: 0 bytes in 0 blocks
-==112632==    still reachable: 0 bytes in 0 blocks
-==112632==         suppressed: 208,163 bytes in 222 blocks
-==112632== 
-==112632== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---112632-- 
---112632-- used_suppression:     63 Readline_ALL_Functions leak.supp:2 suppressed: 208,163 bytes in 222 blocks
-==112632== 
-==112632== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==152400== Memcheck, a memory error detector
+==152400== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==152400== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==152400== Command: ./minishell
+==152400== 
+==152400== 
+==152400== FILE DESCRIPTORS: 5 open (3 std) at exit.
+==152400== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==152400==    <inherited from parent>
+==152400== 
+==152400== Open file descriptor 41: /home/ludebion/.config/Code/logs/20250827T213329/ptyhost.log
+==152400==    <inherited from parent>
+==152400== 
+==152400== 
+==152400== HEAP SUMMARY:
+==152400==     in use at exit: 208,420 bytes in 225 blocks
+==152400==   total heap usage: 872 allocs, 647 frees, 240,242 bytes allocated
+==152400== 
+==152400== LEAK SUMMARY:
+==152400==    definitely lost: 0 bytes in 0 blocks
+==152400==    indirectly lost: 0 bytes in 0 blocks
+==152400==      possibly lost: 0 bytes in 0 blocks
+==152400==    still reachable: 0 bytes in 0 blocks
+==152400==         suppressed: 208,420 bytes in 225 blocks
+==152400== 
+==152400== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--152400-- 
+--152400-- used_suppression:     66 Readline_ALL_Functions leak.supp:2 suppressed: 208,420 bytes in 225 blocks
+==152400== 
+==152400== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

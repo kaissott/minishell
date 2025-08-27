@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:33 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 07:50:26 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 21:38:05 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static t_parse_error	handle_token(t_shell *shell, t_token *token,
 		else
 			return (handle_redirection(shell, token, new_cmd));
 	}
-	return (ERR_TOKEN);
+	return (ERR_NONE);
 }
 
 t_parse_error	parsing(t_shell *shell)

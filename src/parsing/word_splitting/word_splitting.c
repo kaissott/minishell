@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:14 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 07:04:32 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 21:45:44 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ static t_parse_error	split_chunk_by_ifs(t_shell *shell, t_token_chunk *chunk,
 	var_found = false;
 	ifs_env = get_var_value(shell, "IFS", &var_found);
 	if (var_found)
+	{
 		words = split_charset(chunk->value, ifs_env);
+		free(ifs_env);
+	}
 	else
 		words = split_charset(chunk->value, " \n\t");
 	if (!words)

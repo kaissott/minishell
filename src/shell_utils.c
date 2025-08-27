@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 07:10:08 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 08:04:38 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 21:38:48 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,16 @@ void	print_syntax_error_msg(t_parse_error errcode, char unexpected_token,
 		ft_putstr_fd("Memory allocation failed.\n", STDERR_FILENO);
 	else if (errcode == ERR_PIPE)
 		ft_putstr_fd("Pipe failed.\n", STDERR_FILENO);
-	else if (errcode == ERR_TOKEN)
-		ft_putstr_fd("An error happened while parsing token.\n", STDERR_FILENO);
 }
 
 static void	get_errcode(t_shell *shell, t_parse_error errcode)
 {
-	if (errcode == ERR_MALLOC || errcode == ERR_PIPE || errcode == ERR_TOKEN)
+	if (errcode == ERR_MALLOC || errcode == ERR_PIPE)
 		shell->errcode = 12;
 	else if (errcode >= ERR_SYNTAX && errcode <= ERR_MISSING_SINGLE_QUOTE)
 		shell->errcode = 2;
-	else if (errcode == ERR_TOKEN || errcode == ERR_AMBIGUOUS_REDIR
-		|| errcode == ERR_PREV_OPEN || (errcode >= ERR_READ
-			&& errcode <= ERR_OPEN))
+	else if (errcode == ERR_AMBIGUOUS_REDIR || errcode == ERR_PREV_OPEN
+		|| (errcode >= ERR_READ && errcode <= ERR_OPEN))
 		shell->errcode = 1;
 	else
 		shell->errcode = 0;

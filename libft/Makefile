@@ -1,4 +1,4 @@
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror
 
 NAME = libft.a
 
@@ -40,7 +40,6 @@ SRC = ft_atoi.c \
 	ft_calloc.c \
 	ft_strnstr.c \
 	ft_substr.c \
-	ft_strtrim.c \
 	ft_split.c \
 	ft_itoa.c \
 	ft_strjoin.c \

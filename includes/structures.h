@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 08:06:53 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 06:23:16 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 21:38:28 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,8 @@ typedef enum e_parse_error
 	ERR_DOUBLE_PIPE = -9,
 	ERR_SYNTAX = -10,
 	ERR_AMBIGUOUS_REDIR = -11,
-	ERR_TOKEN = -12,
-	ERR_PREV_OPEN = -13,
-	ERR_SIG = -14,
+	ERR_PREV_OPEN = -12,
+	ERR_SIG = -13,
 }							t_parse_error;
 
 typedef struct s_error
