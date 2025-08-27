@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:52:01 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 00:11:27 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 17:41:18 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ static t_parse_error	handle_in_heredoc(t_exec *new_cmd, int *pipe_write,
 	t_parse_error	errcode;
 
 	rl_event_hook = rl_hook;
+	rl_catch_signals = 0;
 	errcode = ERR_NONE;
 	init_sigaction_hd();
 	errcode = write_in_heredoc(new_cmd, pipe_write, delimiter);
-	rl_event_hook = NULL;
-	init_sigaction();
+	// rl_event_hook = NULL;
 	if (errcode == ERR_SIG)
 	{
 		if (secure_close(&new_cmd->infile.fd_heredoc, STDIN_FILENO) != ERR_NONE)
@@ -109,6 +109,7 @@ static t_parse_error	process_heredocs(t_shell *shell, t_exec *new_cmd)
 		}
 		token = token->next;
 	}
+	rl_catch_signals = 1;
 	exec_lst_add_back(&shell->exec, new_cmd);
 	return (ERR_NONE);
 }

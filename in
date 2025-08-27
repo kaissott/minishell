@@ -1,0 +1,11 @@
+in
+includes
+leak.supp
+libft
+ls
+ludebion
+Makefile
+minishell
+pipi
+src
+valgrind.log
