@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 21:38:31 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 08:26:03 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool	is_valid_identifier(const char *str);
 int		check_var_exist(t_shell *main, char *var);
 void	print_export_env(t_shell *main);
 void	export_new_var(t_shell *main, char *var);
-void	replace_var(t_shell *main, char *var, t_env *env);
+void	replace_var(t_shell *main, char *var, t_env *env, bool is_ifs);
 
 /* ===========================================================================
  * MINI_UNSET

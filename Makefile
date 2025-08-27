@@ -10,11 +10,11 @@ NAME :=	minishell
 #################################################################################
 
 #Files
-LST_EXEC :=	minishell.c init_minishell.c close_error_handler.c utils.c
+LST_EXEC :=	minishell.c init_minishell.c close_error_handler.c shell_utils.c
 
 LST_BUILTINS :=	mini_cd.c mini_echo.c \
 				mini_env.c mini_exit_free.c mini_exit.c mini_export.c \
-				mini_pwd.c mini_unset.c mini_cd_utils.c mini_export_utils.c \
+				mini_pwd.c mini_unset.c mini_cd_utils.c mini_export_utils.c
 
 LST_ENV :=		env_lst.c env_to_tab.c lst_add.c
 
@@ -29,11 +29,7 @@ LST_EXPANSION :=	expansion_utils.c expansion.c
 
 LST_PARSE :=	heredoc.c heredoc_utils.c parse_utils.c parse.c
 
-LST_TOKENISATION :=	tokenisation_utils.c tokenisation.c
-
-LST_UTILS :=	file_utils.c utils.c
-
-LST_WORD_SPLITTING :=	word_splitting_utils.c word_splitting.c
+LST_PARSING_UTILS :=	file_utils.c parsing_utils.c
 
 LST_DEBUG_UTILS :=	print_lst_utils.c
 
@@ -42,11 +38,15 @@ LST_LST_UTILS :=	chunk_lst_utils.c exec_lst_utils.c \
 
 LST_LST_FREE_UTILS :=	exec_free_utils.c expand_free_utils.c token_free_utils.c
 
-LST_INC :=	minishell.h structures.h utils.h
+LST_TOKENISATION :=	tokenisation_utils.c tokenisation.c
+
+LST_WORD_SPLITTING :=	word_splitting_utils.c word_splitting.c
+
+LST_INC :=	minishell.h structures.h shell_utils.h
 
 LST_INC_PARSING :=	expansion.h parse.h tokenisation.h word_splitting.h
 
-LST_INC_PARSING_UTILS :=	debug_utils.h lst_utils.h parse_utils.h
+LST_INC_PARSING_UTILS :=	debug_utils.h lst_utils.h parsing_utils.h
 
 LST_INC_EXEC :=	builtins.h exec_utils.h exec.h
 
@@ -74,9 +74,9 @@ D_PARSE :=	parse/
 
 D_TOKENISATION :=	tokenisation/
 
-D_UTILS :=	utils/
-
 D_WORD_SPLITTING :=	word_splitting/
+
+D_PARSING_UTILS :=	parsing_utils/
 
 D_DEBUG_UTILS :=	debug_utils/
 
@@ -88,7 +88,7 @@ D_INC_EXEC :=	exec/
 
 D_INC_PARSING :=	parsing/
 
-D_INC_UTILS :=	utils/
+D_INC_PARSING_UTILS :=	parsing_utils/
 
 D_OBJ :=	.obj/
 
@@ -101,17 +101,17 @@ SRC :=	$(addprefix $(D_SRC), $(LST_EXEC)) \
 		$(addprefix $(D_SRC)$(D_EXEC)$(D_EXEC_UTILS), $(LST_EXEC_UTILS)) \
 		$(addprefix $(D_SRC)$(D_PARSING)$(D_EXPANSION), $(LST_EXPANSION)) \
 		$(addprefix $(D_SRC)$(D_PARSING)$(D_PARSE), $(LST_PARSE)) \
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_PARSING_UTILS), $(LST_PARSING_UTILS)) \
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_PARSING_UTILS)$(D_DEBUG_UTILS), $(LST_DEBUG_UTILS)) \
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_PARSING_UTILS)$(D_LST_UTILS), $(LST_LST_UTILS)) \
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_PARSING_UTILS)$(D_LST_UTILS)$(D_LST_FREE_UTILS), $(LST_LST_FREE_UTILS)) \
 		$(addprefix $(D_SRC)$(D_PARSING)$(D_TOKENISATION), $(LST_TOKENISATION)) \
-		$(addprefix $(D_SRC)$(D_PARSING)$(D_WORD_SPLITTING), $(LST_WORD_SPLITTING)) \
-		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS), $(LST_UTILS)) \
-		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS)$(D_DEBUG_UTILS), $(LST_DEBUG_UTILS)) \
-		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS)$(D_LST_UTILS), $(LST_LST_UTILS)) \
-		$(addprefix $(D_SRC)$(D_PARSING)$(D_UTILS)$(D_LST_UTILS)$(D_LST_FREE_UTILS), $(LST_LST_FREE_UTILS))
+		$(addprefix $(D_SRC)$(D_PARSING)$(D_WORD_SPLITTING), $(LST_WORD_SPLITTING))
 
 INC :=	$(addprefix $(D_INC), $(LST_INC)) \
 		$(addprefix $(D_INC)$(D_INC_EXEC), $(LST_INC_EXEC)) \
 		$(addprefix $(D_INC)$(D_INC_PARSING), $(LST_INC_PARSING)) \
-		$(addprefix $(D_INC)$(D_INC_PARSING)$(D_INC_UTILS), $(LST_INC_PARSING_UTILS))
+		$(addprefix $(D_INC)$(D_INC_PARSING)$(D_INC_PARSING_UTILS), $(LST_INC_PARSING_UTILS))
 
 OBJ :=	$(subst $(D_SRC), $(D_OBJ), $(SRC:.c=.o))
 

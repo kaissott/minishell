@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:02 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/26 05:36:49 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 06:24:09 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_expand	*extract_expand_var(char *var, ssize_t *i)
 	return (create_expand(T_EXPAND_VAR, ft_substr(var, 1, *i - 1)));
 }
 
-static char	*get_var_value(t_shell *shell, char *var_name, bool *var_found)
+char	*get_var_value(t_shell *shell, char *var_name, bool *var_found)
 {
 	t_env	*tmp;
 	size_t	var_name_len;

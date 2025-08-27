@@ -1,36 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   shell_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 07:10:08 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 02:06:00 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 08:04:38 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	rl_hook(void)
-{
-	return (0);
-}
-
-bool	is_ascii_printable(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s && s[i])
-	{
-		if (!(((unsigned char)s[i] >= 32 && (unsigned char)s[i] <= 126)
-				|| s[i] == '\n' || s[i] == '\t'))
-			return (false);
-		i++;
-	}
-	return (true);
-}
 
 void	print_perror(char *error)
 {
@@ -60,13 +40,11 @@ void	print_syntax_error_msg(t_parse_error errcode, char unexpected_token,
 	else if (errcode == ERR_SYNTAX)
 	{
 		ft_putstr_fd("syntax error near unexpected token `", STDERR_FILENO);
-		if (!unexpected_token)
-			ft_putstr_fd("newline'\n", STDERR_FILENO);
-		else
-		{
+		if (unexpected_token)
 			ft_putchar_fd(unexpected_token, STDERR_FILENO);
-			ft_putstr_fd("\'\n", STDERR_FILENO);
-		}
+		else
+			ft_putstr_fd("newline", STDERR_FILENO);
+		ft_putstr_fd("'\n", STDERR_FILENO);
 	}
 	else if (errcode == ERR_DOUBLE_PIPE)
 		ft_putstr_fd("Double pipe.\n", STDERR_FILENO);
@@ -75,6 +53,43 @@ void	print_syntax_error_msg(t_parse_error errcode, char unexpected_token,
 		ft_putstr_fd(ambiguous_redir, STDERR_FILENO);
 		ft_putstr_fd(" : Ambiguous redirection\n", STDERR_FILENO);
 	}
-	else if (errcode == ERR_MALLOC || errcode == ERR_PIPE)
+	else if (errcode == ERR_MALLOC)
 		ft_putstr_fd("Memory allocation failed.\n", STDERR_FILENO);
+	else if (errcode == ERR_PIPE)
+		ft_putstr_fd("Pipe failed.\n", STDERR_FILENO);
+	else if (errcode == ERR_TOKEN)
+		ft_putstr_fd("An error happened while parsing token.\n", STDERR_FILENO);
+}
+
+static void	get_errcode(t_shell *shell, t_parse_error errcode)
+{
+	if (errcode == ERR_MALLOC || errcode == ERR_PIPE || errcode == ERR_TOKEN)
+		shell->errcode = 12;
+	else if (errcode >= ERR_SYNTAX && errcode <= ERR_MISSING_SINGLE_QUOTE)
+		shell->errcode = 2;
+	else if (errcode == ERR_TOKEN || errcode == ERR_AMBIGUOUS_REDIR
+		|| errcode == ERR_PREV_OPEN || (errcode >= ERR_READ
+			&& errcode <= ERR_OPEN))
+		shell->errcode = 1;
+	else
+		shell->errcode = 0;
+}
+
+bool	check_parsing(t_shell *shell, t_parse_error errcode, bool at_end)
+{
+	if (errcode == ERR_NONE)
+	{
+		if (at_end)
+			get_errcode(shell, shell->error.error_type);
+		shell->error.error_type = ERR_NONE;
+		shell->error.unexpected_token = '\0';
+		shell->error.ambiguous_redir = NULL;
+		return (true);
+	}
+	get_errcode(shell, errcode);
+	if (errcode != ERR_SIG && !(errcode >= ERR_READ && errcode <= ERR_OPEN))
+		print_syntax_error_msg(errcode, shell->error.unexpected_token,
+			shell->error.ambiguous_redir);
+	free_shell_error(shell);
+	return (false);
 }

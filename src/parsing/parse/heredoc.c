@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:52:01 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 17:41:18 by karamire         ###   ########.fr       */
+/*   Updated: 2025/08/27 19:09:16 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,9 @@ static t_parse_error	write_in_heredoc(t_exec *new_cmd, int *pipe_write,
 	return (ERR_NONE);
 }
 
-static t_parse_error	handle_in_heredoc(t_exec *new_cmd, int *pipe_write,
-		char *delimiter)
+static int	rl_hook(void)
 {
-	t_parse_error	errcode;
-
-	rl_event_hook = rl_hook;
-	rl_catch_signals = 0;
-	errcode = ERR_NONE;
-	init_sigaction_hd();
-	errcode = write_in_heredoc(new_cmd, pipe_write, delimiter);
-	// rl_event_hook = NULL;
-	if (errcode == ERR_SIG)
-	{
-		if (secure_close(&new_cmd->infile.fd_heredoc, STDIN_FILENO) != ERR_NONE)
-			errcode = ERR_CLOSE;
-		free_exec(new_cmd);
-	}
-	if (secure_close(pipe_write, STDIN_FILENO) != ERR_NONE)
-		return (ERR_CLOSE);
-	return (errcode);
+	return (0);
 }
 
 static t_parse_error	handle_heredoc(t_token *token, t_exec *new_cmd)
@@ -73,6 +56,8 @@ static t_parse_error	handle_heredoc(t_token *token, t_exec *new_cmd)
 	t_parse_error	errcode;
 	int				pipefd[2];
 
+	rl_event_hook = rl_hook;
+	rl_catch_signals = 0;
 	if (secure_close(&new_cmd->infile.fd_heredoc, STDIN_FILENO) != ERR_NONE)
 		return (ERR_CLOSE);
 	if (pipe(pipefd) == -1)
@@ -81,7 +66,17 @@ static t_parse_error	handle_heredoc(t_token *token, t_exec *new_cmd)
 		return (ERR_PIPE);
 	}
 	new_cmd->infile.fd_heredoc = pipefd[0];
-	errcode = handle_in_heredoc(new_cmd, &pipefd[1], token->next->value);
+	init_sigaction_hd();
+	errcode = write_in_heredoc(new_cmd, &pipefd[1], token->next->value);
+	init_sigaction();
+	if (errcode == ERR_SIG)
+	{
+		if (secure_close(&new_cmd->infile.fd_heredoc, STDIN_FILENO) != ERR_NONE)
+			errcode = ERR_CLOSE;
+		free_exec(new_cmd);
+	}
+	if (secure_close(&pipefd[1], STDIN_FILENO) != ERR_NONE)
+		return (ERR_CLOSE);
 	return (errcode);
 }
 

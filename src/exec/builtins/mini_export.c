@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 00:24:55 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 21:36:20 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 08:26:30 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ int	check_var_exist(t_shell *main, char *var)
 	env = main->env;
 	while (env != NULL)
 	{
-		if (ft_strncmp(var, env->env, i) == 0)
+		if (ft_strncmp(var, env->env, i) == 0 && env->env[i] == '=')
 		{
-			replace_var(main, var, env);
+			if (ft_strncmp("IFS", env->env, i) == 0)
+				replace_var(main, var, env, true);
+			else
+				replace_var(main, var, env, false);
 			return (0);
 		}
 		env = env->next;

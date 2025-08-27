@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 08:06:53 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 00:33:13 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 06:23:16 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,5 @@ typedef struct s_shell
 	int						std_in;
 	int						std_out;
 }							t_shell;
-
-t_shell						*init_minishell(char **env);
 
 #endif

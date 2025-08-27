@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 00:10:42 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/08/27 07:32:25 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,27 @@ static void	parse(t_shell *shell, const char *cmd)
 	errcode = word_splitting(shell);
 	if (!check_parsing(shell, errcode, false))
 		return ;
+	// print_token_lst(&shell->token, "TOKEN LIST :\n");
 	errcode = preprocess(shell);
 	if (!check_parsing(shell, errcode, false))
 		return ;
 	errcode = parsing(shell);
 	check_parsing(shell, errcode, true);
+}
+
+static bool	is_ascii_printable(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s && s[i])
+	{
+		if (!(((unsigned char)s[i] >= 32 && (unsigned char)s[i] <= 126)
+				|| s[i] == '\n' || s[i] == '\t'))
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
 static char	*rl_check(t_shell *shell)
