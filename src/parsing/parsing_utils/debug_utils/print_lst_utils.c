@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:34:01 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 05:41:42 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/01 18:41:22 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ static void	print_info_exec(t_exec *lst)
 				j++;
 			}
 		}
+		printf("\tfd infile : [%d]\n", lst->infile.fd);
 		printf("\tfd heredoc : [%d]\n", lst->infile.fd_heredoc);
+		printf("\tfd outfile : [%d]\n", lst->outfile.fd);
 		lst = lst->next;
 	}
 }

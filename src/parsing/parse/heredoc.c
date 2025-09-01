@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:52:01 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 21:54:21 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/01 21:25:58 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ static t_parse_error	process_heredocs(t_shell *shell, t_exec *new_cmd)
 		}
 		token = token->next;
 	}
-	rl_catch_signals = 1;
 	exec_lst_add_back(&shell->exec, new_cmd);
 	return (ERR_NONE);
 }

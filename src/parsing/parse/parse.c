@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:33 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 22:02:20 by karamire         ###   ########.fr       */
+/*   Updated: 2025/09/01 21:10:03 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static t_exec	*handle_pipe(t_shell *shell, t_token *token, t_exec *new_cmd)
 {
+	if (new_cmd->infile.fd != new_cmd->infile.fd_heredoc)
+		secure_close(&new_cmd->infile.fd_heredoc, STDIN_FILENO);
 	token_lst_delone(&shell->token, token);
 	shell->errcode = 0;
 	shell->error.error_type = 0;

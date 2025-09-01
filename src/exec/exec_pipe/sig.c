@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:46:57 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/27 19:51:59 by karamire         ###   ########.fr       */
+/*   Updated: 2025/09/01 21:25:15 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handler_interactive(int sig)
 	{
 		g_sig_mode = sig;
 		rl_replace_line("", 0);
-		write(1, "\n", 1);
+		write(STDOUT_FILENO, "^C\n", 3);
 		rl_on_new_line();
 		rl_redisplay();
 	}

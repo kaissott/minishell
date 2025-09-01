@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:31:16 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 05:56:15 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/01 21:10:49 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ t_parse_error	check_std_cmd(int std, t_exec *new_cmd)
 	if (new_cmd->infile.fd == -1 || new_cmd->outfile.fd == -1)
 	{
 		if (new_cmd->infile.fd_heredoc != 0)
+		{
 			if (secure_close(&new_cmd->infile.fd_heredoc,
 					STDIN_FILENO) != ERR_NONE)
 				return (ERR_CLOSE);
+		}
 		return (ERR_PREV_OPEN);
 	}
 	if (std == STDIN_FILENO)

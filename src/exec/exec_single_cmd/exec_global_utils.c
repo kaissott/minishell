@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_global_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 00:27:16 by karamire          #+#    #+#             */
-/*   Updated: 2025/07/30 19:56:20 by karamire         ###   ########.fr       */
+/*   Updated: 2025/09/01 21:20:05 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,14 @@ char	*env_path_finding(t_shell *main, char **env)
 
 void	ultimate_path_check(t_shell *main, char **cmd)
 {
+	DIR	*dir;
+
 	if (strrchr_slash(cmd[0], '/') == 1)
 	{
-		if (opendir(cmd[0]))
+		dir = opendir(cmd[0]);
+		if (dir)
 		{
-			closedir(opendir(cmd[0]));
+			closedir(dir);
 			free_and_exit_error(main, NULL, "Is a directory", 126);
 		}
 		if (access(cmd[0], F_OK) != 0)

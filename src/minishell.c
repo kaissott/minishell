@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 21:57:16 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/01 21:25:26 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static void	start_shell(t_shell *shell)
 	char	*rl;
 
 	rl = NULL;
+	rl_catch_signals = 0;
 	while (1)
 	{
 		init_sigaction();
