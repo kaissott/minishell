@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:02 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/27 06:24:09 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 07:47:23 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char	*get_var_value(t_shell *shell, char *var_name, bool *var_found)
 		tmp = tmp->next;
 	}
 	*var_found = false;
+	if (ft_strcmp(var_name, "IFS") == 0)
+		return (DEFAULT_IFS);
 	return ("");
 }
 

@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 08:06:53 by ludebion          #+#    #+#             */
-/*   Updated: 2025/09/02 02:08:21 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 22:55:14 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_token_chunk
 	t_token_chunk_type		type;
 	char					*value;
 	bool					is_expanded;
+	bool					is_blank;
 	struct s_token_chunk	*next;
 }							t_token_chunk;
 

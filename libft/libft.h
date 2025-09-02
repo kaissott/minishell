@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:38:10 by karamire          #+#    #+#             */
-/*   Updated: 2025/09/01 21:41:41 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 22:43:35 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ long long			ft_atoll(const char *str, int *error);
 int					ft_isspace(int c);
 int					handle_error(char *msg, int code);
 void				handle_error_exit(char *msg, int code);
-char				**split_charset(char *s, char *charset);
+char				**split_charset(char *s, char *charset, bool *is_empty);
 void				free_strs(char **strs);
 
 #endif

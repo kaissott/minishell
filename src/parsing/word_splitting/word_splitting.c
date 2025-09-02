@@ -6,14 +6,14 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:14 by ludebion          #+#    #+#             */
-/*   Updated: 2025/09/02 03:51:11 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 22:58:31 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_parse_error	process_split_words(t_shell *shell,
-		t_token_chunk *chunk, t_token **new_tokens, char **words)
+static t_parse_error	process_split_words(t_token_chunk *chunk,
+		t_token **new_tokens, char **words, char *ifs_env)
 {
 	size_t			i;
 	t_parse_error	errcode;
@@ -21,60 +21,52 @@ static t_parse_error	process_split_words(t_shell *shell,
 	i = 0;
 	while (words[i])
 	{
-		if (*new_tokens && i == 0 && begin_or_end_by_ifs(shell, chunk->value,
+		if (*new_tokens && i == 0 && !begin_or_end_by_ifs(ifs_env, chunk->value,
 				true))
-		{
 			errcode = handle_first_word(new_tokens, words[i]);
-			if (errcode != ERR_NONE)
-				return (errcode);
-		}
 		else
-		{
 			errcode = create_new_token_with_word(new_tokens, words[i]);
-			if (errcode != ERR_NONE)
-				return (errcode);
-		}
+		if (errcode != ERR_NONE)
+			return (errcode);
 		i++;
 	}
 	return (ERR_NONE);
 }
 
-static t_parse_error	split_chunk_by_ifs(t_shell *shell, t_token_chunk *chunk,
-		t_token **new_tokens)
+static t_parse_error	split_chunk_by_ifs(t_token_chunk *chunk,
+		t_token **new_tokens, char *ifs_env)
 {
 	char			**words;
 	t_parse_error	errcode;
-	char			*ifs_env;
-	bool			var_found;
+	bool			is_empty;
 
-	var_found = false;
-	ifs_env = get_var_value(shell, "IFS", &var_found);
-	if (var_found)
-		words = split_charset(chunk->value, ifs_env);
-	else
-		words = split_charset(chunk->value, DEFAULT_IFS);
-	if (var_found)
-		free(ifs_env);
+	errcode = ERR_NONE;
+	is_empty = false;
+	words = split_charset(chunk->value, ifs_env, &is_empty);
 	if (!words)
-		return (ERR_MALLOC);
-	errcode = process_split_words(shell, chunk, new_tokens, words);
+	{
+		if (!is_empty)
+			return (ERR_MALLOC);
+		chunk->is_blank = true;
+	}
+	if (!chunk->is_blank)
+		errcode = process_split_words(chunk, new_tokens, words, ifs_env);
 	free_strs(words);
 	return (errcode);
 }
 
-static t_parse_error	apply_word_splitting(t_shell *shell,
-		t_token_chunk *chunk, t_token **new_tokens, bool prev_sep)
+static t_parse_error	apply_word_splitting(t_token_chunk *chunk,
+		t_token **new_tokens, char *ifs_env, bool prev_sep)
 {
 	t_parse_error	errcode;
 
 	if (!chunk)
 		return (ERR_NONE);
-	if (chunk_contains_ifs_chars(shell, chunk->value) && chunk->is_expanded
+	if (chunk_contains_ifs_chars(ifs_env, chunk->value) && chunk->is_expanded
 		&& chunk->type == T_STRING)
 	{
-		errcode = split_chunk_by_ifs(shell, chunk, new_tokens);
-		if (chunk_contains_ifs_chars(shell, chunk->value
-				+ ft_strlen(chunk->value) - 1))
+		errcode = split_chunk_by_ifs(chunk, new_tokens, ifs_env);
+		if (begin_or_end_by_ifs(ifs_env, chunk->value, false))
 			prev_sep = true;
 	}
 	else if (!*new_tokens)
@@ -88,18 +80,19 @@ static t_parse_error	apply_word_splitting(t_shell *shell,
 	}
 	if (errcode != ERR_NONE)
 		return (errcode);
-	return (apply_word_splitting(shell, chunk->next, new_tokens, prev_sep));
+	return (apply_word_splitting(chunk->next, new_tokens, ifs_env, prev_sep));
 }
 
-static t_parse_error	process_token(t_shell *shell, t_token *token)
+static t_parse_error	process_token(t_shell *shell, t_token *token,
+		char *ifs_env)
 {
 	t_token			*new_tokens;
 	t_parse_error	errcode;
 
 	new_tokens = NULL;
-	if (token_contains_ifs_chunks(shell, token) && !token->is_redir)
+	if (token_contains_ifs_chunks(ifs_env, token) && !token->is_redir)
 	{
-		errcode = apply_word_splitting(shell, token->chunks, &new_tokens,
+		errcode = apply_word_splitting(token->chunks, &new_tokens, ifs_env,
 				false);
 		if (errcode != ERR_NONE)
 			return (errcode);
@@ -107,8 +100,7 @@ static t_parse_error	process_token(t_shell *shell, t_token *token)
 	}
 	else
 	{
-		if (!token->is_blank && (!token_contains_ifs_chunks(shell, token)
-				|| !token->is_redir))
+		if (!token->is_blank)
 		{
 			errcode = cat_chunks(token);
 			if (errcode != ERR_NONE)
@@ -120,18 +112,27 @@ static t_parse_error	process_token(t_shell *shell, t_token *token)
 
 t_parse_error	word_splitting(t_shell *shell)
 {
+	char			*ifs_env;
+	bool			var_found;
 	t_token			*token;
 	t_token			*next;
 	t_parse_error	errcode;
 
+	ifs_env = get_var_value(shell, "IFS", &var_found);
 	token = shell->token;
 	while (token)
 	{
 		next = token->next;
-		errcode = process_token(shell, token);
+		errcode = process_token(shell, token, ifs_env);
 		if (errcode != ERR_NONE)
+		{
+			if (var_found)
+				free(ifs_env);
 			return (errcode);
+		}
 		token = next;
 	}
+	if (var_found)
+		free(ifs_env);
 	return (ERR_NONE);
 }
