@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:38:10 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/27 21:53:42 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/01 21:41:41 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char				*ft_strrchr(const char *s, int c);
 char				*ft_strdup(const char *s);
 char				*ft_strnstr(char *big, char *little, size_t len);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
+char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));

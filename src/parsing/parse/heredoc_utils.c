@@ -6,14 +6,11 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 09:16:35 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/28 01:00:36 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 03:02:22 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-#define BUFF 4096
-#define PIPE_BUF_SIZE 65536
 
 bool	check_line(char *line, char *delimiter)
 {
@@ -35,14 +32,14 @@ bool	check_line(char *line, char *delimiter)
 
 static t_parse_error	copy_pipe_to_file(int pipe_read_fd, int file_fd)
 {
-	char	buffer[BUFF];
+	char	buffer[PIPE_READ_SIZE];
 	ssize_t	bytes_read;
 	ssize_t	bytes_write;
 
 	bytes_read = 1;
 	while (bytes_read > 0)
 	{
-		bytes_read = read(pipe_read_fd, buffer, BUFF);
+		bytes_read = read(pipe_read_fd, buffer, PIPE_READ_SIZE);
 		if (bytes_read == -1)
 		{
 			print_perror("read");

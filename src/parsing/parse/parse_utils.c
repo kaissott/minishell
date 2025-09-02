@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:29:30 by ludebion          #+#    #+#             */
-/*   Updated: 2025/09/01 19:18:00 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 03:02:52 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**resize_cmd_args(char **cmd, char *new_arg)
 void	process_exec_std(t_shell *shell, t_token *token, t_exec *new_cmd,
 		int std)
 {
-	if (token->next->is_blank || token_contains_ifs_chunks(token->next))
+	if (token->next->is_blank || token_contains_ifs_chunks(shell, token->next))
 	{
 		reset_std_file(shell, token, std, new_cmd);
 		return ;

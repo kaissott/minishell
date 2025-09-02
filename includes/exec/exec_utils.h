@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:19:49 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/27 19:35:50 by karamire         ###   ########.fr       */
+/*   Updated: 2025/09/02 02:57:25 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define ERR_NUM_ARG ": numeric argument required\n"
 # define ERR_CD_FILE ": No such file or directory\n"
 # define ERR_CD_NAMETOOLONG ": File name too long\n"
-# define ERR_CD_NOACCES ": Can't acces file"
+# define ERR_CD_NOACCES ": Can't access file"
 # define ERR_GETCWD "getcwd error"
 # define ERR_CHDIR "chdir error"
 # define ERR_WRITE "write error"

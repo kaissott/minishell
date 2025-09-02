@@ -6,34 +6,52 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:11 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/30 20:54:14 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 03:48:49 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	chunk_contains_ifs_chars(char *str)
+bool	chunk_contains_ifs_chars(t_shell *shell, char *str)
 {
-	int	i;
+	size_t	i;
+	size_t	j;
+	char	*ifs_env;
+	bool	var_found;
 
+	var_found = false;
+	ifs_env = get_var_value(shell, "IFS", &var_found);
+	if (!var_found)
+		ifs_env = " \n\t";
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
-			return (true);
+		j = 0;
+		while (ifs_env[j])
+		{
+			if (str[i] == ifs_env[j])
+			{
+				if (var_found)
+					free(ifs_env);
+				return (true);
+			}
+			j++;
+		}
 		i++;
 	}
+	if (var_found)
+		free(ifs_env);
 	return (false);
 }
 
-bool	token_contains_ifs_chunks(t_token *token)
+bool	token_contains_ifs_chunks(t_shell *shell, t_token *token)
 {
 	t_token_chunk	*chunk;
 
 	chunk = token->chunks;
 	while (chunk)
 	{
-		if (chunk_contains_ifs_chars(chunk->value) && chunk->is_expanded)
+		if (chunk_contains_ifs_chars(shell, chunk->value) && chunk->is_expanded)
 			return (true);
 		chunk = chunk->next;
 	}

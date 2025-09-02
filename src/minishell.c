@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 02:02:50 by ludebion          #+#    #+#             */
-/*   Updated: 2025/09/01 21:25:26 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 00:29:52 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static bool	is_ascii_printable(const char *s)
 static char	*rl_check(t_shell *shell)
 {
 	char	*rl;
+	char	*line;
 
 	rl = NULL;
 	if (isatty(STDIN_FILENO))
@@ -59,6 +60,15 @@ static char	*rl_check(t_shell *shell)
 		rl = readline("> ");
 		if (shell->errcode < 3 && g_sig_mode > 0)
 			shell->errcode = g_sig_mode + 128;
+	}
+	else
+	{
+		line = get_next_line(STDIN_FILENO);
+		if (line)
+		{
+			rl = ft_strtrim(line, "\n");
+			free(line);
+		}
 	}
 	return (rl);
 }

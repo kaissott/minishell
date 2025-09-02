@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:11:54 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/26 09:43:44 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 03:02:00 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "minishell.h"
 # include "structures.h"
+
+# define PIPE_READ_SIZE 4096
+# define PIPE_BUF_SIZE 65536
 
 t_parse_error	preprocess(t_shell *shell);
 t_parse_error	check_heredoc(size_t *bytes_write, char *line, t_exec *new_cmd,

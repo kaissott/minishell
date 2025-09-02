@@ -6,11 +6,42 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:02:34 by ludebion          #+#    #+#             */
-/*   Updated: 2025/07/24 08:21:13 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 03:48:38 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// Leak a foison juste en dessous
+bool	begin_or_end_by_ifs(t_shell *shell, char *str, int begin)
+{
+	size_t	i;
+	size_t	s_len;
+	char	*ifs_env;
+	bool	var_found;
+
+	i = 0;
+	s_len = ft_strlen(str);
+	var_found = false;
+	ifs_env = get_var_value(shell, "IFS", &var_found);
+	if (!var_found)
+		ifs_env = " \n\t";
+	while (ifs_env[i])
+	{
+		if (begin)
+		{
+			if (str[0] == ifs_env[i])
+				return (false);
+		}
+		else if (!begin)
+		{
+			if (str[s_len] == ifs_env[i])
+				return (false);
+		}
+		i++;
+	}
+	return (true);
+}
 
 t_parse_error	create_first_token(t_token **new_tokens, t_token_chunk *chunk)
 {
