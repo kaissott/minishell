@@ -52,7 +52,6 @@ static bool	is_ascii_printable(const char *s)
 static char	*rl_check(t_shell *shell)
 {
 	char	*rl;
-	char	*line;
 
 	rl = NULL;
 	if (isatty(STDIN_FILENO))
@@ -60,15 +59,6 @@ static char	*rl_check(t_shell *shell)
 		rl = readline("> ");
 		if (shell->errcode < 3 && g_sig_mode > 0)
 			shell->errcode = g_sig_mode + 128;
-	}
-	else
-	{
-		line = get_next_line(STDIN_FILENO);
-		if (line)
-		{
-			rl = ft_strtrim(line, "\n");
-			free(line);
-		}
 	}
 	return (rl);
 }

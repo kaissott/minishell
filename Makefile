@@ -124,7 +124,7 @@ LIBFT := $(D_LIBFT)libft.a
 #################################################################################
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -g3
+CFLAGS := -Wall -Wextra -Werror
 IFLAGS := -I$(D_INC) -I$(D_INC)$(D_INC_PARSING) -I$(D_INC)$(D_INC_UTILS) -I/opt/homebrew/opt/readline/include
 LDFLAGS := -L/opt/homebrew/opt/readline/lib -lreadline
 
