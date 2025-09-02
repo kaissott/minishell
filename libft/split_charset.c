@@ -73,7 +73,7 @@ static ssize_t	extract_word(char ***strs_ptr, char *s, char *charset)
 		return (0);
 	while (s[i] && !is_in_charset(charset, s[i]))
 		i++;
-	word = NULL;
+	word = ft_substr(s, 0, i);
 	if (!word)
 		return (-1);
 	new_strs = resize_strs(*strs_ptr, word);

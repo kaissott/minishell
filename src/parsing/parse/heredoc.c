@@ -18,7 +18,6 @@ static t_parse_error	write_in_heredoc(t_exec *new_cmd, int *pipe_write,
 	t_parse_error	errcode;
 	char			*rl;
 	size_t			bytes_write;
-	char			*line;
 
 	bytes_write = 0;
 	while (1)
@@ -26,15 +25,6 @@ static t_parse_error	write_in_heredoc(t_exec *new_cmd, int *pipe_write,
 		rl = NULL;
 		if (isatty(STDIN_FILENO))
 			rl = readline("heredoc> ");
-		else
-		{
-			line = get_next_line(STDIN_FILENO);
-			if (line)
-			{
-				rl = ft_strtrim(line, "\n");
-				free(line);
-			}
-		}
 		if (g_sig_mode == SIGINT)
 		{
 			free(rl);
