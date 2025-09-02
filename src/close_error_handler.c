@@ -38,6 +38,7 @@ void	exit_error_two_close(t_shell *main, int *fd1, int *fd2)
 	{
 		ft_safe_close(fd2, main);
 	}
+	ft_putendl_fd("exit", 1);
 }
 
 void	free_shell_error(t_shell *shell)

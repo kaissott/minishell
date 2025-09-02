@@ -111,6 +111,7 @@ int	main(int ac, char **av, char **env)
 	if (ac > 1)
 		return (EXIT_FAILURE);
 	shell = init_minishell(env);
+	shell->i = 0;
 	start_shell(shell);
 	errcode = shell->errcode;
 	free_struct(shell);

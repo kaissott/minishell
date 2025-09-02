@@ -115,6 +115,7 @@ typedef struct s_env
 
 typedef struct s_shell
 {
+	int						i;
 	t_env					*env;
 	char					**env_tab;
 	t_exec					*exec;
