@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_charset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:33:36 by ludebion          #+#    #+#             */
-/*   Updated: 2025/08/28 01:02:35 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/01 21:52:51 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static ssize_t	extract_word(char ***strs_ptr, char *s, char *charset)
 		return (0);
 	while (s[i] && !is_in_charset(charset, s[i]))
 		i++;
-	word = ft_substr(s, 0, i);
+	word = NULL;
 	if (!word)
 		return (-1);
 	new_strs = resize_strs(*strs_ptr, word);

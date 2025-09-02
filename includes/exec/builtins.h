@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:45:19 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/27 08:26:03 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:44:08 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	lstadd_back_env(t_env **lst, t_env *new);
 bool	mini_cd(char **cmd, t_shell *main);
 char	*get_directory(t_shell *main, char **tab);
 char	*cd_to_last_pwd(t_shell *main);
-char	*cd_to_home(t_shell *main, char *path, int i);
+char	*cd_to_home(t_shell *main);
 void	env_pwd_update(t_shell *main);
 void	env_oldpwd_update(t_shell *main);
 

@@ -6,18 +6,25 @@
 /*   By: karamire <karamire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:57:04 by karamire          #+#    #+#             */
-/*   Updated: 2025/08/27 19:51:40 by karamire         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:58:13 by karamire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*cd_to_home(t_shell *main, char *path, int i)
+static bool	cd_err(t_shell *main, char *err)
+{
+	ft_putstr_fd(err, 2);
+	main->errcode = 1;
+	return (true);
+}
+
+char	*cd_to_home(t_shell *main)
 {
 	t_env	*env;
 	char	*str;
-	char	*dst;
 
+	str = NULL;
 	env = main->env;
 	while (env)
 	{
@@ -29,16 +36,12 @@ char	*cd_to_home(t_shell *main, char *path, int i)
 		}
 		env = env->next;
 	}
-	if (path)
+	if (!str)
 	{
-		dst = ft_strjoin(str, path + i);
-		if (!dst)
-			free_and_exit_error(main, str, ERR_MEM, 12);
-		free(str);
+		cd_err(main, "minishell: cd: HOME not set\n");
+		return (NULL);
 	}
-	else
-		dst = str;
-	return (dst);
+	return (str);
 }
 
 char	*cd_to_last_pwd(t_shell *main)
@@ -60,8 +63,7 @@ char	*cd_to_last_pwd(t_shell *main)
 		}
 		env = env->next;
 	}
-	ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
-	main->errcode = 1;
+	cd_err(main, "minishell: cd: OLDPWD not set\n");
 	return (str);
 }
 
@@ -71,9 +73,9 @@ char	*get_directory(t_shell *main, char **tab)
 
 	str = NULL;
 	if (tab[1] == NULL || tab[1][0] == '~')
-		str = cd_to_home(main, tab[1], 1);
+		str = cd_to_home(main);
 	else if ((ft_strcmp(tab[1], "--") == 0))
-		str = cd_to_home(main, tab[1], 2);
+		str = cd_to_home(main);
 	else if (tab[1][0] == '-' && tab[1][1] == '\0')
 		str = cd_to_last_pwd(main);
 	else
@@ -90,12 +92,10 @@ bool	mini_cd(char **cmd, t_shell *main)
 	char	*str;
 
 	if (cmd[1] != NULL && cmd[2])
-	{
-		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
-		main->errcode = 1;
-		return (true);
-	}
+		return (cd_err(main, "minishell: cd: HOME not set\n"));
 	str = get_directory(main, cmd);
+	if (!str)
+		return (false);
 	if (access(str, F_OK) == 0 && access(str, X_OK) == 0)
 	{
 		env_oldpwd_update(main);
@@ -108,7 +108,7 @@ bool	mini_cd(char **cmd, t_shell *main)
 	else
 	{
 		free(str);
-		ft_putstr_fd("minishell: cd: ", 2);
+		cd_err(main, "minishell: cd: ");
 		return (set_return_err_code(main, main->exec->cmd[1], 1));
 	}
 	return (true);
