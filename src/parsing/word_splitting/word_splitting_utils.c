@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 02:30:11 by ludebion          #+#    #+#             */
-/*   Updated: 2025/09/02 03:48:49 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 03:51:37 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	chunk_contains_ifs_chars(t_shell *shell, char *str)
 	var_found = false;
 	ifs_env = get_var_value(shell, "IFS", &var_found);
 	if (!var_found)
-		ifs_env = " \n\t";
+		ifs_env = DEFAULT_IFS;
 	i = 0;
 	while (str[i])
 	{

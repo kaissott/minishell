@@ -6,7 +6,7 @@
 /*   By: ludebion <ludebion@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 21:02:34 by ludebion          #+#    #+#             */
-/*   Updated: 2025/09/02 03:48:38 by ludebion         ###   ########.fr       */
+/*   Updated: 2025/09/02 03:51:37 by ludebion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	begin_or_end_by_ifs(t_shell *shell, char *str, int begin)
 	var_found = false;
 	ifs_env = get_var_value(shell, "IFS", &var_found);
 	if (!var_found)
-		ifs_env = " \n\t";
+		ifs_env = DEFAULT_IFS;
 	while (ifs_env[i])
 	{
 		if (begin)
