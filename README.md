@@ -1,4 +1,4 @@
-git # Minishell
+##Minishell
 
 Un mini-interpréteur de commandes POSIX, inspiré de bash, implémenté en C. Il gère la lecture interactive, le parsing (tokenisation, expansion, word splitting), l’exécution de commandes simples et en pipeline, la redirection, les here-docs, les variables d’environnement et plusieurs builtins.
 
