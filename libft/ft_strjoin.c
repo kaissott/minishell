@@ -18,7 +18,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	i;
 	size_t	j;
 	char	*str;
-
+	
+	if (!s1 || !s2)
+		return(NULL);
 	maxlen = ft_strlen(s1) + ft_strlen(s2) + 1;
 	str = malloc(maxlen);
 	if (str == NULL)
