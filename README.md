@@ -16,8 +16,6 @@ Un mini-interpréteur de commandes POSIX, inspiré de bash, implémenté en C. I
 - Gestion des erreurs et codes de retour
 - Architecture
 - Dépendances & compatibilité
-- Contribution
-- Licence
 
 ## Présentation
 
