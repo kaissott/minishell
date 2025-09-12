@@ -38,8 +38,6 @@ make
 ./minishell
 > echo "Hello"
 Hello
-> export FOO=bar && echo $FOO
-bar
 > ls | wc -l
 42
 > cat << EOF | grep hello
